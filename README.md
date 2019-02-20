@@ -1,4 +1,4 @@
-# API Platform
+# API Platform Tutorial
 
 Well hi there! This repository holds the code and script
 for the [API Platform](https://symfonycasts.com/screencast/api-platform) course on SymfonyCasts.
