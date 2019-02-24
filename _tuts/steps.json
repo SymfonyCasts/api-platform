@@ -1,0 +1,15 @@
+{
+    "steps": [
+        {
+            "id": "start",
+            "name": "start",
+            "description": null
+        },
+        {
+            "id": "installation",
+            "name": "installation",
+            "description": null
+        }
+    ],
+    "sha": "dcf8df45b1e3fd393b7546dc2b8f86a54da001c5"
+}
