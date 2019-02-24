@@ -19,7 +19,12 @@
             "id": "cheeselisting-create-new-entity",
             "name": "CheeseListing: create new entity",
             "description": null
+        },
+        {
+            "id": "cheeselisting-add-annotation",
+            "name": "CheeseListing: add annotation",
+            "description": null
         }
     ],
-    "sha": "6ffc49d98723ce638864cbf6ef812e74fe6b429c"
+    "sha": "69d17ff8ae124827355d971665510d60c979d61e"
 }
