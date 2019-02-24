@@ -34,7 +34,12 @@
             "id": "user-create-new-entity",
             "name": "User: create new entity",
             "description": null
+        },
+        {
+            "id": "user-add-datafixture",
+            "name": "User: add DataFixture",
+            "description": null
         }
     ],
-    "sha": "a4ca6679a52504736e302058ef20dc4108f05aa0"
+    "sha": "10b76a798d8c565fac7bef6f961a7de364f1f582"
 }

@@ -1,0 +1,25 @@
+diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
+index 40c45e6..7675a93 100644
+--- a/src/DataFixtures/AppFixtures.php
++++ b/src/DataFixtures/AppFixtures.php
+@@ -3,6 +3,7 @@
+ namespace App\DataFixtures;
+ 
+ use App\Entity\CheeseListing;
++use App\Entity\User;
+ use Doctrine\Bundle\FixturesBundle\Fixture;
+ use Doctrine\Common\Persistence\ObjectManager;
+ 
+@@ -10,7 +11,12 @@ class AppFixtures extends Fixture
+ {
+     public function load(ObjectManager $manager)
+     {
++        $user = new User();
++        $user->setUsername('Cheese Seller');
++        $manager->persist($user);
++
+         $cheeseListing = new CheeseListing();
++        $cheeseListing->setUser($user);
+         $cheeseListing->setTitle('Cheese Title');
+         $cheeseListing->setDescription('Cheese Description');
+         $cheeseListing->setCreated(new \DateTime());
