@@ -6,10 +6,15 @@
             "description": null
         },
         {
-            "id": "installation",
-            "name": "installation",
+            "id": "installation-composer-require-api",
+            "name": "Installation: composer require api",
+            "description": null
+        },
+        {
+            "id": "installation-adding-database-information-to-env-file",
+            "name": "Installation: adding database information to .env file",
             "description": null
         }
     ],
-    "sha": "dcf8df45b1e3fd393b7546dc2b8f86a54da001c5"
+    "sha": "6fb944f4c2b6a77cd628eabcb6ad40d9ea123da4"
 }
