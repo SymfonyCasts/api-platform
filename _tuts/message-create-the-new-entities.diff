@@ -188,7 +188,7 @@ index 0000000..80e479d
 +}
 diff --git a/src/Entity/Message.php b/src/Entity/Message.php
 new file mode 100644
-index 0000000..a7e5708
+index 0000000..83d9aff
 --- /dev/null
 +++ b/src/Entity/Message.php
 @@ -0,0 +1,130 @@
@@ -227,7 +227,7 @@ index 0000000..a7e5708
 +    /**
 +     * @ORM\Column(type="text")
 +     */
-+    private $message;
++    private $content;
 +
 +    /**
 +     * @ORM\Column(type="datetime")
@@ -274,14 +274,14 @@ index 0000000..a7e5708
 +        return $this;
 +    }
 +
-+    public function getMessage(): ?string
++    public function getContent(): ?string
 +    {
-+        return $this->message;
++        return $this->content;
 +    }
 +
-+    public function setMessage(string $message): self
++    public function setContent(string $content): self
 +    {
-+        $this->message = $message;
++        $this->content = $content;
 +
 +        return $this;
 +    }
