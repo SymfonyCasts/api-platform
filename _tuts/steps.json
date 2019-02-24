@@ -26,10 +26,15 @@
             "description": null
         },
         {
-            "id": "cheeselisting-add-doctrine-datafixture",
-            "name": "CheeseListing: Add Doctrine DataFixture",
+            "id": "cheeselisting-add-a-doctrine-datafixture",
+            "name": "CheeseListing: add a Doctrine DataFixture",
+            "description": null
+        },
+        {
+            "id": "user-create-new-entity",
+            "name": "User: create new entity",
             "description": null
         }
     ],
-    "sha": "44b6cb16da7cbc7b728370c0275d6c9771039477"
+    "sha": "a4ca6679a52504736e302058ef20dc4108f05aa0"
 }
