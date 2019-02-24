@@ -151,6 +151,16 @@ index 4bdf896..faf6ab9 100644
      "aliases": [],
      "minimum-stability": "stable",
      "stability-flags": [],
+diff --git a/config/bundles.php b/config/bundles.php
+index 1edaed6..b55f43b 100644
+--- a/config/bundles.php
++++ b/config/bundles.php
+@@ -8,4 +8,5 @@ return [
+     Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
+     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
++    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
+ ];
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
 new file mode 100644
 index 0000000..dca0411
@@ -305,3 +315,33 @@ index 0000000..8f3cdda
 +    }
 +    */
 +}
+diff --git a/symfony.lock b/symfony.lock
+index 2e6c058..36efcf8 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -94,6 +94,9 @@
+             "config/packages/nelmio_cors.yaml"
+         ]
+     },
++    "nikic/php-parser": {
++        "version": "v4.2.1"
++    },
+     "phpdocumentor/reflection-common": {
+         "version": "1.0.1"
+     },
+@@ -187,6 +190,15 @@
+     "symfony/inflector": {
+         "version": "v4.2.3"
+     },
++    "symfony/maker-bundle": {
++        "version": "1.0",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "1.0",
++            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
++        }
++    },
+     "symfony/polyfill-mbstring": {
+         "version": "v1.10.0"
+     },
