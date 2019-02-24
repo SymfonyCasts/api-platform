@@ -1,5 +1,5 @@
 diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
-index 40c45e6..7675a93 100644
+index 33b870b..25855e2 100644
 --- a/src/DataFixtures/AppFixtures.php
 +++ b/src/DataFixtures/AppFixtures.php
 @@ -3,6 +3,7 @@
@@ -22,4 +22,4 @@ index 40c45e6..7675a93 100644
 +        $cheeseListing->setUser($user);
          $cheeseListing->setTitle('Cheese Title');
          $cheeseListing->setDescription('Cheese Description');
-         $cheeseListing->setCreated(new \DateTime());
+         $cheeseListing->setIsStinky(false);
