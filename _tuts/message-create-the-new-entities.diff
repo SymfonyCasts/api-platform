@@ -188,7 +188,7 @@ index 0000000..80e479d
 +}
 diff --git a/src/Entity/Message.php b/src/Entity/Message.php
 new file mode 100644
-index 0000000..83d9aff
+index 0000000..a0714d4
 --- /dev/null
 +++ b/src/Entity/Message.php
 @@ -0,0 +1,130 @@
@@ -235,7 +235,7 @@ index 0000000..83d9aff
 +    private $dateSent;
 +
 +    /**
-+     * @ORM\Column(type="datetime")
++     * @ORM\Column(type="datetime", nullable=true)
 +     */
 +    private $dateRead;
 +
