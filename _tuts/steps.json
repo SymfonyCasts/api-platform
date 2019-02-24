@@ -14,7 +14,12 @@
             "id": "installation-adding-database-information-to-env-file",
             "name": "Installation: adding database information to .env file",
             "description": null
+        },
+        {
+            "id": "cheeselisting-create-new-entity",
+            "name": "CheeseListing: create new entity",
+            "description": null
         }
     ],
-    "sha": "6fb944f4c2b6a77cd628eabcb6ad40d9ea123da4"
+    "sha": "d74063fba3194b4561d0e5ec724e9acc9113c4de"
 }
