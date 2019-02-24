@@ -1,0 +1,489 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 9471655..b1ac9ad 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -3,6 +3,8 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
++use Doctrine\Common\Collections\ArrayCollection;
++use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+@@ -45,9 +47,15 @@ class CheeseListing
+      */
+     private $user;
+ 
++    /**
++     * @ORM\OneToMany(targetEntity="App\Entity\Conversation", mappedBy="cheeseListing")
++     */
++    private $conversations;
++
+     public function __construct()
+     {
+         $this->createdAt = new \DateTime();
++        $this->conversations = new ArrayCollection();
+     }
+ 
+     public function getId(): ?int
+@@ -107,4 +115,35 @@ class CheeseListing
+ 
+         return $this;
+     }
++
++    /**
++     * @return Collection|Conversation[]
++     */
++    public function getConversations(): Collection
++    {
++        return $this->conversations;
++    }
++
++    public function addConversation(Conversation $conversation): self
++    {
++        if (!$this->conversations->contains($conversation)) {
++            $this->conversations[] = $conversation;
++            $conversation->setCheeseListing($this);
++        }
++
++        return $this;
++    }
++
++    public function removeConversation(Conversation $conversation): self
++    {
++        if ($this->conversations->contains($conversation)) {
++            $this->conversations->removeElement($conversation);
++            // set the owning side to null (unless already changed)
++            if ($conversation->getCheeseListing() === $this) {
++                $conversation->setCheeseListing(null);
++            }
++        }
++
++        return $this;
++    }
+ }
+diff --git a/src/Entity/Conversation.php b/src/Entity/Conversation.php
+new file mode 100644
+index 0000000..80e479d
+--- /dev/null
++++ b/src/Entity/Conversation.php
+@@ -0,0 +1,117 @@
++<?php
++
++namespace App\Entity;
++
++use ApiPlatform\Core\Annotation\ApiResource;
++use Doctrine\Common\Collections\ArrayCollection;
++use Doctrine\Common\Collections\Collection;
++use Doctrine\ORM\Mapping as ORM;
++
++/**
++ * @ApiResource()
++ * @ORM\Entity(repositoryClass="App\Repository\ConversationRepository")
++ */
++class Conversation
++{
++    /**
++     * @ORM\Id()
++     * @ORM\GeneratedValue()
++     * @ORM\Column(type="integer")
++     */
++    private $id;
++
++    /**
++     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="conversations")
++     */
++    private $users;
++
++    /**
++     * @ORM\ManyToOne(targetEntity="App\Entity\CheeseListing", inversedBy="conversations")
++     */
++    private $cheeseListing;
++
++    /**
++     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="conversation", orphanRemoval=true)
++     */
++    private $messages;
++
++    public function __construct()
++    {
++        $this->users = new ArrayCollection();
++        $this->messages = new ArrayCollection();
++    }
++
++    public function getId(): ?int
++    {
++        return $this->id;
++    }
++
++    /**
++     * @return Collection|User[]
++     */
++    public function getUsers(): Collection
++    {
++        return $this->users;
++    }
++
++    public function addUser(User $user): self
++    {
++        if (!$this->users->contains($user)) {
++            $this->users[] = $user;
++        }
++
++        return $this;
++    }
++
++    public function removeUser(User $user): self
++    {
++        if ($this->users->contains($user)) {
++            $this->users->removeElement($user);
++        }
++
++        return $this;
++    }
++
++    public function getCheeseListing(): ?CheeseListing
++    {
++        return $this->cheeseListing;
++    }
++
++    public function setCheeseListing(?CheeseListing $cheeseListing): self
++    {
++        $this->cheeseListing = $cheeseListing;
++
++        return $this;
++    }
++
++    /**
++     * @return Collection|Message[]
++     */
++    public function getMessages(): Collection
++    {
++        return $this->messages;
++    }
++
++    public function addMessage(Message $message): self
++    {
++        if (!$this->messages->contains($message)) {
++            $this->messages[] = $message;
++            $message->setConversation($this);
++        }
++
++        return $this;
++    }
++
++    public function removeMessage(Message $message): self
++    {
++        if ($this->messages->contains($message)) {
++            $this->messages->removeElement($message);
++            // set the owning side to null (unless already changed)
++            if ($message->getConversation() === $this) {
++                $message->setConversation(null);
++            }
++        }
++
++        return $this;
++    }
++}
+diff --git a/src/Entity/Message.php b/src/Entity/Message.php
+new file mode 100644
+index 0000000..a7e5708
+--- /dev/null
++++ b/src/Entity/Message.php
+@@ -0,0 +1,130 @@
++<?php
++
++namespace App\Entity;
++
++use ApiPlatform\Core\Annotation\ApiResource;
++use Doctrine\ORM\Mapping as ORM;
++
++/**
++ * @ApiResource()
++ * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
++ */
++class Message
++{
++    /**
++     * @ORM\Id()
++     * @ORM\GeneratedValue()
++     * @ORM\Column(type="integer")
++     */
++    private $id;
++
++    /**
++     * @ORM\ManyToOne(targetEntity="App\Entity\User")
++     * @ORM\JoinColumn(nullable=false)
++     */
++    private $sender;
++
++    /**
++     * @ORM\ManyToOne(targetEntity="App\Entity\User")
++     * @ORM\JoinColumn(nullable=false)
++     */
++    private $recipient;
++
++    /**
++     * @ORM\Column(type="text")
++     */
++    private $message;
++
++    /**
++     * @ORM\Column(type="datetime")
++     */
++    private $dateSent;
++
++    /**
++     * @ORM\Column(type="datetime")
++     */
++    private $dateRead;
++
++    /**
++     * @ORM\ManyToOne(targetEntity="App\Entity\Conversation", inversedBy="messages")
++     * @ORM\JoinColumn(nullable=false)
++     */
++    private $conversation;
++
++    public function getId(): ?int
++    {
++        return $this->id;
++    }
++
++    public function getSender(): ?User
++    {
++        return $this->sender;
++    }
++
++    public function setSender(?User $sender): self
++    {
++        $this->sender = $sender;
++
++        return $this;
++    }
++
++    public function getRecipient(): ?User
++    {
++        return $this->recipient;
++    }
++
++    public function setRecipient(?User $recipient): self
++    {
++        $this->recipient = $recipient;
++
++        return $this;
++    }
++
++    public function getMessage(): ?string
++    {
++        return $this->message;
++    }
++
++    public function setMessage(string $message): self
++    {
++        $this->message = $message;
++
++        return $this;
++    }
++
++    public function getDateSent(): ?\DateTimeInterface
++    {
++        return $this->dateSent;
++    }
++
++    public function setDateSent(\DateTimeInterface $dateSent): self
++    {
++        $this->dateSent = $dateSent;
++
++        return $this;
++    }
++
++    public function getDateRead(): ?\DateTimeInterface
++    {
++        return $this->dateRead;
++    }
++
++    public function setDateRead(\DateTimeInterface $dateRead): self
++    {
++        $this->dateRead = $dateRead;
++
++        return $this;
++    }
++
++    public function getConversation(): ?Conversation
++    {
++        return $this->conversation;
++    }
++
++    public function setConversation(?Conversation $conversation): self
++    {
++        $this->conversation = $conversation;
++
++        return $this;
++    }
++}
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index da0796a..6998407 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -30,9 +30,15 @@ class User
+      */
+     private $cheeseListings;
+ 
++    /**
++     * @ORM\ManyToMany(targetEntity="App\Entity\Conversation", mappedBy="users")
++     */
++    private $conversations;
++
+     public function __construct()
+     {
+         $this->cheeseListings = new ArrayCollection();
++        $this->conversations = new ArrayCollection();
+     }
+ 
+     public function getId(): ?int
+@@ -82,4 +88,32 @@ class User
+ 
+         return $this;
+     }
++
++    /**
++     * @return Collection|Conversation[]
++     */
++    public function getConversations(): Collection
++    {
++        return $this->conversations;
++    }
++
++    public function addConversation(Conversation $conversation): self
++    {
++        if (!$this->conversations->contains($conversation)) {
++            $this->conversations[] = $conversation;
++            $conversation->addUser($this);
++        }
++
++        return $this;
++    }
++
++    public function removeConversation(Conversation $conversation): self
++    {
++        if ($this->conversations->contains($conversation)) {
++            $this->conversations->removeElement($conversation);
++            $conversation->removeUser($this);
++        }
++
++        return $this;
++    }
+ }
+diff --git a/src/Repository/ConversationRepository.php b/src/Repository/ConversationRepository.php
+new file mode 100644
+index 0000000..27145e5
+--- /dev/null
++++ b/src/Repository/ConversationRepository.php
+@@ -0,0 +1,50 @@
++<?php
++
++namespace App\Repository;
++
++use App\Entity\Conversation;
++use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
++use Symfony\Bridge\Doctrine\RegistryInterface;
++
++/**
++ * @method Conversation|null find($id, $lockMode = null, $lockVersion = null)
++ * @method Conversation|null findOneBy(array $criteria, array $orderBy = null)
++ * @method Conversation[]    findAll()
++ * @method Conversation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
++ */
++class ConversationRepository extends ServiceEntityRepository
++{
++    public function __construct(RegistryInterface $registry)
++    {
++        parent::__construct($registry, Conversation::class);
++    }
++
++    // /**
++    //  * @return Conversation[] Returns an array of Conversation objects
++    //  */
++    /*
++    public function findByExampleField($value)
++    {
++        return $this->createQueryBuilder('c')
++            ->andWhere('c.exampleField = :val')
++            ->setParameter('val', $value)
++            ->orderBy('c.id', 'ASC')
++            ->setMaxResults(10)
++            ->getQuery()
++            ->getResult()
++        ;
++    }
++    */
++
++    /*
++    public function findOneBySomeField($value): ?Conversation
++    {
++        return $this->createQueryBuilder('c')
++            ->andWhere('c.exampleField = :val')
++            ->setParameter('val', $value)
++            ->getQuery()
++            ->getOneOrNullResult()
++        ;
++    }
++    */
++}
+diff --git a/src/Repository/MessageRepository.php b/src/Repository/MessageRepository.php
+new file mode 100644
+index 0000000..5cd80a8
+--- /dev/null
++++ b/src/Repository/MessageRepository.php
+@@ -0,0 +1,50 @@
++<?php
++
++namespace App\Repository;
++
++use App\Entity\Message;
++use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
++use Symfony\Bridge\Doctrine\RegistryInterface;
++
++/**
++ * @method Message|null find($id, $lockMode = null, $lockVersion = null)
++ * @method Message|null findOneBy(array $criteria, array $orderBy = null)
++ * @method Message[]    findAll()
++ * @method Message[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
++ */
++class MessageRepository extends ServiceEntityRepository
++{
++    public function __construct(RegistryInterface $registry)
++    {
++        parent::__construct($registry, Message::class);
++    }
++
++    // /**
++    //  * @return Message[] Returns an array of Message objects
++    //  */
++    /*
++    public function findByExampleField($value)
++    {
++        return $this->createQueryBuilder('m')
++            ->andWhere('m.exampleField = :val')
++            ->setParameter('val', $value)
++            ->orderBy('m.id', 'ASC')
++            ->setMaxResults(10)
++            ->getQuery()
++            ->getResult()
++        ;
++    }
++    */
++
++    /*
++    public function findOneBySomeField($value): ?Message
++    {
++        return $this->createQueryBuilder('m')
++            ->andWhere('m.exampleField = :val')
++            ->setParameter('val', $value)
++            ->getQuery()
++            ->getOneOrNullResult()
++        ;
++    }
++    */
++}
