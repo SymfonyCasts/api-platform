@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\CheeseListing;
+use App\Entity\CheeseType;
 use App\Entity\Conversation;
 use App\Entity\Message;
 use App\Entity\User;
@@ -21,11 +22,25 @@ class AppFixtures extends Fixture
         $buyer->setUsername('Cheese Buyer');
         $manager->persist($buyer);
 
+        $cheeseType1 = new CheeseType();
+        $cheeseType1->setCategory('Firm');
+        $manager->persist($cheeseType1);
+        $cheeseType2 = new CheeseType();
+        $cheeseType2->setCategory('Fresh');
+        $manager->persist($cheeseType2);
+        $cheeseType3 = new CheeseType();
+        $cheeseType3->setCategory('Blue');
+        $manager->persist($cheeseType3);
+        $cheeseType4 = new CheeseType();
+        $cheeseType4->setCategory('Soft');
+        $manager->persist($cheeseType4);
+
         $cheeseListing = new CheeseListing();
         $cheeseListing->setUser($seller);
         $cheeseListing->setTitle('Cheese Title');
         $cheeseListing->setDescription('Cheese Description');
         $cheeseListing->setIsStinky(false);
+        $cheeseListing->setCheeseType($cheeseType1);
         $manager->persist($cheeseListing);
 
         $cheeseListing2 = new CheeseListing();
@@ -33,6 +48,7 @@ class AppFixtures extends Fixture
         $cheeseListing2->setTitle('Stinky Cheese');
         $cheeseListing2->setDescription('Bah');
         $cheeseListing2->setIsStinky(true);
+        $cheeseListing2->setCheeseType($cheeseType3);
         $manager->persist($cheeseListing2);
 
         $conversation = new Conversation();

@@ -5,7 +5,9 @@ namespace App\Tests;
 use App\Entity\CheeseListing;
 use App\Entity\Message;
 use App\Entity\User;
+use PHPUnit\Runner\Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 class CheeseFunctionalTest extends WebTestCase
 {
@@ -123,5 +125,20 @@ class CheeseFunctionalTest extends WebTestCase
         $json = json_decode($response->getContent(), true);
 
         $this->assertTrue($json['hydra:totalItems'] === 0);
+    }
+
+    public function testCheeseTypePost() {
+        $client = self::createClient([]);
+        $data = [
+            "category" => "stinky cheese",
+        ];
+        $json_data = json_encode($data);
+        $client->request(
+            'POST', '/api/cheese_types', [], [], [
+                'CONTENT_TYPE' => 'application/ld+json',
+                'HTTP_ACCEPT' => 'application/ld+json'
+            ], $json_data
+        );
+        $this->assertTrue($client->getResponse()->getStatusCode() === 405);
     }
 }
