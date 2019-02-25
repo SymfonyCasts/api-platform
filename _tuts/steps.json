@@ -54,7 +54,12 @@
             "id": "message-datesent-readonly-and-update-datafixture",
             "name": "Message: dateSent readonly and update DataFixture",
             "description": null
+        },
+        {
+            "id": "message-install-phpunit",
+            "name": "Message: install PHPUnit",
+            "description": null
         }
     ],
-    "sha": "9413d52dee8f63ea2a693ed2ceaaeb1dfefa4476"
+    "sha": "027743583faef584e1fb1a2b78d55c5779cf1208"
 }
