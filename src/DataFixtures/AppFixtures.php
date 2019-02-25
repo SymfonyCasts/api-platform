@@ -13,7 +13,6 @@ class AppFixtures extends Fixture
         $cheeseListing = new CheeseListing();
         $cheeseListing->setTitle('Cheese Title');
         $cheeseListing->setDescription('Cheese Description');
-        $cheeseListing->setCreated(new \DateTime());
         $cheeseListing->setIsStinky(false);
 
         $manager->persist($cheeseListing);
