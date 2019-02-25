@@ -28,6 +28,13 @@ class AppFixtures extends Fixture
         $cheeseListing->setIsStinky(false);
         $manager->persist($cheeseListing);
 
+        $cheeseListing2 = new CheeseListing();
+        $cheeseListing2->setUser($seller);
+        $cheeseListing2->setTitle('Stinky Cheese');
+        $cheeseListing2->setDescription('Bah');
+        $cheeseListing2->setIsStinky(true);
+        $manager->persist($cheeseListing2);
+
         $conversation = new Conversation();
         $conversation->setCheeseListing($cheeseListing);
         $conversation->addUser($seller);

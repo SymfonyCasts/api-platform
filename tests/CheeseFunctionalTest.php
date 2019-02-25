@@ -27,7 +27,6 @@ class CheeseFunctionalTest extends WebTestCase
             $conversationUrl = array_shift($conversations);
             $this->assertTrue($conversationUrl === '/api/conversations/1');
         }
-
     }
 
     public function testGetMessagesFromConversation()
@@ -83,5 +82,17 @@ class CheeseFunctionalTest extends WebTestCase
 
         $message = $messageRepository->find('4');
         $this->assertTrue($message->getContent() === 'Test the posting a new message');
+    }
+
+    public function testFilters()
+    {
+        $client = self::createClient([]);
+        $client->request('GET', '/api/cheese_listings?isStinky=true', [], [], ['HTTP_ACCEPT' => 'application/ld+json']);
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertTrue($json['hydra:totalItems'] === 1);
+        $this->assertTrue($json['hydra:member'][0]['title'] === 'Stinky Cheese');
     }
 }
