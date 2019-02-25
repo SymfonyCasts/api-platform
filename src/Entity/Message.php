@@ -51,6 +51,11 @@ class Message
      */
     private $conversation;
 
+    public function __construct()
+    {
+        $this->dateSent = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,13 +100,6 @@ class Message
     public function getDateSent(): ?\DateTimeInterface
     {
         return $this->dateSent;
-    }
-
-    public function setDateSent(\DateTimeInterface $dateSent): self
-    {
-        $this->dateSent = $dateSent;
-
-        return $this;
     }
 
     public function getDateRead(): ?\DateTimeInterface
