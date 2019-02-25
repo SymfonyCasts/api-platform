@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Entity\CheeseListing;
 use App\Entity\Message;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -84,7 +85,7 @@ class CheeseFunctionalTest extends WebTestCase
         $this->assertTrue($message->getContent() === 'Test the posting a new message');
     }
 
-    public function testFilters()
+    public function testIsStinkyFilter()
     {
         $client = self::createClient([]);
         $client->request('GET', '/api/cheese_listings?isStinky=true', [], [], ['HTTP_ACCEPT' => 'application/ld+json']);
@@ -94,5 +95,33 @@ class CheeseFunctionalTest extends WebTestCase
 
         $this->assertTrue($json['hydra:totalItems'] === 1);
         $this->assertTrue($json['hydra:member'][0]['title'] === 'Stinky Cheese');
+    }
+
+    public function testCreatedAtFilter() {
+        self::bootKernel();
+        /** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
+        $entityManager = $userRepository = self::$container->get('doctrine')->getManager();
+        // Update the createdAt data with a Doctrine query as we do no longer have the set method.
+        $query = $entityManager->createQuery('
+            UPDATE App\Entity\CheeseListing c
+            SET c.createdAt = \'2000-01-01\'
+            WHERE c.id = 2
+         ');
+        $query->execute();
+        $client = self::createClient([]);
+        $client->request('GET', '/api/cheese_listings?createdAt[before]=2005-03-19', [], [], ['HTTP_ACCEPT' => 'application/ld+json']);
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertTrue($json['hydra:totalItems'] === 1);
+        $this->assertTrue($json['hydra:member'][0]['id'] === 2);
+
+        $client->request('GET', '/api/cheese_listings?createdAt[after]=3000-03-19', [], [], ['HTTP_ACCEPT' => 'application/ld+json']);
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertTrue($json['hydra:totalItems'] === 0);
     }
 }
