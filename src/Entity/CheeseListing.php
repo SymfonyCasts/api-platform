@@ -38,6 +38,13 @@ class CheeseListing
      */
     private $isStinky;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -85,6 +92,18 @@ class CheeseListing
     public function setIsStinky(bool $isStinky): self
     {
         $this->isStinky = $isStinky;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
