@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,9 +47,15 @@ class CheeseListing
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Conversation", mappedBy="cheeseListing")
+     */
+    private $conversations;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->conversations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,6 +112,37 @@ class CheeseListing
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversation $conversation): self
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations[] = $conversation;
+            $conversation->setCheeseListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversation $conversation): self
+    {
+        if ($this->conversations->contains($conversation)) {
+            $this->conversations->removeElement($conversation);
+            // set the owning side to null (unless already changed)
+            if ($conversation->getCheeseListing() === $this) {
+                $conversation->setCheeseListing(null);
+            }
+        }
 
         return $this;
     }

@@ -30,9 +30,15 @@ class User
      */
     private $cheeseListings;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Conversation", mappedBy="users")
+     */
+    private $conversations;
+
     public function __construct()
     {
         $this->cheeseListings = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,6 +84,34 @@ class User
             if ($cheeseListing->getUser() === $this) {
                 $cheeseListing->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversation $conversation): self
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations[] = $conversation;
+            $conversation->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversation $conversation): self
+    {
+        if ($this->conversations->contains($conversation)) {
+            $this->conversations->removeElement($conversation);
+            $conversation->removeUser($this);
         }
 
         return $this;
