@@ -1,16 +1,15 @@
 diff --git a/tests/CheeseFunctionalTest.php b/tests/CheeseFunctionalTest.php
 new file mode 100644
-index 0000000..cb4f3a4
+index 0000000..85a8bb1
 --- /dev/null
 +++ b/tests/CheeseFunctionalTest.php
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,87 @@
 +<?php
 +
 +namespace App\Tests;
 +
 +use App\Entity\Message;
 +use App\Entity\User;
-+use PHPUnit\Util\Json;
 +use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 +
 +class CheeseFunctionalTest extends WebTestCase

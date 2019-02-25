@@ -69,7 +69,12 @@
             "id": "message-phpunit-functional-tests",
             "name": "Message: PHPUnit functional tests",
             "description": null
+        },
+        {
+            "id": "filters-isstinky",
+            "name": "Filters: isStinky",
+            "description": null
         }
     ],
-    "sha": "bc8dacb8dee454a9e93e6a6423451894b2c262c9"
+    "sha": "0474e1e30bf0b99b6bdc2ea36e88e4b8289c30d9"
 }
