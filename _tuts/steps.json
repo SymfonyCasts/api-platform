@@ -59,7 +59,12 @@
             "id": "message-install-phpunit",
             "name": "Message: install PHPUnit",
             "description": null
+        },
+        {
+            "id": "message-use-a-separate-database-for-phpunit",
+            "name": "Message: use a separate database for PHPUnit",
+            "description": null
         }
     ],
-    "sha": "027743583faef584e1fb1a2b78d55c5779cf1208"
+    "sha": "a4c8fe62377b8920111cc71b711094894a139b09"
 }
