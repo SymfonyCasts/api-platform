@@ -1,9 +1,9 @@
 diff --git a/tests/CheeseFunctionalTest.php b/tests/CheeseFunctionalTest.php
 new file mode 100644
-index 0000000..bb5c71a
+index 0000000..cb4f3a4
 --- /dev/null
 +++ b/tests/CheeseFunctionalTest.php
-@@ -0,0 +1,83 @@
+@@ -0,0 +1,88 @@
 +<?php
 +
 +namespace App\Tests;
@@ -15,7 +15,6 @@ index 0000000..bb5c71a
 +
 +class CheeseFunctionalTest extends WebTestCase
 +{
-+
 +    public function testGetConversationOfUser()
 +    {
 +        self::bootKernel();
@@ -23,6 +22,7 @@ index 0000000..bb5c71a
 +        $userRepository = self::$container->get('doctrine')
 +            ->getRepository(User::class);
 +        $user = $userRepository->find('1');
++        $this->assertNotNull($user);
 +        if ($user) {
 +            $client = self::createClient([]);
 +            $client->request('GET', '/api/users/'.$user->getId().'', [], [], ['HTTP_ACCEPT' => 'application/ld+json']);
@@ -33,9 +33,8 @@ index 0000000..bb5c71a
 +            $this->assertTrue(count($conversations) === 1, 'The user does not have 1 conversation');
 +            $conversationUrl = array_shift($conversations);
 +            $this->assertTrue($conversationUrl === '/api/conversations/1');
-+        } else {
-+            $this->assertTrue(false, 'Could not find the user');
 +        }
++
 +    }
 +
 +    public function testGetMessagesFromConversation()
@@ -77,9 +76,15 @@ index 0000000..bb5c71a
 +            "content" => "Test the posting a new message",
 +            "conversation" => "/api/conversations/1"
 +        ];
-+
 +        $json_data = json_encode($data);
-+        $client->request('POST', '/api/messages', [], [], ['CONTENT_TYPE' => 'application/ld+json', 'HTTP_ACCEPT' => 'application/ld+json'], $json_data);
++        $client->request(
++            'POST',
++            '/api/messages',
++            [],
++            [],
++            ['CONTENT_TYPE' => 'application/ld+json', 'HTTP_ACCEPT' => 'application/ld+json'],
++            $json_data
++        );
 +        $response = $client->getResponse();
 +        $this->assertTrue($response->isSuccessful());
 +
