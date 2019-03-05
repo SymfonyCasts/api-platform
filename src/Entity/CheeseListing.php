@@ -38,6 +38,11 @@ class CheeseListing
      */
     private $isStinky;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,13 +75,6 @@ class CheeseListing
     public function getCreated(): ?\DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setCreated(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getIsStinky(): ?bool
