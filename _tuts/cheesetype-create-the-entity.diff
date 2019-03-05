@@ -1,0 +1,166 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index fcdcf0c..6f1b95f 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -47,6 +47,12 @@ class CheeseListing
+      */
+     private $user;
+ 
++    /**
++     * @ORM\ManyToOne(targetEntity="App\Entity\CheeseType", inversedBy="cheeseListing")
++     * @ORM\JoinColumn(nullable=false)
++     */
++    private $cheeseType;
++
+     public function __construct()
+     {
+         $this->createdAt = new \DateTime();
+@@ -109,4 +115,14 @@ class CheeseListing
+ 
+         return $this;
+     }
++
++    public function getCheeseType(): ?CheeseType
++    {
++        return $this->cheeseType;
++    }
++    public function setCheeseType(?CheeseType $cheeseType): self
++    {
++        $this->cheeseType = $cheeseType;
++        return $this;
++    }
+ }
+diff --git a/src/Entity/CheeseType.php b/src/Entity/CheeseType.php
+new file mode 100644
+index 0000000..a911883
+--- /dev/null
++++ b/src/Entity/CheeseType.php
+@@ -0,0 +1,76 @@
++<?php
++namespace App\Entity;
++use ApiPlatform\Core\Annotation\ApiFilter;
++use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
++use Doctrine\Common\Collections\ArrayCollection;
++use Doctrine\Common\Collections\Collection;
++use Doctrine\ORM\Mapping as ORM;
++/**
++ * @ApiResource(
++ *     collectionOperations={"get"},
++ *     itemOperations={"get"}
++ * )
++ * @ApiFilter(SearchFilter::class, properties={"category": "exact"})
++ * @ORM\Entity(repositoryClass="App\Repository\CheeseTypeRepository")
++ */
++class CheeseType
++{
++    /**
++     * @ORM\Id()
++     * @ORM\GeneratedValue()
++     * @ORM\Column(type="integer")
++     */
++    private $id;
++    /**
++     * @ORM\Column(type="string", length=255)
++     */
++    private $category;
++    /**
++     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="cheeseType")
++     */
++    private $cheeseListing;
++    public function __construct()
++    {
++        $this->cheeseListing = new ArrayCollection();
++    }
++    public function getId(): ?int
++    {
++        return $this->id;
++    }
++    public function getCategory(): ?string
++    {
++        return $this->category;
++    }
++    public function setCategory(string $category): self
++    {
++        $this->category = $category;
++        return $this;
++    }
++    /**
++     * @return Collection|CheeseListing[]
++     */
++    public function getCheeseListing(): Collection
++    {
++        return $this->cheeseListing;
++    }
++    public function addCheeseListing(CheeseListing $cheeseListing): self
++    {
++        if (!$this->cheeseListing->contains($cheeseListing)) {
++            $this->cheeseListing[] = $cheeseListing;
++            $cheeseListing->setCheeseType($this);
++        }
++        return $this;
++    }
++    public function removeCheeseListing(CheeseListing $cheeseListing): self
++    {
++        if ($this->cheeseListing->contains($cheeseListing)) {
++            $this->cheeseListing->removeElement($cheeseListing);
++            // set the owning side to null (unless already changed)
++            if ($cheeseListing->getCheeseType() === $this) {
++                $cheeseListing->setCheeseType(null);
++            }
++        }
++        return $this;
++    }
++}
+\ No newline at end of file
+diff --git a/src/Repository/CheeseTypeRepository.php b/src/Repository/CheeseTypeRepository.php
+new file mode 100644
+index 0000000..7693669
+--- /dev/null
++++ b/src/Repository/CheeseTypeRepository.php
+@@ -0,0 +1,45 @@
++<?php
++namespace App\Repository;
++use App\Entity\CheeseType;
++use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
++use Symfony\Bridge\Doctrine\RegistryInterface;
++/**
++ * @method CheeseType|null find($id, $lockMode = null, $lockVersion = null)
++ * @method CheeseType|null findOneBy(array $criteria, array $orderBy = null)
++ * @method CheeseType[]    findAll()
++ * @method CheeseType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
++ */
++class CheeseTypeRepository extends ServiceEntityRepository
++{
++    public function __construct(RegistryInterface $registry)
++    {
++        parent::__construct($registry, CheeseType::class);
++    }
++    // /**
++    //  * @return CheeseType[] Returns an array of CheeseType objects
++    //  */
++    /*
++    public function findByExampleField($value)
++    {
++        return $this->createQueryBuilder('c')
++            ->andWhere('c.exampleField = :val')
++            ->setParameter('val', $value)
++            ->orderBy('c.id', 'ASC')
++            ->setMaxResults(10)
++            ->getQuery()
++            ->getResult()
++        ;
++    }
++    */
++    /*
++    public function findOneBySomeField($value): ?CheeseType
++    {
++        return $this->createQueryBuilder('c')
++            ->andWhere('c.exampleField = :val')
++            ->setParameter('val', $value)
++            ->getQuery()
++            ->getOneOrNullResult()
++        ;
++    }
++    */
++}

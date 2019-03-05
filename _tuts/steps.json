@@ -41,6 +41,11 @@
             "description": null
         },
         {
+            "id": "cheesetype-create-the-entity",
+            "name": "CheeseType: Create the entity",
+            "description": null
+        },
+        {
             "id": "filters-isstinky",
             "name": "Filters: isStinky",
             "description": null
@@ -51,5 +56,5 @@
             "description": null
         }
     ],
-    "sha": "d467e2f7700cbc7edd2b8536bbf0031a08501087"
+    "sha": "3e28be5fb162f639a153d4b5ba45603d72863fec"
 }
