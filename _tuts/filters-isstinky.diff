@@ -1,14 +1,16 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 9471655..a14269b 100644
+index fcdcf0c..a9af160 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -2,11 +2,14 @@
+@@ -2,12 +2,16 @@
  
  namespace App\Entity;
  
 +use ApiPlatform\Core\Annotation\ApiFilter;
  use ApiPlatform\Core\Annotation\ApiResource;
 +use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+ use ApiPlatform\Core\Annotation\ApiSubresource;
++
  use Doctrine\ORM\Mapping as ORM;
  
  /**

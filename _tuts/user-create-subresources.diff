@@ -1,0 +1,40 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 9471655..fcdcf0c 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -3,6 +3,7 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Annotation\ApiSubresource;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+@@ -42,6 +43,7 @@ class CheeseListing
+     /**
+      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
+      * @ORM\JoinColumn(nullable=false)
++     * @ApiSubresource(maxDepth=2)
+      */
+     private $user;
+ 
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index da0796a..1521fc9 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -3,6 +3,7 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Annotation\ApiSubresource;
+ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+@@ -27,6 +28,7 @@ class User
+ 
+     /**
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="user")
++     * @ApiSubresource(maxDepth=1)
+      */
+     private $cheeseListings;
+ 
