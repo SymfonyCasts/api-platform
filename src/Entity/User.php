@@ -10,9 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
+ *     routePrefix="/market",
  *     subresourceOperations={
  *         "cheese_listings_get_subresource"= {
- *             "path"="/users/{id}/cheeses"
+ *             "path"="/market/users/{id}/cheeses"
  *         }
  *     }
  * )

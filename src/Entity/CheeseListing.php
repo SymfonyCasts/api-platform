@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  * @ApiResource(
+ *     routePrefix="/market",
  *     collectionOperations={
  *         "get"={
  *               "path"="/cheeses"
@@ -30,7 +31,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     },
  *     subresourceOperations={
  *          "user_get_subresource"= {
- *              "path"="/cheeses/{id}/user"
+ *              "path"="/market/cheeses/{id}/user"
  *          }
  *     }
  * )
