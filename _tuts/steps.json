@@ -26,8 +26,8 @@
             "description": null
         },
         {
-            "id": "cheeselisting-add-a-doctrine-datafixture",
-            "name": "CheeseListing: add a Doctrine DataFixture",
+            "id": "delete-me-1",
+            "name": "delete me 1",
             "description": null
         },
         {
@@ -41,33 +41,33 @@
             "description": null
         },
         {
-            "id": "user-add-datafixture",
-            "name": "User: add DataFixture",
+            "id": "delete-me-2",
+            "name": "delete me 2",
             "description": null
         },
         {
-            "id": "message-create-the-new-entities",
-            "name": "Message: create the new entities",
+            "id": "delete-me-3",
+            "name": "delete me 3",
             "description": null
         },
         {
-            "id": "message-datesent-readonly-and-update-datafixture",
-            "name": "Message: dateSent readonly and update DataFixture",
+            "id": "delete-me-4",
+            "name": "delete me 4",
             "description": null
         },
         {
-            "id": "message-install-phpunit",
-            "name": "Message: install PHPUnit",
+            "id": "delete-me-5",
+            "name": "delete me 5",
             "description": null
         },
         {
-            "id": "message-use-a-separate-database-for-phpunit",
-            "name": "Message: use a separate database for PHPUnit",
+            "id": "delete-me-6",
+            "name": "delete me 6",
             "description": null
         },
         {
-            "id": "message-phpunit-functional-tests",
-            "name": "Message: PHPUnit functional tests",
+            "id": "delete-me-7",
+            "name": "delete me 7",
             "description": null
         },
         {
@@ -81,10 +81,10 @@
             "description": null
         },
         {
-            "id": "cheesetype-create-the-entity-a-test-and-the-filter",
-            "name": "CheeseType: Create the entity, a test and the filter",
+            "id": "delete-me-8",
+            "name": "delete me 8",
             "description": null
         }
     ],
-    "sha": "aaf1f8bc2bda02a27019a7d928329eba6db4fc0d"
+    "sha": "b1b3354ac217a71630befb4a08301b253ad9d768"
 }
