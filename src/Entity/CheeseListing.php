@@ -33,6 +33,19 @@ use Doctrine\ORM\Mapping as ORM;
  *          },
  *          "delete"={
  *              "path"="/cheeses/{id}"
+ *          },
+ *          "publishCheese"={
+ *              "route_name"="publish_cheese_listing",
+ *              "swagger_context" = {
+ *                  "parameters" = {
+ *                      {
+ *                          "name" = "id",
+ *                          "in" = "path",
+ *                          "required" = "true",
+ *                          "type" = "string"
+ *                      }
+ *                  }
+ *              }
  *          }
  *     },
  *     subresourceOperations={
@@ -85,9 +98,15 @@ class CheeseListing
      */
     private $cheeseType;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->published = false;
     }
 
     public function getId(): ?int
@@ -155,6 +174,17 @@ class CheeseListing
     public function setCheeseType(?CheeseType $cheeseType): self
     {
         $this->cheeseType = $cheeseType;
+        return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function publish(): self {
+        $this->published = true;
+
         return $this;
     }
 }
