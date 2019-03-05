@@ -9,7 +9,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     subresourceOperations={
+ *         "cheese_listings_get_subresource"= {
+ *             "path"="/users/{id}/cheeses"
+ *         }
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User

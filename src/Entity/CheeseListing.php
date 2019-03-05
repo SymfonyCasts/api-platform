@@ -27,6 +27,11 @@ use Doctrine\ORM\Mapping as ORM;
  *          "delete"={
  *              "path"="/cheeses/{id}"
  *          }
+ *     },
+ *     subresourceOperations={
+ *          "user_get_subresource"= {
+ *              "path"="/cheeses/{id}/user"
+ *          }
  *     }
  * )
  */
