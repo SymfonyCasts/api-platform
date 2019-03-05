@@ -1,0 +1,19 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 9471655..a14269b 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -2,11 +2,14 @@
+ 
+ namespace App\Entity;
+ 
++use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
++ * @ApiFilter()r(BooleanFilter::class, properties={"isStinky"})
+  * @ApiResource()
+  */
+ class CheeseListing
