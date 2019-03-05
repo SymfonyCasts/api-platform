@@ -61,6 +61,11 @@
             "description": null
         },
         {
+            "id": "cheeselisting-add-datafixture",
+            "name": "CheeseListing: Add datafixture",
+            "description": null
+        },
+        {
             "id": "filters-isstinky",
             "name": "Filters: isStinky",
             "description": null
@@ -69,7 +74,12 @@
             "id": "filters-createdat-datetime-filter",
             "name": "Filters: createdAt datetime filter",
             "description": null
+        },
+        {
+            "id": "customoperations-new-custom-operation",
+            "name": "CustomOperations: new custom operation",
+            "description": null
         }
     ],
-    "sha": "88a58a7b2937ef291328610f1e561580887ab0e0"
+    "sha": "b2c6d45d972d004e6cf5c82f343f5f6f469fca7f"
 }
