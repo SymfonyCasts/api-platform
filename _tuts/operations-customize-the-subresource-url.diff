@@ -1,0 +1,35 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 3b29ee8..a53163f 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -27,6 +27,11 @@ use Doctrine\ORM\Mapping as ORM;
+  *          "delete"={
+  *              "path"="/cheeses/{id}"
+  *          }
++ *     },
++ *     subresourceOperations={
++ *          "user_get_subresource"= {
++ *              "path"="cheeses/{id}/user"
++ *          }
+  *     }
+  * )
+  */
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 1521fc9..e2e8cda 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -9,7 +9,13 @@ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+- * @ApiResource()
++ * @ApiResource(
++ *     subresourceOperations={
++ *         "cheese_listings_get_subresource"= {
++ *             "path"="users/{id}/cheeses"
++ *         }
++ *     }
++ * )
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+  */
+ class User

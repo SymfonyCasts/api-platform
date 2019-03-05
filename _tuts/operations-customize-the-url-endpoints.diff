@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 6f1b95f..5563201 100644
+index 6b3ed48..3b29ee8 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -8,7 +8,27 @@ use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +14,7 @@ index 6f1b95f..5563201 100644
 + *          },
 + *          "post"={
 + *              "path"="/cheeses",
-+ *          },
++ *          }
 + *     },
 + *     itemOperations={
 + *         "get"={

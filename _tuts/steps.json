@@ -51,6 +51,11 @@
             "description": null
         },
         {
+            "id": "operations-customize-the-subresource-url",
+            "name": "Operations: customize the subresource URL",
+            "description": null
+        },
+        {
             "id": "filters-isstinky",
             "name": "Filters: isStinky",
             "description": null
@@ -61,5 +66,5 @@
             "description": null
         }
     ],
-    "sha": "0a5eec8108757cf29ca5c25d129a704009369f3b"
+    "sha": "228b192492dff4b5717dbcbabf7f507b36eac701"
 }
