@@ -47,6 +47,12 @@ class CheeseListing
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CheeseType", inversedBy="cheeseListing")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cheeseType;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -107,6 +113,16 @@ class CheeseListing
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    public function getCheeseType(): ?CheeseType
+    {
+        return $this->cheeseType;
+    }
+    public function setCheeseType(?CheeseType $cheeseType): self
+    {
+        $this->cheeseType = $cheeseType;
         return $this;
     }
 }
