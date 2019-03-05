@@ -26,11 +26,6 @@
             "description": null
         },
         {
-            "id": "delete-me-1",
-            "name": "delete me 1",
-            "description": null
-        },
-        {
             "id": "cheeselisting-readonly-field-createdat",
             "name": "CheeseListing: readonly field createdAt",
             "description": null
@@ -41,36 +36,6 @@
             "description": null
         },
         {
-            "id": "delete-me-2",
-            "name": "delete me 2",
-            "description": null
-        },
-        {
-            "id": "delete-me-3",
-            "name": "delete me 3",
-            "description": null
-        },
-        {
-            "id": "delete-me-4",
-            "name": "delete me 4",
-            "description": null
-        },
-        {
-            "id": "delete-me-5",
-            "name": "delete me 5",
-            "description": null
-        },
-        {
-            "id": "delete-me-6",
-            "name": "delete me 6",
-            "description": null
-        },
-        {
-            "id": "delete-me-7",
-            "name": "delete me 7",
-            "description": null
-        },
-        {
             "id": "filters-isstinky",
             "name": "Filters: isStinky",
             "description": null
@@ -78,11 +43,6 @@
         {
             "id": "filters-createdat-datetime-filter",
             "name": "Filters: createdAt datetime filter",
-            "description": null
-        },
-        {
-            "id": "delete-me-8",
-            "name": "delete me 8",
             "description": null
         }
     ],
