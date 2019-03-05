@@ -46,6 +46,11 @@
             "description": null
         },
         {
+            "id": "operations-customize-the-url-endpoints",
+            "name": "Operations: customize the URL endpoints",
+            "description": null
+        },
+        {
             "id": "filters-isstinky",
             "name": "Filters: isStinky",
             "description": null
@@ -56,5 +61,5 @@
             "description": null
         }
     ],
-    "sha": "e2f1e5ad675dafc2724f466773dbb0d4498bd888"
+    "sha": "0a5eec8108757cf29ca5c25d129a704009369f3b"
 }

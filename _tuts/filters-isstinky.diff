@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 6f1b95f..0384fcf 100644
+index 5563201..d634e42 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -2,12 +2,16 @@
@@ -16,6 +16,6 @@ index 6f1b95f..0384fcf 100644
  /**
   * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
 + * @ApiFilter(BooleanFilter::class, properties={"isStinky"})
-  * @ApiResource()
-  */
- class CheeseListing
+  * @ApiResource(
+  *     collectionOperations={
+  *         "get"={
