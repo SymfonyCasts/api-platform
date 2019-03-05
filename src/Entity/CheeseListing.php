@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+ * @ApiFilter(BooleanFilter::class, properties={"isStinky"})
  * @ApiResource(
  *     routePrefix="/market",
  *     collectionOperations={
