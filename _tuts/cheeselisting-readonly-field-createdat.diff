@@ -1,15 +1,3 @@
-diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
-index 40c45e6..33b870b 100644
---- a/src/DataFixtures/AppFixtures.php
-+++ b/src/DataFixtures/AppFixtures.php
-@@ -13,7 +13,6 @@ class AppFixtures extends Fixture
-         $cheeseListing = new CheeseListing();
-         $cheeseListing->setTitle('Cheese Title');
-         $cheeseListing->setDescription('Cheese Description');
--        $cheeseListing->setCreated(new \DateTime());
-         $cheeseListing->setIsStinky(false);
- 
-         $manager->persist($cheeseListing);
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
 index 5ac0f50..1520d7d 100644
 --- a/src/Entity/CheeseListing.php

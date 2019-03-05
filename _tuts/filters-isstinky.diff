@@ -1,21 +1,3 @@
-diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
-index 10531a4..a99ab48 100644
---- a/src/DataFixtures/AppFixtures.php
-+++ b/src/DataFixtures/AppFixtures.php
-@@ -28,6 +28,13 @@ class AppFixtures extends Fixture
-         $cheeseListing->setIsStinky(false);
-         $manager->persist($cheeseListing);
- 
-+        $cheeseListing2 = new CheeseListing();
-+        $cheeseListing2->setUser($seller);
-+        $cheeseListing2->setTitle('Stinky Cheese');
-+        $cheeseListing2->setDescription('Bah');
-+        $cheeseListing2->setIsStinky(true);
-+        $manager->persist($cheeseListing2);
-+
-         $conversation = new Conversation();
-         $conversation->setCheeseListing($cheeseListing);
-         $conversation->addUser($seller);
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
 index b1ac9ad..ca60256 100644
 --- a/src/Entity/CheeseListing.php
@@ -38,32 +20,3 @@ index b1ac9ad..ca60256 100644
   */
  class CheeseListing
  {
-diff --git a/tests/CheeseFunctionalTest.php b/tests/CheeseFunctionalTest.php
-index 85a8bb1..c5df121 100644
---- a/tests/CheeseFunctionalTest.php
-+++ b/tests/CheeseFunctionalTest.php
-@@ -27,7 +27,6 @@ class CheeseFunctionalTest extends WebTestCase
-             $conversationUrl = array_shift($conversations);
-             $this->assertTrue($conversationUrl === '/api/conversations/1');
-         }
--
-     }
- 
-     public function testGetMessagesFromConversation()
-@@ -84,4 +83,16 @@ class CheeseFunctionalTest extends WebTestCase
-         $message = $messageRepository->find('4');
-         $this->assertTrue($message->getContent() === 'Test the posting a new message');
-     }
-+
-+    public function testFilters()
-+    {
-+        $client = self::createClient([]);
-+        $client->request('GET', '/api/cheese_listings?isStinky=true', [], [], ['HTTP_ACCEPT' => 'application/ld+json']);
-+        $response = $client->getResponse();
-+        $this->assertTrue($response->isSuccessful());
-+        $json = json_decode($response->getContent(), true);
-+
-+        $this->assertTrue($json['hydra:totalItems'] === 1);
-+        $this->assertTrue($json['hydra:member'][0]['title'] === 'Stinky Cheese');
-+    }
- }
