@@ -1,0 +1,49 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 21c7b8a..7a05a23 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
+ /**
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  * @ApiResource(
++ *     routePrefix="/market",
+  *     collectionOperations={
+  *         "get"={
+  *               "path"="/cheeses"
+@@ -30,7 +31,7 @@ use Doctrine\ORM\Mapping as ORM;
+  *     },
+  *     subresourceOperations={
+  *          "user_get_subresource"= {
+- *              "path"="/cheeses/{id}/user"
++ *              "path"="/market/cheeses/{id}/user"
+  *          }
+  *     }
+  * )
+diff --git a/src/Entity/CheeseType.php b/src/Entity/CheeseType.php
+index a911883..6ad228a 100644
+--- a/src/Entity/CheeseType.php
++++ b/src/Entity/CheeseType.php
+@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+ /**
+  * @ApiResource(
++ *     routePrefix="/market",
+  *     collectionOperations={"get"},
+  *     itemOperations={"get"}
+  * )
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 226c37c..1876bfd 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -10,9 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+  * @ApiResource(
++ *     routePrefix="/market",
+  *     subresourceOperations={
+  *         "cheese_listings_get_subresource"= {
+- *             "path"="/users/{id}/cheeses"
++ *             "path"="/market/users/{id}/cheeses"
+  *         }
+  *     }
+  * )
