@@ -1,0 +1,20 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 83a39cc..d59e49b 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+ use Symfony\Component\Serializer\Annotation\Groups;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+@@ -20,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
+  *     itemOperations={"get", "put"}
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
++ * @ApiFilter(DateFilter::class, properties={"createdAt"})
+  */
+ class CheeseListing
+ {
