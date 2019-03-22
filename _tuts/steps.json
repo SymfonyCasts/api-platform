@@ -44,7 +44,22 @@
             "id": "openapi-documentation-example",
             "name": "OpenAPI documentation Example",
             "description": null
+        },
+        {
+            "id": "serialization-rawdescription",
+            "name": "Serialization rawDescription",
+            "description": null
+        },
+        {
+            "id": "serialization-createdat-read-only",
+            "name": "Serialization createdAt read-only",
+            "description": null
+        },
+        {
+            "id": "serialization-createdat-ago",
+            "name": "Serialization createdAt ago",
+            "description": null
         }
     ],
-    "sha": "a9ac2c28aac54f16c7d721d1a6a6fbcb21b65cac"
+    "sha": "71d769d7c42fdb8cd3d97032e3c9d393b324f7b0"
 }
