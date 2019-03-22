@@ -1,0 +1,21 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index fa0ae15..902930d 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -4,6 +4,7 @@ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Annotation\ApiProperty;
++use Symfony\Component\Serializer\Annotation\Groups;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  * @ApiResource(
+  *     shortName="cheeses",
++ *     normalizationContext={"groups"={"read"}},
++ *     denormalizationContext={"groups"={"write"}},
+  *     collectionOperations={"get", "post"},
+  *     itemOperations={"get", "put"}
+  * )

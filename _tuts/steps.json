@@ -59,7 +59,32 @@
             "id": "serialization-createdat-ago",
             "name": "Serialization createdAt ago",
             "description": null
+        },
+        {
+            "id": "serialgroup-specify-groups",
+            "name": "SerialGroup: specify groups",
+            "description": null
+        },
+        {
+            "id": "serialgroup-add-fields",
+            "name": "SerialGroup: add Fields",
+            "description": null
+        },
+        {
+            "id": "serialgroup-admin-groups",
+            "name": "SerialGroup: Admin groups",
+            "description": null
+        },
+        {
+            "id": "serialgroup-contextbuilder-boilerplate",
+            "name": "SerialGroup; ContextBuilder boilerplate",
+            "description": null
+        },
+        {
+            "id": "serialgroup-contextbuilder-createrequest",
+            "name": "SerialGroup ContextBuilder CreateRequest",
+            "description": null
         }
     ],
-    "sha": "71d769d7c42fdb8cd3d97032e3c9d393b324f7b0"
+    "sha": "44700820813cc5620c2d4d5c9ac910eb20f81d72"
 }
