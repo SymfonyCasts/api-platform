@@ -1,0 +1,43 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 6039975..80d86d3 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -7,6 +7,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+ use Symfony\Component\Serializer\Annotation\Groups;
+ use Symfony\Component\Validator\Constraints as Assert;
+ use Carbon\Carbon;
+@@ -23,6 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
+  * @ApiFilter(DateFilter::class, properties={"createdAt"})
++ * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
+  */
+ class CheeseListing
+ {
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 811e26c..03d043e 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -2,8 +2,10 @@
+ 
+ namespace App\Entity;
+ 
++use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
+ use Symfony\Component\Serializer\Annotation\Groups;
+@@ -16,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
+  *     denormalizationContext={"groups"={"write"}}
+  * )
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
++ * @ApiFilter(SearchFilter::class, properties={"username": "partial"})
+  */
+ class User
+ {
