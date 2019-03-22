@@ -1,0 +1,55 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 4eca136..6039975 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -80,6 +80,8 @@ class CheeseListing
+     /**
+      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
+      * @ORM\JoinColumn(nullable=false)
++     * @Groups({"read", "write"})
++     * @ApiProperty(readableLink=false)
+      */
+     private $user;
+ 
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index caa4f61..73a2b59 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -5,10 +5,15 @@ namespace App\Entity;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
++use Symfony\Component\Serializer\Annotation\Groups;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+- * @ApiResource()
++ * @ApiResource(
++ *     forceEager=false,
++ *     normalizationContext={"groups"={"read"}},
++ *     denormalizationContext={"groups"={"write"}}
++ * )
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+  */
+ class User
+@@ -17,16 +22,20 @@ class User
+      * @ORM\Id()
+      * @ORM\GeneratedValue()
+      * @ORM\Column(type="integer")
++     * @Groups({"read"})
+      */
+     private $id;
+ 
+     /**
+      * @ORM\Column(type="string", length=255)
++     * @Groups({"read", "write"})
+      */
+     private $username;
+ 
+     /**
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="user", orphanRemoval=true)
++     * @Groups({"read"})
++     * @ApiProperty(readableLink=false)
+      */
+     private $cheeseListings;
+ 

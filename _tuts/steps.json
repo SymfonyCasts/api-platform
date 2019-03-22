@@ -99,7 +99,17 @@
             "id": "basic-validation",
             "name": "Basic validation",
             "description": null
+        },
+        {
+            "id": "user-make-entity",
+            "name": "User: make entity",
+            "description": null
+        },
+        {
+            "id": "user-serialization",
+            "name": "User: serialization",
+            "description": null
         }
     ],
-    "sha": "224e705de7c1a8cbb8f0afaa8cfcad998927f255"
+    "sha": "88d5b24f1c2cada4741f0c335d0b3dc2b7480371"
 }
