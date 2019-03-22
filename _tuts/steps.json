@@ -19,7 +19,32 @@
             "id": "cheeselisting-entity",
             "name": "CheeseListing Entity",
             "description": null
+        },
+        {
+            "id": "cheeselisting-annotation",
+            "name": "CheeseListing Annotation",
+            "description": null
+        },
+        {
+            "id": "operations-explicit",
+            "name": "Operations Explicit",
+            "description": null
+        },
+        {
+            "id": "remove-delete-operation",
+            "name": "remove delete operation",
+            "description": null
+        },
+        {
+            "id": "shortname-url-cheeselisting",
+            "name": "Shortname URL CheeseListing",
+            "description": null
+        },
+        {
+            "id": "openapi-documentation-example",
+            "name": "OpenAPI documentation Example",
+            "description": null
         }
     ],
-    "sha": "f1116320681abefa00c8ae0de555d90c8b53d745"
+    "sha": "a9ac2c28aac54f16c7d721d1a6a6fbcb21b65cac"
 }
