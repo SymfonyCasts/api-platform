@@ -14,7 +14,12 @@
             "id": "installation-database",
             "name": "Installation Database",
             "description": null
+        },
+        {
+            "id": "cheeselisting-entity",
+            "name": "CheeseListing Entity",
+            "description": null
         }
     ],
-    "sha": "81390c09df26aa5f95205c5abf5b7b79648cbbf8"
+    "sha": "f1116320681abefa00c8ae0de555d90c8b53d745"
 }
