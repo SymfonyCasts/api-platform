@@ -9,7 +9,12 @@
             "id": "installation",
             "name": "Installation",
             "description": null
+        },
+        {
+            "id": "installation-database",
+            "name": "Installation Database",
+            "description": null
         }
     ],
-    "sha": "2a618e899fbdeee8563869ea425efcc4e30193a2"
+    "sha": "81390c09df26aa5f95205c5abf5b7b79648cbbf8"
 }

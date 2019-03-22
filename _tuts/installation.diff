@@ -1,3 +1,22 @@
+diff --git a/.env b/.env
+index a4dced8..b7dd812 100644
+--- a/.env
++++ b/.env
+@@ -19,3 +19,14 @@ APP_SECRET=f28a1bf238238265afbac1a97df88e9c
+ #TRUSTED_PROXIES=127.0.0.1,127.0.0.2
+ #TRUSTED_HOSTS='^localhost|example\.com$'
+ ###< symfony/framework-bundle ###
++
++###> doctrine/doctrine-bundle ###
++# Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
++# For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db"
++# Configure your db driver and server_version in config/packages/doctrine.yaml
++DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
++###< doctrine/doctrine-bundle ###
++
++###> nelmio/cors-bundle ###
++CORS_ALLOW_ORIGIN=^https?://localhost(:[0-9]+)?$
++###< nelmio/cors-bundle ###
 diff --git a/composer.json b/composer.json
 index d04295b..b8f3525 100644
 --- a/composer.json
@@ -4701,17 +4720,314 @@ index d47deff..13ea2c0 100644
      "stability-flags": [],
      "prefer-stable": false,
      "prefer-lowest": false,
+diff --git a/config/bundles.php b/config/bundles.php
+index 49d3fb6..5ffbd0e 100644
+--- a/config/bundles.php
++++ b/config/bundles.php
+@@ -2,4 +2,10 @@
+ 
+ return [
+     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
++    ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
++    Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
++    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
++    Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
++    Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
++    Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
+ ];
+diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
+new file mode 100644
+index 0000000..e453d1d
+--- /dev/null
++++ b/config/packages/api_platform.yaml
+@@ -0,0 +1,3 @@
++api_platform:
++    mapping:
++        paths: ['%kernel.project_dir%/src/Entity']
+diff --git a/config/packages/doctrine.yaml b/config/packages/doctrine.yaml
+new file mode 100644
+index 0000000..9521fad
+--- /dev/null
++++ b/config/packages/doctrine.yaml
+@@ -0,0 +1,29 @@
++parameters:
++    # Adds a fallback DATABASE_URL if the env var is not set.
++    # This allows you to run cache:warmup even if your
++    # environment variables are not available yet.
++    # You should not need to change this value.
++    env(DATABASE_URL): ''
++
++doctrine:
++    dbal:
++        # configure these for your database server
++        driver: 'pdo_mysql'
++        server_version: '5.7'
++        charset: utf8mb4
++        default_table_options:
++            charset: utf8mb4
++            collate: utf8mb4_unicode_ci
++
++        url: '%env(resolve:DATABASE_URL)%'
++    orm:
++        auto_generate_proxy_classes: true
++        naming_strategy: doctrine.orm.naming_strategy.underscore
++        auto_mapping: true
++        mappings:
++            App:
++                is_bundle: false
++                type: annotation
++                dir: '%kernel.project_dir%/src/Entity'
++                prefix: 'App\Entity'
++                alias: App
+diff --git a/config/packages/nelmio_cors.yaml b/config/packages/nelmio_cors.yaml
+new file mode 100644
+index 0000000..6f202c2
+--- /dev/null
++++ b/config/packages/nelmio_cors.yaml
+@@ -0,0 +1,10 @@
++nelmio_cors:
++    defaults:
++        origin_regex: true
++        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
++        allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
++        allow_headers: ['Content-Type', 'Authorization']
++        expose_headers: ['Link']
++        max_age: 3600
++    paths:
++        '^/': ~
+diff --git a/config/packages/prod/doctrine.yaml b/config/packages/prod/doctrine.yaml
+new file mode 100644
+index 0000000..0a7c53b
+--- /dev/null
++++ b/config/packages/prod/doctrine.yaml
+@@ -0,0 +1,32 @@
++doctrine:
++    orm:
++        auto_generate_proxy_classes: false
++        metadata_cache_driver:
++            type: service
++            id: doctrine.system_cache_provider
++        query_cache_driver:
++            type: service
++            id: doctrine.system_cache_provider
++        result_cache_driver:
++            type: service
++            id: doctrine.result_cache_provider
++
++services:
++    doctrine.result_cache_provider:
++        class: Symfony\Component\Cache\DoctrineProvider
++        public: false
++        arguments:
++            - '@doctrine.result_cache_pool'
++    doctrine.system_cache_provider:
++        class: Symfony\Component\Cache\DoctrineProvider
++        public: false
++        arguments:
++            - '@doctrine.system_cache_pool'
++
++framework:
++    cache:
++        pools:
++            doctrine.result_cache_pool:
++                adapter: cache.app
++            doctrine.system_cache_pool:
++                adapter: cache.system
+diff --git a/config/packages/security.yaml b/config/packages/security.yaml
+new file mode 100644
+index 0000000..fb4c593
+--- /dev/null
++++ b/config/packages/security.yaml
+@@ -0,0 +1,24 @@
++security:
++    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
++    providers:
++        in_memory: { memory: ~ }
++    firewalls:
++        dev:
++            pattern: ^/(_(profiler|wdt)|css|images|js)/
++            security: false
++        main:
++            anonymous: true
++
++            # activate different ways to authenticate
++
++            # http_basic: true
++            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
++
++            # form_login: true
++            # https://symfony.com/doc/current/security/form_login_setup.html
++
++    # Easy way to control access for large sections of your site
++    # Note: Only the *first* access control that matches will be used
++    access_control:
++        # - { path: ^/admin, roles: ROLE_ADMIN }
++        # - { path: ^/profile, roles: ROLE_USER }
+diff --git a/config/packages/twig.yaml b/config/packages/twig.yaml
+new file mode 100644
+index 0000000..d1582a2
+--- /dev/null
++++ b/config/packages/twig.yaml
+@@ -0,0 +1,4 @@
++twig:
++    default_path: '%kernel.project_dir%/templates'
++    debug: '%kernel.debug%'
++    strict_variables: '%kernel.debug%'
+diff --git a/config/packages/validator.yaml b/config/packages/validator.yaml
+new file mode 100644
+index 0000000..a695e1a
+--- /dev/null
++++ b/config/packages/validator.yaml
+@@ -0,0 +1,3 @@
++framework:
++    validation:
++        email_validation_mode: html5
+diff --git a/config/routes/annotations.yaml b/config/routes/annotations.yaml
+new file mode 100644
+index 0000000..d49a502
+--- /dev/null
++++ b/config/routes/annotations.yaml
+@@ -0,0 +1,3 @@
++controllers:
++    resource: ../../src/Controller/
++    type: annotation
+diff --git a/config/routes/api_platform.yaml b/config/routes/api_platform.yaml
+new file mode 100644
+index 0000000..38f11cb
+--- /dev/null
++++ b/config/routes/api_platform.yaml
+@@ -0,0 +1,4 @@
++api_platform:
++    resource: .
++    type: api_platform
++    prefix: /api
+diff --git a/config/routes/dev/twig.yaml b/config/routes/dev/twig.yaml
+new file mode 100644
+index 0000000..f4ee839
+--- /dev/null
++++ b/config/routes/dev/twig.yaml
+@@ -0,0 +1,3 @@
++_errors:
++    resource: '@TwigBundle/Resources/config/routing/errors.xml'
++    prefix: /_error
+diff --git a/src/Entity/.gitignore b/src/Entity/.gitignore
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/Repository/.gitignore b/src/Repository/.gitignore
+new file mode 100644
+index 0000000..e69de29
 diff --git a/symfony.lock b/symfony.lock
-index 7db153f..ce36ca8 100644
+index 7db153f..de616ab 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -1,10 +1,19 @@
+@@ -1,16 +1,129 @@
  {
 +    "api-platform/api-pack": {
 +        "version": "v1.2.0"
 +    },
++    "api-platform/core": {
++        "version": "2.1",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "2.1",
++            "ref": "18727d8f229306860b46955f438e1897421da689"
++        },
++        "files": [
++            "config/packages/api_platform.yaml",
++            "config/routes/api_platform.yaml",
++            "src/Entity/.gitignore"
++        ]
++    },
++    "doctrine/annotations": {
++        "version": "1.0",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "1.0",
++            "ref": "cb4152ebcadbe620ea2261da1a1c5a9b8cea7672"
++        },
++        "files": [
++            "config/routes/annotations.yaml"
++        ]
++    },
++    "doctrine/cache": {
++        "version": "v1.8.0"
++    },
++    "doctrine/collections": {
++        "version": "v1.5.0"
++    },
++    "doctrine/common": {
++        "version": "v2.10.0"
++    },
++    "doctrine/dbal": {
++        "version": "v2.9.2"
++    },
++    "doctrine/doctrine-bundle": {
++        "version": "1.6",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "1.6",
++            "ref": "453e89b78ded666f351617baca5ae40d20622351"
++        },
++        "files": [
++            "config/packages/doctrine.yaml",
++            "config/packages/prod/doctrine.yaml",
++            "src/Entity/.gitignore",
++            "src/Repository/.gitignore"
++        ]
++    },
++    "doctrine/doctrine-cache-bundle": {
++        "version": "1.3.5"
++    },
++    "doctrine/event-manager": {
++        "version": "v1.0.0"
++    },
++    "doctrine/inflector": {
++        "version": "v1.3.0"
++    },
++    "doctrine/instantiator": {
++        "version": "1.2.0"
++    },
++    "doctrine/lexer": {
++        "version": "v1.0.1"
++    },
++    "doctrine/orm": {
++        "version": "v2.6.3"
++    },
++    "doctrine/persistence": {
++        "version": "v1.1.0"
++    },
++    "doctrine/reflection": {
++        "version": "v1.0.0"
++    },
 +    "fig/link-util": {
 +        "version": "1.0.0"
++    },
++    "jdorn/sql-formatter": {
++        "version": "v1.2.17"
++    },
++    "nelmio/cors-bundle": {
++        "version": "1.5",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "1.5",
++            "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
++        },
++        "files": [
++            "config/packages/nelmio_cors.yaml"
++        ]
++    },
++    "phpdocumentor/reflection-common": {
++        "version": "1.0.1"
++    },
++    "phpdocumentor/reflection-docblock": {
++        "version": "4.3.0"
++    },
++    "phpdocumentor/type-resolver": {
++        "version": "0.4.0"
 +    },
      "psr/cache": {
          "version": "1.0.1"
@@ -4725,7 +5041,113 @@ index 7db153f..ce36ca8 100644
      "psr/log": {
          "version": "1.1.0"
      },
-@@ -86,6 +95,9 @@
+     "psr/simple-cache": {
+         "version": "1.0.1"
+     },
++    "symfony/asset": {
++        "version": "v4.2.4"
++    },
+     "symfony/cache": {
+         "version": "v4.2.3"
+     },
+@@ -35,12 +148,18 @@
+     "symfony/dependency-injection": {
+         "version": "v4.2.3"
+     },
++    "symfony/doctrine-bridge": {
++        "version": "v4.2.4"
++    },
+     "symfony/dotenv": {
+         "version": "v4.2.3"
+     },
+     "symfony/event-dispatcher": {
+         "version": "v4.2.3"
+     },
++    "symfony/expression-language": {
++        "version": "v4.2.4"
++    },
+     "symfony/filesystem": {
+         "version": "v4.2.3"
+     },
+@@ -71,9 +190,18 @@
+     "symfony/http-kernel": {
+         "version": "v4.2.3"
+     },
++    "symfony/inflector": {
++        "version": "v4.2.4"
++    },
+     "symfony/polyfill-mbstring": {
+         "version": "v1.10.0"
+     },
++    "symfony/property-access": {
++        "version": "v4.2.4"
++    },
++    "symfony/property-info": {
++        "version": "v4.2.4"
++    },
+     "symfony/routing": {
+         "version": "4.2",
+         "recipe": {
+@@ -83,10 +211,78 @@
+             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
+         }
+     },
++    "symfony/security-bundle": {
++        "version": "3.3",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "3.3",
++            "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
++        },
++        "files": [
++            "config/packages/security.yaml"
++        ]
++    },
++    "symfony/security-core": {
++        "version": "v4.2.4"
++    },
++    "symfony/security-csrf": {
++        "version": "v4.2.4"
++    },
++    "symfony/security-guard": {
++        "version": "v4.2.4"
++    },
++    "symfony/security-http": {
++        "version": "v4.2.4"
++    },
++    "symfony/serializer": {
++        "version": "v4.2.4"
++    },
++    "symfony/twig-bridge": {
++        "version": "v4.2.4"
++    },
++    "symfony/twig-bundle": {
++        "version": "3.3",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "3.3",
++            "ref": "369b5b29dc52b2c190002825ae7ec24ab6f962dd"
++        },
++        "files": [
++            "config/packages/twig.yaml",
++            "config/routes/dev/twig.yaml",
++            "templates/base.html.twig"
++        ]
++    },
++    "symfony/validator": {
++        "version": "4.1",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "4.1",
++            "ref": "0cdc982334f45d554957a6167e030482795bf9d7"
++        },
++        "files": [
++            "config/packages/validator.yaml"
++        ]
++    },
      "symfony/var-exporter": {
          "version": "v4.2.3"
      },
@@ -4734,4 +5156,32 @@ index 7db153f..ce36ca8 100644
 +    },
      "symfony/yaml": {
          "version": "v4.2.3"
++    },
++    "twig/twig": {
++        "version": "v2.7.3"
++    },
++    "webmozart/assert": {
++        "version": "1.4.0"
++    },
++    "willdurand/negotiation": {
++        "version": "v2.3.1"
      }
+ }
+diff --git a/templates/base.html.twig b/templates/base.html.twig
+new file mode 100644
+index 0000000..043f42d
+--- /dev/null
++++ b/templates/base.html.twig
+@@ -0,0 +1,12 @@
++<!DOCTYPE html>
++<html>
++    <head>
++        <meta charset="UTF-8">
++        <title>{% block title %}Welcome!{% endblock %}</title>
++        {% block stylesheets %}{% endblock %}
++    </head>
++    <body>
++        {% block body %}{% endblock %}
++        {% block javascripts %}{% endblock %}
++    </body>
++</html>
