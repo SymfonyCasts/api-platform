@@ -1,4 +1,7 @@
 {
+    "nesbot/carbon": {
+        "version": "2.16.0"
+    },
     "nikic/php-parser": {
         "version": "v4.2.1"
     },
@@ -16,6 +19,19 @@
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "1fb02a6e1c8f3d4232cce485c9afa868d63b115a"
+        },
+        "files": [
+            "config/packages/translation.yaml",
+            "translations/.gitignore"
+        ]
     },
     "symfony/var-dumper": {
         "version": "v4.2.4"
