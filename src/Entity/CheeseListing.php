@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,6 +25,16 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ApiProperty(
+     *     attributes={
+     *          "swagger_context"={
+     *             "example"="Firm Round Gouda Cheese v2"
+     *         },
+     *         "openapi_context"={
+     *             "example"="Firm Round Gouda Cheese v3"
+     *         }
+     *     }
+     * )
      */
     private $title;
 
