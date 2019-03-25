@@ -52,11 +52,13 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"admin:output"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"admin:output"})
      */
     private $isPublished;
 
@@ -96,6 +98,9 @@ class CheeseListing
     }
 
 
+    /**
+     * @Groups({"admin:input"})
+     */
     public function setRawDescription(string $rawDescription): self
     {
         $this->description = $rawDescription;
