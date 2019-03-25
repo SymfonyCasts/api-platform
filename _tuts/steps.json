@@ -139,7 +139,27 @@
             "id": "event-listener",
             "name": "Event listener",
             "description": null
+        },
+        {
+            "id": "custom-exception-code",
+            "name": "Custom exception code",
+            "description": null
+        },
+        {
+            "id": "admin-component-npx-create",
+            "name": "Admin Component: npx create",
+            "description": null
+        },
+        {
+            "id": "admin-component-yarn-add",
+            "name": "Admin Component: Yarn add",
+            "description": null
+        },
+        {
+            "id": "admin-component-app-js",
+            "name": "Admin Component: app.js",
+            "description": null
         }
     ],
-    "sha": "8fea67270a92ca8a0c640d7191175a8fe6b2d079"
+    "sha": "41ca26c3d5165187e62353cf2b51129d3e0ec797"
 }
