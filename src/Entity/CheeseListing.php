@@ -80,6 +80,8 @@ class CheeseListing
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read", "write"})
+     * @ApiProperty(readableLink=false)
      */
     private $user;
 
