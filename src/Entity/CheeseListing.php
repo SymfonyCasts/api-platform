@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +35,11 @@ class CheeseListing
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50
+     * )
      * @ORM\Column(type="string", length=255)
      * @ApiProperty(
      *     attributes={
@@ -50,6 +56,10 @@ class CheeseListing
     private $title;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     max = 500
+     * )
      * @ORM\Column(type="text")
      * @Groups({"read", "write"})
      */
