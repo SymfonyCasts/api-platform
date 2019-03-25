@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\PublishCheeseListing;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
@@ -21,7 +22,58 @@ use Doctrine\ORM\Mapping as ORM;
  *     normalizationContext={"groups"={"read"}},
  *     denormalizationContext={"groups"={"write"}},
  *     collectionOperations={"get", "post"},
- *     itemOperations={"get", "put"},
+ *     itemOperations={
+ *         "get",
+ *         "put",
+ *         "publish"={
+ *              "method"="POST",
+ *              "path"="/cheeses/{id}/publish",
+ *              "controller"=PublishCheeseListing::class,
+ *              "swagger_context"={
+ *                  "summary" = "Publish the CheeseListing swagger",
+ *                  "description" =
+ *                      "# Sell the cheese on the market",
+ *
+ *                  "parameters"={
+ *                      {
+ *                          "name" = "id",
+ *                          "in" = "path",
+ *                          "required" = "true",
+ *                          "type" = "string",
+ *                      }
+ *                  },
+ *                  "responses"={
+ *                      "201"={
+ *                          "description" = "The CheeseListing has been published"
+ *                      }
+ *                  }
+ *              },
+ *              "openapi_context"={
+ *                  "summary" = "Publish the CheeseListing openapi",
+ *                  "description" =
+ *                      "# Sell the cheese on the market",
+ *
+ *                  "parameters" = {
+ *                      {
+ *                          "name" = "id",
+ *                          "in" = "path",
+ *                          "description": "CheeseListing ID",
+ *                          "required" = "true",
+ *                          "schema"={
+ *                              "type"="string"
+ *                          }
+ *
+ *                      }
+ *                  },
+ *                  "responses"={
+ *                      "201"={
+ *                          "description" = "The CheeseListing has been published"
+ *                      }
+ *                  }
+ *              }
+ *          }
+ *     },
+ *
  *     iri="https://schema.org/Offer"
  * )
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
