@@ -1,0 +1,37 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 7f70b3d..cddb652 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -21,7 +21,8 @@ use Doctrine\ORM\Mapping as ORM;
+  *     normalizationContext={"groups"={"read"}},
+  *     denormalizationContext={"groups"={"write"}},
+  *     collectionOperations={"get", "post"},
+- *     itemOperations={"get", "put"}
++ *     itemOperations={"get", "put"},
++ *     iri="https://schema.org/Offer"
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
+  * @ApiFilter(DateFilter::class, properties={"createdAt"})
+@@ -45,6 +46,7 @@ class CheeseListing
+      * )
+      * @ORM\Column(type="string", length=255)
+      * @ApiProperty(
++     *     iri="http://schema.org/itemOffered",
+      *     attributes={
+      *          "swagger_context"={
+      *             "example"="Firm Round Gouda Cheese v2"
+@@ -64,12 +66,14 @@ class CheeseListing
+      *     max = 500
+      * )
+      * @ORM\Column(type="text")
++     * @ApiProperty(iri="https://schema.org/description")
+      * @Groups({"read", "write"})
+      */
+     private $description;
+ 
+     /**
+      * @ORM\Column(type="datetime")
++     * @ApiProperty(iri="https://schema.org/validFrom")
+      * @Groups({"admin:output"})
+      */
+     private $createdAt;

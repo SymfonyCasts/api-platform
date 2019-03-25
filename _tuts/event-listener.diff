@@ -1,0 +1,55 @@
+diff --git a/src/EventSubscriber/CheeseListingManager.php b/src/EventSubscriber/CheeseListingManager.php
+new file mode 100644
+index 0000000..f8a7530
+--- /dev/null
++++ b/src/EventSubscriber/CheeseListingManager.php
+@@ -0,0 +1,35 @@
++<?php
++
++namespace App\EventSubscriber;
++
++use ApiPlatform\Core\EventListener\EventPriorities;
++use App\Entity\CheeseListing;
++use App\Exception\CheeseListingNotFoundException;
++use Symfony\Component\EventDispatcher\EventSubscriberInterface;
++use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
++use Symfony\Component\HttpKernel\KernelEvents;
++
++final class CheeseListingManager implements EventSubscriberInterface
++{
++    public static function getSubscribedEvents(): array
++    {
++        return [
++            KernelEvents::VIEW => ['checkCheeselistingisPublished', EventPriorities::PRE_VALIDATE],
++        ];
++    }
++
++    public function checkCheeselistingisPublished(GetResponseForControllerResultEvent $event): void
++    {
++
++        $cheeseListing = $event->getControllerResult();
++        if (!$cheeseListing instanceof CheeseListing || !$event->getRequest()->isMethodSafe(false)) {
++            return;
++        }
++
++        $isAdmin = false;
++        if (!$cheeseListing->getIsPublished() && $isAdmin === false) {
++            // Using internal codes for a better understanding of what's going on
++            throw new CheeseListingNotFoundException(sprintf('The cheeseListing "%s" does not exist.', $cheeseListing->getId()));
++        }
++    }
++}
+diff --git a/src/Exception/CheeseListingNotFoundException.php b/src/Exception/CheeseListingNotFoundException.php
+new file mode 100644
+index 0000000..ba713a7
+--- /dev/null
++++ b/src/Exception/CheeseListingNotFoundException.php
+@@ -0,0 +1,8 @@
++<?php
++// api/src/Exception/CheeseListingNotFoundException.php
++
++namespace App\Exception;
++
++final class CheeseListingNotFoundException extends \Exception
++{
++}

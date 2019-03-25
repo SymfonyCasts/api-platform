@@ -12,10 +12,10 @@ index 4eca136..6039975 100644
      private $user;
  
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index caa4f61..811e26c 100644
+index caa4f61..9448e53 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -2,13 +2,19 @@
+@@ -2,13 +2,18 @@
  
  namespace App\Entity;
  
@@ -29,14 +29,13 @@ index caa4f61..811e26c 100644
  /**
 - * @ApiResource()
 + * @ApiResource(
-+ *     forceEager=false,
 + *     normalizationContext={"groups"={"read"}},
 + *     denormalizationContext={"groups"={"write"}}
 + * )
   * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
   */
  class User
-@@ -17,16 +23,20 @@ class User
+@@ -17,16 +22,20 @@ class User
       * @ORM\Id()
       * @ORM\GeneratedValue()
       * @ORM\Column(type="integer")

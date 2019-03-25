@@ -114,7 +114,32 @@
             "id": "filter-relationship",
             "name": "Filter: relationship",
             "description": null
+        },
+        {
+            "id": "subresource-initial",
+            "name": "Subresource: initial",
+            "description": null
+        },
+        {
+            "id": "subresource-url",
+            "name": "Subresource: URL",
+            "description": null
+        },
+        {
+            "id": "schema-org-adding-iri",
+            "name": "Schema.org adding iri",
+            "description": null
+        },
+        {
+            "id": "custom-operation",
+            "name": "Custom operation",
+            "description": null
+        },
+        {
+            "id": "event-listener",
+            "name": "Event listener",
+            "description": null
         }
     ],
-    "sha": "3da1b4e2ee13b7bf5867063534263c33670d9172"
+    "sha": "8fea67270a92ca8a0c640d7191175a8fe6b2d079"
 }

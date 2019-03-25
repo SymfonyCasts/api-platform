@@ -19,7 +19,7 @@ index 6039975..80d86d3 100644
  class CheeseListing
  {
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 811e26c..03d043e 100644
+index 9448e53..26b6d56 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -2,8 +2,10 @@
@@ -33,7 +33,7 @@ index 811e26c..03d043e 100644
  use Doctrine\Common\Collections\ArrayCollection;
  use Doctrine\Common\Collections\Collection;
  use Symfony\Component\Serializer\Annotation\Groups;
-@@ -16,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
+@@ -15,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
   *     denormalizationContext={"groups"={"write"}}
   * )
   * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
