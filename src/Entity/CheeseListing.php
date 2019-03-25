@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  * @ApiResource(
+ *     shortName="cheeses",
  *     collectionOperations={"get", "post"},
  *     itemOperations={"get", "put"}
  * )
