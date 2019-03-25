@@ -24,6 +24,7 @@ class CheeseListing
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
@@ -39,11 +40,13 @@ class CheeseListing
      *         }
      *     }
      * )
+     * @Groups({"read", "write"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read", "write"})
      */
     private $description;
 
@@ -60,6 +63,7 @@ class CheeseListing
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->isPublished = false;
     }
 
     public function getId(): ?int
@@ -104,6 +108,9 @@ class CheeseListing
         return $this->createdAt;
     }
 
+    /**
+     * @Groups({"read"})
+     */
     public function getCreatedAgo()
     {
         return Carbon::instance($this->getCreatedAt())->diffForHumans();
