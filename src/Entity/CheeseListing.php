@@ -77,7 +77,15 @@ class CheeseListing
 
     public function setDescription(string $description): self
     {
-        $this->description = $description;
+        $this->description = '<p>'.$description.'</p>';
+
+        return $this;
+    }
+
+
+    public function setRawDescription(string $rawDescription): self
+    {
+        $this->description = $rawDescription;
 
         return $this;
     }
