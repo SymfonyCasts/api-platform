@@ -1,0 +1,18 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 257b245..da88a36 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -87,12 +87,7 @@ class CheeseListing
+ 
+         return $this;
+     }
+-
+-    public function getCreatedAt(): ?\DateTimeInterface
+-    {
+-        return $this->createdAt;
+-    }
+-
++    
+     public function setCreatedAt(\DateTimeInterface $createdAt): self
+     {
+         $this->createdAt = $createdAt;

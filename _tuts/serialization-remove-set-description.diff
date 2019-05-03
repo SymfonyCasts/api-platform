@@ -1,0 +1,18 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 4b67661..257b245 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -69,13 +69,6 @@ class CheeseListing
+         return $this->description;
+     }
+ 
+-    public function setDescription(string $description): self
+-    {
+-        $this->description = '<p>'.$description.'</p>';
+-
+-        return $this;
+-    }
+-
+     public function setRawDescription(string $rawDescription): self
+     {
+         $this->description = $rawDescription;
