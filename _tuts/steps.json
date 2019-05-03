@@ -149,7 +149,32 @@
             "id": "user-embedded",
             "name": "user-embedded",
             "description": null
+        },
+        {
+            "id": "filter-relationship",
+            "name": "filter-relationship",
+            "description": null
+        },
+        {
+            "id": "subresources",
+            "name": "subresources",
+            "description": null
+        },
+        {
+            "id": "security-fix-user-hash",
+            "name": "security-fix-user-hash",
+            "description": null
+        },
+        {
+            "id": "security-jwt-install",
+            "name": "security-jwt-install",
+            "description": null
+        },
+        {
+            "id": "security-jwt-config",
+            "name": "security-jwt-config",
+            "description": null
         }
     ],
-    "sha": "828a93faad3be622232202a61d0d096824db66ff"
+    "sha": "9905864522995aa628cb95086168d44653f82bba"
 }

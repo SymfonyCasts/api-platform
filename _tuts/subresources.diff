@@ -1,0 +1,20 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 9b18336..c487628 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -3,6 +3,7 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Annotation\ApiSubresource;
+ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+@@ -60,6 +61,7 @@ class User implements UserInterface
+     /**
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
+      * @Groups({"user:output"})
++     * @ApiSubresource
+      */
+     private $cheeseListings;
+ 

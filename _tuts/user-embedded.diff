@@ -1,3 +1,25 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 713cf95..a26c809 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -41,7 +41,7 @@ class CheeseListing
+      *     max = 50
+      * )
+      * @ORM\Column(type="string", length=255)
+-     * @Groups({"cheese_listing:output", "cheese_listing:input"})
++     * @Groups({"cheese_listing:output", "cheese_listing:input", "user:output"})
+      */
+     private $title;
+ 
+@@ -107,7 +107,7 @@ class CheeseListing
+     }
+ 
+     /**
+-     * @Groups({"cheese_listing:output"})
++     * @Groups({"cheese_listing:output", "user:output"})
+      */
+     public function getShortDescription(): ?string
+     {
 diff --git a/src/Entity/User.php b/src/Entity/User.php
 index b4236f6..9b18336 100644
 --- a/src/Entity/User.php
