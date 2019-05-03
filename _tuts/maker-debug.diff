@@ -1,0 +1,1029 @@
+diff --git a/.current_move b/.current_move
+new file mode 100644
+index 0000000..91a6941
+--- /dev/null
++++ b/.current_move
+@@ -0,0 +1 @@
++{"step":"maker-debug","hasStash":false}
+\ No newline at end of file
+diff --git a/composer.json b/composer.json
+index 86bfd46..5839da0 100644
+--- a/composer.json
++++ b/composer.json
+@@ -57,5 +57,9 @@
+             "allow-contrib": false,
+             "require": "4.2.*"
+         }
++    },
++    "require-dev": {
++        "symfony/debug-pack": "^1.0",
++        "symfony/maker-bundle": "^1.11"
+     }
+ }
+diff --git a/composer.lock b/composer.lock
+index b396eae..4f115c9 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "f6955df34b7e0a0e6759f9b96f442a44",
++    "content-hash": "419330b874ea292e7cf45a6c63abd1e5",
+     "packages": [
+         {
+             "name": "api-platform/api-pack",
+@@ -4704,7 +4704,705 @@
+             "time": "2018-04-25T15:33:34+00:00"
+         }
+     ],
+-    "packages-dev": [],
++    "packages-dev": [
++        {
++            "name": "easycorp/easy-log-handler",
++            "version": "v1.0.7",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/EasyCorp/easy-log-handler.git",
++                "reference": "5f95717248d20684f88cfb878d8bf3d78aadcbba"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/EasyCorp/easy-log-handler/zipball/5f95717248d20684f88cfb878d8bf3d78aadcbba",
++                "reference": "5f95717248d20684f88cfb878d8bf3d78aadcbba",
++                "shasum": ""
++            },
++            "require": {
++                "monolog/monolog": "~1.6",
++                "php": ">=5.3.0",
++                "symfony/yaml": "~2.3|~3.0|~4.0"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "EasyCorp\\EasyLog\\": "src"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Javier Eguiluz",
++                    "email": "javiereguiluz@gmail.com"
++                },
++                {
++                    "name": "Project Contributors",
++                    "homepage": "https://github.com/EasyCorp/easy-log-handler"
++                }
++            ],
++            "description": "A handler for Monolog that optimizes log messages to be processed by humans instead of software. Improve your productivity with logs that are easy to understand.",
++            "homepage": "https://github.com/EasyCorp/easy-log-handler",
++            "keywords": [
++                "easy",
++                "log",
++                "logging",
++                "monolog",
++                "productivity"
++            ],
++            "time": "2018-07-27T15:41:37+00:00"
++        },
++        {
++            "name": "monolog/monolog",
++            "version": "1.24.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/Seldaek/monolog.git",
++                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
++                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=5.3.0",
++                "psr/log": "~1.0"
++            },
++            "provide": {
++                "psr/log-implementation": "1.0.0"
++            },
++            "require-dev": {
++                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
++                "doctrine/couchdb": "~1.0@dev",
++                "graylog2/gelf-php": "~1.0",
++                "jakub-onderka/php-parallel-lint": "0.9",
++                "php-amqplib/php-amqplib": "~2.4",
++                "php-console/php-console": "^3.1.3",
++                "phpunit/phpunit": "~4.5",
++                "phpunit/phpunit-mock-objects": "2.3.0",
++                "ruflin/elastica": ">=0.90 <3.0",
++                "sentry/sentry": "^0.13",
++                "swiftmailer/swiftmailer": "^5.3|^6.0"
++            },
++            "suggest": {
++                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
++                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
++                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
++                "ext-mongo": "Allow sending log messages to a MongoDB server",
++                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
++                "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
++                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
++                "php-console/php-console": "Allow sending log messages to Google Chrome",
++                "rollbar/rollbar": "Allow sending log messages to Rollbar",
++                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
++                "sentry/sentry": "Allow sending log messages to a Sentry server"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "2.0.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Monolog\\": "src/Monolog"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Jordi Boggiano",
++                    "email": "j.boggiano@seld.be",
++                    "homepage": "http://seld.be"
++                }
++            ],
++            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
++            "homepage": "http://github.com/Seldaek/monolog",
++            "keywords": [
++                "log",
++                "logging",
++                "psr-3"
++            ],
++            "time": "2018-11-05T09:00:11+00:00"
++        },
++        {
++            "name": "nikic/php-parser",
++            "version": "v4.2.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/nikic/PHP-Parser.git",
++                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/5221f49a608808c1e4d436df32884cbc1b821ac0",
++                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0",
++                "shasum": ""
++            },
++            "require": {
++                "ext-tokenizer": "*",
++                "php": ">=7.0"
++            },
++            "require-dev": {
++                "phpunit/phpunit": "^6.5 || ^7.0"
++            },
++            "bin": [
++                "bin/php-parse"
++            ],
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.2-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "PhpParser\\": "lib/PhpParser"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "BSD-3-Clause"
++            ],
++            "authors": [
++                {
++                    "name": "Nikita Popov"
++                }
++            ],
++            "description": "A PHP parser written in PHP",
++            "keywords": [
++                "parser",
++                "php"
++            ],
++            "time": "2019-02-16T20:54:15+00:00"
++        },
++        {
++            "name": "symfony/debug-bundle",
++            "version": "v4.2.8",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/debug-bundle.git",
++                "reference": "730c7361c4c66f9f5489172d8f1b606b60191937"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/debug-bundle/zipball/730c7361c4c66f9f5489172d8f1b606b60191937",
++                "reference": "730c7361c4c66f9f5489172d8f1b606b60191937",
++                "shasum": ""
++            },
++            "require": {
++                "ext-xml": "*",
++                "php": "^7.1.3",
++                "symfony/http-kernel": "~3.4|~4.0",
++                "symfony/twig-bridge": "~3.4|~4.0",
++                "symfony/var-dumper": "^4.1.1"
++            },
++            "conflict": {
++                "symfony/config": "<4.2",
++                "symfony/dependency-injection": "<3.4"
++            },
++            "require-dev": {
++                "symfony/config": "~4.2",
++                "symfony/dependency-injection": "~3.4|~4.0",
++                "symfony/web-profiler-bundle": "~3.4|~4.0"
++            },
++            "suggest": {
++                "symfony/config": "For service container configuration",
++                "symfony/dependency-injection": "For using as a service from the container"
++            },
++            "type": "symfony-bundle",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.2-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Bundle\\DebugBundle\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony DebugBundle",
++            "homepage": "https://symfony.com",
++            "time": "2019-04-11T11:58:13+00:00"
++        },
++        {
++            "name": "symfony/debug-pack",
++            "version": "v1.0.7",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/debug-pack.git",
++                "reference": "09a4a1e9bf2465987d4f79db0ad6c11cc632bc79"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/debug-pack/zipball/09a4a1e9bf2465987d4f79db0ad6c11cc632bc79",
++                "reference": "09a4a1e9bf2465987d4f79db0ad6c11cc632bc79",
++                "shasum": ""
++            },
++            "require": {
++                "easycorp/easy-log-handler": "^1.0.7",
++                "php": "^7.0",
++                "symfony/debug-bundle": "*",
++                "symfony/monolog-bundle": "^3.0",
++                "symfony/profiler-pack": "*",
++                "symfony/var-dumper": "*"
++            },
++            "type": "symfony-pack",
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "description": "A debug pack for Symfony projects",
++            "time": "2018-12-10T12:11:11+00:00"
++        },
++        {
++            "name": "symfony/maker-bundle",
++            "version": "v1.11.6",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/maker-bundle.git",
++                "reference": "d262c2cace4d9bca99137a84f6fc6ba909a17e02"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/d262c2cace4d9bca99137a84f6fc6ba909a17e02",
++                "reference": "d262c2cace4d9bca99137a84f6fc6ba909a17e02",
++                "shasum": ""
++            },
++            "require": {
++                "doctrine/inflector": "^1.2",
++                "nikic/php-parser": "^4.0",
++                "php": "^7.0.8",
++                "symfony/config": "^3.4|^4.0",
++                "symfony/console": "^3.4|^4.0",
++                "symfony/dependency-injection": "^3.4|^4.0",
++                "symfony/filesystem": "^3.4|^4.0",
++                "symfony/finder": "^3.4|^4.0",
++                "symfony/framework-bundle": "^3.4|^4.0",
++                "symfony/http-kernel": "^3.4|^4.0"
++            },
++            "require-dev": {
++                "allocine/twigcs": "^3.0",
++                "doctrine/doctrine-bundle": "^1.8",
++                "doctrine/orm": "^2.3",
++                "friendsofphp/php-cs-fixer": "^2.8",
++                "symfony/phpunit-bridge": "^3.4|^4.0",
++                "symfony/process": "^3.4|^4.0",
++                "symfony/yaml": "^3.4|^4.0"
++            },
++            "type": "symfony-bundle",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "1.0-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Bundle\\MakerBundle\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony Maker helps you create empty commands, controllers, form classes, tests and more so you can forget about writing boilerplate code.",
++            "homepage": "https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html",
++            "keywords": [
++                "code generator",
++                "generator",
++                "scaffold",
++                "scaffolding"
++            ],
++            "time": "2019-04-19T17:26:45+00:00"
++        },
++        {
++            "name": "symfony/monolog-bridge",
++            "version": "v4.2.8",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/monolog-bridge.git",
++                "reference": "06cd3ca9f3fb68e21b227636671d7638dbe90cb3"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/monolog-bridge/zipball/06cd3ca9f3fb68e21b227636671d7638dbe90cb3",
++                "reference": "06cd3ca9f3fb68e21b227636671d7638dbe90cb3",
++                "shasum": ""
++            },
++            "require": {
++                "monolog/monolog": "~1.19",
++                "php": "^7.1.3",
++                "symfony/contracts": "^1.0",
++                "symfony/http-kernel": "~3.4|~4.0"
++            },
++            "conflict": {
++                "symfony/console": "<3.4",
++                "symfony/http-foundation": "<3.4"
++            },
++            "require-dev": {
++                "symfony/console": "~3.4|~4.0",
++                "symfony/event-dispatcher": "~3.4|~4.0",
++                "symfony/security-core": "~3.4|~4.0",
++                "symfony/var-dumper": "~3.4|~4.0"
++            },
++            "suggest": {
++                "symfony/console": "For the possibility to show log messages in console commands depending on verbosity settings.",
++                "symfony/event-dispatcher": "Needed when using log messages in console commands.",
++                "symfony/http-kernel": "For using the debugging handlers together with the response life cycle of the HTTP kernel.",
++                "symfony/var-dumper": "For using the debugging handlers like the console handler or the log server handler."
++            },
++            "type": "symfony-bridge",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.2-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Bridge\\Monolog\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony Monolog Bridge",
++            "homepage": "https://symfony.com",
++            "time": "2019-05-01T08:36:31+00:00"
++        },
++        {
++            "name": "symfony/monolog-bundle",
++            "version": "v3.3.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/monolog-bundle.git",
++                "reference": "572e143afc03419a75ab002c80a2fd99299195ff"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/572e143afc03419a75ab002c80a2fd99299195ff",
++                "reference": "572e143afc03419a75ab002c80a2fd99299195ff",
++                "shasum": ""
++            },
++            "require": {
++                "monolog/monolog": "~1.22",
++                "php": ">=5.6",
++                "symfony/config": "~2.7|~3.3|~4.0",
++                "symfony/dependency-injection": "~2.7|~3.4.10|^4.0.10",
++                "symfony/http-kernel": "~2.7|~3.3|~4.0",
++                "symfony/monolog-bridge": "~2.7|~3.3|~4.0"
++            },
++            "require-dev": {
++                "symfony/console": "~2.7|~3.3|~4.0",
++                "symfony/phpunit-bridge": "^3.3|^4.0",
++                "symfony/yaml": "~2.7|~3.3|~4.0"
++            },
++            "type": "symfony-bundle",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "3.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Bundle\\MonologBundle\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Symfony Community",
++                    "homepage": "http://symfony.com/contributors"
++                },
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                }
++            ],
++            "description": "Symfony MonologBundle",
++            "homepage": "http://symfony.com",
++            "keywords": [
++                "log",
++                "logging"
++            ],
++            "time": "2018-11-04T09:58:13+00:00"
++        },
++        {
++            "name": "symfony/polyfill-php72",
++            "version": "v1.11.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/polyfill-php72.git",
++                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/ab50dcf166d5f577978419edd37aa2bb8eabce0c",
++                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=5.3.3"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "1.11-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Polyfill\\Php72\\": ""
++                },
++                "files": [
++                    "bootstrap.php"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Nicolas Grekas",
++                    "email": "p@tchwork.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
++            "homepage": "https://symfony.com",
++            "keywords": [
++                "compatibility",
++                "polyfill",
++                "portable",
++                "shim"
++            ],
++            "time": "2019-02-06T07:57:58+00:00"
++        },
++        {
++            "name": "symfony/profiler-pack",
++            "version": "v1.0.4",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/profiler-pack.git",
++                "reference": "99c4370632c2a59bb0444852f92140074ef02209"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/profiler-pack/zipball/99c4370632c2a59bb0444852f92140074ef02209",
++                "reference": "99c4370632c2a59bb0444852f92140074ef02209",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.0",
++                "symfony/stopwatch": "*",
++                "symfony/twig-bundle": "*",
++                "symfony/web-profiler-bundle": "*"
++            },
++            "type": "symfony-pack",
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "description": "A pack for the Symfony web profiler",
++            "time": "2018-12-10T12:11:44+00:00"
++        },
++        {
++            "name": "symfony/var-dumper",
++            "version": "v4.2.8",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/var-dumper.git",
++                "reference": "3c4084cb1537c0e2ad41aad622bbf55a44a5c9ce"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3c4084cb1537c0e2ad41aad622bbf55a44a5c9ce",
++                "reference": "3c4084cb1537c0e2ad41aad622bbf55a44a5c9ce",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.1.3",
++                "symfony/polyfill-mbstring": "~1.0",
++                "symfony/polyfill-php72": "~1.5"
++            },
++            "conflict": {
++                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0",
++                "symfony/console": "<3.4"
++            },
++            "require-dev": {
++                "ext-iconv": "*",
++                "symfony/console": "~3.4|~4.0",
++                "symfony/process": "~3.4|~4.0",
++                "twig/twig": "~1.34|~2.4"
++            },
++            "suggest": {
++                "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
++                "ext-intl": "To show region name in time zone dump",
++                "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
++            },
++            "bin": [
++                "Resources/bin/var-dump-server"
++            ],
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.2-dev"
++                }
++            },
++            "autoload": {
++                "files": [
++                    "Resources/functions/dump.php"
++                ],
++                "psr-4": {
++                    "Symfony\\Component\\VarDumper\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Nicolas Grekas",
++                    "email": "p@tchwork.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony mechanism for exploring and dumping PHP variables",
++            "homepage": "https://symfony.com",
++            "keywords": [
++                "debug",
++                "dump"
++            ],
++            "time": "2019-05-01T12:55:36+00:00"
++        },
++        {
++            "name": "symfony/web-profiler-bundle",
++            "version": "v4.2.8",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/web-profiler-bundle.git",
++                "reference": "f4c054dad30b46f23aae60ecfedacc08462c47ef"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/f4c054dad30b46f23aae60ecfedacc08462c47ef",
++                "reference": "f4c054dad30b46f23aae60ecfedacc08462c47ef",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.1.3",
++                "symfony/config": "^4.2",
++                "symfony/http-kernel": "^4.2.6",
++                "symfony/routing": "~3.4|~4.0",
++                "symfony/twig-bundle": "~4.2",
++                "symfony/var-dumper": "~3.4|~4.0",
++                "twig/twig": "~1.34|~2.4"
++            },
++            "conflict": {
++                "symfony/dependency-injection": "<3.4",
++                "symfony/event-dispatcher": "<3.4",
++                "symfony/messenger": "<4.2",
++                "symfony/var-dumper": "<3.4"
++            },
++            "require-dev": {
++                "symfony/console": "~3.4|~4.0",
++                "symfony/dependency-injection": "~3.4|~4.0",
++                "symfony/stopwatch": "~3.4|~4.0"
++            },
++            "type": "symfony-bundle",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.2-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Bundle\\WebProfilerBundle\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony WebProfilerBundle",
++            "homepage": "https://symfony.com",
++            "time": "2019-04-27T11:48:17+00:00"
++        }
++    ],
+     "aliases": [],
+     "minimum-stability": "stable",
+     "stability-flags": [],
+diff --git a/config/bundles.php b/config/bundles.php
+index 7937937..58652da 100644
+--- a/config/bundles.php
++++ b/config/bundles.php
+@@ -9,4 +9,8 @@ return [
+     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
++    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
++    Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
++    Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
++    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
+ ];
+diff --git a/config/packages/dev/debug.yaml b/config/packages/dev/debug.yaml
+new file mode 100644
+index 0000000..26d4e53
+--- /dev/null
++++ b/config/packages/dev/debug.yaml
+@@ -0,0 +1,4 @@
++debug:
++    # Forwards VarDumper Data clones to a centralized server allowing to inspect dumps on CLI or in your browser.
++    # See the "server:dump" command to start a new server.
++    dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
+diff --git a/config/packages/dev/easy_log_handler.yaml b/config/packages/dev/easy_log_handler.yaml
+new file mode 100644
+index 0000000..27bfc60
+--- /dev/null
++++ b/config/packages/dev/easy_log_handler.yaml
+@@ -0,0 +1,16 @@
++services:
++    EasyCorp\EasyLog\EasyLogHandler:
++        public: false
++        arguments: ['%kernel.logs_dir%/%kernel.environment%.log']
++
++#// FIXME: How to add this configuration automatically without messing up with the monolog configuration?
++#monolog:
++#    handlers:
++#        buffered:
++#            type:     buffer
++#            handler:  easylog
++#            channels: ['!event']
++#            level:    debug
++#        easylog:
++#            type: service
++#            id:   EasyCorp\EasyLog\EasyLogHandler
+diff --git a/config/packages/dev/monolog.yaml b/config/packages/dev/monolog.yaml
+new file mode 100644
+index 0000000..b1998da
+--- /dev/null
++++ b/config/packages/dev/monolog.yaml
+@@ -0,0 +1,19 @@
++monolog:
++    handlers:
++        main:
++            type: stream
++            path: "%kernel.logs_dir%/%kernel.environment%.log"
++            level: debug
++            channels: ["!event"]
++        # uncomment to get logging in your browser
++        # you may have to allow bigger header sizes in your Web server configuration
++        #firephp:
++        #    type: firephp
++        #    level: info
++        #chromephp:
++        #    type: chromephp
++        #    level: info
++        console:
++            type: console
++            process_psr_3_messages: false
++            channels: ["!event", "!doctrine", "!console"]
+diff --git a/config/packages/dev/web_profiler.yaml b/config/packages/dev/web_profiler.yaml
+new file mode 100644
+index 0000000..e92166a
+--- /dev/null
++++ b/config/packages/dev/web_profiler.yaml
+@@ -0,0 +1,6 @@
++web_profiler:
++    toolbar: true
++    intercept_redirects: false
++
++framework:
++    profiler: { only_exceptions: false }
+diff --git a/config/packages/prod/monolog.yaml b/config/packages/prod/monolog.yaml
+new file mode 100644
+index 0000000..96dbf96
+--- /dev/null
++++ b/config/packages/prod/monolog.yaml
+@@ -0,0 +1,25 @@
++monolog:
++    handlers:
++        main:
++            type: fingers_crossed
++            action_level: error
++            handler: nested
++            excluded_404s:
++                # regex: exclude all 404 errors from the logs
++                - ^/
++        nested:
++            type: stream
++            path: "%kernel.logs_dir%/%kernel.environment%.log"
++            level: debug
++        console:
++            type: console
++            process_psr_3_messages: false
++            channels: ["!event", "!doctrine"]
++        deprecation:
++            type: stream
++            path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
++        deprecation_filter:
++            type: filter
++            handler: deprecation
++            max_level: info
++            channels: ["php"]
+diff --git a/config/packages/test/monolog.yaml b/config/packages/test/monolog.yaml
+new file mode 100644
+index 0000000..2762653
+--- /dev/null
++++ b/config/packages/test/monolog.yaml
+@@ -0,0 +1,7 @@
++monolog:
++    handlers:
++        main:
++            type: stream
++            path: "%kernel.logs_dir%/%kernel.environment%.log"
++            level: debug
++            channels: ["!event"]
+diff --git a/config/packages/test/web_profiler.yaml b/config/packages/test/web_profiler.yaml
+new file mode 100644
+index 0000000..03752de
+--- /dev/null
++++ b/config/packages/test/web_profiler.yaml
+@@ -0,0 +1,6 @@
++web_profiler:
++    toolbar: false
++    intercept_redirects: false
++
++framework:
++    profiler: { collect: false }
+diff --git a/config/routes/dev/web_profiler.yaml b/config/routes/dev/web_profiler.yaml
+new file mode 100644
+index 0000000..c82beff
+--- /dev/null
++++ b/config/routes/dev/web_profiler.yaml
+@@ -0,0 +1,7 @@
++web_profiler_wdt:
++    resource: '@WebProfilerBundle/Resources/config/routing/wdt.xml'
++    prefix: /_wdt
++
++web_profiler_profiler:
++    resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
++    prefix: /_profiler
+diff --git a/symfony.lock b/symfony.lock
+index 845acc1..0d26190 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -95,12 +95,27 @@
+     "doctrine/reflection": {
+         "version": "v1.0.0"
+     },
++    "easycorp/easy-log-handler": {
++        "version": "1.0",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "1.0",
++            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
++        },
++        "files": [
++            "config/packages/dev/easy_log_handler.yaml"
++        ]
++    },
+     "fig/link-util": {
+         "version": "1.0.0"
+     },
+     "jdorn/sql-formatter": {
+         "version": "v1.2.17"
+     },
++    "monolog/monolog": {
++        "version": "1.24.0"
++    },
+     "nelmio/cors-bundle": {
+         "version": "1.5",
+         "recipe": {
+@@ -113,6 +128,9 @@
+             "config/packages/nelmio_cors.yaml"
+         ]
+     },
++    "nikic/php-parser": {
++        "version": "v4.2.1"
++    },
+     "ocramius/package-versions": {
+         "version": "1.4.0"
+     },
+@@ -167,6 +185,21 @@
+     "symfony/debug": {
+         "version": "v4.2.3"
+     },
++    "symfony/debug-bundle": {
++        "version": "4.1",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "4.1",
++            "ref": "f8863cbad2f2e58c4b65fa1eac892ab189971bea"
++        },
++        "files": [
++            "config/packages/dev/debug.yaml"
++        ]
++    },
++    "symfony/debug-pack": {
++        "version": "v1.0.7"
++    },
+     "symfony/dependency-injection": {
+         "version": "v4.2.3"
+     },
+@@ -215,9 +248,41 @@
+     "symfony/inflector": {
+         "version": "v4.2.7"
+     },
++    "symfony/maker-bundle": {
++        "version": "1.0",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "1.0",
++            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
++        }
++    },
++    "symfony/monolog-bridge": {
++        "version": "v4.2.8"
++    },
++    "symfony/monolog-bundle": {
++        "version": "3.1",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "3.1",
++            "ref": "18ebf5a940573a20de06f9c4060101eeb438cf3d"
++        },
++        "files": [
++            "config/packages/dev/monolog.yaml",
++            "config/packages/prod/monolog.yaml",
++            "config/packages/test/monolog.yaml"
++        ]
++    },
+     "symfony/polyfill-mbstring": {
+         "version": "v1.10.0"
+     },
++    "symfony/polyfill-php72": {
++        "version": "v1.11.0"
++    },
++    "symfony/profiler-pack": {
++        "version": "v1.0.4"
++    },
+     "symfony/property-access": {
+         "version": "v4.2.7"
+     },
+@@ -293,12 +358,29 @@
+             "config/packages/validator.yaml"
+         ]
+     },
++    "symfony/var-dumper": {
++        "version": "v4.2.8"
++    },
+     "symfony/var-exporter": {
+         "version": "v4.2.3"
+     },
+     "symfony/web-link": {
+         "version": "v4.2.7"
+     },
++    "symfony/web-profiler-bundle": {
++        "version": "3.3",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "3.3",
++            "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
++        },
++        "files": [
++            "config/packages/dev/web_profiler.yaml",
++            "config/packages/test/web_profiler.yaml",
++            "config/routes/dev/web_profiler.yaml"
++        ]
++    },
+     "symfony/yaml": {
+         "version": "v4.2.3"
+     },

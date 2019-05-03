@@ -14,7 +14,12 @@
             "id": "installation-database",
             "name": "installation-database",
             "description": null
+        },
+        {
+            "id": "maker-debug",
+            "name": "maker-debug",
+            "description": null
         }
     ],
-    "sha": "6c6dfb5a6ff58cfa2cbee167973a6fa46300d20d"
+    "sha": "eeda9e36987f9039815cd01dd4cde0ac32a050a8"
 }
