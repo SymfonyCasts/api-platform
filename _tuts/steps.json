@@ -4,7 +4,17 @@
             "id": "start",
             "name": "start",
             "description": null
+        },
+        {
+            "id": "installation-api-platform",
+            "name": "installation-api-platform",
+            "description": null
+        },
+        {
+            "id": "installation-database",
+            "name": "installation-database",
+            "description": null
         }
     ],
-    "sha": "41ca26c3d5165187e62353cf2b51129d3e0ec797"
+    "sha": "6c6dfb5a6ff58cfa2cbee167973a6fa46300d20d"
 }
