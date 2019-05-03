@@ -1,0 +1,47 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 6a30e99..6a76a73 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -7,9 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+ use Symfony\Component\Security\Core\User\UserInterface;
++use Symfony\Component\Serializer\Annotation\Groups;
+ 
+ /**
+- * @ApiResource()
++ * @ApiResource(
++ *     normalizationContext={"groups"="user:output"},
++ *     denormalizationContext={"groups"="user:input"}
++ * )
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+  */
+ class User implements UserInterface
+@@ -23,6 +27,7 @@ class User implements UserInterface
+ 
+     /**
+      * @ORM\Column(type="string", length=180, unique=true)
++     * @Groups({"user:output", "user:input"})
+      */
+     private $email;
+ 
+@@ -34,16 +39,19 @@ class User implements UserInterface
+     /**
+      * @var string The hashed password
+      * @ORM\Column(type="string")
++     * @Groups({"user:input"})
+      */
+     private $password;
+ 
+     /**
+      * @ORM\Column(type="string", length=255)
++     * @Groups({"user:output", "user:input"})
+      */
+     private $username;
+ 
+     /**
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
++     * @Groups({"user:output"})
+      */
+     private $cheeseListings;
+ 

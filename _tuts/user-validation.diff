@@ -1,0 +1,40 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 6a76a73..b4236f6 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+ use Symfony\Component\Security\Core\User\UserInterface;
+ use Symfony\Component\Serializer\Annotation\Groups;
++use Symfony\Component\Validator\Constraints as Assert;
++use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+ 
+ /**
+  * @ApiResource(
+@@ -15,6 +17,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  *     denormalizationContext={"groups"="user:input"}
+  * )
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
++ * @UniqueEntity(
++ *     fields={"email", "username"}
++ * )
+  */
+ class User implements UserInterface
+ {
+@@ -26,6 +31,8 @@ class User implements UserInterface
+     private $id;
+ 
+     /**
++     * @Assert\NotBlank
++     * @Assert\Email
+      * @ORM\Column(type="string", length=180, unique=true)
+      * @Groups({"user:output", "user:input"})
+      */
+@@ -44,6 +51,7 @@ class User implements UserInterface
+     private $password;
+ 
+     /**
++     * @Assert\NotBlank
+      * @ORM\Column(type="string", length=255)
+      * @Groups({"user:output", "user:input"})
+      */
