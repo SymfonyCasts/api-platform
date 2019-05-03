@@ -17,7 +17,7 @@
         },
         {
             "id": "installation-maker-debug",
-            "name": "maker-debug",
+            "name": "installation-maker-debug",
             "description": null
         },
         {
@@ -27,7 +27,7 @@
         },
         {
             "id": "cheeselisting-migration",
-            "name": "migration-cheeselisting",
+            "name": "cheeselisting-migration",
             "description": null
         },
         {
