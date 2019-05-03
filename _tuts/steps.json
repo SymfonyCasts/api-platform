@@ -64,7 +64,42 @@
             "id": "seralization-createdat-ago",
             "name": "seralization-createdat-ago",
             "description": null
+        },
+        {
+            "id": "serialgroup-add-to-resource",
+            "name": "serialgroup-add-to-resource",
+            "description": null
+        },
+        {
+            "id": "serialgroup-title-price",
+            "name": "serialgroup-title-price",
+            "description": null
+        },
+        {
+            "id": "serialgroup-description-createdat",
+            "name": "serialgroup-description-createdat",
+            "description": null
+        },
+        {
+            "id": "filters-boolean-published",
+            "name": "filters-boolean-published",
+            "description": null
+        },
+        {
+            "id": "filters-search",
+            "name": "filters-search",
+            "description": null
+        },
+        {
+            "id": "filters-short-description",
+            "name": "filters-short-description",
+            "description": null
+        },
+        {
+            "id": "filters-property",
+            "name": "filters-property",
+            "description": null
         }
     ],
-    "sha": "188a4db55a8567a39825cf84cb403f65224e6a11"
+    "sha": "fd0af85e86fbb5c6fe546af547b88274836cd18c"
 }

@@ -197,7 +197,7 @@ index 5c4b417..10bca7d 100644
  services:
      # default configuration for services in *this* file
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index da88a36..c92bc60 100644
+index 0761179..85c98a3 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -3,6 +3,7 @@
@@ -208,18 +208,18 @@ index da88a36..c92bc60 100644
  use Doctrine\ORM\Mapping as ORM;
  
  /**
-@@ -87,6 +88,11 @@ class CheeseListing
- 
-         return $this;
+@@ -98,6 +99,11 @@ class CheeseListing
+         return $this->createdAt;
      }
-+
+ 
 +    public function getCreatedAgo()
 +    {
-+        return Carbon::instance($this->createdAt)->diffForHumans();
++        return Carbon::instance($this->getCreatedAt())->diffForHumans();
 +    }
-     
-     public function setCreatedAt(\DateTimeInterface $createdAt): self
++
+     public function getIsPublished(): ?bool
      {
+         return $this->isPublished;
 diff --git a/symfony.lock b/symfony.lock
 index 0d26190..852f614 100644
 --- a/symfony.lock
