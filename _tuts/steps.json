@@ -29,7 +29,22 @@
             "id": "migration-cheeselisting",
             "name": "migration-cheeselisting",
             "description": null
+        },
+        {
+            "id": "cheeselisting-operation",
+            "name": "cheeselisting-operation",
+            "description": null
+        },
+        {
+            "id": "cheeselisting-operation-delete",
+            "name": "cheeselisting-operation-delete",
+            "description": null
+        },
+        {
+            "id": "cheeselisting-operation-shortname",
+            "name": "cheeselisting-operation-shortname",
+            "description": null
         }
     ],
-    "sha": "402ef34330e2214463e98a386e66955ae17e3115"
+    "sha": "ffa6351591a3c210f3805a80a74a63bd91e5bfdf"
 }
