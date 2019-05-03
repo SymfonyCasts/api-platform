@@ -1,11 +1,3 @@
-diff --git a/.current_move b/.current_move
-new file mode 100644
-index 0000000..91a6941
---- /dev/null
-+++ b/.current_move
-@@ -0,0 +1 @@
-+{"step":"maker-debug","hasStash":false}
-\ No newline at end of file
 diff --git a/composer.json b/composer.json
 index 86bfd46..5839da0 100644
 --- a/composer.json
@@ -21,7 +13,7 @@ index 86bfd46..5839da0 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index b396eae..4f115c9 100644
+index b396eae..36117a6 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -29,7 +21,7 @@ index b396eae..4f115c9 100644
          "This file is @generated automatically"
      ],
 -    "content-hash": "f6955df34b7e0a0e6759f9b96f442a44",
-+    "content-hash": "419330b874ea292e7cf45a6c63abd1e5",
++    "content-hash": "2dc907731b5b4b4099f29a125b3230ff",
      "packages": [
          {
              "name": "api-platform/api-pack",
