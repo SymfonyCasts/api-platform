@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 6a30e99..6a76a73 100644
+index 6a30e99..92d6c5c 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -7,9 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
@@ -11,8 +11,8 @@ index 6a30e99..6a76a73 100644
  /**
 - * @ApiResource()
 + * @ApiResource(
-+ *     normalizationContext={"groups"="user:output"},
-+ *     denormalizationContext={"groups"="user:input"}
++ *     normalizationContext={"groups"={"user:output"}},
++ *     denormalizationContext={"groups"={"user:input"}}
 + * )
   * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
   */

@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index d152d9b..713cf95 100644
+index 8e98d34..9457067 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -71,6 +71,13 @@ class CheeseListing

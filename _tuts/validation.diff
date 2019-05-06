@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index d384431..d152d9b 100644
+index ec8e997..8e98d34 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -10,6 +10,7 @@ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;

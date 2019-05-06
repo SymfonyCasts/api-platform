@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 85c98a3..f6a8376 100644
+index 85c98a3..bab8829 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -5,12 +5,15 @@ namespace App\Entity;
@@ -14,8 +14,8 @@ index 85c98a3..f6a8376 100644
   *     itemOperations={"get", "put"},
 - *     shortName="cheeses"
 + *     shortName="cheeses",
-+ *     normalizationContext={"groups"="cheese_listing:output"},
-+ *     denormalizationContext={"groups"="cheese_listing:input"}
++ *     normalizationContext={"groups"={"cheese_listing:output"}},
++ *     denormalizationContext={"groups"={"cheese_listing:input"}}
   * )
   * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
   */

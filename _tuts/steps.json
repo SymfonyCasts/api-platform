@@ -184,7 +184,47 @@
             "id": "security-user-access-control",
             "name": "security-user-access-control",
             "description": null
+        },
+        {
+            "id": "dynamicgroup-phonenumber",
+            "name": "dynamicgroup-phonenumber",
+            "description": null
+        },
+        {
+            "id": "dynamicgroup-migration",
+            "name": "dynamicgroup-migration",
+            "description": null
+        },
+        {
+            "id": "dynamicgroup-owner-output",
+            "name": "dynamicgroup-owner-output",
+            "description": null
+        },
+        {
+            "id": "dynamicgroup-context-boilerplate",
+            "name": "dynamicgroup-context-boilerplate",
+            "description": null
+        },
+        {
+            "id": "dyanmicgroup-context-createfromrequest",
+            "name": "dyanmicgroup-context-createfromrequest",
+            "description": null
+        },
+        {
+            "id": "dynamicgroup-normalizer-boilerplate",
+            "name": "dynamicgroup-normalizer-boilerplate",
+            "description": null
+        },
+        {
+            "id": "dynamicgroup-normalization-checkowner",
+            "name": "dynamicgroup-normalization-checkowner",
+            "description": null
+        },
+        {
+            "id": "dynamicgroup-fix-security-roles",
+            "name": "dynamicgroup-fix-security-roles",
+            "description": null
         }
     ],
-    "sha": "dcb8a852e45eb2aaaf2d101f085aca09c3df921a"
+    "sha": "ce75e0bdb5c0793931c5d54ab0570b44aac9d179"
 }
