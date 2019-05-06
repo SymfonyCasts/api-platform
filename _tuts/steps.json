@@ -244,7 +244,12 @@
             "id": "published-security-cheese-repository",
             "name": "published-security-cheese-repository",
             "description": null
+        },
+        {
+            "id": "published-security-custom-operation",
+            "name": "published-security-custom-operation",
+            "description": null
         }
     ],
-    "sha": "fa112f4443223ff2b69b70e84234e91a9f93f918"
+    "sha": "51f18eed8f94602b8622d485a3e1faf26d598d9a"
 }
