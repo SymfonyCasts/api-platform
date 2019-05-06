@@ -169,7 +169,22 @@
             "id": "security-jwt-config",
             "name": "security-jwt-config",
             "description": null
+        },
+        {
+            "id": "security-swagger-token",
+            "name": "security-swagger-token",
+            "description": null
+        },
+        {
+            "id": "security-cheeselisting-access-control",
+            "name": "security-cheeselisting-access-control",
+            "description": null
+        },
+        {
+            "id": "security-user-access-control",
+            "name": "security-user-access-control",
+            "description": null
         }
     ],
-    "sha": "9905864522995aa628cb95086168d44653f82bba"
+    "sha": "dcb8a852e45eb2aaaf2d101f085aca09c3df921a"
 }
