@@ -1,0 +1,46 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 5e445dc..abaa38e 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Entity;
+ 
++use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+@@ -25,7 +26,8 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     },
+  *     shortName="cheeses",
+  *     normalizationContext={"groups"={"cheese_listing:output"}},
+- *     denormalizationContext={"groups"={"cheese_listing:input"}}
++ *     denormalizationContext={"groups"={"cheese_listing:input"}},
++ *     iri="https://schema.org/Product"
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
+  * @ApiFilter(SearchFilter::class, properties={"title": "partial", "price": "exact", "description": "partial", "owner": "exact", "owner.username": "partial"})
+@@ -49,6 +51,7 @@ class CheeseListing
+      * )
+      * @ORM\Column(type="string", length=255)
+      * @Groups({"cheese_listing:output", "cheese_listing:input", "user:output"})
++     * @ApiProperty(iri="http://schema.org/name")
+      */
+     private $title;
+ 
+@@ -59,6 +62,7 @@ class CheeseListing
+      * )
+      * @ORM\Column(type="text")
+      * @Groups({"cheese_listing:output"})
++     * @ApiProperty(iri="https://schema.org/description")
+      */
+     private $description;
+ 
+@@ -70,6 +74,7 @@ class CheeseListing
+ 
+     /**
+      * @ORM\Column(type="datetime")
++     * @ApiProperty(iri="https://schema.org/dateCreated")
+      */
+     private $createdAt;
+ 

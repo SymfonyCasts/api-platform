@@ -1,0 +1,38 @@
+diff --git a/src/Repository/CheeseListingRepository.php b/src/Repository/CheeseListingRepository.php
+index 8f3cdda..bed63bd 100644
+--- a/src/Repository/CheeseListingRepository.php
++++ b/src/Repository/CheeseListingRepository.php
+@@ -5,6 +5,7 @@ namespace App\Repository;
+ use App\Entity\CheeseListing;
+ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+ use Symfony\Bridge\Doctrine\RegistryInterface;
++use Symfony\Component\Security\Core\Security;
+ 
+ /**
+  * @method CheeseListing|null find($id, $lockMode = null, $lockVersion = null)
+@@ -14,11 +15,24 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
+  */
+ class CheeseListingRepository extends ServiceEntityRepository
+ {
+-    public function __construct(RegistryInterface $registry)
++    private $security;
++
++    public function __construct(RegistryInterface $registry, Security $security)
+     {
++        $this->security = $security;
+         parent::__construct($registry, CheeseListing::class);
+     }
+ 
++    public function createQueryBuilder($alias, $indexBy = null)
++    {
++        $querybuilder = parent::createQueryBuilder($alias, $indexBy);
++        $user = $this->security->getUser();
++        if (!isset($user) || !$this->security->isGranted('ROLE_ADMIN')) {
++            $querybuilder->andWhere($alias.'.isPublished = :published')->setParameter('published', true);
++        }
++        return $querybuilder;
++    }
++
+     // /**
+     //  * @return CheeseListing[] Returns an array of CheeseListing objects
+     //  */

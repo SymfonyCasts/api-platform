@@ -224,7 +224,27 @@
             "id": "dynamicgroup-fix-security-roles",
             "name": "dynamicgroup-fix-security-roles",
             "description": null
+        },
+        {
+            "id": "schema-org-cheeselisting",
+            "name": "schema-org-cheeselisting",
+            "description": null
+        },
+        {
+            "id": "published-security-event-listener",
+            "name": "published-security-event-listener",
+            "description": null
+        },
+        {
+            "id": "published-security-custom-exception",
+            "name": "published-security-custom-exception",
+            "description": null
+        },
+        {
+            "id": "published-security-cheese-repository",
+            "name": "published-security-cheese-repository",
+            "description": null
         }
     ],
-    "sha": "ce75e0bdb5c0793931c5d54ab0570b44aac9d179"
+    "sha": "fa112f4443223ff2b69b70e84234e91a9f93f918"
 }

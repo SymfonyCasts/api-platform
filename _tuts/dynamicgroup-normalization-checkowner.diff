@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/UserNormalizer.php b/src/Serializer/UserNormalizer.php
-index 14789bf..830e0d4 100644
+index 14789bf..273deee 100644
 --- a/src/Serializer/UserNormalizer.php
 +++ b/src/Serializer/UserNormalizer.php
 @@ -45,11 +45,15 @@ class UserNormalizer implements ContextAwareNormalizerInterface, NormalizerAware
@@ -17,7 +17,7 @@ index 14789bf..830e0d4 100644
 +         * @var $currentUser User
 +         */
 +        $currentUser = $this->security->getUser();
-+        if ($user->getEmail() === $currentUser->getEmail()) {
++        if (isset($currentUser) && $user->getEmail() === $currentUser->getEmail()) {
 +            return true;
 +        }
 +        return false;
