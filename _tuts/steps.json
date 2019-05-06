@@ -161,11 +161,6 @@
             "description": null
         },
         {
-            "id": "security-fix-user-hash",
-            "name": "security-fix-user-hash",
-            "description": null
-        },
-        {
             "id": "security-jwt-install",
             "name": "security-jwt-install",
             "description": null
