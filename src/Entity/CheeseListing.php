@@ -10,6 +10,7 @@ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -34,12 +35,21 @@ class CheeseListing
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50
+     * )
      * @ORM\Column(type="string", length=255)
      * @Groups({"cheese_listing:output", "cheese_listing:input"})
      */
     private $title;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     max = 500
+     * )
      * @ORM\Column(type="text")
      * @Groups({"cheese_listing:output"})
      */
