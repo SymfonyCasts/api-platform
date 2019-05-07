@@ -269,7 +269,17 @@
             "id": "admin-component-authentication-support",
             "name": "admin-component-authentication-support",
             "description": null
+        },
+        {
+            "id": "graphql-installation",
+            "name": "graphql-installation",
+            "description": null
+        },
+        {
+            "id": "dataprovider-cheesetypereview",
+            "name": "dataprovider-cheesetypereview",
+            "description": null
         }
     ],
-    "sha": "2cd0f4b1bb8fe87dd5d0bc43c815c1d04bbd60b9"
+    "sha": "41845b590adb92b4d937b8567088ee6017db4322"
 }
