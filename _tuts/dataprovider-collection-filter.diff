@@ -1,0 +1,120 @@
+diff --git a/src/Api/Model/CheeseTypeReview.php b/src/Api/Model/CheeseTypeReview.php
+index d86a12f..887a17f 100644
+--- a/src/Api/Model/CheeseTypeReview.php
++++ b/src/Api/Model/CheeseTypeReview.php
+@@ -1,14 +1,17 @@
+ <?php
+ namespace App\Api\Model;
+ 
++use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
++use App\Filter\CheeseTypeFilter;
+ 
+ /**
+  * @ApiResource(
+  *     collectionOperations={"get"},
+  *     itemOperations={"get"}
+  * )
++ * @ApiFilter(CheeseTypeFilter::class, properties={"cheeseType": "exact"})
+  */
+ class CheeseTypeReview {
+ 
+diff --git a/src/DataProvider/CheeseTypeReviewCollectionDataProvider.php b/src/DataProvider/CheeseTypeReviewCollectionDataProvider.php
+index 27474ad..d7c5005 100644
+--- a/src/DataProvider/CheeseTypeReviewCollectionDataProvider.php
++++ b/src/DataProvider/CheeseTypeReviewCollectionDataProvider.php
+@@ -5,9 +5,18 @@ namespace App\DataProvider;
+ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use App\Api\Model\CheeseTypeReview;
++use Symfony\Component\HttpFoundation\RequestStack;
+ 
+ final class CheeseTypeReviewCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
+ {
++
++    protected $request;
++
++    public function __construct(RequestStack $requestStack)
++    {
++        $this->request = $requestStack->getCurrentRequest();
++    }
++
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+     {
+         return CheeseTypeReview::class === $resourceClass;
+@@ -15,9 +24,16 @@ final class CheeseTypeReviewCollectionDataProvider implements CollectionDataProv
+ 
+     public function getCollection(string $resourceClass, string $operationName = null): \Generator
+     {
+-        // Retrieve the Cheese Type Reviews  collection from somewhere
+-        yield new CheeseTypeReview(1, "Soft", "Suberb tasting cheese, extra nice if it is made from a sheep's milk");
+-        yield new CheeseTypeReview(2, "Hard", "Great on burgers and on grilled sandwiches with ham (Tosti)");
+-        yield new CheeseTypeReview(3, "Blue", "Delicious cheeses, strong flavor with a great lenght and fresh finish");
++        $cheeseTypeFilter = $this->request->query->get('cheeseType');
++
++        if (!isset($cheeseTypeFilter) || $cheeseTypeFilter === 'Soft') {
++            yield new CheeseTypeReview(1, "Soft", "Suberb tasting cheese, extra nice if it is made from a sheep's milk");
++        }
++        if(!isset($cheeseTypeFilter) || $cheeseTypeFilter === 'Hard') {
++            yield new CheeseTypeReview(2, "Hard", "Great on burgers and on grilled sandwiches with ham (Tosti)");
++        }
++        if (!isset($cheeseTypeFilter) || $cheeseTypeFilter === 'Blue') {
++            yield new CheeseTypeReview(3, "Blue", "Delicious cheeses, strong flavor with a great lenght and fresh finish");
++        }
+     }
+ }
+\ No newline at end of file
+diff --git a/src/Filter/CheeseTypeFilter.php b/src/Filter/CheeseTypeFilter.php
+new file mode 100644
+index 0000000..14869e2
+--- /dev/null
++++ b/src/Filter/CheeseTypeFilter.php
+@@ -0,0 +1,46 @@
++<?php
++
++namespace App\Filter;
++
++use ApiPlatform\Core\Api\FilterInterface;
++
++class CheeseTypeFilter implements FilterInterface {
++
++    const STRATEGY_EXACT = 'exact';
++
++    protected $properties;
++
++    public function __construct(array $properties = null)
++    {
++        $this->properties = $properties;
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function getDescription(string $resourceClass): array
++    {
++        $description = [];
++
++        $properties = $this->properties;
++
++        foreach ($properties as $property => $strategy) {
++
++            $filterParameterNames = [
++                $property
++            ];
++
++            foreach ($filterParameterNames as $filterParameterName) {
++                $description[$filterParameterName] = [
++                    'property' => $property,
++                    'type' => 'string',
++                    'required' => false,
++                    'strategy' => self::STRATEGY_EXACT,
++                    'is_collection' =>  false,
++                ];
++            }
++        }
++
++        return $description;
++    }
++}
+\ No newline at end of file

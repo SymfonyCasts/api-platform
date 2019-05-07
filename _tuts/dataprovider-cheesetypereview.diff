@@ -1,0 +1,84 @@
+diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
+index daa24ce..86fa041 100644
+--- a/config/packages/api_platform.yaml
++++ b/config/packages/api_platform.yaml
+@@ -1,6 +1,6 @@
+ api_platform:
+     mapping:
+-        paths: ['%kernel.project_dir%/src/Entity']
++        paths: ['%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/Api/Model']
+     swagger:
+          api_keys:
+              apiKey:
+diff --git a/src/Api/Model/CheeseTypeReview.php b/src/Api/Model/CheeseTypeReview.php
+new file mode 100644
+index 0000000..d86a12f
+--- /dev/null
++++ b/src/Api/Model/CheeseTypeReview.php
+@@ -0,0 +1,66 @@
++<?php
++namespace App\Api\Model;
++
++use ApiPlatform\Core\Annotation\ApiProperty;
++use ApiPlatform\Core\Annotation\ApiResource;
++
++/**
++ * @ApiResource(
++ *     collectionOperations={"get"},
++ *     itemOperations={"get"}
++ * )
++ */
++class CheeseTypeReview {
++
++    /**
++     * @ApiProperty(identifier=true)
++     */
++    private $id;
++
++    private $cheeseType;
++
++    private $review;
++
++    public function __construct($id, $cheeseType, $review)
++    {
++        $this->id = $id;
++        $this->cheeseType = $cheeseType;
++        $this->review = $review;
++    }
++
++    public function getId(): ?int
++    {
++        return $this->id;
++    }
++
++    public function setId(int $id): self
++    {
++        $this->id = $id;
++
++        return $this;
++    }
++
++    public function getCheeseType(): ?string
++    {
++        return $this->cheeseType;
++    }
++
++    public function setCheeseType(string $cheeseType): self
++    {
++        $this->cheeseType = $cheeseType;
++
++        return $this;
++    }
++
++    public function getReview(): ?string
++    {
++        return $this->review;
++    }
++
++    public function setReview(string $review): self
++    {
++        $this->review = $review;
++
++        return $this;
++    }
++}
