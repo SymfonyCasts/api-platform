@@ -5,12 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *     collectionOperations={"get", "post"},
  *     itemOperations={"get", "put"},
- *     shortName="cheeses"
+ *     shortName="cheeses",
+ *     normalizationContext={"groups"={"cheese_listing:output"}},
+ *     denormalizationContext={"groups"={"cheese_listing:input"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  */
