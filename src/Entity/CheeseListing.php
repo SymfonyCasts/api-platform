@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     denormalizationContext={"groups"={"cheese_listing:input"}}
  * )
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
- * @ApiFilter(SearchFilter::class, properties={"title": "partial", "price": "exact", "description": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={"title": "partial", "price": "exact", "description": "partial", "owner": "exact", "owner.username": "partial"})
  * @ApiFilter(PropertyFilter::class)
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  */
