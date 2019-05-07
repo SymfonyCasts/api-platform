@@ -34,6 +34,7 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"cheese_listing:output"})
      */
     private $description;
 
@@ -81,6 +82,16 @@ class CheeseListing
         return $this->description;
     }
 
+    public function setDescription(string $description): self
+    {
+        $this->description = '<p>'.$description.'</p>';
+
+        return $this;
+    }
+
+    /**
+     * @Groups({"cheese_listing:input"})
+     */
     public function setRawDescription(string $rawDescription): self
     {
         $this->description = $rawDescription;
@@ -105,6 +116,9 @@ class CheeseListing
         return $this->createdAt;
     }
 
+    /**
+     * @Groups({"cheese_listing:output"})
+     */
     public function getCreatedAgo()
     {
         return Carbon::instance($this->getCreatedAt())->diffForHumans();
