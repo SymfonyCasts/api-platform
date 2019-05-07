@@ -14,8 +14,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
- *     itemOperations={"get", "put"},
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"access_control"="is_granted('ROLE_USER')"}
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"access_control"="is_granted('ROLE_USER') and object.owner == user"},
+ *         "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *     },
  *     shortName="cheeses",
  *     normalizationContext={"groups"={"cheese_listing:output"}},
  *     denormalizationContext={"groups"={"cheese_listing:input"}}
