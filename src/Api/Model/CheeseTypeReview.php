@@ -1,14 +1,17 @@
 <?php
 namespace App\Api\Model;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Filter\CheeseTypeFilter;
 
 /**
  * @ApiResource(
  *     collectionOperations={"get"},
  *     itemOperations={"get"}
  * )
+ * @ApiFilter(CheeseTypeFilter::class, properties={"cheeseType": "exact"})
  */
 class CheeseTypeReview {
 
