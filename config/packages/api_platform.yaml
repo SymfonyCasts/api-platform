@@ -6,3 +6,12 @@ api_platform:
              apiKey:
                 name: Authorization
                 type: header
+    exception_to_status:
+        # 4 default handlers
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+        ApiPlatform\Core\Exception\InvalidArgumentException: 'HTTP_BAD_REQUEST'
+        ApiPlatform\Core\Exception\FilterValidationException: 400
+        Doctrine\ORM\OptimisticLockException: 409
+
+        # Custom mapping
+        App\Exception\CheeseListingNotFoundException: 404
