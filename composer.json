@@ -14,7 +14,8 @@
         "symfony/dotenv": "4.2.*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.2.*",
+        "webonyx/graphql-php": "^0.13.1"
     },
     "config": {
         "preferred-install": {
