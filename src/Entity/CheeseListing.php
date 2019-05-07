@@ -87,6 +87,15 @@ class CheeseListing
         return $this->description;
     }
 
+    /**
+     * @Groups({"cheese_listing:output"})
+     */
+    public function getShortDescription(): ?string
+    {
+        return substr($this->description, 0,100);
+    }
+
+
     public function setDescription(string $description): self
     {
         $this->description = '<p>'.$description.'</p>';
