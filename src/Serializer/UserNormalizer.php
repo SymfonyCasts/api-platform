@@ -45,11 +45,15 @@ class UserNormalizer implements ContextAwareNormalizerInterface, NormalizerAware
         return $data instanceof User;
     }
 
-    private function userIsOwner($object): bool
+    private function userIsOwner(User $user): bool
     {
-        // Get permissions from user in $this->tokenStorage
-        // for the current $object (book) and
-        // return true or false
-        return true;
+        /**
+         * @var $currentUser User
+         */
+        $currentUser = $this->security->getUser();
+        if (isset($currentUser) && $user->getEmail() === $currentUser->getEmail()) {
+            return true;
+        }
+        return false;
     }
 }
