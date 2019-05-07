@@ -50,7 +50,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:input"})
+     * @Groups({"admin:output", "admin:input"})
      */
     private $roles = [];
 
