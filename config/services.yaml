@@ -31,3 +31,8 @@ services:
         decorates: 'api_platform.serializer.context_builder'
         arguments: [ '@App\Serializer\UserContextBuilder.inner' ]
         autoconfigure: false
+
+    'App\Serializer\UserNormalizer':
+        arguments: [ '@security.helper' ]
+        tags:
+            - { name: 'serializer.normalizer', priority: 64 }

@@ -24,6 +24,8 @@ final class UserContextBuilder implements SerializerContextBuilderInterface
 
         $isAdmin = $this->authorizationChecker->isGranted('ROLE_ADMIN');
 
+        $context['normalization'] = $normalization;
+
         if (isset($context['groups']) && $isAdmin) {
             if ($normalization) {
                 $context['groups'][] = 'admin:output';
