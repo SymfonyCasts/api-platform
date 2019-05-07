@@ -206,8 +206,8 @@
             "description": null
         },
         {
-            "id": "dyanmicgroup-context-createfromrequest",
-            "name": "dyanmicgroup-context-createfromrequest",
+            "id": "dynamicgroup-context-createfromrequest",
+            "name": "dynamicgroup-context-createfromrequest",
             "description": null
         },
         {
@@ -291,15 +291,10 @@
             "description": null
         },
         {
-            "id": "dataprovider-collection-pagination",
-            "name": "dataprovider-collection-pagination",
-            "description": null
-        },
-        {
             "id": "dataprovider-item",
             "name": "dataprovider-item",
             "description": null
         }
     ],
-    "sha": "f32bf2d27c16c15021d5b2a91f3e1fa563e9d6a4"
+    "sha": "c3aeb7ba51fe5d264f36031ddede6651926e4913"
 }
