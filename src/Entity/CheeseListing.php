@@ -41,7 +41,7 @@ class CheeseListing
      *     max = 50
      * )
      * @ORM\Column(type="string", length=255)
-     * @Groups({"cheese_listing:output", "cheese_listing:input"})
+     * @Groups({"cheese_listing:output", "cheese_listing:input", "user:output"})
      */
     private $title;
 
@@ -107,7 +107,7 @@ class CheeseListing
     }
 
     /**
-     * @Groups({"cheese_listing:output"})
+     * @Groups({"cheese_listing:output", "user:output"})
      */
     public function getShortDescription(): ?string
     {

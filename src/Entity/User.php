@@ -53,7 +53,7 @@ class User implements UserInterface
     /**
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:output", "user:input"})
+     * @Groups({"user:output", "user:input", "cheese_listing:output"})
      */
     private $username;
 
