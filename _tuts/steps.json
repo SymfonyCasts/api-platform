@@ -249,7 +249,27 @@
             "id": "published-security-custom-operation",
             "name": "published-security-custom-operation",
             "description": null
+        },
+        {
+            "id": "admin-component-installation",
+            "name": "admin-component-installation",
+            "description": null
+        },
+        {
+            "id": "admin-component-uncomment-js",
+            "name": "admin-component-uncomment-js",
+            "description": null
+        },
+        {
+            "id": "admin-component-react-dependencies",
+            "name": "admin-component-react-dependencies",
+            "description": null
+        },
+        {
+            "id": "admin-component-authentication-support",
+            "name": "admin-component-authentication-support",
+            "description": null
         }
     ],
-    "sha": "51f18eed8f94602b8622d485a3e1faf26d598d9a"
+    "sha": "2cd0f4b1bb8fe87dd5d0bc43c815c1d04bbd60b9"
 }
