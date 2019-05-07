@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use App\Controller\PublishCheeseListing;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,7 +23,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     itemOperations={
  *         "get",
  *         "put"={"access_control"="is_granted('ROLE_USER') and object.owner == user"},
- *         "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *         "delete"={"access_control"="is_granted('ROLE_ADMIN')"},
+ *         "publish"={
+ *             "method"="PUT",
+ *             "path"="/cheeselisting/{id}/publish",
+ *             "controller"=PublishCheeseListing::class,
+ *             "access_control"="is_granted('ROLE_ADMIN')"
+ *         }
  *     },
  *     shortName="cheeses",
  *     normalizationContext={"groups"={"cheese_listing:output"}},
@@ -80,6 +87,7 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"admin:output",})
      */
     private $isPublished;
 
