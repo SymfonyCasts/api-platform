@@ -28,6 +28,7 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"cheese_listing:output", "cheese_listing:input"})
      */
     private $title;
 
@@ -38,6 +39,7 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"cheese_listing:output", "cheese_listing:input"})
      */
     private $price;
 
@@ -54,6 +56,7 @@ class CheeseListing
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->isPublished = false;
     }
 
     public function getId(): ?int
