@@ -289,7 +289,17 @@
             "id": "dataprovider-collection-filter",
             "name": "dataprovider-collection-filter",
             "description": null
+        },
+        {
+            "id": "dataprovider-collection-pagination",
+            "name": "dataprovider-collection-pagination",
+            "description": null
+        },
+        {
+            "id": "dataprovider-item",
+            "name": "dataprovider-item",
+            "description": null
         }
     ],
-    "sha": "79b4081fbaa9d1a7e10f84a75f6253d806f0d485"
+    "sha": "f32bf2d27c16c15021d5b2a91f3e1fa563e9d6a4"
 }
