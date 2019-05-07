@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\CheeseListing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method CheeseListing|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CheeseListingRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $security;
+
+    public function __construct(RegistryInterface $registry, Security $security)
     {
+        $this->security = $security;
         parent::__construct($registry, CheeseListing::class);
+    }
+
+    public function createQueryBuilder($alias, $indexBy = null)
+    {
+        $querybuilder = parent::createQueryBuilder($alias, $indexBy);
+        $user = $this->security->getUser();
+        if (!isset($user) || !$this->security->isGranted('ROLE_ADMIN')) {
+            $querybuilder->andWhere($alias.'.isPublished = :published')->setParameter('published', true);
+        }
+        return $querybuilder;
     }
 
     // /**
