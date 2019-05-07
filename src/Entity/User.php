@@ -77,6 +77,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"owner:output", "owner:input", "admin:output", "admin:input"})
      */
     private $phoneNumber;
 
