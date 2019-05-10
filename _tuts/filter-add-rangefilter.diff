@@ -1,0 +1,20 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index ff0d86a..3ecc5a0 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -5,6 +5,7 @@ namespace App\Entity;
+ use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
+  * @ApiFilter(SearchFilter::class, properties={"title": "partial", "description": "partial"})
++ * @ApiFilter(RangeFilter::class, properties={"price"})
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  */
+ class CheeseListing

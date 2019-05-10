@@ -1,0 +1,13 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 7d5279f..b8ebb58 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -34,7 +34,7 @@ class User implements UserInterface
+     private $password;
+ 
+     /**
+-     * @ORM\Column(type="string", length=255)
++     * @ORM\Column(type="string", length=255, unique=true)
+      */
+     private $username;
+ 

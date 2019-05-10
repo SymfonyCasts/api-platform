@@ -1,0 +1,24 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 90f9766..90dff0b 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -3,6 +3,7 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
++use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+@@ -103,6 +104,11 @@ class CheeseListing
+         return $this->createdAt;
+     }
+ 
++    public function getCreatedAtAgo(): string
++    {
++        return Carbon::instance($this->getCreatedAt())->diffForHumans();
++    }
++
+     public function getIsPublished(): ?bool
+     {
+         return $this->isPublished;

@@ -1,0 +1,23 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 3ecc5a0..d4c660c 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -93,6 +93,18 @@ class CheeseListing
+         return $this->description;
+     }
+ 
++    /**
++     * @Groups("cheese_listing:read")
++     */
++    public function getShortDescription(): string
++    {
++        if (strlen($this->description) < 40) {
++            return $this->description;
++        }
++
++        return substr($this->description, 0, 40).'...';
++    }
++
+     public function setDescription(string $description): self
+     {
+         $this->description = $description;

@@ -1,0 +1,14 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index a3fbc15..71883c5 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -15,7 +15,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  *          "put"
+  *     },
+  *     shortName="cheeses",
+- *     normalizationContext={"groups"={"cheese_listing:read"}}
++ *     normalizationContext={"groups"={"cheese_listing:read"}},
++ *     denormalizationContext={"groups"={"cheese_listing:write"}}
+  * )
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  */

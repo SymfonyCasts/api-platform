@@ -6,295 +6,305 @@
             "description": null
         },
         {
-            "id": "installation-api-platform",
-            "name": "installation-api-platform",
+            "id": "installation-require-api",
+            "name": "Installation: require api",
             "description": null
         },
         {
-            "id": "installation-database",
-            "name": "installation-database",
+            "id": "installation-configure-db",
+            "name": "Installation: configure db",
             "description": null
         },
         {
-            "id": "installation-maker-debug",
-            "name": "installation-maker-debug",
+            "id": "first-resource-install-maker",
+            "name": "First Resource: install maker",
             "description": null
         },
         {
-            "id": "cheeselisting-make",
-            "name": "cheeselisting-make",
+            "id": "first-resource-make-entity",
+            "name": "First Resource: make:entity",
             "description": null
         },
         {
-            "id": "cheeselisting-migration",
-            "name": "cheeselisting-migration",
+            "id": "first-resource-install-migrations",
+            "name": "First Resource: install migrations",
             "description": null
         },
         {
-            "id": "cheeselisting-operation",
-            "name": "cheeselisting-operation",
+            "id": "first-resource-make-migration",
+            "name": "First Resource: Make migration",
             "description": null
         },
         {
-            "id": "cheeselisting-operation-delete",
-            "name": "cheeselisting-operation-delete",
+            "id": "hydra-add-var-description",
+            "name": "Hydra: Add @var description",
             "description": null
         },
         {
-            "id": "cheeselisting-operation-shortname",
-            "name": "cheeselisting-operation-shortname",
+            "id": "profiler-install-debug",
+            "name": "Profiler: install debug",
             "description": null
         },
         {
-            "id": "serialization-rawdescription",
-            "name": "serialization-rawdescription",
+            "id": "operations-configure-to-use-all",
+            "name": "Operations: configure to use all",
             "description": null
         },
         {
-            "id": "serialization-remove-set-description",
-            "name": "serialization-remove-set-description",
+            "id": "operations-remove-delete-operation",
+            "name": "Operations: remove delete operation",
             "description": null
         },
         {
-            "id": "serialization-remove-set-createdat",
-            "name": "serialization-remove-set-createdat",
+            "id": "operations-configure-shortname",
+            "name": "Operations: configure shortName",
             "description": null
         },
         {
-            "id": "seralization-createdat-ago",
-            "name": "seralization-createdat-ago",
+            "id": "operations-show-expanded-operation",
+            "name": "Operations: show expanded operation",
             "description": null
         },
         {
-            "id": "serialgroup-add-to-resource",
-            "name": "serialgroup-add-to-resource",
+            "id": "operations-remove-extra-config",
+            "name": "Operations: remove extra config",
             "description": null
         },
         {
-            "id": "serialgroup-title-price",
-            "name": "serialgroup-title-price",
+            "id": "serialization-add-settextdescription",
+            "name": "Serialization: Add setTextDescription()",
             "description": null
         },
         {
-            "id": "serialgroup-description-createdat",
-            "name": "serialgroup-description-createdat",
+            "id": "serialization-remove-setdescription",
+            "name": "Serialization: remove setDescription()",
             "description": null
         },
         {
-            "id": "filters-boolean-published",
-            "name": "filters-boolean-published",
+            "id": "serialization-remove-setcreatedat",
+            "name": "Serialization: remove setCreatedAt()",
             "description": null
         },
         {
-            "id": "filters-search",
-            "name": "filters-search",
+            "id": "serialization-delete-me",
+            "name": "Serialization: delete me",
             "description": null
         },
         {
-            "id": "filters-short-description",
-            "name": "filters-short-description",
+            "id": "serialization-install-carbon",
+            "name": "Serialization: Install carbon",
             "description": null
         },
         {
-            "id": "filters-property",
-            "name": "filters-property",
+            "id": "serialization-getcreatedatago",
+            "name": "Serialization: getCreatedAtAgo()",
             "description": null
         },
         {
-            "id": "validation",
-            "name": "validation",
+            "id": "groups-add-normalization-group",
+            "name": "Groups: Add normalization group",
             "description": null
         },
         {
-            "id": "user-make",
-            "name": "user-make",
+            "id": "groups-add-read-group-to-some-props",
+            "name": "Groups: add read group to some props",
             "description": null
         },
         {
-            "id": "user-make-entity",
-            "name": "user-make-entity",
+            "id": "groups-add-denormalization-group",
+            "name": "Groups: add denormalization group",
             "description": null
         },
         {
-            "id": "user-migrate",
-            "name": "user-migrate",
+            "id": "groups-add-write-group-to-props",
+            "name": "Groups: add write group to props",
             "description": null
         },
         {
-            "id": "user-apiresource",
-            "name": "user-apiresource",
+            "id": "groups-name-swagger-models",
+            "name": "Groups: Name swagger models",
             "description": null
         },
         {
-            "id": "user-make-relation",
-            "name": "user-make-relation",
+            "id": "groups-add-read-to-getcreatedatago",
+            "name": "Groups: add read to getCreatedAtAgo",
             "description": null
         },
         {
-            "id": "user-relation-migration",
-            "name": "user-relation-migration",
+            "id": "groups-add-phpdoc-above-method",
+            "name": "Groups: Add phpdoc above method",
             "description": null
         },
         {
-            "id": "user-serialgroup",
-            "name": "user-serialgroup",
+            "id": "groups-add-settextdescription-to-write-group",
+            "name": "Groups: Add setTextDescription to write group",
             "description": null
         },
         {
-            "id": "user-validation",
-            "name": "user-validation",
+            "id": "groups-re-add-setdescription",
+            "name": "Groups: Re-add setDescription()",
             "description": null
         },
         {
-            "id": "user-embedded",
-            "name": "user-embedded",
+            "id": "groups-default-ispublished",
+            "name": "Groups: default isPublished",
             "description": null
         },
         {
-            "id": "filter-relationship",
-            "name": "filter-relationship",
+            "id": "filter-add-booleanfilter",
+            "name": "Filter: add BooleanFilter",
             "description": null
         },
         {
-            "id": "subresources",
-            "name": "subresources",
+            "id": "filter-add-missing-use",
+            "name": "Filter: add missing use",
             "description": null
         },
         {
-            "id": "security-jwt-install",
-            "name": "security-jwt-install",
+            "id": "filter-add-searchfilter",
+            "name": "Filter: Add SearchFilter",
             "description": null
         },
         {
-            "id": "security-jwt-config",
-            "name": "security-jwt-config",
+            "id": "filter-add-2nd-field-to-searchfilter",
+            "name": "Filter: Add 2nd field to SearchFilter",
             "description": null
         },
         {
-            "id": "security-swagger-token",
-            "name": "security-swagger-token",
+            "id": "filter-add-rangefilter",
+            "name": "Filter: Add RangeFilter",
             "description": null
         },
         {
-            "id": "security-cheeselisting-access-control",
-            "name": "security-cheeselisting-access-control",
+            "id": "filter-add-getshortdescription",
+            "name": "Filter: Add getShortDescription()",
             "description": null
         },
         {
-            "id": "security-user-access-control",
-            "name": "security-user-access-control",
+            "id": "filter-add-propertyfilter",
+            "name": "Filter: Add PropertyFilter",
             "description": null
         },
         {
-            "id": "dynamicgroup-phonenumber",
-            "name": "dynamicgroup-phonenumber",
+            "id": "pagination-add-pagination-items-per-page",
+            "name": "Pagination: Add pagination_items_per_page",
             "description": null
         },
         {
-            "id": "dynamicgroup-migration",
-            "name": "dynamicgroup-migration",
+            "id": "formats-paste-formats-config",
+            "name": "Formats: paste formats config",
             "description": null
         },
         {
-            "id": "dynamicgroup-owner-output",
-            "name": "dynamicgroup-owner-output",
+            "id": "formats-add-hal",
+            "name": "Formats: Add hal",
             "description": null
         },
         {
-            "id": "dynamicgroup-context-boilerplate",
-            "name": "dynamicgroup-context-boilerplate",
+            "id": "validation-add-basic-constraints",
+            "name": "Validation: Add basic constraints",
             "description": null
         },
         {
-            "id": "dynamicgroup-context-createfromrequest",
-            "name": "dynamicgroup-context-createfromrequest",
+            "id": "user-make-user",
+            "name": "User: make:user",
             "description": null
         },
         {
-            "id": "dynamicgroup-normalizer-boilerplate",
-            "name": "dynamicgroup-normalizer-boilerplate",
+            "id": "user-make-entity-add-username",
+            "name": "User: make:entity add username",
             "description": null
         },
         {
-            "id": "dynamicgroup-normalization-checkowner",
-            "name": "dynamicgroup-normalization-checkowner",
+            "id": "user-fix-getusername",
+            "name": "User: fix getUsername",
             "description": null
         },
         {
-            "id": "dynamicgroup-fix-security-roles",
-            "name": "dynamicgroup-fix-security-roles",
+            "id": "user-make-username-unique",
+            "name": "User: make username unique",
             "description": null
         },
         {
-            "id": "schema-org-cheeselisting",
-            "name": "schema-org-cheeselisting",
+            "id": "user-make-migration",
+            "name": "User: make:migration",
             "description": null
         },
         {
-            "id": "published-security-event-listener",
-            "name": "published-security-event-listener",
+            "id": "user-make-apiresource",
+            "name": "User: make ApiResource",
             "description": null
         },
         {
-            "id": "published-security-custom-exception",
-            "name": "published-security-custom-exception",
+            "id": "user-add-serialization-groups",
+            "name": "User: Add serialization groups",
             "description": null
         },
         {
-            "id": "published-security-cheese-repository",
-            "name": "published-security-cheese-repository",
+            "id": "user-add-validation",
+            "name": "User: Add validation",
             "description": null
         },
         {
-            "id": "published-security-custom-operation",
-            "name": "published-security-custom-operation",
+            "id": "relation-add-cheeselisting-owner",
+            "name": "Relation: add CheeseListing.owner",
             "description": null
         },
         {
-            "id": "admin-component-installation",
-            "name": "admin-component-installation",
+            "id": "relation-make-migration",
+            "name": "Relation: make:migration",
             "description": null
         },
         {
-            "id": "admin-component-uncomment-js",
-            "name": "admin-component-uncomment-js",
+            "id": "relation-expose-cheeselisting-owner",
+            "name": "Relation: expose CheeseListing.owner",
             "description": null
         },
         {
-            "id": "admin-component-react-dependencies",
-            "name": "admin-component-react-dependencies",
+            "id": "relation-expose-user-cheeselistings",
+            "name": "Relation: Expose User.cheeseListings",
             "description": null
         },
         {
-            "id": "admin-component-authentication-support",
-            "name": "admin-component-authentication-support",
+            "id": "relation-embed-user-cheeselistings",
+            "name": "Relation: Embed User.cheeseListings",
             "description": null
         },
         {
-            "id": "graphql-installation",
-            "name": "graphql-installation",
+            "id": "relation-embed-cheeselisting-owner",
+            "name": "Relation: embed CheeseListing.owner",
             "description": null
         },
         {
-            "id": "dataprovider-cheesetypereview",
-            "name": "dataprovider-cheesetypereview",
+            "id": "relation-propertyfilter-on-relation",
+            "name": "Relation: PropertyFilter on relation",
             "description": null
         },
         {
-            "id": "dataprovider-collection",
-            "name": "dataprovider-collection",
+            "id": "relationfilter-use-multiple-lines",
+            "name": "RelationFilter: use multiple lines",
             "description": null
         },
         {
-            "id": "dataprovider-collection-filter",
-            "name": "dataprovider-collection-filter",
+            "id": "relationfilter-filter-on-cheeselisting-owner",
+            "name": "RelationFilter: filter on CheeseListing.owner",
             "description": null
         },
         {
-            "id": "dataprovider-item",
-            "name": "dataprovider-item",
+            "id": "relationfilter-filter-on-owner-username",
+            "name": "RelationFilter: filter on owner.username",
+            "description": null
+        },
+        {
+            "id": "subresource-user-cheeselistings",
+            "name": "Subresource: User.cheeseListings",
+            "description": null
+        },
+        {
+            "id": "subresource-remove-it",
+            "name": "Subresource: remove it",
             "description": null
         }
     ],
-    "sha": "c3aeb7ba51fe5d264f36031ddede6651926e4913"
+    "sha": "a0b418c33319c4a9a6fad322804cc7979d875b01"
 }

@@ -1,0 +1,16 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 8a8ec3d..912f9ae 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -6,7 +6,10 @@ use ApiPlatform\Core\Annotation\ApiResource;
+ use Doctrine\ORM\Mapping as ORM;
+ 
+ /**
+- * @ApiResource()
++ * @ApiResource(
++ *     collectionOperations={"get", "post"},
++ *     itemOperations={"get", "put", "delete"}
++ * )
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  */
+ class CheeseListing

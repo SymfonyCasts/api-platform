@@ -1,0 +1,193 @@
+diff --git a/composer.json b/composer.json
+index dad1bbb..68a14d8 100644
+--- a/composer.json
++++ b/composer.json
+@@ -56,5 +56,8 @@
+             "allow-contrib": false,
+             "require": "4.2.*"
+         }
++    },
++    "require-dev": {
++        "symfony/maker-bundle": "^1.11"
+     }
+ }
+diff --git a/composer.lock b/composer.lock
+index 03399dc..c357029 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "53b0abd9372a0fe91046b606c539e2c9",
++    "content-hash": "089f1124884f97c0fc1104da32532923",
+     "packages": [
+         {
+             "name": "api-platform/api-pack",
+@@ -4280,7 +4280,125 @@
+             "time": "2017-05-14T17:21:12+00:00"
+         }
+     ],
+-    "packages-dev": [],
++    "packages-dev": [
++        {
++            "name": "nikic/php-parser",
++            "version": "v4.2.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/nikic/PHP-Parser.git",
++                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/5221f49a608808c1e4d436df32884cbc1b821ac0",
++                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0",
++                "shasum": ""
++            },
++            "require": {
++                "ext-tokenizer": "*",
++                "php": ">=7.0"
++            },
++            "require-dev": {
++                "phpunit/phpunit": "^6.5 || ^7.0"
++            },
++            "bin": [
++                "bin/php-parse"
++            ],
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.2-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "PhpParser\\": "lib/PhpParser"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "BSD-3-Clause"
++            ],
++            "authors": [
++                {
++                    "name": "Nikita Popov"
++                }
++            ],
++            "description": "A PHP parser written in PHP",
++            "keywords": [
++                "parser",
++                "php"
++            ],
++            "time": "2019-02-16T20:54:15+00:00"
++        },
++        {
++            "name": "symfony/maker-bundle",
++            "version": "v1.11.6",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/maker-bundle.git",
++                "reference": "d262c2cace4d9bca99137a84f6fc6ba909a17e02"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/d262c2cace4d9bca99137a84f6fc6ba909a17e02",
++                "reference": "d262c2cace4d9bca99137a84f6fc6ba909a17e02",
++                "shasum": ""
++            },
++            "require": {
++                "doctrine/inflector": "^1.2",
++                "nikic/php-parser": "^4.0",
++                "php": "^7.0.8",
++                "symfony/config": "^3.4|^4.0",
++                "symfony/console": "^3.4|^4.0",
++                "symfony/dependency-injection": "^3.4|^4.0",
++                "symfony/filesystem": "^3.4|^4.0",
++                "symfony/finder": "^3.4|^4.0",
++                "symfony/framework-bundle": "^3.4|^4.0",
++                "symfony/http-kernel": "^3.4|^4.0"
++            },
++            "require-dev": {
++                "allocine/twigcs": "^3.0",
++                "doctrine/doctrine-bundle": "^1.8",
++                "doctrine/orm": "^2.3",
++                "friendsofphp/php-cs-fixer": "^2.8",
++                "symfony/phpunit-bridge": "^3.4|^4.0",
++                "symfony/process": "^3.4|^4.0",
++                "symfony/yaml": "^3.4|^4.0"
++            },
++            "type": "symfony-bundle",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "1.0-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Bundle\\MakerBundle\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony Maker helps you create empty commands, controllers, form classes, tests and more so you can forget about writing boilerplate code.",
++            "homepage": "https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html",
++            "keywords": [
++                "code generator",
++                "generator",
++                "scaffold",
++                "scaffolding"
++            ],
++            "time": "2019-04-19T17:26:45+00:00"
++        }
++    ],
+     "aliases": [],
+     "minimum-stability": "stable",
+     "stability-flags": [],
+diff --git a/config/bundles.php b/config/bundles.php
+index 1edaed6..b55f43b 100644
+--- a/config/bundles.php
++++ b/config/bundles.php
+@@ -8,4 +8,5 @@ return [
+     Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
+     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
++    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
+ ];
+diff --git a/symfony.lock b/symfony.lock
+index 1b596b4..d5221a1 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -97,6 +97,9 @@
+             "config/packages/nelmio_cors.yaml"
+         ]
+     },
++    "nikic/php-parser": {
++        "version": "v4.2.1"
++    },
+     "phpdocumentor/reflection-common": {
+         "version": "1.0.1"
+     },
+@@ -210,6 +213,15 @@
+     "symfony/inflector": {
+         "version": "v4.2.8"
+     },
++    "symfony/maker-bundle": {
++        "version": "1.0",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "1.0",
++            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
++        }
++    },
+     "symfony/polyfill-mbstring": {
+         "version": "v1.11.0"
+     },

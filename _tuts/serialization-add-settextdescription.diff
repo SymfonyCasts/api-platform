@@ -1,0 +1,18 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 1e4a173..1dbe75f 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -81,6 +81,13 @@ class CheeseListing
+         return $this;
+     }
+ 
++    public function setTextDescription(string $description): self
++    {
++        $this->description = nl2br($description);
++
++        return $this;
++    }
++
+     public function getPrice(): ?int
+     {
+         return $this->price;

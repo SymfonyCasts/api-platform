@@ -1,0 +1,13 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 19bbe15..ff0d86a 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"}
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
+- * @ApiFilter(SearchFilter::class, properties={"title": "partial"})
++ * @ApiFilter(SearchFilter::class, properties={"title": "partial", "description": "partial"})
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  */
+ class CheeseListing

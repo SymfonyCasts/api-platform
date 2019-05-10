@@ -1,0 +1,30 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 76f7e2d..90f9766 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -52,6 +52,11 @@ class CheeseListing
+      */
+     private $isPublished;
+ 
++    public function __construct()
++    {
++        $this->createdAt = new \DateTimeImmutable();
++    }
++
+     public function getId(): ?int
+     {
+         return $this->id;
+@@ -98,13 +103,6 @@ class CheeseListing
+         return $this->createdAt;
+     }
+ 
+-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+-    {
+-        $this->createdAt = $createdAt;
+-
+-        return $this;
+-    }
+-
+     public function getIsPublished(): ?bool
+     {
+         return $this->isPublished;

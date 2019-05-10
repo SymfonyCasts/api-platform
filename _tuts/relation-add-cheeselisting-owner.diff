@@ -1,0 +1,100 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index c02caa1..6e64fcf 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -80,6 +80,12 @@ class CheeseListing
+      */
+     private $isPublished = false;
+ 
++    /**
++     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
++     * @ORM\JoinColumn(nullable=false)
++     */
++    private $owner;
++
+     public function __construct()
+     {
+         $this->createdAt = new \DateTimeImmutable();
+@@ -176,4 +182,16 @@ class CheeseListing
+ 
+         return $this;
+     }
++
++    public function getOwner(): ?User
++    {
++        return $this->owner;
++    }
++
++    public function setOwner(?User $owner): self
++    {
++        $this->owner = $owner;
++
++        return $this;
++    }
+ }
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index a1864ea..042652b 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -3,6 +3,8 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
++use Doctrine\Common\Collections\ArrayCollection;
++use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+ use Symfony\Component\Security\Core\User\UserInterface;
+@@ -54,6 +56,16 @@ class User implements UserInterface
+      */
+     private $username;
+ 
++    /**
++     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
++     */
++    private $cheeseListings;
++
++    public function __construct()
++    {
++        $this->cheeseListings = new ArrayCollection();
++    }
++
+     public function getId(): ?int
+     {
+         return $this->id;
+@@ -138,4 +150,35 @@ class User implements UserInterface
+ 
+         return $this;
+     }
++
++    /**
++     * @return Collection|CheeseListing[]
++     */
++    public function getCheeseListings(): Collection
++    {
++        return $this->cheeseListings;
++    }
++
++    public function addCheeseListing(CheeseListing $cheeseListing): self
++    {
++        if (!$this->cheeseListings->contains($cheeseListing)) {
++            $this->cheeseListings[] = $cheeseListing;
++            $cheeseListing->setOwner($this);
++        }
++
++        return $this;
++    }
++
++    public function removeCheeseListing(CheeseListing $cheeseListing): self
++    {
++        if ($this->cheeseListings->contains($cheeseListing)) {
++            $this->cheeseListings->removeElement($cheeseListing);
++            // set the owning side to null (unless already changed)
++            if ($cheeseListing->getOwner() === $this) {
++                $cheeseListing->setOwner(null);
++            }
++        }
++
++        return $this;
++    }
+ }

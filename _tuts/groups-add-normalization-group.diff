@@ -1,0 +1,14 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 90dff0b..652fc22 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -13,7 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
+  *          "get"={},
+  *          "put"
+  *     },
+- *     shortName="cheeses"
++ *     shortName="cheeses",
++ *     normalizationContext={"groups"={"cheese_listing:read"}}
+  * )
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  */

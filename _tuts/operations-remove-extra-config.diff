@@ -1,0 +1,13 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index c8ac93c..1e4a173 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
+  * @ApiResource(
+  *     collectionOperations={"get", "post"},
+  *     itemOperations={
+- *          "get"={"path"="/i❤️cheeses/{id}"},
++ *          "get"={},
+  *          "put"
+  *     },
+  *     shortName="cheeses"

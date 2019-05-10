@@ -1,0 +1,40 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 3c7d61b..c02caa1 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -11,6 +11,7 @@ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+ use Symfony\Component\Serializer\Annotation\Groups;
++use Symfony\Component\Validator\Constraints as Assert;
+ 
+ /**
+  * @ApiResource(
+@@ -44,12 +45,19 @@ class CheeseListing
+     /**
+      * @ORM\Column(type="string", length=255)
+      * @Groups({"cheese_listing:read", "cheese_listing:write"})
++     * @Assert\NotBlank()
++     * @Assert\Length(
++     *     min=2,
++     *     max=50,
++     *     maxMessage="Describe your cheese in 50 chars or less"
++     * )
+      */
+     private $title;
+ 
+     /**
+      * @ORM\Column(type="text")
+      * @Groups({"cheese_listing:read"})
++     * @Assert\NotBlank()
+      */
+     private $description;
+ 
+@@ -58,6 +66,7 @@ class CheeseListing
+      *
+      * @ORM\Column(type="integer")
+      * @Groups({"cheese_listing:read", "cheese_listing:write"})
++     * @Assert\NotBlank()
+      */
+     private $price;
+ 

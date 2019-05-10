@@ -1,0 +1,13 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 8a8af5f..fa15f37 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -111,6 +111,8 @@ class CheeseListing
+     }
+ 
+     /**
++     * How long ago in text that this cheese listing was added.
++     *
+      * @Groups("cheese_listing:read")
+      */
+     public function getCreatedAtAgo(): string

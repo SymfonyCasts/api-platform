@@ -1,0 +1,13 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index f8a8f1d..8a8ec3d 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -29,6 +29,8 @@ class CheeseListing
+     private $description;
+ 
+     /**
++     * The price of this delicious cheese, in cents
++     *
+      * @ORM\Column(type="integer")
+      */
+     private $price;

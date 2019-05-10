@@ -1,0 +1,14 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 12d3136..801ede1 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -31,7 +31,8 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * @ApiFilter(SearchFilter::class, properties={
+  *     "title": "partial",
+  *     "description": "partial",
+- *     "owner": "exact"
++ *     "owner": "exact",
++ *     "owner.username": "partial"
+  * })
+  * @ApiFilter(RangeFilter::class, properties={"price"})
+  * @ApiFilter(PropertyFilter::class)

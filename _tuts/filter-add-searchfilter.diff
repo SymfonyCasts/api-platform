@@ -1,0 +1,20 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 779529c..19bbe15 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -5,6 +5,7 @@ namespace App\Entity;
+ use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+ use Symfony\Component\Serializer\Annotation\Groups;
+@@ -21,6 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"}
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
++ * @ApiFilter(SearchFilter::class, properties={"title": "partial"})
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  */
+ class CheeseListing

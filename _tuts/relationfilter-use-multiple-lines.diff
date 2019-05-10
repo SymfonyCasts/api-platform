@@ -1,0 +1,16 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index e8f4581..f611847 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -28,7 +28,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     }
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
+- * @ApiFilter(SearchFilter::class, properties={"title": "partial", "description": "partial"})
++ * @ApiFilter(SearchFilter::class, properties={
++ *     "title": "partial",
++ *     "description": "partial"
++ * })
+  * @ApiFilter(RangeFilter::class, properties={"price"})
+  * @ApiFilter(PropertyFilter::class)
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")

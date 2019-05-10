@@ -1,0 +1,22 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 5609a7d..e8f4581 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -44,7 +44,7 @@ class CheeseListing
+ 
+     /**
+      * @ORM\Column(type="string", length=255)
+-     * @Groups({"cheese_listing:read", "cheese_listing:write"})
++     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read"})
+      * @Assert\NotBlank()
+      * @Assert\Length(
+      *     min=2,
+@@ -65,7 +65,7 @@ class CheeseListing
+      * The price of this delicious cheese, in cents
+      *
+      * @ORM\Column(type="integer")
+-     * @Groups({"cheese_listing:read", "cheese_listing:write"})
++     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read"})
+      * @Assert\NotBlank()
+      */
+     private $price;

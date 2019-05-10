@@ -1,0 +1,22 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index cf99d11..b5f65bc 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -2,7 +2,9 @@
+ 
+ namespace App\Entity;
+ 
++use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+@@ -16,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     normalizationContext={"groups"={"user:read"}},
+  *     denormalizationContext={"groups"={"user:write"}},
+  * )
++ * @ApiFilter(PropertyFilter::class)
+  * @UniqueEntity(fields={"username"})
+  * @UniqueEntity(fields={"email"})
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")

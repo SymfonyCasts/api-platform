@@ -1,0 +1,20 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index f7e5c09..b5f65bc 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -4,7 +4,6 @@ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiResource;
+-use ApiPlatform\Core\Annotation\ApiSubresource;
+ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
+@@ -63,7 +62,6 @@ class User implements UserInterface
+     /**
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
+      * @Groups("user:read")
+-     * @ApiSubresource()
+      */
+     private $cheeseListings;
+ 

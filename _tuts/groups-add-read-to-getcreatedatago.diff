@@ -1,0 +1,14 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index f799f5d..8a8af5f 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -110,6 +110,9 @@ class CheeseListing
+         return $this->createdAt;
+     }
+ 
++    /**
++     * @Groups("cheese_listing:read")
++     */
+     public function getCreatedAtAgo(): string
+     {
+         return Carbon::instance($this->getCreatedAt())->diffForHumans();

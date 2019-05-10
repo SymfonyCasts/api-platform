@@ -1,0 +1,13 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 0443c89..7d5279f 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -62,7 +62,7 @@ class User implements UserInterface
+      */
+     public function getUsername(): string
+     {
+-        return (string) $this->email;
++        return (string) $this->username;
+     }
+ 
+     /**

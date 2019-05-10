@@ -1,0 +1,40 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 3784887..a1864ea 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -4,14 +4,18 @@ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use Doctrine\ORM\Mapping as ORM;
++use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+ use Symfony\Component\Security\Core\User\UserInterface;
+ use Symfony\Component\Serializer\Annotation\Groups;
++use Symfony\Component\Validator\Constraints as Assert;
+ 
+ /**
+  * @ApiResource(
+  *     normalizationContext={"groups"={"user:read"}},
+  *     denormalizationContext={"groups"={"user:write"}},
+  * )
++ * @UniqueEntity(fields={"username"})
++ * @UniqueEntity(fields={"email"})
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+  */
+ class User implements UserInterface
+@@ -26,6 +30,8 @@ class User implements UserInterface
+     /**
+      * @ORM\Column(type="string", length=180, unique=true)
+      * @Groups({"user:read", "user:write"})
++     * @Assert\NotBlank()
++     * @Assert\Email()
+      */
+     private $email;
+ 
+@@ -44,6 +50,7 @@ class User implements UserInterface
+     /**
+      * @ORM\Column(type="string", length=255, unique=true)
+      * @Groups({"user:read", "user:write"})
++     * @Assert\NotBlank()
+      */
+     private $username;
+ 

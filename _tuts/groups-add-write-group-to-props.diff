@@ -1,0 +1,22 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 71883c5..5d273bb 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -31,7 +31,7 @@ class CheeseListing
+ 
+     /**
+      * @ORM\Column(type="string", length=255)
+-     * @Groups({"cheese_listing:read"})
++     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+      */
+     private $title;
+ 
+@@ -45,7 +45,7 @@ class CheeseListing
+      * The price of this delicious cheese, in cents
+      *
+      * @ORM\Column(type="integer")
+-     * @Groups({"cheese_listing:read"})
++     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+      */
+     private $price;
+ 

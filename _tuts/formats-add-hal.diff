@@ -1,0 +1,11 @@
+diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
+index 4f2e862..ae73e69 100644
+--- a/config/packages/api_platform.yaml
++++ b/config/packages/api_platform.yaml
+@@ -11,3 +11,6 @@ api_platform:
+         html:
+             mime_types:
+                 - text/html
++        jsonhal:
++            mime_types:
++                - application/hal+json
