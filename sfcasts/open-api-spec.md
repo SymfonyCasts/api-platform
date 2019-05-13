@@ -1,94 +1,94 @@
-# Open Api Spec
+# OpenAPI Specification
 
-Coming soon...
+Confession time: this tutorial is about a *lot* more than just API Platform. The
+world of APIs has undergone *massive* changes over the past few years, introducing
+new hypermedia formats, standards, specifications, performance tools and more!
+API Platform lives right in the middle of these: bringing bleeding-edge best practices
+right into your app. If you want to understand API Platform, you need to understand
+modern API development.
 
-This story is a lot more than just how to use API platform because API platform that
-leverages so many things about modern API APIs and modern API standards that this, it
-makes this tutorial. Let's turn. Story is really all about all of the modern concepts
-and exciting things happening around building an API, so we talked about this
-interface here. This is called that swagger and what swagger is, it is truly just an
-interface. It's just a basically an API documentation interface. If you Google for
-swagger and open their site, you can actually see this on their tools. It's called,
-this is called these Swagger UI.
+I told you earlier that what we're looking at is called Swagger. Swagger is basically
+an API documentation interface - a sort of, interactive README. Google for
+Swagger and open their site. Under tools, the one *we're* using is called Swagger UI.
 
-Okay.
+Yep!
 
-It's a little late, just a user interface to visualize and interact with your API or
-resources. It even says without having any of the implementation logic in place. Let
-me show you what I mean by that. They have a live demo here where you can see
-something that looks very similar to what we've been using here. The way that swagger
-works is that up here you pointed at a `swagger.json` File. I copy that you were
-on, put up my browser. You can check this out. This is a huge JSON file that
-describes an API. This API might not even exist. This could just be a uh, a uh,
-document that you build at the beginning of your API. It talks about all of your
-paths down here, all of the, um, description of those, the parameters on the input,
-what happens on the output, uh, things related to security on there. It basically
-tries to completely describe how to use your API. So if you have one of these, JSON,
-if you have one of these configuration files, you can plug it into swagger in swagger
-will generate itself automatically.
+> Swagger UI allows anyone to visualize and interact with your API's resources
+> without having any of the implementation in place.
 
-Yeah.
+Literally, you could first *describe* your API - what endpoints it has, what it
+returns, what fields to expect - and use Swagger UI to visualize your future API,
+*before* writing even *one* line of code for it.
 
-Now this configuration format is actually called OpenAPI. So swagger is the user
-interface, but what it's consuming here as a format and agreed upon official SPEC
-format called the OpenAPI Specification to make things more confusing, that
-specification itself, you still also be called `swagger`, but starting an OpenAPI 3.0
-it's called `openapi`. And then swagger is, it just is just the user interface for it.
+Let me show you what I mean: they have a live demo here where you can see something
+that looks *very* similar to our API docs. See that `swagger.json` URL on top?
+Copy that, open a new tab, and paste. Woh! It's a *huge* JSON file that describes
+the API! *This* is how Swagger UI works: it reads then JSON file, then builds
+the visual, interactive interface. Heck, this API might not even *exist*! As
+long as you have this JSON file, you can view it in Swagger.
 
-Of course this is a really cool idea, but you know it's already enough work just to
-build an Api, let alone build an API and to try to like build and maintain giant
-document about your API, which is why we don't have to do this inside of Api Platform
-and API platform. The whole thing is about creating these resources and configuring
-them. We haven't done any configuration yet, but we're going to be able to decide.
-We're gonna be able to customize how our resources are exposed. He kept bought from
-then takes that configuration would give it to both create our API, but also to
-create one of these OpenAPI specifications. Check this out. Go to `/api/docs.json`
-we have one of those OpenAPI documentation things. Yeah, it's been great for
-us automatically and actually you notice it says `swagger: "2.0:"` up here. You can also do
-`?spec_version=3`. This actually gives you an OpenAPI 3 so
-this is the latest version of the format, not that that is that important on our
-documentation homepage. If you view source on this, you'll see that the data from
-this end point here was already being included on the page and a little `swagger-data`
-`<script>` and our documentation was set up to automatically read that. So that's why this
-page is being, is generating is generated automatically based off of our OpenAPI
-Specification, which Oh, a API Platform is giving us for free.
+The JSON file contains all your paths, a description of each, the parameters of
+the input, what happens on the output, things related to security... it basically
+tries to *completely* describe your API.
 
-You can also add the `?spec_version=3` to this page.
-You'll see it changes to `OAS3` not much really changes in the API and
-the uh, and the frontend of this. But uh, this technically uses behind the scenes.
-Now, uh, it's using the uh, latest OpenAPI information which has an old couple of
-extra things in it.
+So *if* you have one of these JSON configuration files, you can plug it into Swagger
+UI and... boom! You get a rich, descriptive interface.
 
-Okay.
+## Hello OpenAPI
 
-So being able to have this, having this OpenAPI Specification automatically gives us
-the Swagger UI automatically, which is incredible. But just to kind of get you
-thinking about the importance of this swagger is actually more than just this UI.
-They also other tools or for example, the Swagger Code Generation, which is where you
-can actually generate an SDK in many different languages. Based off of that. This is
-something that we're going to talk about later.
+The format of this file is called OpenAPI. So, Swagger UI is the interface and
+it understands this sort of, official spec format for describing APIs called
+OpenAPI. To make things a bit *more* confusing, the OpenAPI spec *used* to be
+called Swagger. Starting with OpenAPI 3.0, it's called OpenAPI and Swagger is
+just the interface part.
 
-Yeah,
+Phew!
 
-there was, the last thing I want to point out is in addition to the end points, the
-OpenAPI specification also has information about your what are called models. Right
-now we have a `CheeseListing`, a model, and it exposes it to her information on the
-bottom, since we have a `CheeseListening` model and check the Sada already knows that
-`id` an `integer` and somehow knows that this is a `readonly`. We'll talk about why this
-is readonly a little bit. It also knows that a `price` is an `integer`, which is
-amazing.
+Anyways, this is all really cool... but creating an API is already enough work,
+without needing to try to build and maintain this gigantic JSON document. Which
+is why Api Platform does it for you.
 
-Okay,
+Remember: API Platform's philosophy is this: create some resources, tweak any
+configuration you need - we haven't done that, but will soon - and let API Platform
+*expose* those resources as an API. It does that, but to be an *extra* good friend,
+it *also* creates an OpenAPI specification. Check it out: go to `/api/docs.json`.
 
-and that to `createdAt` is a `string`, but it's a string and a `datetime`.
+Hello giant OpenAPI spec document! Notice it says `swagger: "2.0:"` up here. OpenAPI
+version 3 is still pretty new, so API Platform 2 still uses the old format. Add
+`?spec_version=3` to the URL to see... yep! This is that same document in the latest
+format.
 
-Okay.
+Now, go back to our API doc homepage and view the HTML source. Ha! The OpenAPI JSON
+data is *already* being included on this page via a little `swagger-data` script
+tag! *That* is how this page is working!
 
-The second I'll show you where some of that information is coming from, but it's
-actually being read from our code. Before we get there, we need to talk about one
-other really important thing that we're already seeing in that is the JSON-LD and
-hydra format.
+To generate Swagger UI from OpenAPI version 3, you can add the same `?spec_version=3`
+to the URL . Yep, you can see the `OAS3` tag. That doesn't change a *lot* on the
+frontend, but there *are* a few new things pieces of information that Swagger
+can now use thanks to the new spec version.
 
-Okay.
+## What else Can OpenAPI Do? Code Generation!
 
-That is coming back and our API responses.
+But... other than the fact that it gives us this nice Swagger UI, why should we
+care that there's some giant OpenAPI JSON spec being created behind the scenes?
+Back on the Swagger site, one of the *other* tools is called Swagger CodeGen:
+a tool for creating an SDK for your API in almost any language! Think about it:
+if your API is fully-documented in a machine-understandable language, shouldn't
+we be able to generate a JavaScript or PHP library that's *customized* for talking
+with your API? You totally can!
+
+The last thing I want to point out is that, in addition to the endpoints, or "paths",
+the OpenAPI specification also has information about "models". In the JSON spec,
+scroll *all* the way to the bottom: it describes our `CheeseListing` model and
+the fields to expect when sending an receiving this model. You can see this same
+info in Swagger.
+
+And woh! It somehow *already* knows that the `id` is an `integer` and that it's
+`readonly`. It also knows price is an `integer` and `createdAt` is a string in a
+`datetime` format. That's awesome! API Platform *reads* that information directly
+from our code, which means that our API docs stay accurate without us needing to
+think about that. We'll learn more about how that works along the way.
+
+But before we get there, we need to talk about one other *super* important thing
+that we're already seeing: the JSON-LD and Hydra format that's being returned by
+our API responses.

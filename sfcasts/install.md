@@ -1,104 +1,106 @@
-# Install
+# API Platform Installation!
 
-Coming soon...
+Yo friends! It's time to talk about... drum roll... how to bake a delicious cake
+that looks like an Oreo. Wait... huh? Wrong tutorial. It's time to talk about
+API Platform! And I am *so* excited... like *almost* as excited as if I were eating
+a giant cake that looks like an Oreo.
 
-Yeah.
+API Platform is *crushing* it these days - everywhere I turn, someone is *raving*
+about it! Its lead developer - Kévin Dunglas - is a core contributor of Symfony,
+*super* nice guy and absolutely pushing the boundaries of what API's can do. You
+will see that first-hand. He was also nice enough to guide us on this tutorial!
 
-Hi Friends. Welcome to our tutorial on API Platform. I've been looking forward to
-this tutorial for a long time because API Platform is just absolutely blowing up
-right now. It's incredible what you can do with this because the problem is that
-building API has, it's not so easy anymore. It's a lot of work. It's a lot more than
-just returning JSON. It's taking your models and it's being able to serialize them
-and then deserialize them. There's hypermedia and linking. There's errors and air
-format status code generating documentation.
+## Modern APIs are Hard. API Platform is not
 
-Okay.
+If you need to build a few API endpoints *just* to help with your JavaScript,
+you might be thinking:
 
-Handling security cores.
+> What's the big deal? Returning some JSON here and there is already pretty easy!
 
-Okay.
+Little-by-little, I think this way of thinking is becoming less and less true.
+*Just* like how frameworks were born when web applications became more and more
+complex, tools like API Platform have been created because the same things is
+happening to APIs.
 
-And this is why API Platform exists because these days you really to build any type
-of a complex API, you need something to help you put those pieces together. Api
-Platform has tons of features. I mean it's ridiculous. It gives you the ability to
-build REST CRUDs a hypermedia with something called JSON Ld, which we'll talk
-about later. Page nation has built in filtering validation, content negotiation,
-schema.org in integration, GraphQl, docker support and Admin and client generators
-and a lot more, uh, it can be overwhelming, which is why we're going to go through it
-by step by step so we can absolutely master it. So what API Platform wants you to do
-is
+These days, API's are more than just returning JSON: it's about being able to
+serialize and deserialize your models, maybe into multiple formats, like JSON or XML,
+but also JSON-LD or HAL JSON. Then there's hypermedia, linked data, status codes,
+error formats, documentation - including OpenAPI spec documentation that can power
+Swagger. Then there's security, CORS, access control and other important features
+like pagination, filtering, validation, content-type negotiation, GraphQL... and
+I could keep going.
 
-think differently about your application. So in Symfony weren't used to thinking
-about routes, controllers, and then our response, which might be html or maybe we re
-we returned JSON with the API Platform. It wants you to think all about your model.
-So if you're used to doctrine, it would be your entity usually. So you have a model
-and then you're just able to activate different ways to expose that. You can expose
-that model as a rest API or you could expose that model as a GraphQL API, which
-we'll talk about later. All right, well before we get into any more of that, let's
-actually get started. Uh, API Platform itself is just an independent PHP library
-that's built on top of the Symfony components. But as you can see here, it works best
-as a, they recommend using it inside of the Symfony framework, which is great for us.
-Now, if you fell along their documentation here for getting started, they actually
-have their own
+*This* is why API Platform exists: to allow us to build a *killer* API and *love*
+doing it! Oh, and all that stuff I just listed that an API needs? API Platform
+comes with *all* of that. And it's not just for building a *huge* API. It's the
+perfect tool even if you only need a few endpoints to power your own JavaScript.
 
-Abi Platform and distribution, which is actually a whole directory structure that
-gives you, uh, an API skeleton, a JavaScript frontend, uh, and several other things
-and at wires it together all via docker. So it's a little bit of a bigger thing to
-start with, but it gives you all of the features and at wires in love with docker. So
-if that speaks to you, you can do that. Um, or you can do it. We're going to do,
-which is going to be a little better for learning API Platform, which is we're just
-going to install API Platform as a bundle into a Symfony application. So as always
-to get
+## API Platform Distribution
 
-okay
+So let's do this! API Platform is an independent PHP library that's built on top
+of the Symfony components. You don't *need* to use it from inside a Symfony app,
+but as you can see here that's how they recommend using it, which is great for us.
 
-the most out of, uh, the tutorial that you should absolutely code along with me. You
-can download the course code on this page. After you unzip it, you'll have a
-directory structure that looks like what I have here, which is actually just a
-Symfony 4.2 skeleton app so it has almost nothing installed into it right now. It's
-just tiny Symfony. So now I'll move over it. Let's move over to our terminal. Ah,
-follow the `README.md` file for setup instructions. The last step will be to open a
-terminal move into the project and how to use the Symfony executable, which you can
-download at http://symfony.com/download and say 
+If you follow their documentation, they have their *own* API Platform *distribution*:
+a custom directory structure with a *bunch* of stuff: one directory for your API,
+another for your JavaScript frontend, *another* for an admin frontend *all*
+wired together with Docker! Woh! It's a bit of a "big" thing to start with, but
+you get all of the features out-of-the-box. If that speaks to you, you can totally
+use that.
+
+But we will do something different: we're going to install API Platform as a bundle
+into a normal, traditional Symfony app. It makes learning API Platform a bit easier.
+Once you're confident, for your project, you can do it this way *or* jump in and
+use the official distribution.
+
+## Project Setup
+
+Anyways, to become the API hero that we all need, you should *totally* code along
+with me by downloading the course code from this page. After you unzip it, you'll
+find a `start/` directory inside with that same code you see here... which is
+*actually* just a new Symfony 4.2 skeleton project: there is *nothing* special
+installed or configured yet. Follow the `README.md` file for the setup instructions.
+
+The *last* step will be to open a terminal, move into the project and start the
+Symfony server with:
 
 ```terminal
 symfony serve -d
-``` 
+```
 
-That will start a
-little web server listening on port `8000` I can move back to your browser and go to
-`localhost:8000` to see to see nothing. Just the nice opening welcome page
-cause there's nothing in our project right now. All right, so two in stock component
-to install API Platform. It's so awesome. I'm going to open a shit. I don't need
-to do that. It's so awesome. In my terminal. 
- 
+This uses the `symfony` executable - an awesome little dev tool that you can
+download at https://symfony.com/download. This starts a web server on port 8000
+that runs in the background. Which means that *we* can find our browser, head to
+`localhost:8000` and see... well, basically nothing! Just the nice welcome page
+you see in an empty Symfony app.
+
+## Installing API Platform
+
+Now that we have an empty Symfony project, how can we install API Platform? Oh,
+it's so awesome. Find your terminal and run:
+
 ```terminal
 composer require api
 ```
- 
-and that's it.
 
-You'll notice that this is installing something called the `api-platform/api-pack`. If
-you remember from our Symfony series, a pack is just a fake repository that helps you
-install several things. So we can pull that up and get hub, we can check out, it's
-composed at JSON file and we can see it downloads a number of things. It's going to
-download doctrine for us. It also downloads a CORS bundle, which we'll talk about
-later, installs, annotations, gets API Platform itself and also grabs a couple other
-things like Symfony validation system, uh, the Symfony security system and even
-twig, which is used for some really cool documentation that you're going to see in a
-second.
+That's it. You'll notice that this is installing something called the
+`api-platform/api-pack`. If you remember from our Symfony series, a "pack" is sort
+of a "fake" library that helps to install several thing at once.
 
-Okay.
+Heck, you can see this at `https://github.com/api-platform/api-pack`: it's a single
+`composer.json` file that requires several libraries, like Doctrine, a CORS
+bundle that we'll talk about later, annotations, API Platform itself and a few
+parts of Symfony, like the validation system, security component and even twig,
+which is used to generate some really cool documentation that we'll see in a minute.
 
-But it's all just standard Symfony features plus API Platform.
+But, there's nothing *that* interesting yet: just API Platform and some standard
+Symfony packages.
 
-Okay.
+Back in the terminal, it's done and some details on how to get started. We'll
+go through these steps in a minute. But before we do *anything* else, we can already
+go back to the browser and head to `https://localhost:8000/api`... to see woh!
+We have API documentation! Well, we don't *have* any API yet... so there's nothing
+here. But this is going to be a *huge*, free feature you get with API Platform:
+as we build our API, this page will automatically update.
 
-So if we go back to your terminal, Yup, there it is. It's already telling us to
-modify or David would that really nice. Um, the really nice welcome message with some
-awesome hints here with some notes on how we can get started. Even even the, um,
-hints about GraphQL support, which is awesome, but we'll get through all of that.
-But as soon as we've done this, we can actually go over to a browser and go to 
-`localhost:8000/api` to see are already made API documentation, which is something we
-get absolutely for free with API Platform. It's nothing here yet because we still
-have an empty project, but we're going to fix that next.
+Let's see that next by creating an *exposing* our first API Resource.
