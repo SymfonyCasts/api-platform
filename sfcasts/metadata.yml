@@ -1,1 +1,4 @@
-chapters: []
+chapters:
+  - install         #raw
+  - api-resource    #raw
+  - open-api-spec   #raw
