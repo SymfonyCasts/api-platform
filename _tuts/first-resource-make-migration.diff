@@ -1,3 +1,15 @@
+diff --git a/README.md b/README.md
+index d178a74..c6da257 100644
+--- a/README.md
++++ b/README.md
+@@ -35,6 +35,7 @@ the database & tables!
+ 
+ ```
+ php bin/console doctrine:database:create
++php bin/console doctrine:migrations:migrate
+ ```
+ 
+ If you get an error that the database exists, that should
 diff --git a/src/Migrations/Version20190508193750.php b/src/Migrations/Version20190508193750.php
 new file mode 100644
 index 0000000..0c2c8e9
