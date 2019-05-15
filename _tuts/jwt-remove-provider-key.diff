@@ -1,0 +1,12 @@
+diff --git a/config/packages/security.yaml b/config/packages/security.yaml
+index 5d573bc..2cbed62 100644
+--- a/config/packages/security.yaml
++++ b/config/packages/security.yaml
+@@ -18,7 +18,6 @@ security:
+         main:
+             stateless: true
+             anonymous: true
+-            provider: app_user_provider
+             json_login:
+                 check_path: /authentication_token
+                 username_path: email

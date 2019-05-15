@@ -1,0 +1,13 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index b5c1957..300e7c1 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     },
+  *     collectionOperations={
+  *          "get",
+- *          "post"
++ *          "post"={"access_control"="is_granted('ROLE_USER')"}
+  *     },
+  *     shortName="cheeses",
+  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},

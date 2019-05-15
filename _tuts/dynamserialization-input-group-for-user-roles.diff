@@ -1,0 +1,12 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 57c9a6b..df62b2e 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -52,6 +52,7 @@ class User implements UserInterface
+ 
+     /**
+      * @ORM\Column(type="json")
++     * @Groups({"user:write"})
+      */
+     private $roles = [];
+ 

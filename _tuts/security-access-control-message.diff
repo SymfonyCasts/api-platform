@@ -1,0 +1,16 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 7cfdd3c..ea30a91 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -18,7 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     collectionOperations={"get", "post"},
+  *     itemOperations={
+  *          "get",
+- *          "put"={"access_control"="is_granted('ROLE_USER') and object.getOwner() == user"},
++ *          "put"={
++ *              "access_control"="is_granted('ROLE_USER') and object.getOwner() == user",
++ *              "access_control_message"="Only the creator can edit a cheese listing"
++ *          },
+  *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+  *     },
+  *     collectionOperations={

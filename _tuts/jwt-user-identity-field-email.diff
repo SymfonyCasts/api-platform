@@ -1,0 +1,9 @@
+diff --git a/config/packages/lexik_jwt_authentication.yaml b/config/packages/lexik_jwt_authentication.yaml
+index c5bbc28..845315c 100644
+--- a/config/packages/lexik_jwt_authentication.yaml
++++ b/config/packages/lexik_jwt_authentication.yaml
+@@ -3,3 +3,4 @@ lexik_jwt_authentication:
+     public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
+     pass_phrase: '%env(JWT_PASSPHRASE)%'
+     token_ttl: 86400
++    user_identity_field: email

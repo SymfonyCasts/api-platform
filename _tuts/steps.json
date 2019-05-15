@@ -304,7 +304,87 @@
             "id": "subresource-remove-it",
             "name": "Subresource: remove it",
             "description": null
+        },
+        {
+            "id": "jwt-install-jwt",
+            "name": "JWT: Install jwt",
+            "description": null
+        },
+        {
+            "id": "jwt-setup-firewalls",
+            "name": "JWT: setup firewalls",
+            "description": null
+        },
+        {
+            "id": "jwt-remove-provider-key",
+            "name": "JWT: remove provider key",
+            "description": null
+        },
+        {
+            "id": "jwt-add-authentication-token-route",
+            "name": "JWT: Add authentication_token route",
+            "description": null
+        },
+        {
+            "id": "jwt-increase-timeout",
+            "name": "JWT: Increase timeout",
+            "description": null
+        },
+        {
+            "id": "jwt-user-identity-field-email",
+            "name": "JWT: user_identity_field email",
+            "description": null
+        },
+        {
+            "id": "security-set-collectionoperations",
+            "name": "Security: set collectionOperations",
+            "description": null
+        },
+        {
+            "id": "security-post-requires-role-user",
+            "name": "Security: POST requires ROLE_USER",
+            "description": null
+        },
+        {
+            "id": "security-add-swagger-api-keys",
+            "name": "Security: Add swagger api_keys",
+            "description": null
+        },
+        {
+            "id": "security-protect-item-operations",
+            "name": "Security: protect item operations",
+            "description": null
+        },
+        {
+            "id": "security-only-allow-owners-to-put",
+            "name": "Security: only allow owners to PUT",
+            "description": null
+        },
+        {
+            "id": "security-access-control-message",
+            "name": "Security: access_control_message",
+            "description": null
+        },
+        {
+            "id": "security-todo-show-previous-object",
+            "name": "Security: TODO - show previous_object",
+            "description": null
+        },
+        {
+            "id": "security-access-control-for-user",
+            "name": "Security: access_control for User",
+            "description": null
+        },
+        {
+            "id": "security-use-top-level-access-control",
+            "name": "Security: use top-level access_control",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-input-group-for-user-roles",
+            "name": "DynamSerialization: input group for User.roles",
+            "description": null
         }
     ],
-    "sha": "99b6ce77fd7ba578bd62a019066bd78fc2af840d"
+    "sha": "155c62a79900db2e3e1c32530b3b23f8de8e9df5"
 }
