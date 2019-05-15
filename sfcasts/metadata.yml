@@ -3,4 +3,5 @@ chapters:
   - api-resource
   - swagger
   - open-api-spec
-  - json-ld-hydra
+  - json-ld
+  - hydra
