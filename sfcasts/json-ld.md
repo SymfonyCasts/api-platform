@@ -12,7 +12,7 @@ to the condition of the *exact* cheese I'm selling? What about price? Is that a
 string, float, integer? Is it in US Dollars? Euro? Is it measured in cents?
 
 If you're a human... you *are* a human, right? A human can *usually* "infer"
-some meaning from the fields names *or* find some human-readable documentation
+some meaning from the field names *or* find some human-readable documentation
 to help learn *exactly* what each field represents. But, there's no way for a *machine*
 to understand *anything* about what these fields mean or their types. Even a *smart*
 algorithm could get confused! A field called `title` could be the "title" of
@@ -89,7 +89,7 @@ exact *fields* of that type somewhere, that gives us two superpowers. First, we
 instantly know if two different JSON structures are in fact *both* describing
 a cheese listing... or if they just *look* similar and are actually describing
 different things. And second, we can look at the definition of this type to learn
-more about it: what properties it has an even the type of each property.
+more about it: what properties it has and even the type of each property.
 
 Heck, this is nothing new! We do this *all* the time in PHP! When we create a *class*
 instead of just an array, we are giving our data a "type". It allows us to know
@@ -105,7 +105,7 @@ comes in: it basically says:
 
 For this to make sense, we need to think like a machine: a machine that *desperately*
 wants to learn as much as possible about our API, its fields and what they mean.
-When a machine sees that `@context`, it follow it. Yea, let's *literally* put that
+When a machine sees that `@context`, it follows it. Yea, let's *literally* put that
 URL in the browser: `/api/context/CheeseListing`. And... interesting. It's another
 `@context`. Without going into *too* much crazy detail, `@context` allows us to
 use "shortcut" property names - called "terms". Our actual JSON response includes
@@ -151,7 +151,7 @@ and some data.
 
 By the way, even that `xmls:integer` type comes from *another* document. I didn't
 show it, but at the top of this page, we're referencing *another* document
-that defines *more* types, including what `xmls:integer` "type" means in a
+that defines *more* types, including what the `xmls:integer` "type" means in a
 machine-readable format.
 
 Anyways, back in our code, above price, add some phpdoc:
