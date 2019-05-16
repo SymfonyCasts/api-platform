@@ -1,0 +1,32 @@
+diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+index 335d3f6..f11c0cb 100644
+--- a/src/ApiPlatform/CheeseListingIsPublishedExtension.php
++++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+@@ -6,15 +6,27 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInter
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+ use App\Entity\CheeseListing;
+ use Doctrine\ORM\QueryBuilder;
++use Symfony\Component\Security\Core\Security;
+ 
+ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInterface
+ {
++    private $security;
++
++    public function __construct(Security $security)
++    {
++        $this->security = $security;
++    }
++
+     public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
+     {
+         if ($resourceClass !== CheeseListing::class) {
+             return;
+         }
+ 
++        if ($this->security->isGranted('ROLE_ADMIN')) {
++            return;
++        }
++
+         $rootAlias = $queryBuilder->getRootAliases()[0];
+         $queryBuilder->andWhere(sprintf('%s.isPublished = :isPublished', $rootAlias))
+             ->setParameter('isPublished', true);

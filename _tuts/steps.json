@@ -479,7 +479,27 @@
             "id": "acl-finishing-validator",
             "name": "ACL: Finishing validator",
             "description": null
+        },
+        {
+            "id": "extension-empty-cheeselistingispublishedextension",
+            "name": "Extension: Empty CheeseListingIsPublishedExtension",
+            "description": null
+        },
+        {
+            "id": "extension-add-ispublished-where",
+            "name": "Extension: Add isPublished where",
+            "description": null
+        },
+        {
+            "id": "extension-add-admin-exception",
+            "name": "Extension: Add admin exception",
+            "description": null
+        },
+        {
+            "id": "extension-add-extension-item-interface",
+            "name": "Extension: add extension item interface",
+            "description": null
         }
     ],
-    "sha": "8084985092fb4777a7bdb7b5e7ba99296340aca4"
+    "sha": "622ecf59ee68e40c8a36e97ac8c6dd9e5558dd66"
 }

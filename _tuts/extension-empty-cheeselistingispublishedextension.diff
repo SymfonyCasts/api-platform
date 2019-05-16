@@ -1,0 +1,22 @@
+diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+new file mode 100644
+index 0000000..09652dc
+--- /dev/null
++++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+@@ -0,0 +1,15 @@
++<?php
++
++namespace App\ApiPlatform;
++
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
++use Doctrine\ORM\QueryBuilder;
++
++class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInterface
++{
++    public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
++    {
++
++    }
++}
+\ No newline at end of file

@@ -1,0 +1,25 @@
+diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+index 09652dc..335d3f6 100644
+--- a/src/ApiPlatform/CheeseListingIsPublishedExtension.php
++++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+@@ -4,12 +4,19 @@ namespace App\ApiPlatform;
+ 
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
++use App\Entity\CheeseListing;
+ use Doctrine\ORM\QueryBuilder;
+ 
+ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInterface
+ {
+     public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
+     {
++        if ($resourceClass !== CheeseListing::class) {
++            return;
++        }
+ 
++        $rootAlias = $queryBuilder->getRootAliases()[0];
++        $queryBuilder->andWhere(sprintf('%s.isPublished = :isPublished', $rootAlias))
++            ->setParameter('isPublished', true);
+     }
+ }
+\ No newline at end of file
