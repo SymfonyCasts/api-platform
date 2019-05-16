@@ -1,0 +1,33 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index df62b2e..65bfbe2 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -76,6 +76,11 @@ class User implements UserInterface
+      */
+     private $cheeseListings;
+ 
++    /**
++     * @ORM\Column(type="string", length=50, nullable=true)
++     */
++    private $phoneNumber;
++
+     public function __construct()
+     {
+         $this->cheeseListings = new ArrayCollection();
+@@ -196,4 +201,16 @@ class User implements UserInterface
+ 
+         return $this;
+     }
++
++    public function getPhoneNumber(): ?string
++    {
++        return $this->phoneNumber;
++    }
++
++    public function setPhoneNumber(?string $phoneNumber): self
++    {
++        $this->phoneNumber = $phoneNumber;
++
++        return $this;
++    }
+ }

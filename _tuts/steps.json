@@ -384,7 +384,62 @@
             "id": "dynamserialization-input-group-for-user-roles",
             "name": "DynamSerialization: input group for User.roles",
             "description": null
+        },
+        {
+            "id": "dynamserialization-add-phonenumber",
+            "name": "DynamSerialization: Add phoneNumber",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-migration",
+            "name": "DynamSerialization: migration",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-groups-for-phonenumber",
+            "name": "DynamSerialization: groups for phoneNumber",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-chnage-to-admin-read",
+            "name": "DynamSerialization: chnage to admin:read",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-copy-in-context-builder",
+            "name": "DynamSerialization: Copy in context builder",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-add-admin-groups",
+            "name": "DynamSerialization: Add admin groups",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-protect-roles",
+            "name": "DynamSerialization: protect roles",
+            "description": null
+        },
+        {
+            "id": "normalizer-make-usernormalizer",
+            "name": "Normalizer: make UserNormalizer",
+            "description": null
+        },
+        {
+            "id": "normalizer-fill-in-dummy-logic",
+            "name": "Normalizer: fill in dummy logic",
+            "description": null
+        },
+        {
+            "id": "normalizer-add-cacheablesupportsmethodinterface",
+            "name": "Normalizer: Add CacheableSupportsMethodInterface",
+            "description": null
+        },
+        {
+            "id": "normalizer-check-true-security",
+            "name": "Normalizer: check true security",
+            "description": null
         }
     ],
-    "sha": "155c62a79900db2e3e1c32530b3b23f8de8e9df5"
+    "sha": "c1c1f00c22132705fa914f5dd115c36ea93bd5e3"
 }

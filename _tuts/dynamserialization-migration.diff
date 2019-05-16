@@ -1,0 +1,41 @@
+diff --git a/src/Migrations/Version20190515191421.php b/src/Migrations/Version20190515191421.php
+new file mode 100644
+index 0000000..e824a7e
+--- /dev/null
++++ b/src/Migrations/Version20190515191421.php
+@@ -0,0 +1,35 @@
++<?php
++
++declare(strict_types=1);
++
++namespace DoctrineMigrations;
++
++use Doctrine\DBAL\Schema\Schema;
++use Doctrine\Migrations\AbstractMigration;
++
++/**
++ * Auto-generated Migration: Please modify to your needs!
++ */
++final class Version20190515191421 extends AbstractMigration
++{
++    public function getDescription() : string
++    {
++        return '';
++    }
++
++    public function up(Schema $schema) : void
++    {
++        // this up() migration is auto-generated, please modify it to your needs
++        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
++
++        $this->addSql('ALTER TABLE user ADD phone_number VARCHAR(50) DEFAULT NULL');
++    }
++
++    public function down(Schema $schema) : void
++    {
++        // this down() migration is auto-generated, please modify it to your needs
++        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
++
++        $this->addSql('ALTER TABLE user DROP phone_number');
++    }
++}

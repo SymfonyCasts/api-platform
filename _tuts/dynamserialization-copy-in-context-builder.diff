@@ -1,0 +1,50 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index 10bca7d..49fdbe8 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -26,3 +26,8 @@ services:
+ 
+     # add more service definitions when explicit configuration is needed
+     # please note that last definitions always *replace* previous ones
++
++    App\Serializer\SerializerContextBuilder:
++        decorates: 'api_platform.serializer.context_builder'
++        arguments: [ '@App\Serializer\SerializerContextBuilder.inner' ]
++        autoconfigure: false
+diff --git a/src/Serializer/SerializerContextBuilder.php b/src/Serializer/SerializerContextBuilder.php
+new file mode 100644
+index 0000000..e14f28d
+--- /dev/null
++++ b/src/Serializer/SerializerContextBuilder.php
+@@ -0,0 +1,31 @@
++<?php
++
++namespace App\Serializer;
++
++use ApiPlatform\Core\Serializer\SerializerContextBuilderInterface;
++use Symfony\Component\HttpFoundation\Request;
++use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
++
++final class SerializerContextBuilder implements SerializerContextBuilderInterface
++{
++    private $decorated;
++    private $authorizationChecker;
++
++    public function __construct(SerializerContextBuilderInterface $decorated, AuthorizationCheckerInterface $authorizationChecker)
++    {
++        $this->decorated = $decorated;
++        $this->authorizationChecker = $authorizationChecker;
++    }
++
++    public function createFromRequest(Request $request, bool $normalization, ?array $extractedAttributes = null): array
++    {
++        $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);
++        $resourceClass = $context['resource_class'] ?? null;
++
++        if ($resourceClass === Book::class && isset($context['groups']) && $this->authorizationChecker->isGranted('ROLE_ADMIN') && false === $normalization) {
++            $context['groups'][] = 'admin:input';
++        }
++
++        return $context;
++    }
++}
