@@ -1,0 +1,21 @@
+diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
+index de6dc69..09cdf2e 100644
+--- a/src/Serializer/Normalizer/UserNormalizer.php
++++ b/src/Serializer/Normalizer/UserNormalizer.php
+@@ -24,13 +24,14 @@ class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
+      */
+     public function normalize($object, $format = null, array $context = array()): array
+     {
+-        if ($this->userIsOwner($object)) {
++        $isOwner = $this->userIsOwner($object);
++        if ($isOwner) {
+             $context['groups'][] = 'owner:read';
+         }
+ 
+         $data = $this->normalizer->normalize($object, $format, $context);
+ 
+-        // Here: add, edit, or delete some data
++        $data['isMe'] = $isOwner;
+ 
+         return $data;
+     }

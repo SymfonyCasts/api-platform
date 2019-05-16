@@ -439,7 +439,12 @@
             "id": "normalizer-check-true-security",
             "name": "Normalizer: check true security",
             "description": null
+        },
+        {
+            "id": "normalizer-add-isme-field",
+            "name": "Normalizer: Add isMe field",
+            "description": null
         }
     ],
-    "sha": "c1c1f00c22132705fa914f5dd115c36ea93bd5e3"
+    "sha": "6221617a420b41434fa037b9fa92c268b552e835"
 }
