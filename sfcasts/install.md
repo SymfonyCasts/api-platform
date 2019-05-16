@@ -25,7 +25,7 @@ because the same things is currently happening with APIs.
 These days, API's are more than just returning JSON: it's about being able to
 serialize and deserialize your models consistently, maybe into multiple formats,
 like JSON or XML, but also JSON-LD or HAL JSON. Then there's hypermedia, linked
-data, status codes, error formats, documentation - including OpenAPI spec
+data, status codes, error formats, documentation - including API spec
 documentation that can power Swagger. Then there's security, CORS, access control
 and other important features like pagination, filtering, validation,
 content-type negotiation, GraphQL... and... honestly, I could keep going.
