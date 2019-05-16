@@ -1,0 +1,28 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index e8f4581..9892845 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -17,7 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * @ApiResource(
+  *     collectionOperations={"get", "post"},
+  *     itemOperations={
+- *          "get"={},
++ *          "get"={
++ *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:get:item"}},
++ *          },
+  *          "put"
+  *     },
+  *     shortName="cheeses",
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index cf99d11..db22ce2 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -51,7 +51,7 @@ class User implements UserInterface
+ 
+     /**
+      * @ORM\Column(type="string", length=255, unique=true)
+-     * @Groups({"user:read", "user:write", "cheese_listing:read"})
++     * @Groups({"user:read", "user:write", "cheese_listing:get:item"})
+      * @Assert\NotBlank()
+      */
+     private $username;

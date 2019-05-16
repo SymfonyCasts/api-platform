@@ -276,6 +276,11 @@
             "description": null
         },
         {
+            "id": "relation-only-embed-on-get-item",
+            "name": "Relation: only embed on GET item",
+            "description": null
+        },
+        {
             "id": "relation-propertyfilter-on-relation",
             "name": "Relation: PropertyFilter on relation",
             "description": null
@@ -431,6 +436,16 @@
             "description": null
         },
         {
+            "id": "normalizer-fix-missing-json-ld-fields",
+            "name": "Normalizer: Fix missing JSON-LD fields",
+            "description": null
+        },
+        {
+            "id": "normalizer-fix-recursion",
+            "name": "Normalizer: fix recursion",
+            "description": null
+        },
+        {
             "id": "normalizer-add-cacheablesupportsmethodinterface",
             "name": "Normalizer: Add CacheableSupportsMethodInterface",
             "description": null
@@ -444,7 +459,27 @@
             "id": "normalizer-add-isme-field",
             "name": "Normalizer: Add isMe field",
             "description": null
+        },
+        {
+            "id": "acl-group-to-only-allow-cl-owner-on-post",
+            "name": "ACL: group to only allow CL.owner on POST",
+            "description": null
+        },
+        {
+            "id": "acl-add-isvalidownervalidator",
+            "name": "ACL: Add IsValidOwnerValidator",
+            "description": null
+        },
+        {
+            "id": "acl-fill-in-some-validator-logic",
+            "name": "ACL: Fill in some validator logic",
+            "description": null
+        },
+        {
+            "id": "acl-finishing-validator",
+            "name": "ACL: Finishing validator",
+            "description": null
         }
     ],
-    "sha": "6221617a420b41434fa037b9fa92c268b552e835"
+    "sha": "8084985092fb4777a7bdb7b5e7ba99296340aca4"
 }

@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 12d3136..801ede1 100644
+index e73e97a..d5c9fed 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -31,7 +31,8 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -33,7 +33,8 @@ use Symfony\Component\Validator\Constraints as Assert;
   * @ApiFilter(SearchFilter::class, properties={
   *     "title": "partial",
   *     "description": "partial",

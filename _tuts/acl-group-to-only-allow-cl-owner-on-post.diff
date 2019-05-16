@@ -1,0 +1,25 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 1e8eabe..7227f8a 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -28,7 +28,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     },
+  *     collectionOperations={
+  *          "get",
+- *          "post"={"access_control"="is_granted('ROLE_USER')"}
++ *          "post"={
++ *              "access_control"="is_granted('ROLE_USER')",
++ *              "denormalization_context"={"groups"={"cheese_listing:write", "cheese_listing:post:collection"}},
++ *          }
+  *     },
+  *     shortName="cheeses",
+  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
+@@ -98,7 +101,7 @@ class CheeseListing
+     /**
+      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
+      * @ORM\JoinColumn(nullable=false)
+-     * @Groups({"cheese_listing:read", "cheese_listing:write"})
++     * @Groups({"cheese_listing:read", "cheese_listing:post:collection"})
+      */
+     private $owner;
+ 

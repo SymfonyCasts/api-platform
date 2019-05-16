@@ -1,11 +1,11 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 7cfdd3c..ea30a91 100644
+index db696b4..1e8eabe 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -18,7 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
-  *     collectionOperations={"get", "post"},
-  *     itemOperations={
-  *          "get",
+@@ -20,7 +20,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *          "get"={
+  *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:get:item"}},
+  *          },
 - *          "put"={"access_control"="is_granted('ROLE_USER') and object.getOwner() == user"},
 + *          "put"={
 + *              "access_control"="is_granted('ROLE_USER') and object.getOwner() == user",

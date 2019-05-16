@@ -1,0 +1,61 @@
+diff --git a/src/Validator/IsValidOwner.php b/src/Validator/IsValidOwner.php
+index f003a37..9aea431 100644
+--- a/src/Validator/IsValidOwner.php
++++ b/src/Validator/IsValidOwner.php
+@@ -14,4 +14,6 @@ class IsValidOwner extends Constraint
+      * Then, use these in your validator class.
+      */
+     public $message = 'Cannot set owner to a different user';
++
++    public $anonymousMessage = 'Cannot set owner unless you are authenticated';
+ }
+diff --git a/src/Validator/IsValidOwnerValidator.php b/src/Validator/IsValidOwnerValidator.php
+index 71a121a..4c94354 100644
+--- a/src/Validator/IsValidOwnerValidator.php
++++ b/src/Validator/IsValidOwnerValidator.php
+@@ -2,11 +2,20 @@
+ 
+ namespace App\Validator;
+ 
++use App\Entity\User;
++use Symfony\Component\Security\Core\Security;
+ use Symfony\Component\Validator\Constraint;
+ use Symfony\Component\Validator\ConstraintValidator;
+ 
+ class IsValidOwnerValidator extends ConstraintValidator
+ {
++    private $security;
++
++    public function __construct(Security $security)
++    {
++        $this->security = $security;
++    }
++
+     public function validate($value, Constraint $constraint)
+     {
+         /* @var $constraint \App\Validator\IsValidOwner */
+@@ -15,7 +24,22 @@ class IsValidOwnerValidator extends ConstraintValidator
+             return;
+         }
+ 
+-        $this->context->buildViolation($constraint->message)
+-            ->addViolation();
++        $user = $this->security->getUser();
++        if (!$user instanceof User) {
++            $this->context->buildViolation($constraint->anonymousMessage)
++                ->addViolation();
++
++            return;
++        }
++
++        if (!$value instanceof User) {
++            throw new \InvalidArgumentException(sprintf('@IsValidOwner constraint must be put on a property container a User object'));
++        }
++
++
++        if ($value->getId() !== $user->getId()) {
++            $this->context->buildViolation($constraint->message)
++                ->addViolation();
++        }
+     }
+ }

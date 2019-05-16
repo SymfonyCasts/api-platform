@@ -1,0 +1,52 @@
+diff --git a/src/Validator/IsValidOwner.php b/src/Validator/IsValidOwner.php
+new file mode 100644
+index 0000000..1374430
+--- /dev/null
++++ b/src/Validator/IsValidOwner.php
+@@ -0,0 +1,17 @@
++<?php
++
++namespace App\Validator;
++
++use Symfony\Component\Validator\Constraint;
++
++/**
++ * @Annotation
++ */
++class IsValidOwner extends Constraint
++{
++    /*
++     * Any public properties become valid options for the annotation.
++     * Then, use these in your validator class.
++     */
++    public $message = 'The value "{{ value }}" is not valid.';
++}
+diff --git a/src/Validator/IsValidOwnerValidator.php b/src/Validator/IsValidOwnerValidator.php
+new file mode 100644
+index 0000000..153922f
+--- /dev/null
++++ b/src/Validator/IsValidOwnerValidator.php
+@@ -0,0 +1,23 @@
++<?php
++
++namespace App\Validator;
++
++use Symfony\Component\Validator\Constraint;
++use Symfony\Component\Validator\ConstraintValidator;
++
++class IsValidOwnerValidator extends ConstraintValidator
++{
++    public function validate($value, Constraint $constraint)
++    {
++        /* @var $constraint \App\Validator\IsValidOwner */
++
++        if (null === $value || '' === $value) {
++            return;
++        }
++
++        // TODO: implement the validation here
++        $this->context->buildViolation($constraint->message)
++            ->setParameter('{{ value }}', $value)
++            ->addViolation();
++    }
++}

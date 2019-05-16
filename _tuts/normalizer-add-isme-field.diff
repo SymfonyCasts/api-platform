@@ -1,8 +1,8 @@
 diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
-index de6dc69..09cdf2e 100644
+index 230674a..775779c 100644
 --- a/src/Serializer/Normalizer/UserNormalizer.php
 +++ b/src/Serializer/Normalizer/UserNormalizer.php
-@@ -24,13 +24,14 @@ class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
+@@ -26,7 +26,8 @@ class UserNormalizer implements ContextAwareNormalizerInterface, NormalizerAware
       */
      public function normalize($object, $format = null, array $context = array()): array
      {
@@ -11,6 +11,8 @@ index de6dc69..09cdf2e 100644
 +        if ($isOwner) {
              $context['groups'][] = 'owner:read';
          }
+ 
+@@ -34,7 +35,7 @@ class UserNormalizer implements ContextAwareNormalizerInterface, NormalizerAware
  
          $data = $this->normalizer->normalize($object, $format, $context);
  
