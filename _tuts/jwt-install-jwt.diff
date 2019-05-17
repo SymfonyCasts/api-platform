@@ -1,10 +1,10 @@
 diff --git a/.env b/.env
-index 32fbe8b..e9dbee8 100644
+index 58b6d22..02a20ac 100644
 --- a/.env
 +++ b/.env
 @@ -30,3 +30,9 @@ CORS_ALLOW_ORIGIN=^https?://localhost(:[0-9]+)?$
  # Configure your db driver and server_version in config/packages/doctrine.yaml
- DATABASE_URL=mysql://root:@127.0.0.1:3306/cheese_factory
+ DATABASE_URL=mysql://root:@127.0.0.1:3306/cheese_whiz
  ###< doctrine/doctrine-bundle ###
 +
 +###> lexik/jwt-authentication-bundle ###
