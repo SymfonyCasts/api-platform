@@ -21,6 +21,9 @@ Symfony project. Step 1 is... hmm, probably do create some database entities.
 
 Let's open up our `.env` file and tweak the `DATABASE_URL`. My computer uses
 `root` with no password... and how about `cheese_whiz` for the database name.
+
+[[[ ('b92d6c0ac7') ]]]
+
 You can also create a `.env.local` file and override `DATABASE_URL` there. Using
 `root` and no password is pretty standard, so I like to add this to `.env` and
 commit it as the default.
@@ -48,8 +51,11 @@ MakerBundle asks this because it noticed that API Platform is installed. Say
 yep! This created the usual `CheeseListing` and `CheeseListingRepository`.
 Nothing special there. Right now, the only property the entity has is `id`. So,
 what did answering "yes" to the API Platform resource question give us? This tiny
-annotation right here: `@ApiResource`. The *real* question is: what does that
-activate? We'll see that soon.
+annotation right here: `@ApiResource`. 
+
+.[[[ ('beab5706e8') ]]]
+
+The *real* question is: what does that activate? We'll see that soon.
 
 But first, let's add some fields. Let's see, each cheese listing probably needs
 a `title`, `string`, `255`, not nullable, a `description`, which will be a big
@@ -58,7 +64,11 @@ text field, `price`, which I'll make an `integer` - this will be the price in
 boolean. Ok: good start! Hit enter to finish.
 
 Congratulations! We have a *perfectly* boring `CheeseEntity` class: 7 properties
-with getters and setters. Next, generate the migration with:
+with getters and setters. 
+
+[[[ ('990e4e48f5') ]]]
+
+Next, generate the migration with:
 
 ```terminal
 php bin/console make:migration
@@ -85,6 +95,8 @@ php bin/console make:migration
 Let's go check that out to make sure there aren't any surprises:
 
 > CREATE TABLE cheese_listing...
+
+[[[ ('aa7c60ad0f') ]]]
 
 Yea! Looks good! Close that and run:
 
