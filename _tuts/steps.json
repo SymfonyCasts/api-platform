@@ -426,6 +426,31 @@
             "description": null
         },
         {
+            "id": "encoding-bootstrap-data-persister",
+            "name": "Encoding: Bootstrap data persister",
+            "description": null
+        },
+        {
+            "id": "encoding-use-entity-manager",
+            "name": "Encoding: use entity manager",
+            "description": null
+        },
+        {
+            "id": "encoding-encode-password",
+            "name": "Encoding: encode password",
+            "description": null
+        },
+        {
+            "id": "validationgroups-plainpassword-notblank",
+            "name": "ValidationGroups: plainPassword NotBlank",
+            "description": null
+        },
+        {
+            "id": "validationgroups-add-write-group",
+            "name": "ValidationGroups: add write group",
+            "description": null
+        },
+        {
             "id": "dynamserialization-input-group-for-user-roles",
             "name": "DynamSerialization: input group for User.roles",
             "description": null
@@ -541,5 +566,5 @@
             "description": null
         }
     ],
-    "sha": "1c0fe8fb83e19725fc29586cab9b782ca6ad6de3"
+    "sha": "0a319c4bb06b7240d7ff38f2e0474cad0673a163"
 }

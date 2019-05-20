@@ -1,8 +1,8 @@
-diff --git a/src/Serializer/SerializerContextBuilder.php b/src/Serializer/SerializerContextBuilder.php
-index e14f28d..7d4bdeb 100644
---- a/src/Serializer/SerializerContextBuilder.php
-+++ b/src/Serializer/SerializerContextBuilder.php
-@@ -22,8 +22,10 @@ final class SerializerContextBuilder implements SerializerContextBuilderInterfac
+diff --git a/src/Serializer/AdminGroupsContextBuilder.php b/src/Serializer/AdminGroupsContextBuilder.php
+index d056561..6f74733 100644
+--- a/src/Serializer/AdminGroupsContextBuilder.php
++++ b/src/Serializer/AdminGroupsContextBuilder.php
+@@ -22,8 +22,10 @@ final class AdminGroupsContextBuilder implements SerializerContextBuilderInterfa
          $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);
          $resourceClass = $context['resource_class'] ?? null;
  

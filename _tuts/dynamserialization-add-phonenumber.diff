@@ -1,8 +1,8 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index f6227c8..890b445 100644
+index 6dc91ca..31597b7 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -80,6 +80,11 @@ class User implements UserInterface
+@@ -84,6 +84,11 @@ class User implements UserInterface
       */
      private $plainPassword;
  
@@ -14,7 +14,7 @@ index f6227c8..890b445 100644
      public function __construct()
      {
          $this->cheeseListings = new ArrayCollection();
-@@ -212,4 +217,16 @@ class User implements UserInterface
+@@ -216,4 +221,16 @@ class User implements UserInterface
  
          return $this;
      }

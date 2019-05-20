@@ -1,0 +1,32 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index d1211b4..79a9461 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -18,7 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     accessControl="is_granted('ROLE_USER')",
+  *     collectionOperations={
+  *          "get",
+- *          "post"={"access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
++ *          "post"={
++ *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
++ *              "validation_groups"={"Default", "create"}
++ *          },
+  *     },
+  *     itemOperations={
+  *          "get",
+@@ -58,7 +61,6 @@ class User implements UserInterface
+     /**
+      * @var string The hashed password
+      * @ORM\Column(type="string")
+-     * @Assert\NotBlank()
+      */
+     private $password;
+ 
+@@ -77,6 +79,7 @@ class User implements UserInterface
+ 
+     /**
+      * @Groups("user:write")
++     * @Assert\NotBlank(groups={"create"})
+      */
+     private $plainPassword;
+ 

@@ -1,21 +1,20 @@
 diff --git a/config/services.yaml b/config/services.yaml
-index 10bca7d..49fdbe8 100644
+index 10bca7d..e942033 100644
 --- a/config/services.yaml
 +++ b/config/services.yaml
-@@ -26,3 +26,8 @@ services:
+@@ -26,3 +26,7 @@ services:
  
      # add more service definitions when explicit configuration is needed
      # please note that last definitions always *replace* previous ones
 +
-+    App\Serializer\SerializerContextBuilder:
++    App\Serializer\AdminGroupsContextBuilder:
 +        decorates: 'api_platform.serializer.context_builder'
-+        arguments: [ '@App\Serializer\SerializerContextBuilder.inner' ]
-+        autoconfigure: false
-diff --git a/src/Serializer/SerializerContextBuilder.php b/src/Serializer/SerializerContextBuilder.php
++        arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]
+diff --git a/src/Serializer/AdminGroupsContextBuilder.php b/src/Serializer/AdminGroupsContextBuilder.php
 new file mode 100644
-index 0000000..e14f28d
+index 0000000..d056561
 --- /dev/null
-+++ b/src/Serializer/SerializerContextBuilder.php
++++ b/src/Serializer/AdminGroupsContextBuilder.php
 @@ -0,0 +1,31 @@
 +<?php
 +
@@ -25,7 +24,7 @@ index 0000000..e14f28d
 +use Symfony\Component\HttpFoundation\Request;
 +use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 +
-+final class SerializerContextBuilder implements SerializerContextBuilderInterface
++final class AdminGroupsContextBuilder implements SerializerContextBuilderInterface
 +{
 +    private $decorated;
 +    private $authorizationChecker;
