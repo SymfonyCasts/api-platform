@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 4da6056..abbaeeb 100644
+index 4da6056..d164249 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -18,7 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
@@ -8,13 +8,13 @@ index 4da6056..abbaeeb 100644
   *     itemOperations={
 - *          "get"={},
 + *          "get"={
-+ *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:get:item"}},
++ *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
 + *          },
   *          "put"
   *     },
   *     shortName="cheeses",
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index cf99d11..db22ce2 100644
+index cf99d11..e88b803 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -51,7 +51,7 @@ class User implements UserInterface
@@ -22,7 +22,7 @@ index cf99d11..db22ce2 100644
      /**
       * @ORM\Column(type="string", length=255, unique=true)
 -     * @Groups({"user:read", "user:write", "cheese_listing:read"})
-+     * @Groups({"user:read", "user:write", "cheese_listing:get:item"})
++     * @Groups({"user:read", "user:write", "cheese_listing:item:get"})
       * @Assert\NotBlank()
       */
      private $username;

@@ -491,6 +491,26 @@
             "description": null
         },
         {
+            "id": "autogroups-add-default-groups",
+            "name": "AutoGroups: Add default groups",
+            "description": null
+        },
+        {
+            "id": "autogroups-remove-custom-normalize-group",
+            "name": "AutoGroups: remove custom normalize group",
+            "description": null
+        },
+        {
+            "id": "autogroups-try-removing-top-level-context",
+            "name": "AutoGroups: Try removing top-level context",
+            "description": null
+        },
+        {
+            "id": "autogroups-add-back",
+            "name": "AutoGroups: Add back",
+            "description": null
+        },
+        {
             "id": "normalizer-make-usernormalizer",
             "name": "Normalizer: make UserNormalizer",
             "description": null
@@ -566,5 +586,5 @@
             "description": null
         }
     ],
-    "sha": "0a319c4bb06b7240d7ff38f2e0474cad0673a163"
+    "sha": "df488e79996790742091626e15c4b99b70c84a03"
 }

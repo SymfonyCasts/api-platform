@@ -1,10 +1,10 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 79bf3b1..36a60aa 100644
+index 83c1741..812ecef 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
   *          "get"={
-  *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:get:item"}},
+  *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
   *          },
 - *          "put"={"access_control"="is_granted('ROLE_USER')"},
 + *          "put"={"access_control"="is_granted('ROLE_USER') and object.getOwner() == user"},

@@ -1,0 +1,15 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 0f0d7a4..9e1979f 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -18,9 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * @ApiResource(
+  *     collectionOperations={"get", "post"},
+  *     itemOperations={
+- *          "get"={
+- *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
+- *          },
++ *          "get",
+  *          "put"={
+  *              "access_control"="is_granted('ROLE_USER') and object.getOwner() == user",
+  *              "access_control_message"="Only the creator can edit a cheese listing"

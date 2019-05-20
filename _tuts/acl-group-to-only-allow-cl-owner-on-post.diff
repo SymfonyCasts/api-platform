@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 18601e9..251b7b9 100644
+index 9e1979f..064eca3 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -29,7 +29,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -27,7 +27,10 @@ use Symfony\Component\Validator\Constraints as Assert;
   *     },
   *     collectionOperations={
   *          "get",
@@ -14,7 +14,7 @@ index 18601e9..251b7b9 100644
   *     },
   *     shortName="cheeses",
   *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
-@@ -99,7 +102,7 @@ class CheeseListing
+@@ -97,7 +100,7 @@ class CheeseListing
      /**
       * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
       * @ORM\JoinColumn(nullable=false)

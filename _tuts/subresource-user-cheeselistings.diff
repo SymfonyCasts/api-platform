@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index ba50c56..2e75fb0 100644
+index 130650c..310046d 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -4,6 +4,7 @@ namespace App\Entity;
