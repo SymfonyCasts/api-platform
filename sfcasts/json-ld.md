@@ -37,7 +37,7 @@ Person's `name` and `telephone` are these other pieces of data:
 ```html
 <p vocab="http://schema.org/" typeof="http://schema.org/Person">
    My name is
-   <span property="name">Manu Sporny</span>Manu Sporny</span>
+   <span property="name">Manu Sporny</span>
    and you can give me a ring via
    <span property="telephone">1-800-555-0199</span>.
 </p>
