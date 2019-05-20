@@ -11,7 +11,7 @@ index e92cb84..154fc4d 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index c2588f9..17267e8 100644
+index a454030..395d339 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index c2588f9..17267e8 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -1535,6 +1535,66 @@
+@@ -1536,6 +1536,66 @@
              ],
              "time": "2019-02-27T13:13:15+00:00"
          },
@@ -90,7 +90,7 @@ index c2588f9..17267e8 100644
          {
              "name": "ocramius/package-versions",
              "version": "1.4.0",
-@@ -3979,6 +4039,81 @@
+@@ -3983,6 +4043,81 @@
              "homepage": "https://symfony.com",
              "time": "2019-01-16T20:31:39+00:00"
          },

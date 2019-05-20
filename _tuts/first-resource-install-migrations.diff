@@ -11,7 +11,7 @@ index 68a14d8..82f931d 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index c357029..11f3085 100644
+index 72e7be9..1256456 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index c357029..11f3085 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -736,6 +736,71 @@
+@@ -737,6 +737,71 @@
              ],
              "time": "2018-11-09T06:25:35+00:00"
          },
@@ -95,7 +95,7 @@ index c357029..11f3085 100644
          {
              "name": "doctrine/event-manager",
              "version": "v1.0.0",
-@@ -987,6 +1052,88 @@
+@@ -988,6 +1053,88 @@
              ],
              "time": "2014-09-09T13:34:57+00:00"
          },
@@ -184,7 +184,7 @@ index c357029..11f3085 100644
          {
              "name": "doctrine/orm",
              "version": "v2.6.3",
-@@ -1388,6 +1535,126 @@
+@@ -1389,6 +1536,126 @@
              ],
              "time": "2019-02-27T13:13:15+00:00"
          },
@@ -311,7 +311,7 @@ index c357029..11f3085 100644
          {
              "name": "phpdocumentor/reflection-common",
              "version": "1.0.1",
-@@ -3662,6 +3929,56 @@
+@@ -3666,6 +3933,56 @@
              "homepage": "https://symfony.com",
              "time": "2019-04-28T07:09:27+00:00"
          },
@@ -368,7 +368,7 @@ index c357029..11f3085 100644
          {
              "name": "symfony/twig-bridge",
              "version": "v4.2.8",
-@@ -4278,6 +4595,113 @@
+@@ -4282,6 +4599,113 @@
                  "negotiation"
              ],
              "time": "2017-05-14T17:21:12+00:00"
