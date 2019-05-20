@@ -110,9 +110,12 @@ that in a minute - and below, 5 routes for the 5 new endpoints. When we add more
 resources later, we'll see more routes.
 
 When we installed the API Platform pack, its recipe added a
-`config/routes/api_platform.yaml` file. *This* is how API Platform magically adds
-the routes. It's not very interesting, but see that `type: api_platform`?
-That basically says:
+`config/routes/api_platform.yaml` file. 
+
+[[[ code('ec8e8b39c5') ]]]
+
+*This* is how API Platform magically adds the routes. 
+It's not very interesting, but see that `type: api_platform`? That basically says:
 
 > Hey! I want API Platform to be able to dynamically add whatever routes it wants.
 
