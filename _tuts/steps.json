@@ -86,11 +86,6 @@
             "description": null
         },
         {
-            "id": "serialization-delete-me",
-            "name": "Serialization: delete me",
-            "description": null
-        },
-        {
             "id": "serialization-install-carbon",
             "name": "Serialization: Install carbon",
             "description": null
@@ -428,26 +423,6 @@
         {
             "id": "encoding-erasecredentials",
             "name": "Encoding: eraseCredentials()",
-            "description": null
-        },
-        {
-            "id": "encoding-delete-me-1",
-            "name": "Encoding: delete me 1",
-            "description": null
-        },
-        {
-            "id": "encoding-delete-me-2",
-            "name": "Encoding: delete me 2",
-            "description": null
-        },
-        {
-            "id": "encoding-delete-me-3",
-            "name": "Encoding: delete me 3",
-            "description": null
-        },
-        {
-            "id": "encoding-delete-me-4",
-            "name": "Encoding: delete me 4",
             "description": null
         },
         {
