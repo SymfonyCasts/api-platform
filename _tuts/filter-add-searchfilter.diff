@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 779529c..19bbe15 100644
+index 293e3b7..5b96273 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -5,6 +5,7 @@ namespace App\Entity;
@@ -10,7 +10,7 @@ index 779529c..19bbe15 100644
  use Carbon\Carbon;
  use Doctrine\ORM\Mapping as ORM;
  use Symfony\Component\Serializer\Annotation\Groups;
-@@ -21,6 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+@@ -22,6 +23,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
   *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"}
   * )
   * @ApiFilter(BooleanFilter::class, properties={"isPublished"})

@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index c02caa1..6e64fcf 100644
+index b099da3..4ccbc10 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -80,6 +80,12 @@ class CheeseListing
+@@ -81,6 +81,12 @@ class CheeseListing
       */
      private $isPublished = false;
  
@@ -12,10 +12,10 @@ index c02caa1..6e64fcf 100644
 +     */
 +    private $owner;
 +
-     public function __construct()
+     public function __construct(string $title = null)
      {
-         $this->createdAt = new \DateTimeImmutable();
-@@ -176,4 +182,16 @@ class CheeseListing
+         $this->title = $title;
+@@ -172,4 +178,16 @@ class CheeseListing
  
          return $this;
      }

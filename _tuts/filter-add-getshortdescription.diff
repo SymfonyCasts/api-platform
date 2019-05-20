@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 3ecc5a0..d4c660c 100644
+index 7a32ff6..101ccc1 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -93,6 +93,18 @@ class CheeseListing
+@@ -88,6 +88,18 @@ class CheeseListing
          return $this->description;
      }
  

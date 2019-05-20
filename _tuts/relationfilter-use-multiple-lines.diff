@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 9892845..d2f0106 100644
+index abbaeeb..71baa42 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -30,7 +30,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -31,7 +31,10 @@ use Symfony\Component\Validator\Constraints as Assert;
   *     }
   * )
   * @ApiFilter(BooleanFilter::class, properties={"isPublished"})

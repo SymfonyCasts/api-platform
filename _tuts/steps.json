@@ -151,6 +151,31 @@
             "description": null
         },
         {
+            "id": "serializetricks-serializedname",
+            "name": "SerializeTricks: @SerializedName",
+            "description": null
+        },
+        {
+            "id": "serializetricks-constructor",
+            "name": "SerializeTricks: constructor",
+            "description": null
+        },
+        {
+            "id": "serializetricks-change-arg-name",
+            "name": "SerializeTricks: change arg name",
+            "description": null
+        },
+        {
+            "id": "serializetricks-change-back",
+            "name": "SerializeTricks: change back",
+            "description": null
+        },
+        {
+            "id": "serializetricks-make-optional",
+            "name": "SerializeTricks: make optional",
+            "description": null
+        },
+        {
             "id": "filter-add-booleanfilter",
             "name": "Filter: add BooleanFilter",
             "description": null
@@ -386,6 +411,46 @@
             "description": null
         },
         {
+            "id": "encoding-add-plainpassword-field",
+            "name": "Encoding: Add plainPassword field",
+            "description": null
+        },
+        {
+            "id": "encoding-remove-password-from-group",
+            "name": "Encoding: remove password from group",
+            "description": null
+        },
+        {
+            "id": "encoding-customize-getter-setter",
+            "name": "Encoding: customize getter\/setter",
+            "description": null
+        },
+        {
+            "id": "encoding-erasecredentials",
+            "name": "Encoding: eraseCredentials()",
+            "description": null
+        },
+        {
+            "id": "encoding-delete-me-1",
+            "name": "Encoding: delete me 1",
+            "description": null
+        },
+        {
+            "id": "encoding-delete-me-2",
+            "name": "Encoding: delete me 2",
+            "description": null
+        },
+        {
+            "id": "encoding-delete-me-3",
+            "name": "Encoding: delete me 3",
+            "description": null
+        },
+        {
+            "id": "encoding-delete-me-4",
+            "name": "Encoding: delete me 4",
+            "description": null
+        },
+        {
             "id": "dynamserialization-input-group-for-user-roles",
             "name": "DynamSerialization: input group for User.roles",
             "description": null
@@ -501,5 +566,5 @@
             "description": null
         }
     ],
-    "sha": "210e4817b7e2dc63725c9a6d5d5766e027c0a6ba"
+    "sha": "1c0fe8fb83e19725fc29586cab9b782ca6ad6de3"
 }

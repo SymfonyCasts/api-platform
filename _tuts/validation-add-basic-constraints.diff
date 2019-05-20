@@ -1,16 +1,16 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 3c7d61b..c02caa1 100644
+index 3a0c476..b099da3 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -11,6 +11,7 @@ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
- use Carbon\Carbon;
+@@ -12,6 +12,7 @@ use Carbon\Carbon;
  use Doctrine\ORM\Mapping as ORM;
  use Symfony\Component\Serializer\Annotation\Groups;
+ use Symfony\Component\Serializer\Annotation\SerializedName;
 +use Symfony\Component\Validator\Constraints as Assert;
  
  /**
   * @ApiResource(
-@@ -44,12 +45,19 @@ class CheeseListing
+@@ -45,12 +46,19 @@ class CheeseListing
      /**
       * @ORM\Column(type="string", length=255)
       * @Groups({"cheese_listing:read", "cheese_listing:write"})
@@ -30,7 +30,7 @@ index 3c7d61b..c02caa1 100644
       */
      private $description;
  
-@@ -58,6 +66,7 @@ class CheeseListing
+@@ -59,6 +67,7 @@ class CheeseListing
       *
       * @ORM\Column(type="integer")
       * @Groups({"cheese_listing:read", "cheese_listing:write"})

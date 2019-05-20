@@ -1,0 +1,29 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 32da404..b04c3de 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -60,8 +60,9 @@ class CheeseListing
+      */
+     private $isPublished = false;
+ 
+-    public function __construct()
++    public function __construct(string $title)
+     {
++        $this->title = $title;
+         $this->createdAt = new \DateTimeImmutable();
+     }
+ 
+@@ -75,13 +76,6 @@ class CheeseListing
+         return $this->title;
+     }
+ 
+-    public function setTitle(string $title): self
+-    {
+-        $this->title = $title;
+-
+-        return $this;
+-    }
+-
+     public function getDescription(): ?string
+     {
+         return $this->description;

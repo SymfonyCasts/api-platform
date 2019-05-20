@@ -1,10 +1,10 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index d9fdd02..ef990f2 100644
+index f6227c8..890b445 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -76,6 +76,11 @@ class User implements UserInterface
+@@ -80,6 +80,11 @@ class User implements UserInterface
       */
-     private $cheeseListings;
+     private $plainPassword;
  
 +    /**
 +     * @ORM\Column(type="string", length=50, nullable=true)
@@ -14,7 +14,7 @@ index d9fdd02..ef990f2 100644
      public function __construct()
      {
          $this->cheeseListings = new ArrayCollection();
-@@ -196,4 +201,16 @@ class User implements UserInterface
+@@ -212,4 +217,16 @@ class User implements UserInterface
  
          return $this;
      }

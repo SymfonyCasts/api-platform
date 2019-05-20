@@ -1,0 +1,22 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index f81cb0f..f6e0994 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -200,13 +200,15 @@ class User implements UserInterface
+         return $this;
+     }
+ 
+-    public function getPlainPassword()
++    public function getPlainPassword(): string
+     {
+         return $this->plainPassword;
+     }
+ 
+-    public function setPlainPassword($plainPassword)
++    public function setPlainPassword(string $plainPassword): self
+     {
+         $this->plainPassword = $plainPassword;
++
++        return $this;
+     }
+ }

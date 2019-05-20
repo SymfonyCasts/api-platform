@@ -1,0 +1,20 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 03fed02..32da404 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+ use Symfony\Component\Serializer\Annotation\Groups;
++use Symfony\Component\Serializer\Annotation\SerializedName;
+ 
+ /**
+  * @ApiResource(
+@@ -97,6 +98,7 @@ class CheeseListing
+      * The description of the cheese as raw text.
+      *
+      * @Groups("cheese_listing:write")
++     * @SerializedName("description")
+      */
+     public function setTextDescription(string $description): self
+     {

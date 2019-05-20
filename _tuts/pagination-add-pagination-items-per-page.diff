@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index a9b6dc5..3c7d61b 100644
+index 1d64a38..3a0c476 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -21,7 +21,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
+@@ -22,7 +22,10 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
   *     },
   *     shortName="cheeses",
   *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
