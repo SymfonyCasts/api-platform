@@ -1,131 +1,136 @@
-# Serializer
+# The Serializer
 
-Coming soon...
+Google for Symfony serializer and find a page called
+[The Serializer Component](https://symfony.com/doc/current/components/serializer.html).
 
-Google for Symfony serializer.
+API Platform is built on top of the Symfony components. And the *entire* process
+of how it turns our `CheeseListing` object into JSON and JSON back into a
+`CheeseListing` object is done by Symfony's Serializer! If we understand how *it*
+works, we're in business!
 
-Okay.
+And on the surface, it's beautifully simple. Check out the diagram that shows how
+it works. Going from an object to JSON is called serializing, and from JSON back
+into an object called deserializing. To do that, internally, it goes through a
+process called normalizing: it *first* takes your object and turns it into an array.
+And *then* it's encoded into JSON or whatever format.
 
-And you'll find a page called the Serializer Component. API Platform, as you know, is
-built on top of Symfony and the entire process of how it turns our `CheeseListing`
-object into JSON and JSON back into the `CheeseListing` object is done by Symfony
-Serializer. It uses Symfony Serializer 100%. So if you understand Symfony Serializer,
-it's going to go a long way to knowing how to leverage API Platform and we're not going
-to go through and we're going to go through with the Symfony. So you realize you're a
-little by little. But what I did want you to see here is this nice little diagram
-that talks about the process. Um, I've taken your object and going into JSON and
-taking your JSON and going into your object of going from an object to JSON is called
-serializing and from your JSON and to back into your object called deserializing now
-in the process, when you start with your object, you go through a process called
-normalizing. It takes your object and turns it into an array and then it's encoded
-into JSON.
+## How Objects are Turned into Raw Data
 
-Great
+There are actually a *bunch* of different "normalizer" classes that help with this
+job - like one that's really good at converting `DateTime` objects to a string
+and back. But the *main* class - the one at the *heart* of this process - is called
+the `ObjectNormalizer`. Behind the scenes, *it* uses another Symfony component
+called `PropertyAccess`, which has one superpower: if you give it a property name,
+like `title`, it's really good at finding and using the getter and setter methods
+to access that property.
 
-to do the job of normalizing and denormalizing. There's an object called a
-Normalizer, specifically one called an Object Normalizer. The object normalizer is
-basically the heart of the process and it controls how everything, um, how everything
-works and the object normalizer works like this. It uses behind the scenes that you
-used as a component of Symfonys called the PropertyAccess components. PropertyAccess
-component is basically really good at using getter and setter methods to
-access properties. In other words.
+In other words, when API platform tries to "normalize" an object into an array,
+it uses the getter and setter methods to do that!
 
-When API platform tries to chair turn one of our Objects into JSON. What the, what 
-it does is it basically looks at all of the getter and setter methods.
+For example, it sees that there's a `getId()` method and so it turns that into an
+`id` key on the array... and eventually in the JSON. It does the same thing for
+`getTitle()` - that becomes `title`. It's just that simple!
 
-So for example, because we have a, obviously can reference our properties
-directly, it sees that there's a `getId()` method and so it turns that into an `id`
-property. It sees that there's a `getTitle()` method. It turns that into a `title`
-property. It's just that simple.
+When we *send* data, it does the same thing! Because we have a `setTitle()` method,
+we can send JSON with a `title` key. The normalizer will take the value we're sending,
+call `setTitle()` and pass it!
 
-Okay.
+It's a simple, but neat way to allow your API clients to interact with your object,
+your API resource, using its getter and setter methods. By the way, the
+PropertyAccess component also supports public properties, hassers, issers, adders,
+removers - basically a bunch of common method naming conventions in addition to
+*just* getters and setters.
 
-And on input it does the same thing for the body. So it sees that there is a 
-`setTitle()` method and so it knows that there can be a `title` key and what it takes in that
-JSON, it's going to take whatever string we pass here and it's going to pass it to
-`setTitle()`. So it's kind of a cool way that your objects are corn being exposed into
-your API and the API clients are using your getters and setters to interact with
-them. There's more to it, there's more super powers in that. That's basically what
-goes on behind the scenes. So let's see this in action. Let's pretend the right now
-that's um, as you can see when we, if we were to and endpoint, you can see that we
-passed the `description`, which is uh, which is, uh, we passed the description. Let's
-say that that um, let's say that in the database, the `description` is actually going
-to contain some HTML.
+## Adding a Custom "Field"
 
-But what do you want the user to only send? We want the user to actually send us
-plain text description. And what we're gonna do is we're going to take, let's say if
-it supports line breaks, we're going to add a line breaks through that. Basically
-we're going to create, let me show you what I mean. Freedom about your API for a
-second. Let's find our `setDescription()` method. I'm going to copy this, I'm going to
-paste it. I want to make a new one called `setTextDescription()`. And here we're going
-say `$this->description = nl2br($description);`. So very simple thing where it's
-like, hey, if you want to set a text description on the `CheeseListing`, you can do
-that and we will turn all of the uh, new lines into `<br>` elements and set that on the
-`description` field.
+Anyways, now that we know how this works, we're *super* dangerous! Seriously!
+Right now, we're able to send a `description` field. Let's pretend that this property
+can contain HTML in the database. But most of our users don't really understand
+HTML and, instead, just type into a box with line breaks. Let's create a new,
+*custom* field called `textDescription`. If an API client sends data for
+`textDescription`, we'll convert the new lines into HTML breaks before saving it
+on the `description` field.
 
-if you go over here, as soon as we refresh, as soon as we refresh under the posts,
-you can see, look at, we have a `description` field. We can also set a 
-`textDescription`, field input. But if you get it, you can see that there's still just
-`description` field cause we have a center but we don't have a getter. In fact, you can
-see this all the way in the bottom of our swag and I condition under our models. You
-can see `textDescription` and we'd seen `description`.
+How can we create a totally custom new input field for our resource?
+Find `setDescription()`, duplicate it, and name it `setTextDescription()`. Inside,
+say, `$this->description = nl2br($description);`. It's a silly example, but even
+forgetting about API Platform, this is good, boring, object-oriented coding: we've
+added a way to set the description where new lines are converted to line breaks.
 
-of course you don't really want to have two fields there. Uh, what's it that we want
-to force the user to use the `textDescription` one. So let's actually removes that
-`setDescription()`. And then refresh.
+But *now*, refresh, and open up the POST operation again. Woh! It says that we can
+*still* send a `description` field, but we can *also* pass `textDescription`! But
+if your try the GET operation... we still *only* get back `description`.
 
-And we now have this desired result that on input they have to pass the 
-`textDescription`, but when they retrieved the resource, they're actually going to get the
-`description` field, which will contain the, uh, the HTML. In fact, let's try this. So
-`id` 1, let's go down here and actually do an edit for id one. And here for 
-`textDescription`, we'll do a strain that has a couple of line breaks in it and I'm only
-going to update that one field. So we can do that by just passing the single field on
-there. And then I'll execute. Cool. 200 status code to check this out. So on the Alto we
-actually get the `description` back and now the `description` has those line breaks in
-there.
+That makes senses! We added a *setter* method - which makes it possible to *send*
+this field - but we did *not* add a *getter* method. You can also see the new field
+described down in the models section.
 
-So the easiest way to start crafting your API is to control your getters and setters
-So we're going to get more complicated than that. Another thing you might
-notice is that we have this `createdAt` field, which is great, but it doesn't
-really make sense to allow the users to set that. That should be set automatically.
-So we don't really want a `createdAt` field here. So perfect. So what we can do then
-is let's find `setCreatedAt()` , let's delete that and we'll just do normal good
-object oriented programming, which says let's make a constructor function 
-`public function __construct()`. And inside here `$this->createdAt = new DateTimeImmutable()`
-So now we go over and refreshing. Nice. You can see it's gone from
-here,
+## Removing "description" as Input
 
-but when we actually execute, it's still going to be returned as a field on our
-things. So let's do one more thing. Let's actually create a custom field. So let's
-say that in addition to, um, uh, custom output field, so let's say that in addition
-to the `createdAt` we actually want to, um, have a creative that shown as a string.
-Somebody says like five seconds ago, this was credit two days ago, something like
-that. So to help that, I'm going to say 
+But, we *probably* don't want to allow the user to send both `description`
+*and* `textDescription`. I mean, you *could*, but it's a little weird - if the
+client sent both, they would bump into each other. So, let's remove
+`setDescription()`.
+
+Refresh now. I love it! To create or update a cheese listing, the client will send
+`textDescription`. But when they fetch the data, they'll always get back `description`.
+In fact, let's try this... with id 1. Open the PUT operation and set `textDescription`
+to something with a few line breaks. I *only* want to update this *one* field,
+so we can just remove the other fields. And... execute! 200 status code and...
+a `description` field with some line breaks!
+
+By the way, the fact that our input fields don't match our output fields is
+*totally* ok. Consistency *is* super nice - and I'll show you soon how we can
+fix this inconsistency. But there's no rule that says your input data needs to
+match your output data.
+
+## Removing createdAt Input
+
+Ok, what else can we do? Well, having a `createdAt` field on the output is great,
+but it probably doesn't make sense to allow the client to send this: the server
+should set it automatically.
+
+No problem! Don't want `createdAt` field to be allowed in the input? Find the
+`setCreatedAt()` field and remove it. To auto-set it, it's back to good,
+old-fashioned object-oriented programming. Add `public function __construct()` and,
+inside, `$this->createdAt = new DateTimeImmutable()`.
+
+Go refresh the docs. Yep, it's gone here... but when we try the GET operation,
+it *is* still in the output.
+
+## Adding a Custom Date Field
+
+We're on a roll! So let's customize one more thing! Let's say that, in addition
+to the `createdAt` field - which is in this ugly, but standard format - we *also*
+want to return the date as a string - something like `5 minutes ago` or `1 month ago`.
+
+To help us do that, find your terminal and run:
 
 ```terminal
 composer require nesbot/carbon
 ```
 
-This is just a little datetime utility. While I'm waiting for that, one thing I forgot
-to do is I'm actually gonna take out my custom configuration for my GET endpoint
-just so that doesn't cause anything weird.
+This is a handy DateTime utility that can easily give us that string. Oh, while
+this is installing, I'll go back to the top of my entity and remove the custom
+`path` on the `get` operation. That's a cool example... but let's *not* make our
+API extra weird for no reason.
 
-And that will make our URL kind of go back to normal. There we go. That looks better.
-Then back over here on composer. When that finishes perfect, I'm going to go back in
-and find my `getCreatedAt()` method. And down here we'll say 
-`public function getCreatedAtAgo()`. And this is actually not return a `string`. 
-And here I'm gonna `return Carbon::instance($this->getCreatedAt());` this is that. 
-And then we can just say `->diffForHumans()`. So just for adding getter, 
-I'm gonna flip back over and refresh. You can see it down here first in the model, 
-we now have a `createdAtAgo`, which is a readonly field. By the way. You can 
-also see here that text, the `description` is a readonly field and if I try it up
-here, there it is `createdAt`, but then are `createdAtAgo`. Is there?
+Yep, that looks better.
 
-Yeah,
+Back at the terminal.... done! In `CheeseListing`, find `getCreatedAt()`, go below
+it, and add `public function getCreatedAtAgo()` with a `string` return type. Then,
+`return Carbon::instance($this->getCreatedAt())->diffForHumans()`.
 
-so his nicest it is to control things with the getter and setter methods. It is a
-little bit weird that, for example, I don't have a setCreatedAt in here. Like
-what if for some reason I'm application, I really did need a set created that
-sometimes we didn't need to override the creative that method, but we don't want to
-expose that our API, this is a super common use case and we're going to handle it
-with serialization groups. That's next.
+You know the drill: *just* by adding a getter, when we refresh... and look at
+the model, we have a *new* `createdAtAgo` - *readonly* field! And, by the way,
+it *also* knows that `description` is readonly.
+
+Scroll up and try the GET collection operation. And... cool: `createdAt` *and*
+`createdAtAgo`.
+
+As *nice* as it is to control things by tweaking your getter and setter methods,
+it's not *ideal*. For example, to prevent an API client from setting the `createdAt`
+field, we *had* to remove the `setCreatedAt()` method. But, what if, *somewhere*
+in my app - like a command that imports legacy cheese listings - we *do* need to
+manually set the `createdAt` date? Let's learn how to control this with
+serialization groups.
