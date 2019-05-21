@@ -7,4 +7,4 @@ chapters:
   - hydra
   - operations
   - serializer
-  - serialization-groups #raw
+  - serialization-groups
