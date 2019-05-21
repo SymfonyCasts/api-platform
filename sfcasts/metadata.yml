@@ -6,5 +6,5 @@ chapters:
   - json-ld
   - hydra
   - operations
-  - serializer  #raw
+  - serializer
   - serialization-groups #raw
