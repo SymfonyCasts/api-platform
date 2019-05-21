@@ -35,16 +35,19 @@ metadata - saying that some `div` describes a *Person* and that this
 Person's `name` and `telephone` are these other pieces of data:
 
 ```html
-<p vocab="http://schema.org/" typeof="http://schema.org/Person">
+<p typeof="http://schema.org/Person">
    My name is
-   <span property="name">Manu Sporny</span>
+   <span property="http://schema.org/Person#name">Manu Sporny</span>
    and you can give me a ring via
-   <span property="telephone">1-800-555-0199</span>.
+   <span property="http://schema.org/Person#telephone">1-800-555-0199</span>.
 </p>
 
 <!-- or equivalent using vocab -->
 <p vocab="http://schema.org/" typeof="Person">
-    <!-- ... -->
+   My name is
+   <span property="name">Manu Sporny</span>
+   and you can give me a ring via
+   <span property="telephone">1-800-555-0199</span>.
 </p>
 ```
 
