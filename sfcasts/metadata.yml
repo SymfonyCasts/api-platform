@@ -5,3 +5,6 @@ chapters:
   - open-api-spec
   - json-ld
   - hydra
+  - operations
+  - serializer
+  - serialization-groups
