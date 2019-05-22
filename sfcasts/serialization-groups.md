@@ -1,125 +1,148 @@
 # Serialization Groups
 
-Coming soon...
+If the only way to control the input and output of our API was by controlling
+the getters and setters on our entity, it wouldn't be that flexible... and
+*could* be a bit dangerous. You might add a new getter or setter method for
+something internal and not realize that you were exposing new data in your API!
 
-If the only way to control the input and output I've already API was by controlling
-the getters and setters on our entity, it wouldn't be that flexible and actually
-would be a little dangerous. You could accidentally add new getter set or methods for
-your own code and suddenly be exposing fuels in the API maybe without thinking about,
-so the way that the way around this and the way that I recommend doing things is by
-using groups, which is a concept inside the serializer works like this.
+The solution for this - and the way that I recommend doing things in all cases -
+is to use serialization groups.
 
-Let's add, add a new key here called `normalizationContext`. So remember,
-normalization is when you're going from your object to your array. So this is
-something that's used when you are reading data from your API context is basically
-options that you passed to that process. The most calm option by far is called a
-`"groups"` which you set again turned away. And I'm going to add, make one in here called
-`cheese_listing:read`. What this is going to say is that it's going to,
-it's going to say, um, when we are reading from our API, I only want you to serialize
-fields that have this `cheese_listing:reed` group because in a second we're
-going to start adding in that group to these properties. Right now we haven't added
-it anywhere. And so if you go over and try your get collection and point again, oh,
-actually going to see a huge air. I knew this was going to happen. Sooner or later
-you can see that this air is actually a little bit hard to read
+## Adding a Group for Normalization
 
-the way around. The way to figure out the way to see this is actually go to 
-`localhost:8000/_profiler/`. That trip we saw a few minutes ago and either you're going to
-be able to see the list of it profiler things and you're gonna be able to click into
-the one you have. Or a lot of times the, the URL is so the errors so fatal that
-you're going to get a huge exception. You can see right here. In this case, I'm going
-to do this a lot. This is a problem with my uh, annotations because I forgot a comma
-at the end. It's now a refresh.
+In the annotation, add `normalizationContext`. Remember, normalization is
+when you're going from your object to an array. So this option is related to when
+you are *reading* data from your API. Context is basically "options" that you pass
+to that process. The most common option by far is called `"groups"`, which you
+set to another array. Add one string here: `cheese_listing:read`.
 
-The profiler works so we can go back over here and execute our response again. All
-right, perfect. So notice, look, we get no fuels back. We get this ad ID and Andy at
-type from JSON Ld, but there's not actually any fields because we are, because none
-of our fields have this yet. So I'm gonna copy this `cheese_listing:read` and
-now we can do is just start opting into where we want to use that. So we do that with
-adding this `@Groups()` annotation and then `{}` and then `""` and paste. That'll 
-copy of that. And let's put that also above `description`.
-And how about above `price`?
+Thanks to this, when an object is being serialized, the serializer will *only*
+include fields that are in this `cheese_listing:read` group, because, in a second,
+we're going to start adding groups to each property.
 
-now let me flip back over and try it. Beautiful. We get those three exact fields that
-I really like, that control, we can do the same thing with the input data. So we do
-that by passing something called `denormalizationContext`. I'm actually going to
-copy `normalizationContext` and `de` front of vets and change this to `cheese_listing:write`
-This is a convention I'm going to follow with all of my groups to make
-it very easy to control the input and output. In this case, let's, I'll copy that
-`cheese_listing:write`. Let's see on on the input. Let's just allow right now the
-`title` and the `price`. I actually don't want to allow the `description`. We're going to
-talk about the description in a second.
+But right now, we haven't added *any* groups to *anything*. And so, if you go over
+and try your get collection operation... oh! Ah! A huge error!
 
-Now, if we move over and refresh, you'll see that down here. If you go to post and
-try it out, it's it knows from in general documentation that now we can only pass the
-`title` and the `price` as fields. So `normalizationContext` and `denormalizationContext`
-are two totally separate ideas. One controls reading it. That's normalization context
-and Dean Organization context supports, uh, is when you're writing to the field. Now
-you also notice that the bottom of the page here that we now have two models. It's
-actually separating the read model. That's the normalization context with `title`,
-`description` `price` from the write model. The `title` and `price` and it's not really
-important, but if you want to control these names, I usually don't do this, but you
-can do that as another option to the `normalizationContext` here called 
-`swagger_definition_name`.
+## Debugging Errors
 
-And you can set this, I'll set this one first one to Read and copy that.
-And then paste it on there and call this one, Write. This is just something that
-shows up in our swagger API. So `cheeses-Read` and `cheeses-Write`.
+Let's... pretend like I did that on purpose and see how to debug it! The problem is
+that the giant HTML error is... a bit hard to read. One way to see the error is
+to use our trick from earlier: go to `https://localhost:8000/_profiler/`.
 
-Okay. So, um, we're missing a couple of fields here though. So first of all, when we
-read something, we get `title`, `description` and `price`, what we're getting to get back.
-But I remember we also have a creative that field. In fact, we have two creative that
-fields, we have a, the created an actual was the standardized string, but we also
-have that `getCreatedAtAgo` we created a second ago. So let's decide for some
-reason that we don't want to expose the `createdAt` standard string, which we probably
-do instead. We just want to expose the `createdAtAgo`. The problem is that
-there's no property to go put this annotation above, which is fine when you have a
-situation where the field exists just because of a getter, you'll add any of your
-options directly onto that. So we'll say `@Groups({""})` and we'll do that 
-`cheese_listing:read` I'm actually also going to add a little bit of documentation
-above this. How long ago in text that that this cheese and listening that was added.
+Woh! Ok, there are two types of errors: runtime errors, where something went wrong
+*specific* to that request, and build errors, where some invalid configuration
+is killing *every* page. Most of the time, if you see an exception, there is *still*
+a profiler you can find for that request by using the trick of going to this URL,
+finding that request in the list - usually right on top - and clicking the sha
+into its profiler. Once you're there, you can click an "Exception" tab on the left
+to see the big, beautiful normal exception.
 
-snap football [inaudible] I'll refresh it and get the new documentation. And down
-here the cheese model, you can see that get created, `createdAtAgo` with suddenly it
-and it has even the description on there. And if we try to execute that end point
-there, it is `createdAtAgo` and it's same thing for the input. So one of the
-fields that we're missing in our post here is we're missing the description. Now I
-remember we don't want actually we want the user to actually set set using the 
-`setTextDescription()` method. We don't want to expose, we didn't have a `setDescription()`
-method. Right now we're gonna use `setDescription()` methods. So I'll do the same thing
-I'll do `@Groups({""})`. We'll call this one `cheese_listing:write` And I'll put some
-description on there here, which is the description of the cheese as raw text.
+If you get a build error that kills *every* page, it's even easier: you'll see it
+when trying to access anything.
 
-And this time when we refresh the documentation, you can see it on the write model
-and you can see it inside of the specific thing, which means that we can go back here
-now and if we need it inside of our application, we can re add the original 
-`setDescription()` number removed a second ago. So that wouldn't be part of our API. We
-don't have to do that anymore. If you need a set method, you can have a 
-`setDescription()` method. It's not going to modify our API in any way. So let's try all of
-this out here. So let's refresh to get a fresh page on a documentation. Let's create
-a new cheese. So I'll try it out. The title of this is going to be, tell us just
-shovel
+Anyways, the problem here is with my annotation syntax. I do this a lot - which
+is no big deal as long as you know how to debug the error. And, yep! I forgot a
+comma at the end.
 
-trying to cut box. Okay.
+## Adding Groups to Fields
 
-And why don't we take advantage of that. A line break thing inside of our text
-description. All right, hit execute and Whoa, 500 error, check this out. It says an
-exception occurred during the query answered into "is_published" cannot be no. Ah, and
-actually in Symfony 4.3 you might not, you might see a different error. You might see a
-validation error. That's because in Symfony 4.3, um, doctrine constraints are
-automatically turn into validation errors.
+Refresh again! The profiler works, so now we can go back over and hit execute again.
+Check it out - we have `@id` and `@type` from JSON-LD... but it doesn't contain
+*any* real fields because *none* of them are in the new `cheese_listing:read` group!
 
-so this makes sense because art `$isPublished` method.
+Copy the `cheese_listing:read` group name. To *add* fields to this, above title,
+use `@Groups()`, `{""}` and paste. Let's also put that above `description`...
+and `price`.
 
-Okay?
+Flip back over and try it again. Beautiful! We get those *three* exact fields.
+I *love* this control.
 
-It's type `boolean`. It's not nullable. Well we don't want this to actually be set by
-the user. So we're do this, this is just good object oriented programming. We won't,
-we don't want this to be stopped by the user when they initially create it. We're
-going to create a different process later for publishing cheese listings. So just
-means that we want to initialize it to `false`. It's now let me go over and execute. It
-works and isn't that beautiful. We have just the input fields that we want here and
-the output fields are very different. We have a created out of go, we have a
-delicious, uh, the description which has the, um, line breaks in it and is published
-with, isn't, isn't exposed as all, but was set in the background.
+By the way - the name `cheese_listing:read`... I just made that up - you could
+use anything. *But*, I *will* be following a group naming convention that I
+recommend. It'll give you flexibility, but keep things organized.
 
-Yes.
+## Adding Denormalization Groups
+
+Now we can do the same thing with the input data. Copy `normalizationContext`,
+paste, and add `de` in front to make `denormalizationContext`. This time, use
+the group: `cheese_listing:write`
+
+Copy that and... let's see... just add this to `title` and `price` for now. We
+actually *don't* want to add it to `description`. Instead, we'll talk about how
+to add this group to the fake `textDescription` in a minute.
+
+Move over and refresh again. Open up the POST endpoint.... yea - the *only* fields
+we can pass now are `title` and `price`!
+
+So `normalizationContext` and `denormalizationContext` are two totally separate
+configs for the two directions: *reading* our data - normalization - and *writing*
+our data - denormalization.
+
+## The Open API Read & Write Models
+
+At the bottom of the docs, you'll *also* notice that we now have two models: the
+*read* model - that's the normalization context with `title`, `description` and
+`price`, and the write model with `title` and `price`.
+
+And, it's not really important, but you can control these names if you want. Add
+another option: `swagger_definition_name` set to "Read". And then the same thing
+below... set to Write.
+
+I don't normally care about this, but if you want to control it, you can.
+
+## Adding Groups to Fake Fields
+
+But, we're missing some fields! When we *read* the data, we get back `title`,
+`description` and `price`. But what about our `createdAt` field or our
+custom `createdAtAgo` field?
+
+Let's pretend that we *only* want to expose `createdAtAgo`. No problem! Just add
+the `@Groups` annotation to that property... oh wait... there *is* no `createdAtAgo`
+property. Ah, it's just as easy: find the *getter* and put the annotation there:
+`@Groups({"cheese_listing:read"})`. And while we're here, I'll add some documentation
+to that method:
+
+> How long ago in text that this cheese listing was added.
+
+Let's try it! Refresh the docs. Down in the models section... nice! There's our
+new `createdAtAgo` readonly field. *And* that documentation we added shows up
+here. Nice! No surprise that when we try it... the field shows up.
+
+For denormalization - for *sending* data - we need to re-add our fake `textDescription`
+field. Search for the `setTextDescription()` method. To prevent API clients from
+sending us the `description` field directly, we removed the `setDescription()` method.
+Above `setTextDescription()`, add `@Groups({"cheese_listing:write"})`. And again,
+let's give this some extra docs.
+
+*This* time, when we refresh the docs, you can see it on the write model and, of
+course, on the data that we can send to the POST operation.
+
+## Have Whatever Getters and Setters You Want
+
+And... this leads us to some great news! *If* we decide that something internally
+in our app *does* need to set the description property directly, it's now perfectly
+ok to re-add the original `setDescription()` method. That won't become part of our API.
+
+## Default isPublished Value
+
+Let's try *all* of this out. Refresh the docs page. Let's create
+a new listing: Delicious chèvre - excuse my French - for $25 and a description
+with some line breaks. Execute!
+
+Woh! A 500 error! I could go look at this exception in the profiler, but this one
+is pretty easy to read: an exception in our query: `is_published` cannot be null.
+Oh, that makes sense: the user isn't sending `is_published`... so *nobody* is setting
+it. And it's set to not null in the database. No worries: default the property
+to false.
+
+By the way, if you're using Symfony 4.3, instead of a Doctrine error, you may
+have gotten a validation error. That's due to a new feature where Doctrine database
+constraints can automatically be used to add validation. So, if you see a validation
+error, awesome!
+
+Anyways, try to execute it again. It works! We have *exactly* the input fields
+and output fields that we want. The `isPublished` field isn't exposed at *all* in
+our API, but it *is* being set in the background.
+
+Next, let's learn a few more serialization tricks - like how to control the field
+name and how to handle constructor arguments.

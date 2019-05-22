@@ -6,28 +6,29 @@ We have *one* resource - our `CheeseListing` - and, by default, API Platform gen
 
 ## Collection and Item Operations
 
-Operations are divided into two categories. First, "collection" operations. these
-are the URLs that don't include the `{id}` and where the "resource" you're operating
+Operations are divided into two categories. First, "collection" operations. These
+are the URLs that don't include `{id}` and where the "resource" you're operating
 on is *technically* the "collection of cheese listings". For example, you're "getting"
-the collection of you're "adding" to the collection with POST.
+the collection or you're "adding" to the collection with POST.
 
 And second - "item" operations. These are the URLs that *do* have the `{id}` part,
-when you're "operating" on a *single* cheese listing.
+when you're "operating" on a *single* cheese listing resource.
 
 The *first* thing we can customize is which operations we actually want! Above
 `CheeseListing`, inside the annotation, add `collectionOperations={}` with
 `"get"` and `"post"` inside. Then `itemOperations` with `{"get", "put", "delete"}`.
 
-Yep, *a lot* of mastering API Platform comes down to learning about what options
-you can pass to this annotation. *This* is basically the default configuration:
-we want *all* five of these end points. So not surprisingly, when we refresh, we
+*A lot* of mastering API Platform comes down to learning about what options
+you can pass inside this annotation. *This* is basically the default configuration:
+we want *all* five operations. So not surprisingly, when we refresh, we
 see absolutely no changes. But what if we don't want to allow users to delete a
-cheese listing? Maybe instead we'll add a way to "archive" them. Remove `"delete"`.
+cheese listing? Maybe instead, in the future, we'll add a way to "archive" them.
+Remove `"delete"`.
 
 As *soon* as we do that... boom! It's gone from our documentation. Simple, right?
 Yep! But a bunch of cool things just happened. Remember that, behind the scenes,
 the Swagger UI is built off of an Open API spec document, which you can see
-at `/api/docs.json`. The reason the "delete" endpoint disappeared from swagger
+at `/api/docs.json`. The reason the "delete" endpoint disappeared from Swagger
 is that it disappeared from here. API Platform is keeping our "spec" document
 up to date. If you looked at the JSON-LD spec doc, you'd see the same thing.
 
@@ -38,13 +39,13 @@ running:
 php bin/console debug:router
 ```
 
-Yep, just `GET`, `POST`, `GET` and `PUT` endpoints.
+Yep, just `GET`, `POST`, `GET` and `PUT`.
 
 ## Customizing the Resource URL (shortName)
 
-Hmm, now that I'm looking at this, I don't love the `cheese_listing` part of the
-URLs... API Platform generates automatically from the class name. And really, in
-an API, you shouldn't obsess about how your URLS work - it's just not important,
+Hmm, now that I'm looking at this, I don't love the `cheese_listings` part of the
+URLs... API Platform generates this from the class name. And really, in an API,
+you shouldn't obsess about how your URLs look - it's just not important,
 especially - as you'll see - when your API responses include links to other resources.
 But... we *can* control this.
 
@@ -81,8 +82,8 @@ serialization process.
 
 In fact, let's learn about that process right now! How does API Platform transform
 our `CheeseListing` object - with all these private properties - into the JSON that
-we've been seeing? And when we create a *new* `CheeseListing`, how it it converting
-out *input* JSON and populating a `CheeseListing` object?
+we've been seeing? And when we create a *new* `CheeseListing`, how is it converting
+our *input* JSON into a `CheeseListing` object?
 
 Understanding the serialization process may be *the* most important piece to
 unlocking API Platform.
