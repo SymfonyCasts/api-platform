@@ -9,7 +9,7 @@ chapters:
   - operations
   - serializer
   - serialization-groups
-  - serialization-tricks #raw
+  - serialization-tricks
   - filters              #raw
   - pagination           #raw
   - formats              #raw
