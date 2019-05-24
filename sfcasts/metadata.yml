@@ -11,7 +11,7 @@ chapters:
   - serialization-groups
   - serialization-tricks
   - filters
-  - pagination           #raw
+  - pagination
   - formats              #raw
   - validation           #raw
   - user-resource        #raw
