@@ -9,3 +9,9 @@ chapters:
   - operations
   - serializer
   - serialization-groups
+  - serialization-tricks #raw
+  - filters              #raw
+  - pagination           #raw
+  - formats              #raw
+  - validation           #raw
+  - user-resource        #raw
