@@ -18,12 +18,16 @@ The *first* thing we can customize is which operations we actually want! Above
 `CheeseListing`, inside the annotation, add `collectionOperations={}` with
 `"get"` and `"post"` inside. Then `itemOperations` with `{"get", "put", "delete"}`.
 
+[[[ code('4eafb7ea76') ]]]
+
 *A lot* of mastering API Platform comes down to learning about what options
 you can pass inside this annotation. *This* is basically the default configuration:
 we want *all* five operations. So not surprisingly, when we refresh, we
 see absolutely no changes. But what if we don't want to allow users to delete a
 cheese listing? Maybe instead, in the future, we'll add a way to "archive" them.
 Remove `"delete"`.
+
+[[[ code('70cbcf174b') ]]]
 
 As *soon* as we do that... boom! It's gone from our documentation. Simple, right?
 Yep! But a bunch of cool things just happened. Remember that, behind the scenes,
@@ -51,6 +55,8 @@ But... we *can* control this.
 
 Flip back over and add another option: `shortName` set to `cheeses`.
 
+[[[ code('f041112cf9') ]]]
+
 *Now* run `debug:router` again:
 
 ```terminal-silent
@@ -71,6 +77,8 @@ lines. Then, instead of just saying `"get"`, we can say `"get"={}` and pass this
 extra configuration.
 
 Try `"path"=` set to, I don't know, `"/i❤️️cheeses/{id}"`.
+
+[[[ code('e0bf4ca943') ]]]
 
 Go check out the docs! Ha! That works! What else can you put here? Quite a lot!
 To start, *anything* that can be defined on a route, can be added here - like
