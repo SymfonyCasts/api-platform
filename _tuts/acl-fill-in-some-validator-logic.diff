@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 064eca3..0c532c4 100644
+index 325ad30..2d55c5e 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
@@ -13,7 +13,7 @@ index 064eca3..0c532c4 100644
 @@ -101,6 +102,7 @@ class CheeseListing
       * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
       * @ORM\JoinColumn(nullable=false)
-      * @Groups({"cheese_listing:read", "cheese_listing:post:collection"})
+      * @Groups({"cheese_listing:read", "cheese_listing:collection:post"})
 +     * @IsValidOwner()
       */
      private $owner;

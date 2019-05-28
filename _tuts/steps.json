@@ -361,6 +361,26 @@
             "description": null
         },
         {
+            "id": "jwt-add-empty-subscriber",
+            "name": "JWT: Add empty subscriber",
+            "description": null
+        },
+        {
+            "id": "jwt-listen-to-authentication-success",
+            "name": "JWT: listen to authentication success",
+            "description": null
+        },
+        {
+            "id": "jwt-add-user-id-to-response",
+            "name": "JWT: Add user id to response",
+            "description": null
+        },
+        {
+            "id": "jwt-send-back-iri",
+            "name": "JWT: send back IRI",
+            "description": null
+        },
+        {
             "id": "security-set-collectionoperations",
             "name": "Security: set collectionOperations",
             "description": null
@@ -586,5 +606,5 @@
             "description": null
         }
     ],
-    "sha": "df488e79996790742091626e15c4b99b70c84a03"
+    "sha": "63f3809b33bf2df106a5af92f98fe4e4e1b14aa5"
 }

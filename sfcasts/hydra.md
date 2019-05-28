@@ -60,7 +60,7 @@ Here's the idea: JSON-LD gave us the *system* for saying that this piece of data
 is this type and this piece of data is this other type. Hydra is an *extension*
 of JSON-LD that adds new *vocab*. It says:
 
-> Hold on a second. JSON-LD is great and fun and an excllent dinner party guest.
+> Hold on a second. JSON-LD is great and fun and an excellent dinner party guest.
 > But to *really* allow a client and a server to communicate, we need *more*
 > shared language! We need a way to define "classes" within my API, the properties
 > of those classes and whether or not each is readable and writeable. Oh, and we
