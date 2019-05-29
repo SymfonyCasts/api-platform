@@ -1,75 +1,98 @@
 # Validation
 
-Coming soon...
+There are a *bunch* of different ways that an API client can send bad data: they
+might send malformed JSON... or send a blank `title` field... maybe because a
+user forgot to fill in a field on the frontend. The job of our API is to respond
+to *all* of these situations in an informative and consistent way so that errors
+can be easily understood, parsed and communicated back to humans.
 
-In a traditional Symfony APP with forms validation is so simple. Unfortunately with
-API Platform is just as simple and it kind of takes care of things we don't even
-need to think about. So first of all, let's try this. What's, what's one way that you
-can screw up as an API? We can actually send invalid JSON, I'll kill that last little
-curly brace. That's Ellen invalid JSON, which if you're creating your own API end
-points, you would actually need the handle and give back. And I say our message with
-this, if we just get it automatically when you check out comes back with an
-`@context` of `/api/context/error`. And this is a `hydra:Error` type. So this is kind of a
-built in a clients understand hydra and understand that this was some sort of an
-air that happened and it's a 400 status code automatically, which is correct. And it
-tells you that there's a syntax error. The trace here will only show, um, when we're
-in development mode. So that's awesome. And what happens if we just delete
-everything?
+## Invalid JSON Handling
 
-well I actually don't really everything everything do at least a `{}`.
+This is one of the areas where API Platform *really* excels. Let's do some
+experimenting: what happens if we accidentally send some invalid JSON? Remove the
+last curly brace.
 
-perfect. This time we get a 500 error. It's actually giving us an air from our database
-because of a couple of our columns cannot be null. By the way, in Symfony 4.3 as I
-mentioned earlier, you might already get a validation error from this because it uses
-the doctrine metadata to automatically add some, some validation rules. But even if
-you do are in this situation this week, this is something we want to prevent. It's
-the same thing when you build a Symfony form. If you allow the foreign to be
-completely blank because you forgot to add cirrus, I validation you are going to get
-a 500 error or weird things are gonna happen. So we need to add validation, which
-turns out is just super beautiful. It's the exact way we've been doing all along.
-It's just with annotation. So, uh, above `title`, let's say, let's `@Assert\NotBlank()`
-Let's also add an `@Assert\Length()` here. I'll say that the `min=` needs to be
-2 the `max=` is going to be 50 and we'll even uh, control the `maxMessage=""` to say,
-"Describe your cheese and 50 chars or less". And let's see the other fields.
+Try it! Woh! Nice! This comes back with a *new* "type" of resource: a `hydra:error`.
+If an API client understands Hydra, they'll instantly know that this response contains
+error details. And even if someone has *never* heard of Hydra before, this is a
+*super* clear response. And, *most* importantly, *every* error has the same structure.
 
-How about `@Assert\NotBlank()` about `$description`? That is a little bit odd because we
-actually are using the tech, right? It's actually calling, `setDescription()`, 
-`setTextDescription()` from behind the seat and you haven't seen,
+The status code is also 400 - which means the client made an error in the request -
+and `hydra:description` says "Syntax error". Without doing anything, API Platform
+is already handling this case. Oh, and the `trace`, while maybe useful right now
+during development, will *not* show up in the production environment.
 
+## Field Validation
 
-This will cause the air to be attached to the `$description` of property, which, which
-should make sense. And then down here, let's put `@Assert\NotBlank()` on price and you
-could also maybe put something to make that it's above zero.
+What happens if we just delete everything and send an *empty* request? Oh...
+that's *still* technically invalid JSON. Try just `{}`.
 
-All right. So, so for, if we switched back over now and we still have our empty
-response, I mean you're not sending any fields. Yes. Look at this. It's awesome. It's
- `@type` of `ConstraintViolationList`. That's one of the types that was described by
-our JSON-LD documentation at `/api/docs.jsonld`.
+Ah... *this* time we get a 500 error: the database is exploding because some of
+the columns cannot be null. Oh, and like I mentioned earlier, if you're using
+Symfony 4.3, you might already see a validation error instead of a database error
+because of a new feature where validation rules are automatically added by reading
+the Doctrine database rules.
 
-See down here under `supportedClasses`, there's entry point, but there's also a
-`ConstraintViolation` and `ConstraintViolationList` to kind of describes what these
-are supposed to look like and what properties they're supposed to have. So it is
-actually a type of resource where were you turning in? Air Resource has a `violations`
-key and blow their kind of shows you the `propertyPath` where it's coming from and the
-`message`. So just kind of like works automatically out of the box. It's super, super
-nice. Um, and if we did pass a `title`, And that was way too long.
+But, whether you're seeing a 500 error, or Symfony is *at least* adding some basic
+validation for you, the input data that's allowed is something *we* want to control:
+I want to decide the *exact* rules for each field.
 
-Yup. And our custom message shows up right there. So one thing you might be thinking
-about that was about this `price`, right? The only annotation I added here was at, not
-blank, but what's preventing us from adding a word to that? Something that's not even
-a valid, uh, a key. So let's try that.
+Adding validation rules is... oh, so nice. And, unless you're new to Symfony, this
+will look *delightfully* boring. Above `title`, to make it required, add
+`@Assert\NotBlank()`. Let's also add `@Assert\Length()` here with, how about,
+`min=2` and `max=50`. Heck, let's even set the `maxMessage` to
 
-Let's say `price` is going to be `apple`, totally invalid setting.
+> Describe your cheese in 50 chars or less
 
-Let me execute this. It actually fails where they 400 air and you can see that it
-says the type or the price price. Attri it must be into string given it fails during
-the, you kind of look down at the trace here. It fails during the deserealization
-process. So it's not actually a validation air. Uh, it's a DC realization air, but to
-the user, it actually looks the same. It's a 400 air and um, and they get like a good
-description, let's talking about it. So kind of someone with forms, you don't even
-need to worry about some of the type of safe sort of a rules. A API platform knows
-the types of your fields and it's going to make sure that something insane doesn't
-get pushed there. You'll need need to do business rule validation. Basically making
-sure that fields aren't blank, are within some range that you need. So you have
-validation works exactly like it's always worked in Symfony and a pamphlet from maps
-it to the API responses and messages that we want without doing any work.
+What else? Above `description`, add `@Assert\NotBlank`. And for price,
+`@Assert\NotBlank()`. You could also add a `GreaterThan` constraint to make
+sure this is above zero.
+
+Ok, switch back over and try sending *no* data again. Woh! It's awesome! The
+ `@type` is `ConstraintViolationList`! That's one of the types that was described
+by our JSON-LD documentation!
+
+Go to `/api/docs.jsonld`. Down under `supportedClasses`, there's `EntryPoint` and
+here is `ConstraintViolation` and `ConstraintViolationList`, which describes what
+each of these types look like.
+
+And the data on the response is really useful: a `violations` array where each
+error has a `propertyPath` - so we know what field that error is coming from -
+and `message`. So... it all just... works!
+
+And if you try passing a `title` that's longer than 50 characters... and execute,
+there's our custom message.
+
+## Validation for Passing Invalid Types
+
+Perfect! We're done! But wait... aren't we missing a bit of validation on the
+`price` field? We have `@NotBlank`... but what's preventing us from sending *text*
+for this field? Anything?
+
+Let's try it! Set the price to `apple`, and execute.
+
+Ha! It *fails* with a 400 status code! That's awesome! It says:
+
+> The type of the price attribute must be int, string given
+
+If you look closely, it's failing during the deserialization process. It's not
+*technically* a validation error - it's a serialization error. But to the API client,
+it looks just about the same, except that this returns an Error type instead of
+a `ConstraintViolationList`... which probably makes sense: if some JavaScript
+is making this request, that JavaScript should probably have some built-in
+validation rules to prevent the user from *ever* adding text to the price field.
+
+The point is: API Platform, well, really, the serializer, knows the types of your
+fields and will make sure that nothing insane gets passed. It *knows* that price
+is an integer from *two* sources actually: the Doctrine `@ORM\Column` metadata
+on the field *and* the argument type-hint on `setPrice()`.
+
+The only thing *we* really need to worry about is adding "business rules" validation:
+adding the `@Assert` validation constraints to say that this field is required,
+that field has a min length, etc. Basically, validation in API Platform works
+*exactly* like validation in *every* Symfony app. And API Platform takes care of
+the boring work of mapping serialization and validation failures to a 400 status
+code and descriptive, consistent error responses.
+
+Next, let's create a *second* API Resource! A User! Because things will get *really*
+interesting when we start creating *relations* between resources.

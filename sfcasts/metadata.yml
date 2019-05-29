@@ -11,6 +11,7 @@ chapters:
   - serialization-groups
   - serialization-tricks
   - filters
+  - property-filter
   - pagination
   - formats
   - validation

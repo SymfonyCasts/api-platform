@@ -1,56 +1,63 @@
 # Pagination
 
-Coming soon...
+If we have a million, or a thousand... or even a *hundred* cheese listings, we can't
+return *all* of them when someone makes a GET request to `/api/cheeses`! The way
+that's solved in an API is *really* the same as on the web: pagination! And
+in API Platform... ah, it's so *boring*... you get a powerful, flexible pagination
+system... without doing... *anything*.
 
-Something else. Every API needs is pagination. You don't normally think about that.
-But if we have a million or a thousand or even a hundred cheese listings, we can't
-return all of them. When you make an API request to cheese listings. So aps have have
-pagination for that and an API platform, it's just built in. So let's actually go
-to my post end point here and let's create a few more cheese listings. I put in some
-kind of simple data here.
+Let's go to the POST operation and create a few more cheese listings. I'll put in
+some simple data... and execute a bunch of times.. in fast forward. On a real
+project, I'd use data fixtures to help me get useful dummy data.
 
-You know, execute that multiple times. This is where on a real project, data fixtures
-can definitely come in handy.
+We should have about 10 or so thanks to the 4 we started with. Now, head up to
+the GET collection operation... and hit Execute. We *still* see *all* the results.
+That's because API Platform shows *30* results per page, by default. Because I
+don't feel like adding 20 more manually, this is a *great* time to learn how
+to change that!
 
-And this point, we should have about 10 or so from our normal ones before. So if we
-go up to our GET endpoint here and hit execute, we get still actually everything.
-So by Default API Platform, uh, it's Max per page is 25 and since I don't feel like,
-uh, making 25 of these to show that off, let's actually learn how to modify that. So
-this is something that you can control on a resource by resource basis. So in my 
-`@ApiResource` here, I'm going to add an `attributes={}` key which has some kind of random
-configuration that's inside of there. We can say `"pagination_items_per_page":` and
-set that to `10` this is what I was talking about earlier where a lot of API Platform,
-it's just figuring out the right keys to put here to configure the behavior. So as
-soon as you do that, I don't even need to refresh this page. I can just sit, execute.
+## Controlling Items Per Page
 
-We get pagination.
+First, this can be changed globally in your `config/packages/api_platform.yaml`
+file. I won't show it now, but always remember that you can run:
 
-Okay.
+```terminal
+php bin/console debug:config api_platform
+```
 
-You can see it says total items 11 but it's actually only showing us up to 10 and now
-I have this `hydra:view` thing down here, which actually advertising the pagination
-These are basically links that on API client that understands hydra could go,
-they could actually figure out there's this hydra view thing and they go to the 
-`hydra:first`, `hydra:last` or `hydra:next` to go to the first, last or next page. And you can
-see paginations is very simple. It's just `?page=1` `?page=2` and so on. So let's 
-actually do this directly.
+to see a list of all of the valid configuration for that file and their current
+values. That would reveal a `collection.pagination` section that is *full* of
+config.
 
-So we can go to `/api/cheeses.jsonld`
+But we can also control the number of items per page on a resource-by-resource
+basis. Inside the `@ApiResource` annotation, add `attributes={}`... which is a key
+that holds a variety of random configuration for API Platform. And then,
+`"pagination_items_per_page": 10`.
 
-you get the first 10 results. And let me do a `?page=2` to get the
-last result, which is just that one thing. And filtering still totally works here. So
-`.jsonld?title=cheese`. That's going to return just 10 results. We
-don't actually need page and nation here, but if we did have return 11 results, then
-it would um, have pagination on that filter and the links would actually have links
-to that particular thing. I don't know if I can, I can actually see this if we go up
-here and let's add one more of our cheese listings. Oh, but actually let me modify
-that so we have the word
+I mentioned earlier that a lot of API Platform is learning exactly *what* you can
+configure inside of this annotation and how. *This* is a perfect example.
 
-we're cheese in there. I'll have that a couple more times and then up here and
-refresh this. There you go. This time. Nice. We have 13 total results. It's only
-showing the first 10 and the page nation actually has the filter included in this
-man. This really make like powers are front end to, uh, to be awesome. And all this
-stuff is configurable. The fact that this is called the page where your parameters
-configure all the Max per page is configurable. So anything about this they want to
-configure, you can, it just works out of the box and it's very, very friendly to your
-front end.
+Go back to the docs - no need to refresh. Just hit Execute. Let's see... the total
+items are 11... but if you counted, this is only showing *10* results! Hello pagination!
+We also have a new `hydra:view` property. This advertises that pagination
+is happening and how we can "browse" through the other pages: we can follow
+`hydra:first`, `hydra:last` and `hydra:next` to go to the first, last or next page.
+The URLs look exactly like I want: `?page=1`, `?page=2` and so on.
+
+Open a new tab and go back to `/api/cheeses.jsonld`. Yep, the first 10 results.
+Now add `?page=2`... to see the one, last result.
+
+Filtering *also* still works. Try `.jsonld?title=cheese`. That returns... only
+10 results... so no pagination! That's no fun. Let's go back to the docs, open
+the POST endpoint and add a few more. Oh, but let's make sure that we add one
+with "cheese" in the title. Hit Execute a few times.
+
+*Now* go refresh the GET collection operation with `?title=cheese`. Nice! We
+have 13 total results and this shows the first 10. What's *really* nice is that
+the pagination links *include* the filter! That is *super* useful in JavaScript:
+you don't need to try to hack the URL together manually by combining the `page`
+and filter information: just read the links from hydra and use them.
+
+Next, we know that our API can return JSON-LD, JSON and HTML. And... that's probably
+all we need, right? Let's see how easy it is to add *more* formats... including
+making our cheese listings downloadable as a CSV.

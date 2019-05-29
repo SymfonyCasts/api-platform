@@ -1,77 +1,87 @@
-# Formats
+# More Formats: HAL & CSV
 
-Coming soon...
+API Platform supports multiple input and output formats. You can see this by going
+to `/api/cheeses.json` to get "raw" JSON or `.jsonld` or even `.html`, which
+loads the HTML documentation. But adding the extension like this is kind of a "hack"
+that API Platform added just to make things easier to play with.
 
-Mentioned earlier that API Platform supports multiple formats. You can see this by
-going to `/api/cheeses.json` did just to see raw JSON or `.jsonld` or even `.html`
-which technically loads HTML documentation. But we all stocked at all
-something. We also mentioned something called content-type negotiation, which is the
-fact that adding this extension on here is kind of a hack. What really goes on behind
-the scenes and the way that you should use your API is that if you want the JSON
-version, you should do what our documentation does, which has actually since this
-`accept:` header. So the cool thing is that our API out of the box supports three
-different formats and we can choose the format and want with the `accept:` header.
-Though by far the most useful is JSON-LD. But knowing this unlocked some cool
-possibilities, we can actually very easily add more formats.
+Instead, you're supposed to choose what "format", or "representation" you want for
+a resource via content negotiation. The documentation already does this and shows
+it in the examples: it sends an `Accept` header, which API Platform uses to figure
+out which format the serializer should use.
 
-In fact, without doing anything else, API Platform supports, um, JSON Api, how JSON
-Xml, YAML and CSV. So check this out. If I had a terminal 
+## Adding a new Format: HAL
+
+Out-of-the-box, API Platform uses 3 formats... but it *actually* supports a bunch
+more: JSON-API, HAL JSON, XML, YAML and CSV. Find your terminal and run:
 
 ```terminal
 php bin/console debug:config api_platform
 ```
 
-to see kind of what our current API Platform
-configuration looks like, including um, configuration. So you can see it has this
-`formats:` key under here and this is actually telling you that we support these three
-minutes. I love the box and here are the mime types that should activate those. So
-I'm actually going to copy that entire format section because I want to add a new
-format, but in order to add a new format, I need to first list these formats so that
-we don't remove them. Now hello. I can use one of the, um, one of the builtin formats
-is called `jsonhal`, how it's kind of like JSON-LD, it's JSON that has some extra metadata
-attached to it. And then, and, and um, it's one of the supported versions and JSON
-Howell is the exact key that you need to use to support it. Now I'll say `mine_types:`
-in the mime type for this is usually `application/hal+json`.
+This is our current API Platform configuration, *including* default values. Check
+out `formats`. Hey! It shows the 3 formats that we've seen so far and the mime
+types for each - that's the value that should be sent in the `Accept` header
+to activate them.
 
-Cool. And just like that. If we refresh our documentation is being updated and I'll
-actually go and try one, she's listing. And here you can change this to 
-`applications/hal+json` and you can see how it looks. So it has this little `_links` section
-whereas links to itself and we'll also have links to other related resources if they
-were there. This looks even cooler if you try out our main and points. So I'll select
-`application/hal+json` hit execute. And it's just cool to see how it does pagination
-So it has that same honor `_links` thing. And here it has a `first`,
-`last` and `next`, uh, links. And if we were on page 2, we would actually have a
-previous, I'm just kind of fun and here all the,
+Let's add *another* format. To do that, copy this entire formats section. Then
+open `config/packages/api_platform.yaml` and paste here. This will make sure that
+we *keep* these three formats. Now, let's add a new one: `jsonhal`. This is one
+of the *other* formats that API Platform supports out-of-the box. Below, add
+`mime_types:` then the standard content type for this format: `application/hal+json`.
 
-So it's just a kind of a different way of a structure that's trying to solve this
-problem of like adding links to our data. And there may be some cases when having
-this format can be handy. Now, one of the forums I think actually is really handy
-every now and then is the fact that you can do CSV but you might not want to activate
-CSV across your entire application. So one of the cool things we can do is you can
-activate um, formats on a resource by for resource level. So back on our 
-`CheeseListing` entity. Well, once again, under this kind of special `attributes` key, there's
-one call `"formats"`. Now if you want to keep all of your existing formats, you want to,
-you're going to need to list those first by their names. So `jsonld`, `json`, what I'm
-doing here is just kind of like mentioning these names.
+Cool! And *just* like that... our *entire* API supports a new format! Refresh the
+docs and open the GET operation to see cheese listing 1. Before you hit execute,
+open the format drop down and... hey hey! Select `application/hal+json`. Execute!
 
-So we'll also do `html` and uh, hal JSON or `jsonhal`. Then if you want to add an
-additional one, like we want CSV just for this resource, we can say comma, `csv`, but
-because this is not one of the main formats inside of here, we need to specify what
-mind types to use second, say `={}` and then you can say `text/csv`.
-So we don't need to do this for the other ones because we're basically just
-activating our preexisting configuration in here about for this last one, we need to
-say this should be for `text/csv`. So now when refresh the documentation, suddenly
-only for this resource, which it's the only resource we have right now, but only for
-this resource, we have a CSV format so we can check it out down here and execute
-that. And there it is. Thank you. Even try this in our browser and say `.csv` on the
-end. And then I'll flip over and I'll just cat that file so we can see what it looks
-like. And he has line breaks with the library, sir. Okay. Because they're inside of
-a, um, quotes, oh, we're gonna do that same thing to get all of them, `cheeses.csv`
-and all cat that file as well.
+Say hello to the JSON HAL format: a, sort of "competing" format with JSON-LD or
+JSON-API, all of which aim to standardize how you should *structure* your JSON:
+where you data should live, where links should live, etc.
 
-cool. So, and in addition to this, you can actually create your own custom formats if
-you need to return something. Um, there's a way, create a custom format and there,
-and then you can activate it exactly like when you need it. So kind of a powerful
-system. You have this resource and you can really express that resource and a number
-of different ways, including these kind of like weird formats like CSV, which
-sometimes you just need for random situations.
+In HAL, you have an `_links` property. It only has a link to `self` now, but this
+often contains links to other resources.
+
+This is more fun if we try the GET collection operation: select
+`application/hal+json` and hit Execute. It's kinda cool to see how the different
+formats "advertise" pagination. HAL uses `_links` with `first`, `last` and `next`
+keys. If we were on page 2, there would also be a `prev` field.
+
+Having this format available may or may not be handy for you - the awesome part
+is you can *choose* whatever you want. *And*, understanding formats unlocks other
+interesting possibilities.
+
+## CSV Format
+
+For example, what if, for some reason, you or someone who uses your API wants to
+be able to fetch the cheese listing resources as CSV? Yea, that's totally possible!
+But instead of making that format available globally for *every* resource, let's
+activate it for *only* our `CheeseListing`.
+
+Back inside that class, once again under this special `attributes` key, add
+`"formats"`. If you want to keep all the existing formats, you'll need to list
+them here: `jsonld`, `json`, then... let's see, ah yep, `html` and `jsonhal`.
+To add a *new* format, say `csv`, but *set* this to a new array with `text/csv`
+inside.
+
+This is the mime type for the format. We didn't need to add mime types for the
+*other* formats because they're already set up in our config file.
+
+Let's try it! Go refresh the docs. Suddenly, *only* for *this* resource... which,
+ok, we only have one resource right now... but CheeseListing *now* has a CSV
+format. Select it and Execute.
+
+There it is! And we can try this directly in the browser by adding `.csv` on the
+end. My browser downloaded it... so let's flip over and `cat` that file to see what
+it looks like. The line breaks look a bit weird, but that *is* valid CSV.
+
+A better example is getting the full list: `/api/cheeses.csv`. Let's go see what
+that looks like in the terminal as well. This is awesome! Fastest CSV download
+feature I've *ever* built.
+
+And... yea! You can *also* create your own format and activate it in this same
+way. It's a powerful idea: our *one* API Resource can be *represented* in any
+number of different ways, including formats - like CSV - which you don't need...
+until that one random situation when you suddenly *really* need them.
+
+Next, it's time to stop letting users create cheese listings with *any* crazy
+data they want. It's time to add validation!
