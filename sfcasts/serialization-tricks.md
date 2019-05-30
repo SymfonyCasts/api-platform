@@ -7,7 +7,7 @@ make these the same, that might make life easier for anyone using our API.
 
 It's pretty easy to guess how these properties are created: the keys inside the
 JSON literally match the names of the properties inside our class. And in the case
-of a fake property like `textDescription`, API Platform strips off the "get" part
+of a fake property like `textDescription`, API Platform strips off the "set" part
 and makes it lower camel case. By the way, like everything in API Platform, the
 way fields are transformed into keys *is* something you can control at a global
 level: it's called a "name converter".
