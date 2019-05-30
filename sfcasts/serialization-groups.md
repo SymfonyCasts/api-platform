@@ -114,7 +114,7 @@ to that method:
 
 > How long ago in text that this cheese listing was added.
 
-[[[ code('7db0a5fc63') ]]]
+[[[ code('69efb9d8b8') ]]]
 
 Let's try it! Refresh the docs. Down in the models section... nice! There's our
 new `createdAtAgo` readonly field. *And* that documentation we added shows up
