@@ -16,6 +16,8 @@ you are *reading* data from your API. Context is basically "options" that you pa
 to that process. The most common option by far is called `"groups"`, which you
 set to another array. Add one string here: `cheese_listing:read`.
 
+[[[ code('8750fdc710') ]]]
+
 Thanks to this, when an object is being serialized, the serializer will *only*
 include fields that are in this `cheese_listing:read` group, because, in a second,
 we're going to start adding groups to each property.
@@ -54,6 +56,8 @@ Copy the `cheese_listing:read` group name. To *add* fields to this, above title,
 use `@Groups()`, `{""}` and paste. Let's also put that above `description`...
 and `price`.
 
+[[[ code('85d5a41aee') ]]]
+
 Flip back over and try it again. Beautiful! We get those *three* exact fields.
 I *love* this control.
 
@@ -67,9 +71,13 @@ Now we can do the same thing with the input data. Copy `normalizationContext`,
 paste, and add `de` in front to make `denormalizationContext`. This time, use
 the group: `cheese_listing:write`
 
+[[[ code('2ab6c65f11') ]]]
+
 Copy that and... let's see... just add this to `title` and `price` for now. We
 actually *don't* want to add it to `description`. Instead, we'll talk about how
 to add this group to the fake `textDescription` in a minute.
+
+[[[ code('00f6954f3d') ]]]
 
 Move over and refresh again. Open up the POST endpoint.... yea - the *only* fields
 we can pass now are `title` and `price`!
@@ -88,6 +96,8 @@ And, it's not really important, but you can control these names if you want. Add
 another option: `swagger_definition_name` set to "Read". And then the same thing
 below... set to Write.
 
+[[[ code('6a589d6804') ]]]
+
 I don't normally care about this, but if you want to control it, you can.
 
 ## Adding Groups to Fake Fields
@@ -104,6 +114,8 @@ to that method:
 
 > How long ago in text that this cheese listing was added.
 
+[[[ code('7db0a5fc63') ]]]
+
 Let's try it! Refresh the docs. Down in the models section... nice! There's our
 new `createdAtAgo` readonly field. *And* that documentation we added shows up
 here. Nice! No surprise that when we try it... the field shows up.
@@ -114,6 +126,8 @@ sending us the `description` field directly, we removed the `setDescription()` m
 Above `setTextDescription()`, add `@Groups({"cheese_listing:write"})`. And again,
 let's give this some extra docs.
 
+[[[ code('794f4ff08a') ]]]
+
 *This* time, when we refresh the docs, you can see it on the write model and, of
 course, on the data that we can send to the POST operation.
 
@@ -122,6 +136,8 @@ course, on the data that we can send to the POST operation.
 And... this leads us to some great news! *If* we decide that something internally
 in our app *does* need to set the description property directly, it's now perfectly
 ok to re-add the original `setDescription()` method. That won't become part of our API.
+
+[[[ code('ba9aa2825a') ]]]
 
 ## Default isPublished Value
 
@@ -133,7 +149,9 @@ Woh! A 500 error! I could go look at this exception in the profiler, but this on
 is pretty easy to read: an exception in our query: `is_published` cannot be null.
 Oh, that makes sense: the user isn't sending `is_published`... so *nobody* is setting
 it. And it's set to not null in the database. No worries: default the property
-to false.
+to `false`.
+
+[[[ code('a5d6654c9b') ]]]
 
 By the way, if you're using Symfony 4.3, instead of a Doctrine error, you may
 have gotten a validation error. That's due to a new feature where Doctrine database
