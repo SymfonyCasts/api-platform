@@ -22,6 +22,8 @@ but the user wouldn't need to care or worry about that.
 And... yes! You can *totally* control this with a *super* useful annotation. Above
 `setTextDescription()`, add `@SerializedName()` with `description`.
 
+[[[ code('556648f4d0') ]]]
+
 Refresh the docs! If we try the GET operation... that hasn't changed: still
 `description`. But for the POST operation... yes! The field is *now* called
 `description`, but the serializer will call `setTextDescription()` internally.
@@ -48,6 +50,8 @@ there *are* situations when you want to do exactly this.
 
 Oh, and don't forget to say `$this->title = $title` in the constructor.
 
+[[[ code('261360b41e') ]]]
+
 The question *now* is... will the serializer be able to work with this? Is it going
 to be super angry that we removed `setTitle()`? And when we POST to add a new one,
 will it be able to instantiate the `CheeseListing` even though it has a required
@@ -65,6 +69,8 @@ still totally lying. The answer is because of the argument's *name*.
 Check this out: change the argument to `$name`, and update the code below. From
 an object-oriented perspective, that shouldn't change anything. But hit execute
 again.
+
+[[[ code('7b476e810a') ]]]
 
 Huge error! A 400 status code:
 
@@ -99,6 +105,8 @@ we'll talk about in a few minutes. *But*, what you need to know *now* is that
 validation can't happen unless the serializer is able to successfully create
 the `CheeseListing` object. In other words, you need to help the serializer
 out by making this argument optional.
+
+[[[ code('120e49ac3a') ]]]
 
 If you try this again... ha! A 500 error! It *does* create the `CheeseListing`
 object successfully... then explodes when it tries to add a null title in the
