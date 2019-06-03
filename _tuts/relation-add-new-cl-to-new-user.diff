@@ -1,0 +1,44 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index d9b3378..038aa6d 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -48,7 +48,7 @@ class CheeseListing
+ 
+     /**
+      * @ORM\Column(type="string", length=255)
+-     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read"})
++     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read", "user:write"})
+      * @Assert\NotBlank()
+      * @Assert\Length(
+      *     min=2,
+@@ -69,7 +69,7 @@ class CheeseListing
+      * The price of this delicious cheese, in cents
+      *
+      * @ORM\Column(type="integer")
+-     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read"})
++     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read", "user:write"})
+      * @Assert\NotBlank()
+      */
+     private $price;
+@@ -134,7 +134,7 @@ class CheeseListing
+     /**
+      * The description of the cheese as raw text.
+      *
+-     * @Groups("cheese_listing:write")
++     * @Groups({"cheese_listing:write", "user:write"})
+      * @SerializedName("description")
+      */
+     public function setTextDescription(string $description): self
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index b20233d..e19a82c 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -57,7 +57,7 @@ class User implements UserInterface
+     private $username;
+ 
+     /**
+-     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
++     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"})
+      * @Groups({"user:read", "user:write"})
+      */
+     private $cheeseListings;

@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 130650c..310046d 100644
+index df326cb..0336471 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -4,6 +4,7 @@ namespace App\Entity;
@@ -10,10 +10,10 @@ index 130650c..310046d 100644
  use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
  use Doctrine\Common\Collections\ArrayCollection;
  use Doctrine\Common\Collections\Collection;
-@@ -62,6 +63,7 @@ class User implements UserInterface
-     /**
-      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
-      * @Groups("user:read")
+@@ -63,6 +64,7 @@ class User implements UserInterface
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"})
+      * @Groups({"user:read", "user:write"})
+      * @Assert\Valid()
 +     * @ApiSubresource()
       */
      private $cheeseListings;

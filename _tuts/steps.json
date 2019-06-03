@@ -221,6 +221,11 @@
             "description": null
         },
         {
+            "id": "formats-add-csv-to-resource",
+            "name": "Formats: Add CSV to resource",
+            "description": null
+        },
+        {
             "id": "validation-add-basic-constraints",
             "name": "Validation: Add basic constraints",
             "description": null
@@ -298,6 +303,26 @@
         {
             "id": "relation-only-embed-on-get-item",
             "name": "Relation: only embed on GET item",
+            "description": null
+        },
+        {
+            "id": "relation-allow-embedded-write",
+            "name": "Relation: allow embedded write",
+            "description": null
+        },
+        {
+            "id": "relation-set-items-on-collection",
+            "name": "Relation: set items on collection",
+            "description": null
+        },
+        {
+            "id": "relation-add-new-cl-to-new-user",
+            "name": "Relation: add new CL to new User",
+            "description": null
+        },
+        {
+            "id": "relation-add-valid-annotation",
+            "name": "Relation: Add @Valid annotation",
             "description": null
         },
         {
@@ -606,5 +631,5 @@
             "description": null
         }
     ],
-    "sha": "63f3809b33bf2df106a5af92f98fe4e4e1b14aa5"
+    "sha": "802a9c985826339e73a47acea205348e322ad7d2"
 }

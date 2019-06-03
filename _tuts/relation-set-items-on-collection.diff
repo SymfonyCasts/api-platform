@@ -1,0 +1,13 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 6dc8609..b20233d 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -58,7 +58,7 @@ class User implements UserInterface
+ 
+     /**
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
+-     * @Groups("user:read")
++     * @Groups({"user:read", "user:write"})
+      */
+     private $cheeseListings;
+ 

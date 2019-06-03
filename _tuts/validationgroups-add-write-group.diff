@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 6673120..3057de1 100644
+index 2508b29..3b8a3bd 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -18,7 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
@@ -22,7 +22,7 @@ index 6673120..3057de1 100644
       */
      private $password;
  
-@@ -77,6 +79,7 @@ class User implements UserInterface
+@@ -78,6 +80,7 @@ class User implements UserInterface
  
      /**
       * @Groups("user:write")
