@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index d9b3378..038aa6d 100644
+index e6c806e..1b4c26b 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -48,7 +48,7 @@ class CheeseListing
@@ -20,7 +20,7 @@ index d9b3378..038aa6d 100644
       * @Assert\NotBlank()
       */
      private $price;
-@@ -134,7 +134,7 @@ class CheeseListing
+@@ -135,7 +135,7 @@ class CheeseListing
      /**
       * The description of the cheese as raw text.
       *

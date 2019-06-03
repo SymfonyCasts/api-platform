@@ -311,6 +311,11 @@
             "description": null
         },
         {
+            "id": "relation-valid-on-cl-owner",
+            "name": "Relation: @Valid on CL.owner",
+            "description": null
+        },
+        {
             "id": "relation-set-items-on-collection",
             "name": "Relation: set items on collection",
             "description": null
@@ -323,6 +328,11 @@
         {
             "id": "relation-add-valid-annotation",
             "name": "Relation: Add @Valid annotation",
+            "description": null
+        },
+        {
+            "id": "relation-add-orphanremoval",
+            "name": "Relation: add orphanRemoval",
             "description": null
         },
         {
@@ -631,5 +641,5 @@
             "description": null
         }
     ],
-    "sha": "802a9c985826339e73a47acea205348e322ad7d2"
+    "sha": "5876174299b6d0211f03d53233359caa1deb14ad"
 }

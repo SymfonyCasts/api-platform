@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index df326cb..0336471 100644
+index 3765742..504316f 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -4,6 +4,7 @@ namespace App\Entity;
@@ -11,7 +11,7 @@ index df326cb..0336471 100644
  use Doctrine\Common\Collections\ArrayCollection;
  use Doctrine\Common\Collections\Collection;
 @@ -63,6 +64,7 @@ class User implements UserInterface
-      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"})
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"}, orphanRemoval=true)
       * @Groups({"user:read", "user:write"})
       * @Assert\Valid()
 +     * @ApiSubresource()

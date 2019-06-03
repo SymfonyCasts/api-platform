@@ -1,0 +1,13 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 5ba7a25..f868e0b 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -57,7 +57,7 @@ class User implements UserInterface
+     private $username;
+ 
+     /**
+-     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"})
++     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"}, orphanRemoval=true)
+      * @Groups({"user:read", "user:write"})
+      * @Assert\Valid()
+      */

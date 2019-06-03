@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 2508b29..3b8a3bd 100644
+index 0a7074f..6b0ef12 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -18,7 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
