@@ -17,5 +17,5 @@ chapters:
   - validation
   - user-resource
   - relations
-  - embedded       # raw
+  - embedded
   - embedded-write # raw
