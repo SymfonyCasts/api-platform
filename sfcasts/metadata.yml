@@ -16,6 +16,6 @@ chapters:
   - formats
   - validation
   - user-resource
-  - relations      # raw
+  - relations
   - embedded       # raw
   - embedded-write # raw
