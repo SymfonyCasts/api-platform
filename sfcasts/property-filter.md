@@ -7,6 +7,8 @@ Add another `@ApiFilter()` with `RangeFilter::class`. Let's immediately go up
 and add the `use` statement for that - the one for the ORM. Then,
 `properties={"price"}`.
 
+[[[ code('4aaaac201a') ]]]
+
 This filter is a bit nuts. Flip over, refresh the docs, and look at the GET
 collection operation. Woh! We now have a *bunch* of filter boxes, for price between,
 greater than, less than, greater than or equal, etc. Let's look for everything
@@ -32,11 +34,15 @@ below called  `public function getShortDescription()`. This will return a nullab
 string, in case description isn't set yet. Let's immediately add this to a
 group - `cheese_listing:read` so that it shows up in the API.
 
+[[[ code('5bacd98cdf') ]]]
+
 Inside, if the `description` is already less than 40 characters, just return it.
 Otherwise, return a `substr` of the description - get the first 40 characters, then
 a little `...` at the end. Oh, and, in a real project, to make this better - you
 should probably use `strip_tags()` on description before doing any of this so
 that we don't split any HTML tags.
+
+[[[ code('ed7c07d610') ]]]
 
 Refresh the docs... then open the GET item operation. Let's look for cheese listing
 id 1. And... there it is! The description was just *barely* longer than 40 characters.
@@ -54,6 +60,8 @@ certain fields?
 At the top of our class, add another filter with `PropertyFilter::class`. Move
 up, type `use PropertyFilter` and hit tab to auto-complete. This time, there's
 only one of these classes.
+
+[[[ code('c2673c06b2') ]]]
 
 This filter *does* have some options, but it works perfectly well without doing
 anything else.
