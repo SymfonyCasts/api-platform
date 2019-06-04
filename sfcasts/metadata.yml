@@ -18,4 +18,4 @@ chapters:
   - user-resource
   - relations
   - embedded
-  - embedded-write # raw
+  - embedded-write
