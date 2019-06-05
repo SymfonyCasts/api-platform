@@ -72,7 +72,7 @@ of JSON-LD that adds new *vocab*. It says:
 Hydra took the JSON-LD system and added new "terminology" - called "vocab" - that
 makes it possible to *fully* define *every* aspect of your API.
 
-## Hydra Versus OpenAPO
+## Hydra Versus OpenAPI
 
 At this point, you're almost *definitely* thinking:
 
