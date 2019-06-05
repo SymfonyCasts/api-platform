@@ -34,6 +34,8 @@ basis. Inside the `@ApiResource` annotation, add `attributes={}`... which is a k
 that holds a variety of random configuration for API Platform. And then,
 `"pagination_items_per_page": 10`.
 
+[[[ code('62704bc366') ]]]
+
 I mentioned earlier that a lot of API Platform is learning exactly *what* you can
 configure inside of this annotation and how. *This* is a perfect example.
 
