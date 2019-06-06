@@ -1,139 +1,126 @@
-# Relations
+# Relating Resources
 
-Coming soon...
+We have a cheese resource and a user resource. Let's link them together! Ok,
+the *real* problem we need to solve is this: each `CheeseListing` will be "owned"
+by a single user, which is something we need to set up in the database but *also*
+something we need to expose in our API: when I look at a `CheeseListing` resource,
+I need to know which user posted it!
 
-We have a cheese resource, we have a user resource, let's link them together. And the
-reason we're doing this is that every Cheese listing internal in the database needs
-to have an owner. It needs to know, no, we need to know who created that she's
-listing. So let's go over to our terminal around 
+## Creating the Database Relationship
+
+Let's set up the database first. Find your terminal and run:
 
 ```terminal
 php bin/console make:entity
 ```
 
-let's update the `CheeseListing` resource and we're going to add a new `owner` property.
-This will be a `relation` over to the `User` entity. In this case, it's going to be a
-`ManyToOne` relationship every `CheeseListing` has at one `User`.
+Let's update the `CheeseListing` entity: we want to add a new `owner` property.
+This will be a `relation` to the `User` entity... which will be a `ManyToOne`
+relationship: every `CheeseListing` has one `User`. Should this new property be
+nullable in the database? Say no: *every* `CheeseListing` *must* have an `owner`
+in our system.
 
-Uh, and this relationship should not to be nullable. The database, it should
-be a required property and the database and let's say yes to mapping both sides of
-the relationships is something that's optional and doctrine. And as you'll see in a
-API Platform, if you map both sides of the relationship, it's going to allow you to
-fetch that data from both sides of the relationship. We'll call the property 
-`cheeseListings` and we'll say no to orphan removal because that's not something that we are
-going to need in this case. And I'll enter and we're good. So as usual, this attitude
-things, it added an `$owner` of property that `CheeseListing` along with a `getOwner()` and
-a `setOwner()`. Then over on `User`, this added a `$cheeseListings` property with a 
-`getCheeseListings()` and an `addCheeseListing()`. Any `removeCheeseListing()`. So there's
-no set or on that side. so listen, right. The migration for this 
+Next, it asks a *super* important question: do we want to add a new property
+to `User` so that we can access and update cheese listings on it - like
+`$user->getCheeseListings()`. Doing this is optional, and there are *two* reasons
+why you might want it. First, if you think writing `$user->getCheeseListings()`
+in your code might be convenient, you'll want it! *Second*, when you fetch a
+`User` in our API, if you want to be able to see what cheese listings this user
+owns, you'll *also* want this. More on that soon.
+
+Anyways, say yes, call the property `cheeseListings` and say no to `orphanRemoval`.
+If you're not familiar with that option... then you don't need it. And... bonus!
+A bit later in this tutorial, I'll show you why and when this option is useful.
+
+Hit enter to finish this! As usual, this did a few things: it added an `$owner`
+property to `CheeseListing` along with `getOwner()` and `setOwner()` methods.
+Over on `User`, it added a `$cheeseListings` property with a `getCheeseListings()`
+method but *not* a `setCheeseListings()` method. Instead, `make:entity` generated
+`addCheeseListing()` and `removeCheeseListing()` methods. Those will come in handy
+later.
+
+Create the migration
 
 ```terminal
 php bin/console make:migration
 ```
 
-And as usual I'll open that up just to make sure that looks good. Yeah. To alter
-tables for the foreign key and then spin back over and execute that with 
+And open that up... *just* to make sure it doesn't contain anything extra. Looks
+good - altering the table and setting up the foreign key. Execute that:
 
 ```terminal
 php bin/console doctrine:migrations:migrate
 ```
 
-Oh, but that's right. This explodes. CanNot Update. Add or update a child row, a
-foreign key constraint fails. So it fails because we made that new owner id, that new
-`$owner` field on `CheeseListing`.
+Oh no! It exploded!
 
-We said to `nullable=false`. It's required in the database. So when we try to
-add this column, the database, it fails. If this site we're already on production, we
-would need to do some fancy or migrations to give this to work. In this case, the
-easiest thing to do is just to drop all of our data, so I'm going to say 
+> Cannot add or update a child row, a foreign key constraint fails
+
+... on the `owner_id` column of `cheese_listing`. Above the `owner` property,
+we set `nullable=false`, which means that the `owner_id` column in the table
+*cannot* be null. But... because our `cheese_listing` table already has some rows
+in it, when we try to add that new column... it doesn't know what value to use
+for the existing rows and it explodes.
+
+In other words, it's a *classic* migration failure. If our site were already on
+production, we would need to make this migration fancier to add the new column
+as nullable, set the values, the change it to not nullable. Because because we're
+not there yet, we can just drop all our data and try again. Run:
 
 ```terminal
 php bin/console doctrine:schema:drop --help
 ```
 
-because this has an argument I can remember that's right. Full database is what we want. 
-So we run that again with `--full-database`
+... because this has an option I can't remember. Ah, here it is: `--full-database`
+will make sure we drop *every* table, *including* `migration_versions`. Run:
 
-```terminal-silent
+```terminal
 php bin/console doctrine:schema:drop --full-database --force
 ```
 
-that will drop the entire database including our migrations table. That's what the full
-database is for. And then make a run `migrations:migrate` again
+*Now* we can run *every* migration to create our schema from scratch:
 
-```terminal-silent
+```terminal
 php bin/console doctrine:migrations:migrate
 ```
 
-This time it works. All right, so let's go look at what's, so we have these new properties 
-and these new getters and setters, but because we are using on normalization a groups, 
-we have `normalizationContext` and `denormalizationContext`. These properties aren't going 
-to show up automatically. We need to just like normal properties, we need to include
-them in the groups. So let's start with cheese listing. Let's say that when we create
-a cheese listing, we need to set the owner. And when we view a cheese listing, we're
-going to want to see who owns it. Pretty simple situation. So let's go down. I'm
-actually in a copy of the `@Groups()` off of `$price`. Let's go down the `$owner` and we'll
-put those into the read and write group for `CheeseListing`. So now if we move over
-and refresh, and the first thing I'm actually going to do is ignore cheese list and
-let's actually create a `User`. So we have something to play with.
+Nice!
 
-So I'll give the uh, an email, the password, it doesn't matter at all right now we're
-not using that. And then a username and we'll execute that to a one. And I'll just
-make sure that I add a couple. Let's add a second user just to make things a bit more
-interesting than one also worked. Okay, great. So now let's go up and create a new
-`CheeseListing`. So I'm gonna go to the post end point. Hit tried out. The first thing
-you're going to notice is that it thinks the owner is a string. We're gonna talk more
-about that. Why in a second? Where's you might think that what should be an I key. So
-let's try adding a `CheeseListing` here.
+## Exposing the Relation Property
 
-Cell block one node cheese, two of 70 brave for 20 bucks.
+Back to work! In `CheeseListing`, we have a new property and a new getter and setter.
+But because we're using normalization and denormalization groups, this new stuff
+is *not* exposed in our API.
 
-And then for the owner, what do we put here? Well, if you'd go cut sheet, if we go
-back and look when we created that user a second ago that created um, id too. So we
-have id one and I need to in the database. So most obvious thing to do here is to put
-id one and had execute. When we do that, that fails I 400 error. It says expected IRI
-or nested document for attribute owner integer given. Oh, that and that makes, this is
-one of the weirdest things about API Platform, but also one of the things I love the
-most, this is the modern way to do API APIs using an id. Remember I mentioned earlier
-that instead of using ids, we're always going to use, URLs called IRI
-eyes. We can see this if we down in are going to be created. Our user, when it
-returns the user, it returns. It's `@id`, the IRI. So even when you, uh, whenever you
-reference a resource, you're going to reference it with the IRS. So this is actually
-`/api/users/1`. And when you execute that, this time it works and check it out, it
-passes us back and `owner`, that is an IRI. It's a relationship. That's why
-swagger thought that this was a string because it actually technically is a string.
-You can see this down in the models. If you scroll all the way down the bottom, if
-you look at `cheeses-Write`? For example, you'll see owner is a `string`.
+To begin with, here's the goal: when we *create* a `CheeseListing`, an API client
+should be able to specify *who* the owner is. And when we read a `CheeseListing`,
+we should be able to *see* who owns it. That might feel a bit weird at first:
+are we *really* going to allow an API client to create a `CheeseListing` and freely
+choose *who* its owner is? For now, yes: setting the owner on a cheese listing
+is *no* different than setting *any* other field. Later, once we have a real
+security system, we'll start locking things down so that I can't create a `CheeseListing`
+and say that someone else owns it.
 
-But actually if you went and looked at the, uh, API documentation.
+Anyways, to make `owner` part of our API, copy the `@Groups()` off of `$price`...
+and add those above `$owner`.
 
-So `localhost:8000/api/docs.jsonld`, if you went and looked at the JSON-LD
-documentation and search for owner, you'll see that it's a little bit smarter. It
-actually knows this is a link and it has some fancy stuff in here to basically say
-this is a link to a user. So technically a `string` but not actually a `string`. So
-yeah, without really doing anything, uh, it exposes that um, relationship to us. The
-only thing we need to know is that it's exposed to be an IRI. So what about the other
-side? Um,
+Let's try it! Move over and refresh the docs. But before we look at `CheeseListing`,
+let's create a `User` so we have some data to play with. I'll give this an email,
+any password, a username and... Execute. Great - 201 success. Tweak the data and
+create one more user.
 
-we can now fudge a `CheeseListing` with id = 1 and we can get back the information,
-including the owner that has the IRI. What if we want to get to the go the other
-direction? So right now if we go, let me close a few things up. This is getting kind
-of shout refresh to close everything up. Let's get `User` with id = 1 as you'd see,
-comes back with email and username. It might also be useful for us to have the
-`CheeseListing` for the user, maybe not. But let's pretend that it is. So this is
-just as easy. We need to go over to `User` and on our `$cheeseListings` property. We need
-to add `@Groups()` to that. And actually for now I'm just going to add the `user:read`
-group. We'll talk about the `user:write` group later. But let's pretend we just want to
-read this.
+*Now*, the moment of truth: click to create a new `CheeseListing`. Interesting...
+it says that `owner` is a "string"... which *might* be surprising... aren't we
+going to set this to the integer id? Let's find out. Try to sell a block of unknown
+cheese for $20, and add a description.
 
-Okay,
+For owner, what do we put here? Let's see... the two users we just created had
+ids 2 and 1. Okay! Set owner to `1` and Execute!
 
-now for refresh and open up the get on point, hit try it out. You can say it's
-already advertised and it's going to return an array of strings, which is
-interesting. So let's look at user one. And yes, if you look at it, it actually
-returns `cheeseListings`, cheeses, and cause an array, but it doesn't. But when it
-actually gives you as an array of the IRIs in a second, we're talking about
-embedding relationships, but by default in API Platform, when you're, you're always
-going to eat, when you relate to things, you're always going to get an IRI or an
-array of IRI, which is really, really nice. All right, so next, let's talk
-about embedding relationships.
+Woh! It *fails* with a 400 status code!
+
+> Expected IRI or nested document for attribute owner, integer given.
+
+It turns out that setting owner to the id is *not* correct! Next, let's fix this,
+talk more about IRIs and add a new `cheeseListings` property to our `User` API
+resource.
