@@ -1,6 +1,6 @@
 # Hydra: Describing API Classes, Operations & More
 
-So, at least on a high level, we understand the each resource will have an `@type`
+So, at least on a high level, we understand that each resource will have an `@type`
 key and that *this* page - via the `supportedClass` and `supportedProperty` keys -
 *defines* what that type means - what properties it has, and a lot of info about
 each property.
@@ -72,7 +72,7 @@ of JSON-LD that adds new *vocab*. It says:
 Hydra took the JSON-LD system and added new "terminology" - called "vocab" - that
 makes it possible to *fully* define *every* aspect of your API.
 
-## Hydra Versus OpenAPO
+## Hydra Versus OpenAPI
 
 At this point, you're almost *definitely* thinking:
 

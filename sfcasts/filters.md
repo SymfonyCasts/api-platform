@@ -27,6 +27,8 @@ Then, choose the *specific* filter by its class name: `BooleanFilter::class`...
 because we're filtering on a *boolean* property. Finish by passing the
 `properties={}` option set to `"isPublished"`.
 
+[[[ code('92b37a881a') ]]]
+
 Cool! Let's see what this did! Refresh! Oh... what it *did* was break our app!
 
 > The filter class `BooleanFilter` does not implement `FilterInterface`.
@@ -39,6 +41,8 @@ why PhpStorm didn't autocomplete it for us.
 No problem, at the top of your class, add `use BooleanFilter`. But... careful...
 most filters support Doctrine ORM *and* Doctrine with MongoDB. Make sure to choose
 the class for the ORM.
+
+[[[ code('e5579433be') ]]]
 
 Ok, *now* move over and refresh again.
 
@@ -65,6 +69,8 @@ of a string, `end` or a string or on `word_start`.
 
 Anyways, *this* time, I remember that we need to add the `use` statement manually.
 Say `use SearchFilter` and auto-complete the one for the ORM.
+
+[[[ code('1986d6da79') ]]]
 
 Oh, and before we check this out, I'll click to open `SearchFilter`. This lives
 in a directory called `Filter` and... if I double click it... hey! We can see
