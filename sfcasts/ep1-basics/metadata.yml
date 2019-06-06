@@ -15,6 +15,7 @@ chapters:
   - pagination
   - formats
   - validation
+  - user-entity
   - user-resource
   - relations
   - embedded
