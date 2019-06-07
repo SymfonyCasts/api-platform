@@ -22,5 +22,5 @@ chapters:
   - embedded
   - embedded-write
   - collections-write
-  - relation-filtering  #raw
+  - relation-filtering
   - subresources        #raw
