@@ -14,7 +14,7 @@ Let's set up the database first. Find your terminal and run:
 php bin/console make:entity
 ```
 
-Let's update the `CheeseListing` entity: we want to add a new `owner` property.
+Let's update the `CheeseListing` entity and add a new `owner` property.
 This will be a `relation` to the `User` entity... which will be a `ManyToOne`
 relationship: every `CheeseListing` has one `User`. Should this new property be
 nullable in the database? Say no: *every* `CheeseListing` *must* have an `owner`
@@ -26,20 +26,20 @@ to `User` so that we can access and update cheese listings on it - like
 why you might want it. First, if you think writing `$user->getCheeseListings()`
 in your code might be convenient, you'll want it! *Second*, when you fetch a
 `User` in our API, if you want to be able to see what cheese listings this user
-owns, you'll *also* want this. More on that soon.
+owns as a property in the JSON, you'll *also* want this. More on that soon.
 
 Anyways, say yes, call the property `cheeseListings` and say no to `orphanRemoval`.
 If you're not familiar with that option... then you don't need it. And... bonus!
-A bit later in this tutorial, I'll show you why and when this option is useful.
+A bit later in this tutorial, I'll show you why and when this option *is* useful.
 
-Hit enter to finish this! As usual, this did a few things: it added an `$owner`
+Hit enter to finish! As usual, this did a few things: it added an `$owner`
 property to `CheeseListing` along with `getOwner()` and `setOwner()` methods.
 Over on `User`, it added a `$cheeseListings` property with a `getCheeseListings()`
-method but *not* a `setCheeseListings()` method. Instead, `make:entity` generated
+method... but *not* a `setCheeseListings()` method. Instead, `make:entity` generated
 `addCheeseListing()` and `removeCheeseListing()` methods. Those will come in handy
 later.
 
-Create the migration
+Let's create the migration:
 
 ```terminal
 php bin/console make:migration
@@ -62,10 +62,10 @@ we set `nullable=false`, which means that the `owner_id` column in the table
 in it, when we try to add that new column... it doesn't know what value to use
 for the existing rows and it explodes.
 
-In other words, it's a *classic* migration failure. If our site were already on
-production, we would need to make this migration fancier to add the new column
-as nullable, set the values, the change it to not nullable. Because because we're
-not there yet, we can just drop all our data and try again. Run:
+It's a *classic* migration failure. If our site were already on production,
+we would need to make this migration fancier by adding the new column first
+as nullable, set the values, then change it to not nullable. But because we're
+not there yet... we can just drop all our data and try again. Run:
 
 ```terminal
 php bin/console doctrine:schema:drop --help
@@ -98,8 +98,8 @@ we should be able to *see* who owns it. That might feel a bit weird at first:
 are we *really* going to allow an API client to create a `CheeseListing` and freely
 choose *who* its owner is? For now, yes: setting the owner on a cheese listing
 is *no* different than setting *any* other field. Later, once we have a real
-security system, we'll start locking things down so that I can't create a `CheeseListing`
-and say that someone else owns it.
+security system, we'll start locking things down so that I can't create a
+`CheeseListing` and say that someone else owns it.
 
 Anyways, to make `owner` part of our API, copy the `@Groups()` off of `$price`...
 and add those above `$owner`.
