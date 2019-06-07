@@ -21,3 +21,6 @@ chapters:
   - relations-iri
   - embedded
   - embedded-write
+  - collections-write   #raw
+  - relation-filtering  #raw
+  - subresources        #raw
