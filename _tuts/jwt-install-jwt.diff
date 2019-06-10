@@ -25,7 +25,7 @@ index 136901b..a57a97e 100644
 +/config/jwt/*.pem
 +###< lexik/jwt-authentication-bundle ###
 diff --git a/composer.json b/composer.json
-index 154fc4d..2aa7eed 100644
+index 904fce4..3199868 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -7,6 +7,7 @@
@@ -37,50 +37,47 @@ index 154fc4d..2aa7eed 100644
          "symfony/console": "4.2.*",
          "symfony/dotenv": "4.2.*",
 diff --git a/composer.lock b/composer.lock
-index 395d339..71fd636 100644
+index a54e2d4..8e9cb11 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "93a70d7280e3a45026d63ce36c1f319e",
-+    "content-hash": "bfe73ef611c0782efe43eac6524bfa45",
+-    "content-hash": "7b960adc126464c84089e2276c05b56b",
++    "content-hash": "d5136c79b28058b473699594228bba26",
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -1478,6 +1478,224 @@
+@@ -1484,6 +1484,221 @@
              ],
              "time": "2014-01-12T16:20:24+00:00"
          },
 +        {
 +            "name": "lcobucci/jwt",
-+            "version": "3.2.5",
++            "version": "3.3.1",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/lcobucci/jwt.git",
-+                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b"
++                "reference": "a11ec5f4b4d75d1fcd04e133dede4c317aac9e18"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/82be04b4753f8b7693b62852b7eab30f97524f9b",
-+                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b",
++                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/a11ec5f4b4d75d1fcd04e133dede4c317aac9e18",
++                "reference": "a11ec5f4b4d75d1fcd04e133dede4c317aac9e18",
 +                "shasum": ""
 +            },
 +            "require": {
++                "ext-mbstring": "*",
 +                "ext-openssl": "*",
-+                "php": ">=5.5"
++                "php": "^5.6 || ^7.0"
 +            },
 +            "require-dev": {
-+                "mdanter/ecc": "~0.3.1",
 +                "mikey179/vfsstream": "~1.5",
 +                "phpmd/phpmd": "~2.2",
 +                "phpunit/php-invoker": "~1.1",
-+                "phpunit/phpunit": "~4.5",
++                "phpunit/phpunit": "^5.7 || ^7.3",
 +                "squizlabs/php_codesniffer": "~2.3"
-+            },
-+            "suggest": {
-+                "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
 +            },
 +            "type": "library",
 +            "extra": {
@@ -109,7 +106,7 @@ index 395d339..71fd636 100644
 +                "JWS",
 +                "jwt"
 +            ],
-+            "time": "2018-11-11T12:22:26+00:00"
++            "time": "2019-05-24T18:30:49+00:00"
 +        },
 +        {
 +            "name": "lexik/jwt-authentication-bundle",

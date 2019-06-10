@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index 82f931d..e92cb84 100644
+index 96b720c..c316c08 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -59,6 +59,7 @@
+@@ -62,6 +62,7 @@
          }
      },
      "require-dev": {
@@ -12,77 +12,22 @@ index 82f931d..e92cb84 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 1256456..a454030 100644
+index a33bbb7..71c068a 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "ef82c2f9e635dc2e76985799e04045bd",
-+    "content-hash": "dc57ddb92b4f6df3fabccc5237d6e233",
+-    "content-hash": "6f9d27757769a792f32bfd6ae4e93567",
++    "content-hash": "69631dbbfde627ac677acce04607ebfc",
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -4825,6 +4825,231 @@
+@@ -5037,6 +5037,176 @@
                  "scaffolding"
              ],
              "time": "2019-04-19T17:26:45+00:00"
-+        },
-+        {
-+            "name": "symfony/polyfill-php72",
-+            "version": "v1.11.0",
-+            "source": {
-+                "type": "git",
-+                "url": "https://github.com/symfony/polyfill-php72.git",
-+                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c"
-+            },
-+            "dist": {
-+                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/ab50dcf166d5f577978419edd37aa2bb8eabce0c",
-+                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c",
-+                "shasum": ""
-+            },
-+            "require": {
-+                "php": ">=5.3.3"
-+            },
-+            "type": "library",
-+            "extra": {
-+                "branch-alias": {
-+                    "dev-master": "1.11-dev"
-+                }
-+            },
-+            "autoload": {
-+                "psr-4": {
-+                    "Symfony\\Polyfill\\Php72\\": ""
-+                },
-+                "files": [
-+                    "bootstrap.php"
-+                ]
-+            },
-+            "notification-url": "https://packagist.org/downloads/",
-+            "license": [
-+                "MIT"
-+            ],
-+            "authors": [
-+                {
-+                    "name": "Nicolas Grekas",
-+                    "email": "p@tchwork.com"
-+                },
-+                {
-+                    "name": "Symfony Community",
-+                    "homepage": "https://symfony.com/contributors"
-+                }
-+            ],
-+            "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
-+            "homepage": "https://symfony.com",
-+            "keywords": [
-+                "compatibility",
-+                "polyfill",
-+                "portable",
-+                "shim"
-+            ],
-+            "time": "2019-02-06T07:57:58+00:00"
 +        },
 +        {
 +            "name": "symfony/profiler-pack",
@@ -114,7 +59,7 @@ index 1256456..a454030 100644
 +        },
 +        {
 +            "name": "symfony/var-dumper",
-+            "version": "v4.2.8",
++            "version": "v4.2.9",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/symfony/var-dumper.git",
@@ -190,16 +135,16 @@ index 1256456..a454030 100644
 +        },
 +        {
 +            "name": "symfony/web-profiler-bundle",
-+            "version": "v4.2.8",
++            "version": "v4.2.9",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/symfony/web-profiler-bundle.git",
-+                "reference": "f4c054dad30b46f23aae60ecfedacc08462c47ef"
++                "reference": "1bd05666e23aff4306d7b236b6ccdf6d2e99fe00"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/f4c054dad30b46f23aae60ecfedacc08462c47ef",
-+                "reference": "f4c054dad30b46f23aae60ecfedacc08462c47ef",
++                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/1bd05666e23aff4306d7b236b6ccdf6d2e99fe00",
++                "reference": "1bd05666e23aff4306d7b236b6ccdf6d2e99fe00",
 +                "shasum": ""
 +            },
 +            "require": {
@@ -209,7 +154,7 @@ index 1256456..a454030 100644
 +                "symfony/routing": "~3.4|~4.0",
 +                "symfony/twig-bundle": "~4.2",
 +                "symfony/var-dumper": "~3.4|~4.0",
-+                "twig/twig": "~1.34|~2.4"
++                "twig/twig": "^1.41|^2.10"
 +            },
 +            "conflict": {
 +                "symfony/dependency-injection": "<3.4",
@@ -252,7 +197,7 @@ index 1256456..a454030 100644
 +            ],
 +            "description": "Symfony WebProfilerBundle",
 +            "homepage": "https://symfony.com",
-+            "time": "2019-04-27T11:48:17+00:00"
++            "time": "2019-05-26T20:47:34+00:00"
          }
      ],
      "aliases": [],
