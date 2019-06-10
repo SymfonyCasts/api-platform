@@ -25,10 +25,15 @@ types for each - that's the value that should be sent in the `Accept` header
 to activate them.
 
 Let's add *another* format. To do that, copy this entire formats section. Then
-open `config/packages/api_platform.yaml` and paste here. This will make sure that
-we *keep* these three formats. Now, let's add a new one: `jsonhal`. This is one
-of the *other* formats that API Platform supports out-of-the box. Below, add
+open `config/packages/api_platform.yaml` and paste here. 
+
+[[[ code('9c59cc589d') ]]]
+
+This will make sure that we *keep* these three formats. Now, let's add a new one: `jsonhal`. 
+This is one of the *other* formats that API Platform supports out-of-the box. Below, add
 `mime_types:` then the standard content type for this format: `application/hal+json`.
+
+[[[ code('0e59e2d1cb') ]]]
 
 Cool! And *just* like that... our *entire* API supports a new format! Refresh the
 docs and open the GET operation to see cheese listing 1. Before you hit execute,
@@ -62,6 +67,8 @@ Back inside that class, once again under this special `attributes` key, add
 them here: `jsonld`, `json`, then... let's see, ah yep, `html` and `jsonhal`.
 To add a *new* format, say `csv`, but *set* this to a new array with `text/csv`
 inside.
+
+[[[ code('451350bf22') ]]]
 
 This is the mime type for the format. We didn't need to add mime types for the
 *other* formats because they're already set up in our config file.

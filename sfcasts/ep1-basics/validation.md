@@ -44,9 +44,13 @@ will look *delightfully* boring. Above `title`, to make it required, add
 
 > Describe your cheese in 50 chars or less
 
+[[[ code('0f178802c6') ]]]
+
 What else? Above `description`, add `@Assert\NotBlank`. And for price,
 `@Assert\NotBlank()`. You could also add a `GreaterThan` constraint to make
 sure this is above zero.
+
+[[[ code('40a8181ab1') ]]]
 
 Ok, switch back over and try sending *no* data again. Woh! It's awesome! The
  `@type` is `ConstraintViolationList`! That's one of the types that was described
