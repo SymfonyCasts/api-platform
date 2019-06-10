@@ -1,84 +1,129 @@
 # Embedded Write
 
-Coming soon...
+Here's an interesting question: if we fetch a single `CheeseListing`, we can see
+that the `username` comes through on the `owner` property. And obviously, if we,
+edit a specific `CheeseListing`, we can *totally* change the owner to a different
+owner. Let's actually try this: let's *just* set `owner` to `/api/users/2`.
+Execute and... yep! It updated!
 
-No, I've, here's an interesting question. If we fetch a single `CheeseListing`, you
-can see the `username` that comes through on the owner property. And obviously if we,
-edited a specific cheese listing, we can totally change the owner to new owner. 
-Let's actually try this. Let's set just set owner two `/api/users/2` cool. 
-Is that saves here's, can we get back the link to that user?
+That's great, and it works pretty much like a normal, scalar property. But...
+looking back at the results from the GET operation... here it is, if we can *read*
+the `username` property off of the related owner, instead of changing the owner
+entirely, could we *update* the current owner's username *while* updating
+a `CheeseListing`?
 
-And that's great. Could we also, but looking back on the item in point, could we also
-just change the `username` like so instead of changing the actual owner, she'll can we
-edit the owners username while we're updating a `CheeseListing`? It's kind of a weird
-example in this case, but let's try it. So instead of owner being an IRI, let's say
-that we want to say, well, let's set it to an object.
+It's kind of a weird example, but editing data *through* an embedded relation *is*
+possible... and, at the very least, it's an *awesome* way to *really* understand
+how the serializer works.
 
-And if we actually add a user, set it to an object and set the username of, try it,
-it doesn't work. It says Nesta documents for attribute owner are not allowed. Use
-IRIs instead. So it looks like this isn't possible. But that's not actually true.
+## Trying to Update the Embedded owner
 
-Yeah.
+Anyways... let's just try it! Instead of setting owner to an IRI, set it to
+an object and try to update the `username` to `cultured_cheese_head`. Go, go, go!
 
-When we are the whole reason that using an of shows up here as we've edited towards
-`cheese_listing:item:get` Group, which is the group that is used when we are using that
-are get itemOperation. We also could have used `cheese_listing:read`. If you
-want this to be writeable daring denormalization, then we just need to use the 
-denormalization group, which in this case is `cheese_listing:write`? So I'm
-gonna copy that and actually add that over here. Suddenly that actually does make
-this embedded username property modifiable. So if we go back and try it and now, so
-we're still have owner with username and it execute.
+And... it doesn't work:
 
-Yeah.
+> Nested documents for attribute "owner" are not allowed. Use IRIs instead.
 
-Oh, it still doesn't work. But the air is fascinating. A new entity was found through
-the relationship cheese listing owner that was not configured to cascade persist
-operations per entity. If you've been around doctrine for awhile, this means that
-behind the scenes API Platform actually created a new `User` object and it failed
-because nothing ever persisted. That this is something we can work around. Um, and
-we'll talk about cascading persist operations in the second, but this is actually not
-what we want. What we wanted is we wanted it to take the existing user an update.
-It's username instead of creating a totally new username. And the way to do that, the
-problem here is actually just my syntax. The way the API Platform works is that if
-you pass it just an array of data, it assumes that's a new object and tries to create
-a new object. If you want to signal that there's an existing object, you need to add
-the `@id` property. So `/api/users/2` it's going to load that user trying to modify
-and try to modify it. So if you try that this time it works and we can't see what the
-actual username is here. But if we go down and look for um, username `id = 2`, there it
-is our culture cheese at.
+So... is this possible, or not?
 
-So does that mean that we could actually create a brand new user
+Well, the *whole* reason that `username` is embedded when serializing a `CheeseListing`
+is that, above `username`, we've added the `cheese_listing:item:get` group, which
+is one of the groups that's used in the "get" item operation.
 
-while editing a cheese listing? Like, could we put, you know, could we take off as ad
-id and I had username and password and the answer is yes. In theory this is maybe not
-something that you even want to do. What you need to do is make sure that you expose
-all of the properties that you need. So for example, our and our `User` entity, we
-actually would also need to expose the pro, the `$password` field and the `$email` field
-because these are both required things of the database. So right now we couldn't
-actually create a new user even if we cascade things correctly because we haven't
-exposed enough fields. But we aren't going to talk a little bit more about that. Uh,
-and the second, when we start treating in a second, but one thing that is weird here,
-if you did want to do this kind of stuff is that if you set owner `username` to empty
-quotes, that shouldn't work because we have an `@NotBlank()` for `$username` which makes 
-perfect sense. But if you try it you get,
+The same logic is used when *writing* a field, or, denormalizing it. If we want
+`username` to be writable while denormalizing a `CheeseListing`, we need to put
+it in a group that's *used* during denormalization. In this case, that's
+`cheese_listing:write`.
 
-Oh of course. In 500 error cause I took off my `@id`. Let me put that back 
-`@id: "/api/users/2`. There we go. Let's try that again. Gas. Here we go. You getting
-200 status code. It appears to have worked. And in fact if you go down here and look
-up user out with `id = 2`, they have no username. This is a bit of a Gotcha. It's how
-the about it deals with validation by defaults. When we modify the cheese listing,
-the validation rules are executed. So are `@Assert/NotBlank()`, uh, as
-`@Asseer/Length()`, these things are validated. But when the validators system sees in
-embedded season object, it doesn't follow that. It doesn't actually go into the
-owner, into the user and make sure it's also valid. You can't force that by saying 
-`@Assert/Valid()`. Now if we go back and try our edit endpoint on execute, Yup. You can
-see owner.username:. This value should not be blank. So that fixes it. So let me
-change that back here.
+Copy that and paste it above `username`.
 
-Yeah.
+As *soon* as we do that - because the `owner` property already has this group -
+the embedded `username` property can be written! Let's go back and try it: we're
+still trying to pass an *object* with `username`. Execute!
 
-To a valid user name just so we can fix that. And perfect. That one works fine. So,
-you know, it's really cool that you can make modifications on embedded properties,
-like on embedded objects like this that may or may not be something you actually
-want. It makes things more complicated. I don't love doing it, but it is something
-that you can absolutely do.
+## Sending New Objects vs References in JSON
+
+And... oh... it *still* doesn't work! But the error is fascinating!
+
+> A new entity was found through the relationship `CheeseListing.owner` that was
+> not configured to cascade persist operations for entity User.
+
+If you've been around Doctrine for awhile, you might recognize this strange error.
+Ignoring API Platform for a moment, it means that something created a *totally*
+new `User` object, *set* it onto the `CheeseListing.owner` property and then tried
+to save. But because nobody ever called `$entityManager->persist()` on the new
+`User` object, Doctrine panics!
+
+So... yep! Instead of querying for the existing owner and *updating* it, API Platform
+took our data and used it to create a totally *new* `User` object! That's not what
+we wanted at all! How can we tell it to *update* the existing `User` object instead?
+
+Here's the answer, or really, here's the simple rule: *if* we send an array of
+data, or really, an "object" in JSON, API Platform assumes that this is a new
+object and so... creates a new object. If you want to *signal* that you instead
+want to update an *existing* object, just add the `@id` property. Set it to
+`/api/users/2`. Thanks to this, API Platform will query for that user and
+*modify* it.
+
+Let's try it again. It *works*! Well... it *probably* worked - it looks successful,
+but we can't see the username here. Scroll down and look for the user with id 2.
+
+There it is!
+
+## Creating new Users?
+
+So, we *now* know that, when updating... or really creating... a `CheeseListing`,
+we can send embedded `owner` data *and* signal to API Platform that it should update
+an existing `owner` via the `@id` property.
+
+And when we *don't* add `@id`, it tries to create a *new* `User` object...
+which didn't work because of that persist error. But, we can *totally* fix that
+problem with a cascade persist... which I'll show in a few minutes to solve a
+different problem.
+
+So wait... does this mean that, in theory, we *could* create a brand new `User`
+while editing a `CheeseListing`? The answer is.... yes! Well... *almost*. There
+are 2 things preventing it right now: first, the missing cascade persist, which
+gave us that big Doctrine error. And second, on `User`, we would also need to
+expose the `$password`  and `$email` fields because these are both required in
+the database. When you start making embedded things writeable, it honestly adds
+complexity. Make sure you keep track of what and what is *not* possible in your
+API. I *don't* want users to be created accidentally while updating a `CheeseListing`,
+so this is perfect.
+
+## Embedded Validation
+
+But, there is *one* weird thing remaining. Set `username` to an empty string.
+That shouldn't work because we have a `@NotBlank()` above `$username`.
+
+Try to update anyways. Oh, of course! I get the cascade 500 error - let me put
+the `@id` property back on. Try it again.
+
+Woh! A 200 status code! It looks like it worked! Go down and fetch this user... with
+id=2. They have no username! Gasp!
+
+This... is a bit of a gotcha. When we modify the `CheeseListing`, the validation
+rules are executed: `@Assert\NotBlank()`, `@Assert\Length()`, etc. But when the
+validator sees the embedded `owner` object, it does *not* continue down into that
+object to validate *it*. That's *usually* what we want: if we were *only* updating
+a `CheeseListing`, why should it *also* try to validate a related `User` object
+that we didn't even modify? It shouldn't!
+
+But when you're doing *embedded* object updates like we are, that changes: we *do*
+want validation to continue down into this object. To force that, above the `owner`
+property, add `@Assert\Valid()`.
+
+Ok, go back, and... try our edit endpoint again. Execute. Got it!
+
+> owner.username: This value should not be blank
+
+Nice! Let's go back and give this a valid username... just so we don't have a
+bad user sitting in our database. Perfect!
+
+Being able to make modifications on embedded properties is pretty cool... but it
+*does* add complexity. Do it if you need it, but also remember that we can update
+a `CheeseListing` and a `User` more simply by making two requests to two endpoints.
+
+Next, let's get even *crazier* and talking about updating *collections*: what happens
+if we start to try to modify the `cheeseListings` property directly on a `User`?
