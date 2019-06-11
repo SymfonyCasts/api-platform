@@ -3,7 +3,7 @@
 Use the docs to check out the `User` with id=2. When we *read* a resource, we
 can decide to expose any property - and a property that holds a *collection*, like `cheeseListings`, is no different. We exposed that property by adding
 `@Groups("user:read")` above it. And because this holds a collection of related
-objects, we can *also* decide whether the `cheeseListings` property should be
+*objects*, we can *also* decide whether the `cheeseListings` property should be
 exposed as an array of IRI strings *or* as an array of embedded objects, by
 adding this same group to at least one property inside `CheeseListing` itself.
 
@@ -23,10 +23,10 @@ own... all in one request.
 ## Making cheeseListings Modifiable
 
 Right now, the `cheeseListings` property is not modifiable. The reason is simple:
-that property *only* has the read group. Cool! Ill make that group an array
+that property *only* has the read group. Cool! I'll make that group an array
 and add `user:write`.
 
-Now go back, refresh the docs and look at the POST operation: we *do* have
+Now, go back, refresh the docs and look at the POST operation: we *do* have
 a `cheeseListings` property. Let's do this! Start with the boring user info:
 email, password doesn't matter and username. For `cheeseListings`, this needs
 to be an array... because this property *holds* an array. Inside, add just one
@@ -37,7 +37,7 @@ In a perfect world, this will create a new `User` and *then* go fetch the
 Execute!
 
 It worked? I mean, it worked! A 201 status code: it created the new `User` and
-it now owns this `CheeseListing`. Wait a second... how *did* that work?
+that `User` now owns this `CheeseListing`! Wait a second... how *did* that work?
 
 ## Adder and Remover Methods for Collections
 
@@ -55,11 +55,11 @@ calls `addCheeseListing()` and passes it as an argument.
 
 The *whole* reason `make:entity` generates the adder - instead of just
 `setCheeseListings()` - is that it lets us *do* things when a cheese listing is
-added. And that is *key*! Check it out: inside the generated code, it calls
-`$cheeseListing->setOwner($this)`. *That* is the reason why the owner *changed*
+added or removed. And that is *key*! Check it out: inside the generated code, it
+calls `$cheeseListing->setOwner($this)`. *That* is the reason why the owner *changed*
 to the new user, for this `CheeseListing` with id=1. Then... everything just saves!
 
 Next: when we're creating or editing a user, instead of *reassigning* an existing
 `CheeseListing` to a new owner, let's make it possible to create totally *new*
-cheese listings. Yea, we're getting crazy, and we'll learn *more* about how
-the serializer thinks and works.
+cheese listings. Yep, we're getting crazy! But this will let us learn even *more*
+about how the serializer thinks and works.
