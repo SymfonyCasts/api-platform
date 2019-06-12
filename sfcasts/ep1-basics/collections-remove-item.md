@@ -1,59 +1,77 @@
 # Removing Items from a Collection
 
-So again, all possible, it just gets a little
-more complicated. All right, so let's try one more thing. So let's go ahead and close
-up our `POST` end point. I'm gonna make a get request to get the collection of users.
-So let's see here. Let's play with `User` id = 4 here. It has one `CheeseListing` a
-attached to it, which is a cheese 2. So I'm gonna close up the collection end point
-and let's actually, let's open up the `PUT` end point. So here's what I want to do.
-Let's say that you have, this is actually a much more normal situation, sort of let's
-say that we want to update `User` id = 4 and we want to add a new `CheeseListing` to it.
-Like there's the cheese listings already saved to the database. We want to assign it
-to this user. So what we can do here is under cheese listings, we already know that
-we can pass new objects or IRI is here swinging past `/api/cheeses/2` that's the
-existing,
+Close up the POST operation. I want to make a GET request to the collection of users.
+Let's see here - the user with id 4 has one `CheeseListing` attached to it - id 2.
+Ok, close up that operation and open up the operation for `PUT`: I want to *edit*
+that User. Enter 4 for the id.
 
-`CheeseListing` for this `User`. If I look at user id for their attached to cheeses too.
-And then let's also though add `/api/cheeses/3`
+First, I'm going to do something that we've already seen: let's *just* update the
+`cheeseListings` field: set it to an array with one IRI inside: `/api/cheeses/2`.
+If we did *nothing* else, this would set this property to... *exactly* what
+it already equals: user id 4 already has this *one* `CheeseListing`.
 
-Which is currently owned by `User` id = 5. So when I execute this time, oh, I get a
-syntax error because I have an extra comma. Let's try that again this time. Oh, of
-course this value should not be blank. So is because I allowed `CheeseListing` a three
-to have a blank title. So now when we're trying to modify it and it's actually trying
-to validate that now what I wanted in this case, it's because we allowed a bad record
-in our database. Let's try a different value. Let's actually try reassigning um,
-cheeses. One. There we go. This time it works. You can see that we now have these two
-cheeses, cheeses assigned to it and this works the same way. It's simply and noticed
-that this, uh, cheese too was a new one. It called `addCheeseListing()` with that
-`CheeseListing` id one and that changed the owner.
+But now, add *another* IRI: `/api/cheeses/3`. That already exists, but is owned
+by another user. When I hit Execute.... pfff - I get a syntax error, because I left
+an extra comma on my JSON. Boo Ryan. Let's... try that again. This time... bah! A
+400 status code:
 
-Cool. So now let's go back and say, all right, we want to do that, but let's actually
-get rid. Now we want a remove operation. We're going to remove the `CheeseListing` two
-from this user for, so let me execute this time. Whoa. We get an error and integrity
-can occurred. An exception occurred when executing update cheese_listing set owner to
-null a column `owner_id` cannot be null. So this is really cool because the serializer
-notice that we removed the `CheeseListing` with id = 2. And so what it did is actually
-past that. `CheeseListing` with id two to remove `CheeseListing` and
-`removeCheeseListings()` thanks to our generated code. It actually sets the owner to know on that
-`CheeseListing`. In some cases, depending on your application and what you're trying
-to accomplish, sometimes that's exactly what you want. Sometimes if you remove a
-something like a `CheeseListing` from a `User`, you want it to be sort of orphaned,
-allow it to be known in the database. But in our case, we don't ever want to
-`CheeseListing` to be a orphan of the database. And so instead what we really want is we
-probably want, if a `CheeseListing` removed from a `User`, we probably want that
-`CheeseListing` to be deleted.
+> This value should be blank
 
-So to do that, that's cool. All the way back up to the `$cheeseListings` his property
-and we can add `orphanRemoval=true`
+My experiments with validation just came back to bite me! We set the `title` for
+`CheeseListing` 3 to an empty string in the database... it's basically a "bad"
+record that snuck in when we were playing with embedded validation. We could fix
+that title.. or... just change this to `/api/cheeses/1`. Execute!
 
-What that means is that if any of these `CheeseListing` s uh, stop having their owner
-assigned to them have their owner nullified or even changed, I needed to look that
-up then that `CheeseListing` is going to be deleted. So if we get execute this time, it
-works. And you can see `/api/cheeses/1` is the only one there.
-And if we go all the way back up and try look, `CheeseListing` to is gone. And
-actually while we're here, let's fix our broken cheese, the database. So I'm actually
-going to update `CheeseListing` 3
+## The Serializer only Calls Adders for New Items
 
-And sat in its title to something real well, execute that. Nevermind on that last
-part. So this question is have a super complicated, it's possible, but you really got
-to know what you're doing.
+This time, it works! But, no surprise - we've basically done this! Internally,
+the serializer sees the existing `CheeseListing` IRI - `/api/cheeses/2`, realizes
+that this is already set on our `User`, and... does nothing. I mean, maybe it goes
+and gets a coffee or takes a walk. But, it most definitely does *not* call
+`$user->addCheeseListing()`... or really do anything. But when it sees the *new*
+IRI - `/api/cheeses/1`, it figures out that this `CheeseListing` does *not* exist
+on the `User` yet, and so, it *does* call `$user->addCheeseListing()`. That's why
+adder and remover methods are so handy: the serializer is smart enough to *only*
+call them when an object is *truly* being added or removed.
+
+## Removing Items from a Collection
+
+Now, let's do the *opposite*: pretend that we want to *remove* a `CheeseListing`
+from this `User` - remove `/api/cheeses/2`. What do you think will happen? Execute
+and... woh! An integrity constraint error!
+
+> An exception occurred when executing UPDATE cheese_listing SET owner_id=NULL -
+> column `owner_id` cannot be null.
+
+This is cool! The serializer *noticed* that we *removed* the `CheeseListing` with
+id = 2. And so, it *correctly* called `$user->removeCheeseListing()` and passed
+`CheeseListing` id 2. Then, our generated code set the owner on that `CheeseListing`
+to null.
+
+Depending on the situation and the nature of the relationship and entities, this
+might be *exactly* what you want! Or, if this were a ManyToMany relationship,
+the result of *that* generated code would basically be to "unlink" the two objects.
+
+## orphanRemoval
+
+But in our case, we don't *ever* want a `CheeseListing` to be an "orphan" in
+the database. In fact... that's exactly why we made `owner` `nullable=false` and
+why we're seeing this error! Nope, if a `CheeseListing` is removed from a `User`...
+I guess we really need to just delete that `CheeseListing` *entirely*!
+
+And... yea, doing that is easy! All the way back up above the `$cheeseListings`
+property, add `orphanRemoval=true`.
+
+This means, *if* any of the `CheeseListings` in this array suddenly... are *not*
+in this array, Doctrine will delete them. Just, realize that if you try to
+*reassign* a `CheeseListing` to another `User`, it will *still* delete that
+`CheeseListing`. So, just make sure you only use this when that's *not* a use-case.
+We've been changing the owner of cheese listings a bunch... but only as an example:
+it doesn't *really* make sense, so this is perfect.
+
+Execute one more time. It works... and *only* `/api/cheeses/1` is there. And if
+we go *all* the way back up to fetch the collection of cheese listings... yea,
+`CheeseListing` id 2 is gone.
+
+Next, when you combine relations and filtering... well... you get some *pretty*
+serious power.

@@ -1,54 +1,70 @@
-# Relation Filtering
+# Filtering on Relations
 
-Coming soon...
+Go directly to `/api/users/5.jsonld`. Ok, this user owns one `CheeseListing`,
+and we've decided to embed the `title` and `price` fields instead of just showing
+the IRI. Great!
 
-Yeah,
+Earlier, we talked about a really cool filter called `PropertyFilter`, which allows
+us to do, for example, add `?properties[]=username` to the URL if we *only* want
+to get back that *one* field. We added that to `CheeseListing`, but not `User`.
+Let's fix that!
 
-God directly to `/api/users/5.jsonld`, that's one of our users, that Owens
-one `CheeseListing`. One of the things we do with that, she's listening as we added a
-really cool filter called a `PropertyFilter` which allowed us to do things like this
-`?properties[]=username`. If we just wanted to get that, we don't have
-that enabled right now and I think that's really useful feature. So let's add that.
-So Bob `User`, we're going to add our first `@ApiFilter()` and inside of here,
-`PropertyFilter::class`. And just like we had to do before, we're going to use
-`PropertyFilter` on top manually. Cool. As soon as we did that one refresh we get that
-superpower. But here's the really cool thing. I'm gonna tick off that `?properties[]=`
-for a second cause notice we in this, we set up this to have it in
-embedded `CheeseListing`. We actually see the data. Turns out that `PropertyFilter`
-works for embedded data too. You just have to know the syntax. So in this case we can
-say and `properties[]`. Instead of the inside of here we actually put
-`cheeseListings` and then we do the `[]=` and let's say we just want to get the
-`title` of that cheese listing, which in this case is actually empty and it works. So
-`PropertyFilter` is is something we get for free even when we embed things.
+Above `User`, add `@ApiFilter(PropertyFilter::class)`. And remember, we need to
+manually add the `use` statement for filter classes: `use PropertyFilter`.
 
-All right, so speaking of filters, our `CheeseListing`, we ended up bunch of filters.
-We can search by `title`, `description`, `price`, lots of different things. Let's actually
-add a couple of other ones. So I'm gonna Scroll up to the top here and probably the
-most useful when we have here is a `SearchFilter` allows us to search on `title` and
-`description`. Actually going to break that onto multiple lines cause we are going to
-add a little bit more here. So one of things that might be useful as it might be
-useful for us to find all cheese listings that are owned by a specific `User`. Of
-course we could fetch that user's data the other direction, but we might want to do
-that. And actually we can here by adding `owner`. In this case we're going to use
-`exact`, we want to match the exact owner so as soon as they go back we can refresh our
-docs and not surprisingly when we try out our GET endpoint, we have a new spot here
-where we can actually do it in owner or we can actually find by multiple owners. And
-the way this works is you do `/api/users/4` you actually use the IRI. You
-can use the `id` but that's deprecated. So if we try that, yes we get the one 
-`CheeseListing` for that specific `User`. And if you look at the way that syntax circus looks
-is really nice, it's `?owner=` and this looks ugly because it's URL
-encoded but it's just the IRI to that `User`. So super handy.
+And... we're done! When we refresh, it works! Other than the standard JSON-LD
+properties, we *only* see `username`.
 
-But you can even do more than that at another filter, say `owner.username` and set
-this to `partial`. This is pretty sweet. So refresh the docs again, open up our
-collection point and now we have an `owner.username` thing here where, check this
-out. Let's search for head because we have a bunch of cheese, head usernames, hit
-execute, and that finds two cheese listings by `users/4` and `users/5`. And actually
-let's there, let's make sure this works. Let's go back and look down here and look at
-exactly what those two users look like. So users four and five are cheesehead2,
-and cheesehead3. So let's actually look for cheesehead3 specifically. So
-backup in our filter. Let's look for `owner.username=cheesehead3`. It
-should find just one results. And it does. And again, the way this looks in the URL
-is super clean. It's just `?owner.username=` and then
-what you're searching for. So it's very powerful that this filtering system, it works
-just as well. Once you start diving into embedded objects.
+## Selecting Embedded Relation Properties
+
+But wait there's more! Remove the `?properties[]=` part for a second so we can see
+the full response. What if we wanted to fetch only the `username` property and
+the `title` property of any embedded `cheeseListings`. Is that possible? Totally!
+You just need to know the syntax. Put back the `?properties[]=username`. *Now*
+add `properties[`, but inside of the square brackets, put `cheeseListings`. Then
+`[]=` and the property name: `title`. Hit it! Nice! Well, the `title` is empty
+on this `CheeseListing`, but you get the idea. The point is this: `PropertyFilter`
+kicks butt and can be used to filter embedded data without any extra work.
+
+## Searching on Related Properties
+
+Speaking of filters, we gave `CheeseListing` a *bunch* of them, including the ability
+to search by `title` or `description` and filter by `price`. Let's add another one.
+
+Scroll to the top of `CheeseListing` to find `SearchFilter`. Let's break this onto
+multiple lines. Searching by `title` and `description` is great. But what if I want
+to search by *owner*: find all the `CheeseListings` owned by a specific `User`? Well,
+we can already do this a different way: fetch that specific user's data and look
+at its `cheeseListings`. But having it as a filter might be super useful. Heck,
+then we could search for all cheese listings owned by a specific user... that match
+some title! And... if users might have *many* `cheeseListings`, we might *not* be
+able to expose that property on `User` at all - the list might be too long. The
+advantage of a filter is that we can get all the cheese listings for a user in
+a paginated collection.
+
+To do this... add `owner` set to `exact`.
+
+Go refresh the docs and try the GET endpoint. Hey! We've got a new filter box!
+We can even find by *multiple* owners. Inside the box, add the *IRI* - `/api/users/4`.
+You *can* also filter by `id`, but the IRI is recommended.
+
+Execute and... yes! We get the *one* `CheeseListing` for that `User`. And the syntax
+on the URL is *beautifully* simple: `?owner=` and the IRI... which only looks ugly
+because it's URL-encoded.
+
+## Searching Cheese Listings by Owner Username
+
+But we can get even crazier! Add one more filter: `owner.username` set to `partial`.
+
+This is pretty sweet. Refresh the docs again and open up the collection operation.
+Heres our new filter box, for `owner.username`. Check this out: Search for "head"
+because we have a bunch of cheesehead usernames. Execute! This finds two cheese
+listings owned by users 4 and 5.
+
+Let's fetch all the users... just to be sure and... yep! Users 4 and 5 match that
+username search. Let's try searching for this `cheesehead3` exactly. Put that in
+the box and... execute! Got it! The exact search works too. And, even though we're
+filtering *across* a relationship, the URL is pretty clean:
+`owner.username=cheesehead3`.
+
+Ok just *one* more short topic for this part of our tutorial: sub-resources.
