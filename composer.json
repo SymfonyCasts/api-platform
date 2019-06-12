@@ -15,7 +15,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2.0"
+        }
     },
     "autoload": {
         "psr-4": {

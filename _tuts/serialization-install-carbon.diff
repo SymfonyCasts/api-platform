@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index e92cb84..154fc4d 100644
+index c316c08..904fce4 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -7,6 +7,7 @@
@@ -11,34 +11,34 @@ index e92cb84..154fc4d 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index a454030..395d339 100644
+index 71c068a..a54e2d4 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "dc57ddb92b4f6df3fabccc5237d6e233",
-+    "content-hash": "93a70d7280e3a45026d63ce36c1f319e",
+-    "content-hash": "69631dbbfde627ac677acce04607ebfc",
++    "content-hash": "7b960adc126464c84089e2276c05b56b",
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -1536,6 +1536,66 @@
+@@ -1542,6 +1542,66 @@
              ],
              "time": "2019-02-27T13:13:15+00:00"
          },
 +        {
 +            "name": "nesbot/carbon",
-+            "version": "2.17.1",
++            "version": "2.19.2",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/briannesbitt/Carbon.git",
-+                "reference": "96acbc0c03782e8115156dd4dd8b736267155066"
++                "reference": "adcad3f3af52d0ad4ad7b05f43aa58243b6ca67b"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/96acbc0c03782e8115156dd4dd8b736267155066",
-+                "reference": "96acbc0c03782e8115156dd4dd8b736267155066",
++                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/adcad3f3af52d0ad4ad7b05f43aa58243b6ca67b",
++                "reference": "adcad3f3af52d0ad4ad7b05f43aa58243b6ca67b",
 +                "shasum": ""
 +            },
 +            "require": {
@@ -85,32 +85,32 @@ index a454030..395d339 100644
 +                "datetime",
 +                "time"
 +            ],
-+            "time": "2019-04-27T18:04:27+00:00"
++            "time": "2019-06-07T09:56:45+00:00"
 +        },
          {
              "name": "ocramius/package-versions",
              "version": "1.4.0",
-@@ -3983,6 +4043,81 @@
+@@ -4195,6 +4255,81 @@
              "homepage": "https://symfony.com",
              "time": "2019-01-16T20:31:39+00:00"
          },
 +        {
 +            "name": "symfony/translation",
-+            "version": "v4.2.8",
++            "version": "v4.2.9",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/symfony/translation.git",
-+                "reference": "181a426dd129cb496f12d7e7555f6d0b37a7615b"
++                "reference": "5fe4ec5ecc04fa43c34f8df033bf60e3729bfaee"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/translation/zipball/181a426dd129cb496f12d7e7555f6d0b37a7615b",
-+                "reference": "181a426dd129cb496f12d7e7555f6d0b37a7615b",
++                "url": "https://api.github.com/repos/symfony/translation/zipball/5fe4ec5ecc04fa43c34f8df033bf60e3729bfaee",
++                "reference": "5fe4ec5ecc04fa43c34f8df033bf60e3729bfaee",
 +                "shasum": ""
 +            },
 +            "require": {
 +                "php": "^7.1.3",
-+                "symfony/contracts": "^1.0.2",
++                "symfony/contracts": "^1.1.1",
 +                "symfony/polyfill-mbstring": "~1.0"
 +            },
 +            "conflict": {
@@ -119,7 +119,7 @@ index a454030..395d339 100644
 +                "symfony/yaml": "<3.4"
 +            },
 +            "provide": {
-+                "symfony/translation-contracts-implementation": "1.0"
++                "symfony/translation-implementation": "1.0"
 +            },
 +            "require-dev": {
 +                "psr/log": "~1.0",
@@ -167,11 +167,11 @@ index a454030..395d339 100644
 +            ],
 +            "description": "Symfony Translation Component",
 +            "homepage": "https://symfony.com",
-+            "time": "2019-05-01T12:55:36+00:00"
++            "time": "2019-05-28T09:07:12+00:00"
 +        },
          {
              "name": "symfony/twig-bridge",
-             "version": "v4.2.8",
+             "version": "v4.2.9",
 diff --git a/config/packages/translation.yaml b/config/packages/translation.yaml
 new file mode 100644
 index 0000000..e6b1cd6

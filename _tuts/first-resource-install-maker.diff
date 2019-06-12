@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index dad1bbb..68a14d8 100644
+index d8e99d9..57f616b 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -56,5 +56,8 @@
+@@ -59,5 +59,8 @@
              "allow-contrib": false,
              "require": "4.2.*"
          }
@@ -12,19 +12,19 @@ index dad1bbb..68a14d8 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 43247f3..72e7be9 100644
+index 553e03c..a413c13 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "53b0abd9372a0fe91046b606c539e2c9",
-+    "content-hash": "089f1124884f97c0fc1104da32532923",
+-    "content-hash": "673f3407be5950239d4b8021667a5d0e",
++    "content-hash": "4cf99d7d20b310c2c7238898845019a6",
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -4284,7 +4284,125 @@
+@@ -4496,7 +4496,125 @@
              "time": "2017-05-14T17:21:12+00:00"
          }
      ],
@@ -32,16 +32,16 @@ index 43247f3..72e7be9 100644
 +    "packages-dev": [
 +        {
 +            "name": "nikic/php-parser",
-+            "version": "v4.2.1",
++            "version": "v4.2.2",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/nikic/PHP-Parser.git",
-+                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0"
++                "reference": "1bd73cc04c3843ad8d6b0bfc0956026a151fc420"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/5221f49a608808c1e4d436df32884cbc1b821ac0",
-+                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0",
++                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1bd73cc04c3843ad8d6b0bfc0956026a151fc420",
++                "reference": "1bd73cc04c3843ad8d6b0bfc0956026a151fc420",
 +                "shasum": ""
 +            },
 +            "require": {
@@ -79,7 +79,7 @@ index 43247f3..72e7be9 100644
 +                "parser",
 +                "php"
 +            ],
-+            "time": "2019-02-16T20:54:15+00:00"
++            "time": "2019-05-25T20:07:01+00:00"
 +        },
 +        {
 +            "name": "symfony/maker-bundle",

@@ -22,5 +22,7 @@ chapters:
   - embedded
   - embedded-write
   - collections-write
+  - collections-create
+  - collections-remove-item
   - relation-filtering
   - subresources
