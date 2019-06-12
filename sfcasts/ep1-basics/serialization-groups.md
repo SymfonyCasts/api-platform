@@ -56,7 +56,7 @@ Copy the `cheese_listing:read` group name. To *add* fields to this, above title,
 use `@Groups()`, `{""}` and paste. Let's also put that above `description`...
 and `price`.
 
-[[[ code('85d5a41aee') ]]]
+[[[ code('bb90cac6bf') ]]]
 
 Flip back over and try it again. Beautiful! We get those *three* exact fields.
 I *love* this control.
