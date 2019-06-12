@@ -46,11 +46,17 @@ and `eraseCredentials()`, but they won't affect what we're doing. Mostly we have
 a normal, boring entity with `$id`, `$email`, a `$roles` array property,
 and `$password`, which will eventually store the hashed password.
 
+[[[ code('10d7c23982') ]]]
+
 This also created the normal `UserRepository` and made a *couple* of changes to
 `security.yaml`: it set up `encoders` - this might say `auto` for you, thanks
 to the new Symfony 4.3 feature - and the user provider. All things to talk more
 about later. So... just forget they're here and instead say... yay! We have a
 `User` entity!
+
+[[[ code('fb035fa9ca') ]]]
+
+[[[ code('99e381dc01') ]]]
 
 ## Adding username Field
 
@@ -70,9 +76,13 @@ command generated this and returned `$this->email`... because that's what I chos
 as my "display" name for security. Now that we really *do* have a username field,
 return `$this->username`.
 
+[[[ code('1239a1c605') ]]]
+
 Oh, and while we're making this class, just, *amazing*, the `make:user` command
 knew that `email` should be unique, so it added `unique=true`. Let's *also* add
 that to `username`: `unique=true`.
+
+[[[ code('290e49035c') ]]]
 
 That is a *nice* entity! Let's sync up our database by running:
 
@@ -80,8 +90,11 @@ That is a *nice* entity! Let's sync up our database by running:
 php bin/console make:migration
 ```
 
-Move over... and double-check the SQL: `CREATE TABLE user` - looks good! Run it
-with:
+Move over... and double-check the SQL: `CREATE TABLE user` - looks good! 
+
+[[[ code('d509f044ae') ]]]
+
+Run it with:
 
 ```terminal
 php bin/console doctrine:migration:migrate
