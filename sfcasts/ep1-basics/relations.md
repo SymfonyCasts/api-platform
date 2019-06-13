@@ -39,14 +39,21 @@ method... but *not* a `setCheeseListings()` method. Instead, `make:entity` gener
 `addCheeseListing()` and `removeCheeseListing()` methods. Those will come in handy
 later.
 
+[[[ code('be811e5079') ]]]
+
+[[[ code('b5e24fc8a2') ]]]
+
 Let's create the migration:
 
 ```terminal
 php bin/console make:migration
 ```
 
-And open that up... *just* to make sure it doesn't contain anything extra. Looks
-good - altering the table and setting up the foreign key. Execute that:
+And open that up... *just* to make sure it doesn't contain anything extra. 
+
+[[[ code('e9e9053212') ]]]
+
+Looks good - altering the table and setting up the foreign key. Execute that:
 
 ```terminal
 php bin/console doctrine:migrations:migrate
@@ -103,6 +110,8 @@ security system, we'll start locking things down so that I can't create a
 
 Anyways, to make `owner` part of our API, copy the `@Groups()` off of `$price`...
 and add those above `$owner`.
+
+[[[ code('5cb6690fdc') ]]]
 
 Let's try it! Move over and refresh the docs. But before we look at `CheeseListing`,
 let's create a `User` so we have some data to play with. I'll give this an email,
