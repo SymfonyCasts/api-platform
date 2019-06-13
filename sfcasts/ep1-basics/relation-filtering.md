@@ -1,11 +1,11 @@
 # Filtering on Relations
 
-Go directly to `/api/users/5.jsonld`. Ok, this user owns one `CheeseListing`,
-and we've decided to embed the `title` and `price` fields instead of just showing
+Go directly to `/api/users/5.jsonld`. This user owns one `CheeseListing`... and
+we've decided to embed the `title` and `price` fields instead of just showing
 the IRI. Great!
 
 Earlier, we talked about a really cool filter called `PropertyFilter`, which allows
-us to do, for example, add `?properties[]=username` to the URL if we *only* want
+us to, for example, add `?properties[]=username` to the URL if we *only* want
 to get back that *one* field. We added that to `CheeseListing`, but not `User`.
 Let's fix that!
 
@@ -19,9 +19,9 @@ properties, we *only* see `username`.
 
 But wait there's more! Remove the `?properties[]=` part for a second so we can see
 the full response. What if we wanted to fetch only the `username` property and
-the `title` property of any embedded `cheeseListings`. Is that possible? Totally!
+the `title` property of the embedded `cheeseListings`? Is that possible? Totally!
 You just need to know the syntax. Put back the `?properties[]=username`. *Now*
-add `properties[`, but inside of the square brackets, put `cheeseListings`. Then
+add `&properties[`, but inside of the square brackets, put `cheeseListings`. Then
 `[]=` and the property name: `title`. Hit it! Nice! Well, the `title` is empty
 on this `CheeseListing`, but you get the idea. The point is this: `PropertyFilter`
 kicks butt and can be used to filter embedded data without any extra work.
@@ -34,13 +34,13 @@ to search by `title` or `description` and filter by `price`. Let's add another o
 Scroll to the top of `CheeseListing` to find `SearchFilter`. Let's break this onto
 multiple lines. Searching by `title` and `description` is great. But what if I want
 to search by *owner*: find all the `CheeseListings` owned by a specific `User`? Well,
-we can already do this a different way: fetch that specific user's data and look
-at its `cheeseListings`. But having it as a filter might be super useful. Heck,
-then we could search for all cheese listings owned by a specific user... that match
-some title! And... if users might have *many* `cheeseListings`, we might *not* be
-able to expose that property on `User` at all - the list might be too long. The
-advantage of a filter is that we can get all the cheese listings for a user in
-a paginated collection.
+we can already do this a different way: fetch that user's data and look at
+its `cheeseListings` property. But having it as a filter might be super useful. Heck,
+then we could search for all cheese listings owned by a specific user *and* that
+match some title! And... if users start to have *many* `cheeseListings`, we
+might decide *not* to expose that property on `User` at all: the list might be
+too long. The advantage of a filter is that we can get all the cheese listings
+for a user in a paginated collection.
 
 To do this... add `owner` set to `exact`.
 
@@ -57,14 +57,14 @@ because it's URL-encoded.
 But we can get even crazier! Add one more filter: `owner.username` set to `partial`.
 
 This is pretty sweet. Refresh the docs again and open up the collection operation.
-Heres our new filter box, for `owner.username`. Check this out: Search for "head"
+Here's our new filter box, for `owner.username`. Check this out: Search for "head"
 because we have a bunch of cheesehead usernames. Execute! This finds two cheese
 listings owned by users 4 and 5.
 
 Let's fetch all the users... just to be sure and... yep! Users 4 and 5 match that
 username search. Let's try searching for this `cheesehead3` exactly. Put that in
-the box and... execute! Got it! The exact search works too. And, even though we're
+the box and... Execute! Got it! The exact search works too. And, even though we're
 filtering *across* a relationship, the URL is pretty clean:
 `owner.username=cheesehead3`.
 
-Ok just *one* more short topic for this part of our tutorial: sub-resources.
+Ok just *one* more short topic for this part of our tutorial: subresources.

@@ -15,7 +15,7 @@ by another user. When I hit Execute.... pfff - I get a syntax error, because I l
 an extra comma on my JSON. Boo Ryan. Let's... try that again. This time... bah! A
 400 status code:
 
-> This value should be blank
+> This value should not be blank
 
 My experiments with validation just came back to bite me! We set the `title` for
 `CheeseListing` 3 to an empty string in the database... it's basically a "bad"
