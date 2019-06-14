@@ -44,7 +44,7 @@ will look *delightfully* boring. Above `title`, to make it required, add
 
 > Describe your cheese in 50 chars or less
 
-[[[ code('0f178802c6') ]]]
+[[[ code('4d04c62b2b') ]]]
 
 What else? Above `description`, add `@Assert\NotBlank`. And for price,
 `@Assert\NotBlank()`. You could also add a `GreaterThan` constraint to make
