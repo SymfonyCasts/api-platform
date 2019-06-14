@@ -44,6 +44,8 @@ That's *just* as easy. Inside `User` find the `$username` property, copy the
 for now, let's *only* make this readable: just `user:read`. We're going to talk
 about how you can *modify* collection relationships later.
 
+[[[ code('71506814e0') ]]]
+
 Ok, refresh and open the GET item operation for User. Before even trying this, it's
 *already* advertising that it will *now* return a `cheeseListings` property, which,
 interesting, will be an array of *strings*. Let's see what `User` id 1 looks like.
