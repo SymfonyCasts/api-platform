@@ -26,6 +26,8 @@ Right now, the `cheeseListings` property is not modifiable. The reason is simple
 that property *only* has the read group. Cool! I'll make that group an array
 and add `user:write`.
 
+[[[ code('16d4b0a91c') ]]]
+
 Now, go back, refresh the docs and look at the POST operation: we *do* have
 a `cheeseListings` property. Let's do this! Start with the boring user info:
 email, password doesn't matter and username. For `cheeseListings`, this needs
