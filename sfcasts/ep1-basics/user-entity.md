@@ -4,7 +4,7 @@ We're not going to talk *specifically* about security in this tutorial - we'll
 do that in our next course and give it proper attention. But, even forgetting
 about security and logging in and all that, there's a *pretty* good chance that
 your API will have some concept of "users". In our case, a "user" will post a
-cheese listing and becomes its "owner". And maybe later, in order to by a
+cheese listing and becomes its "owner". And maybe later, in order to buy a
 CheeseListing, one User might send a message to another User. It's time to take
 our app to the next level by creating that entity.
 
