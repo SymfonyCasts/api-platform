@@ -38,6 +38,8 @@ it in a group that's *used* during denormalization. In this case, that's
 
 Copy that and paste it above `username`.
 
+[[[ code('6c066eceac') ]]]
+
 As *soon* as we do that - because the `owner` property already has this group -
 the embedded `username` property can be written! Let's go back and try it: we're
 still trying to pass an *object* with `username`. Execute!
@@ -113,6 +115,8 @@ that we didn't even modify? It shouldn't!
 But when you're doing *embedded* object updates like we are, that changes: we *do*
 want validation to continue down into this object. To force that, above the `owner`
 property, add `@Assert\Valid()`.
+
+[[[ code('157e4fdbfd') ]]]
 
 Ok, go back, and... try our edit endpoint again. Execute. Got it!
 
