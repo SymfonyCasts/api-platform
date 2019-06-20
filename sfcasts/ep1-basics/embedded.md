@@ -25,6 +25,8 @@ to do: go into the related entity - so  `CheeseListing` - and add this `user:rea
 group to at least one property. For example, add `user:read` above `$title`...
 and how about also above `$price`.
 
+[[[ code('b1f0216d29') ]]]
+
 Let's see what happens! We don't even need to refresh, just Execute. Woh! Instead
 of an array of strings, it's now an array of *objects*! Well, this user only owns
 *one* CheeseListing, but you get the idea. Each item has the standard `@type`
@@ -54,6 +56,8 @@ Inside `CheeseListing`, the normalization process will serializer everything in
 the `cheese_listing:read` group. Copy that. The `owner` property, of course, already
 has this group above it, which is why we see it in our API. Inside `User`, find
 `$username`... and add `cheese_listing:read` to that.
+
+[[[ code('ea55c9eadf') ]]]
 
 Let's try this thing! Move back over and... Execute! And... ha! Perfect!
 It expands to an object and includes the `username`.
@@ -88,6 +92,8 @@ going to say:
 > properties that have the `cheese_listing:read` group like normal. But I *also*
 > want to include any properties in a new `cheese_listing:item:get` group.
 
+[[[ code('0eb08286dd') ]]]
+
 We'll talk more about it later - but I'm using a *specific* naming convention for
 this operation-specific group - the "entity name", colon, item or collection, colon,
 then the HTTP method - `get`, `post`, `put`, etc.
@@ -97,6 +103,8 @@ a new group for serialization - yaaaay - but nothing is *in* the new group.
 
 Here's the magic. Copy the new group name, open `User`, and above the
 `$username` property, replace `cheese_listing:read` with `cheese_listing:item:get`.
+
+[[[ code('e11e5c2054') ]]]
 
 That's it! Move back to the documentation and fetch a *single* `CheeseListing`.
 And... *perfect* - it *still* embeds the owner - there's the username. But
