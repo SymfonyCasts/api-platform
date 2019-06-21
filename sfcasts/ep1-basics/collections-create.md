@@ -34,6 +34,8 @@ that, in order to create a `CheeseListing`, we need to be able to set `title`,
 `description` and `price`. So, let's add that group! `user:write` above `title`,
 `price` and... down here, look for `setTextDescription()`... and add it there.
 
+[[[ code('0e4bac8f13') ]]]    
+
 I *love* how clean it is to choose which fields you want to allow to be embedded...
 but life *is* getting more complicated. Just keep that "complexity" cost in mind
 if you decide to support this kind of stuff in your API
@@ -58,6 +60,8 @@ Platform is handling all of that for us, we can use a different solution.
 Open `User`, find the `$cheeseListings` property, and add `cascade={"persist"}`.
 Thanks to this, whenever a `User` is persisted, Doctrine will automatically
 persist any `CheeseListing` objects in this collection.
+
+[[[ code('455e97b909') ]]]
 
 Ok, let's see what happens. Execute! Woh, it worked! This created a new `User`,
 a new `CheeseListing` *and* linked them together in the database.
@@ -89,6 +93,8 @@ have validation to prevent that! That's because, as we talked about earlier,
 when the validator processes the `User` object, it doesn't automatically cascade
 down into the `cheeseListings` array and *also* validate those objects. You can
 force that by adding `@Assert\Valid()`.
+
+[[[ code('1ca01098e3') ]]]
 
 Let's make sure that did the trick: go back up, bump the `email` and `username`
 to be unique again and... Execute! Perfect! A 400 status code because:
