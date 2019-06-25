@@ -12,6 +12,8 @@ Let's fix that!
 Above `User`, add `@ApiFilter(PropertyFilter::class)`. And remember, we need to
 manually add the `use` statement for filter classes: `use PropertyFilter`.
 
+[[[ code('c818db1ea9') ]]]
+
 And... we're done! When we refresh, it works! Other than the standard JSON-LD
 properties, we *only* see `username`.
 
@@ -32,7 +34,11 @@ Speaking of filters, we gave `CheeseListing` a *bunch* of them, including the ab
 to search by `title` or `description` and filter by `price`. Let's add another one.
 
 Scroll to the top of `CheeseListing` to find `SearchFilter`. Let's break this onto
-multiple lines. Searching by `title` and `description` is great. But what if I want
+multiple lines. 
+
+[[[ code('7049bbb6e2') ]]]
+
+Searching by `title` and `description` is great. But what if I want
 to search by *owner*: find all the `CheeseListings` owned by a specific `User`? Well,
 we can already do this a different way: fetch that user's data and look at
 its `cheeseListings` property. But having it as a filter might be super useful. Heck,
@@ -43,6 +49,8 @@ too long. The advantage of a filter is that we can get all the cheese listings
 for a user in a paginated collection.
 
 To do this... add `owner` set to `exact`.
+
+[[[ code('dd301f85a4') ]]]
 
 Go refresh the docs and try the GET endpoint. Hey! We've got a new filter box!
 We can even find by *multiple* owners. Inside the box, add the *IRI* - `/api/users/4`.
@@ -55,6 +63,8 @@ because it's URL-encoded.
 ## Searching Cheese Listings by Owner Username
 
 But we can get even crazier! Add one more filter: `owner.username` set to `partial`.
+
+[[[ code('1a2d66f266') ]]]
 
 This is pretty sweet. Refresh the docs again and open up the collection operation.
 Here's our new filter box, for `owner.username`. Check this out: Search for "head"
