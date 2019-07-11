@@ -37,6 +37,10 @@ But, whether you're seeing a 500 error, or Symfony is *at least* adding some bas
 validation for you, the input data that's allowed is something *we* want to control:
 I want to decide the *exact* rules for each field.
 
+***TIP
+Actually, the auto-validation was not enabled by default in Symfony 4.3, but may be in Symfony 4.4.
+***
+
 Adding validation rules is... oh, so nice. And, unless you're new to Symfony, this
 will look *delightfully* boring. Above `title`, to make it required, add
 `@Assert\NotBlank()`. Let's also add `@Assert\Length()` here with, how about,
