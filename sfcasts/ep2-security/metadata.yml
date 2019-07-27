@@ -1,1 +1,7 @@
-chapters: []
+chapters:
+    - production-docs
+    - json-login
+    - auth-errors
+    - login-success
+    - data-page-load
+    - samesite-csrf

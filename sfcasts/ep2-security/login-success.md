@@ -1,0 +1,55 @@
+# Login Success
+
+Coming soon...
+
+Let's see if we can log in for real. Uh, first I'm gonna go to slash API in my application. I do have a couple of users in the database already. Uh, but there's a good chance that your database is empty and I can't remember what anyone's password is anyways. So let's create a brand new user. Now, one of the shortcomings of our API right now, which we're going to fix pretty soon, is that when you create a user, when you close this down here and actually open up the post endpoint, you send the password. But this password actually needs to be the encoded password, not the plain text password. We don't have any mechanism yet to take the plain text password on, on create and encode that in the database. So we're going to cheat for now. We're gonna move over to our terminal run bin, console security and code. It's a fun little utility where you can give it a password. I'll type Fu and it gives us back an encoded version of that password.
+
+So now we can use our API here. I'll hit try it out on the post end point and we'll create our Kaiso lover@example.com password, that big long encoded password, username case, a lover and I will remove the CI's listings here. We don't need to add any cheese listings. Then I'll hit execute and perfect two oh one we have our case of lever@example.com so I'll copy that email address. We will go back to our homepage and right down the bottom you can see on the web debug toolbar. I am logged in, I'm not logged in, I am am anonymous slummy open mind con inspector back up again. My console tools put in that email address and I'll say fu hit it and okay, let's see what happened here. Web, you have r two r two of our. That was a 200 status code and yeah, it worked.
+
+Look user six that's coming from our security controller. We're returning user and then the user's Id. That's awesome and actually like we are fully logged in. If I refresh right now, we can see I am now logged in as Caiso lover and important thing number one right here is your done. We just, because we're creating an API doesn't mean we now need to start thinking about some crazy API token system where this end point creates a token and returns that token and then our javascript stores, that token and all of our future Ajax requests send that token on a header. We're done. All of our HX requests from here on out. We'll send the session cookie like normal and they will be authenticated.
+
+Yes, and we are going to talk about API token authentication later, but there's a good chance you don't need it. It's a good chance. It's just this simple. What I really want to talk about is the end point when we log in. What information do we want back? Because as reminder, if we log in right now when we get back is just the number six, which is not that useful. I don't know what the user's email addresses or a username or anything like that. So what should we return from this authentication endpoint? Well, there's not a perfect answer for this, but there's a couple of options. One is that we could actually return the user object, the serialized version of the user object. Basically the same thing that we get if we went and fetched a specific user. So for example, I don't know what these ideas are, but user slash five. Dot. Jason, that's a valid use or my system. We could return this Jason, or even better, we can return the Jason LD for it. That's actually very useful. It's not, it's not restful because really only one URL should be responsible. One, you or I should be responsible for returning the user resource, returning it from our auth. Our authentication endpoint is not very restful. However, never let usefulness get in the way of, um, of just being perfectly restful. Uh, so if that's something that you want to do and it's useful for you, do it. But I have another suggestion.
+
+Okay.
+
+What if we returned the I r I slash API slash users slash five, which happens to be the URL that you could use to go get more information about that user. It turns out there's a standard or at least somewhat standard way of doing this. So at the bottom, my controller, I'm gonna return a new response, the one from h foundation and I'm actually going to return a content of nothing. No, which is totally valid. As long as you put it with a two Oh four status code, this means successful, but I have nothing to say back then. The IRI, I'm actually going to put this on a location resource. I'm going to location header. Now how do we get the URL to slash API slash users? Slash five? I mean, uh, usually we generate URLs, um, uh, in symphony and maybe there's a route that we could do that too.
+
+But you know, for the most part, API platform is taken care of or routes for us. So is there an API platform way to say, Hey, I want to generate the I r I to this exact object and the answer is eh. Yeah. And it's actually really useful to do that. We're going to type hint and Inter F. We're going to type, add an argument here with a con I our I converter interface. We'll set that to IRI converter. Now down below for the location, however we can say IRI, converter, Arrow get I r I from item. You can see there's a number of other useful classes down there and we'll say this Arrow get user. All right, let's what this looks like.
+
+Let's go back to our log and formed that view and you can see right now on success we were doing a console. That log of response, that data, let's change that to response dot headers so we can see what the headers look like.
+
+Let's go back over here. I'll go back to my homepage refresh and by the way you can see that it says you are currently not authenticated. That's because my view application on page load doesn't know that I'm authenticated. We're going to work on that really soon.
+
+This summer when we log in, we get a two or four status code. And if you check it out, look at this location slash API slash users slash six. So now we can make another request for that if we needed more user information to figure out what that is. And in fact my, my site is actually already set up like this. So I'm going to look at my, um, my view app. If you open the cheese was app, this is actually what is rendering the entire page. You can see cheese whiz here because someone wants your leftover cheese. This is what's showing up on top. And then the login form is actually, um, embedded inside of here. So this is actually where we in bed, that other login form component that you see over here.
+
+Okay.
+
+And this top level thing, it actually has a spot here where it tells us whether or not we're authenticated. It has a little user variable,
+
+okay?
+
+And not to get too much into the view details here,
+
+but
+
+when we render the login form component, we actually pass it a callback. We actually pass it some information that says, hey, one the user's authenticated. You can, um, you can emit a user authenticated event. Well that's going to do is it's going to cause,
+
+okay.
+
+And what we're supposed to pass to this is not actually like the user data, but the user. Uh, you are, I, this would then go fetch the user data, update that user information, and it should make us look logged in on the left here. Let me actually show you what this looks inside the log and forum. I'm going to, I'm count out these three lines here. And the point is that all we need to do is admit this user authenticated event. And then whenever you pass here for user, you or I is going to get past as the argument here. So it needs to be the user's Uri. We know that this is response, that headers, that location.
+
+Okay,
+
+I'll take out my console dot log.
+
+Okay.
+
+All right, I'm going to go back. We'll do a case, a lover, again, type in food and watch the left side here. Oh, it failed. Yay. Type air can not read. Substream undefined.
+
+[inaudible]
+
+oh yeah, I know. Promise. Oh Huh. Oh, and actually before I tried, I need to remember that the headers are all a lowercase to normalize it as lowercased. I'm on the front end here, so now I'm going back over. I'm going to refresh the whole page here. Okay. So elaborate@example.com password Fu and watched the left side. Boom. It says you are currently authenticated as Kaisa lever log out.
+
+Okay.
+
+To the point of showing this is that I'm in two things, is that you need to think about how you stay authenticated. We're going to use session based authentication and you also need to think about like what your end point actually returns. We're gonna return to Uri.
