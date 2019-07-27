@@ -381,13 +381,18 @@
             "description": null
         },
         {
-            "id": "frontend-install-encore",
-            "name": "Frontend: install encore",
+            "id": "pre-ep2-install-encore",
+            "name": "Pre Ep2: Install encore",
             "description": null
         },
         {
-            "id": "frontend-create-vue-frontend",
-            "name": "Frontend: create vue frontend",
+            "id": "pre-ep2-create-entire-vue-frontend",
+            "name": "Pre Ep2: create entire vue frontend",
+            "description": null
+        },
+        {
+            "id": "frontend-delete-me",
+            "name": "Frontend: delete me",
             "description": null
         },
         {
@@ -706,5 +711,5 @@
             "description": null
         }
     ],
-    "sha": "0b201d91da18cd833ef91570259d92270ddf5924"
+    "sha": "a4fc67e86525d1da3cd96ec155fbe49e85ccb5f0"
 }
