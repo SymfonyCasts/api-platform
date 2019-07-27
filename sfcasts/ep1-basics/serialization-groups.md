@@ -153,6 +153,10 @@ to `false`.
 
 [[[ code('a5d6654c9b') ]]]
 
+***TIP
+Actually, the auto-validation was not enabled by default in Symfony 4.3, but may be in Symfony 4.4.
+***
+
 By the way, if you're using Symfony 4.3, instead of a Doctrine error, you may
 have gotten a validation error. That's due to a new feature where Doctrine database
 constraints can automatically be used to add validation. So, if you see a validation

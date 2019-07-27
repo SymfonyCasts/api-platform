@@ -109,7 +109,7 @@ comes in: it basically says:
 For this to make sense, we need to think like a machine: a machine that *desperately*
 wants to learn as much as possible about our API, its fields and what they mean.
 When a machine sees that `@context`, it follows it. Yea, let's *literally* put that
-URL in the browser: `/api/context/CheeseListing`. And... interesting. It's another
+URL in the browser: `/api/contexts/CheeseListing`. And... interesting. It's another
 `@context`. Without going into *too* much crazy detail, `@context` allows us to
 use "shortcut" property names - called "terms". Our actual JSON response includes
 fields like `title` and `description`. But as far as JSON-LD is concerned, when

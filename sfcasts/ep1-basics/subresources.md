@@ -16,6 +16,8 @@ resource has its own, sort of, base URL: `/api/cheeses` and `/api/users`. But it
 
 Here's how: in `User`, find the `$cheeseListings` property and add `@ApiSubresource`.
 
+[[[ code('4636f39c9e') ]]]
+
 Let's go refresh the docs! Woh! We have a new endpoint!
 `/api/users/{id}/cheese_listings`. It shows up in two places... because it's kind
 of related to users... and kind of related to cheese listings. The URL is

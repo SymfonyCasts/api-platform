@@ -34,7 +34,7 @@ below called  `public function getShortDescription()`. This will return a nullab
 string, in case description isn't set yet. Let's immediately add this to a
 group - `cheese_listing:read` so that it shows up in the API.
 
-[[[ code('5bacd98cdf') ]]]
+[[[ code('aa0f8ed1b0') ]]]
 
 Inside, if the `description` is already less than 40 characters, just return it.
 Otherwise, return a `substr` of the description - get the first 40 characters, then

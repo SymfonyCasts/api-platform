@@ -62,6 +62,8 @@ I guess we really need to just delete that `CheeseListing` *entirely*!
 And... yea, doing that is easy! All the way back up above the `$cheeseListings`
 property, add `orphanRemoval=true`.
 
+[[[ code('2595134de7') ]]]
+
 This means, *if* any of the `CheeseListings` in this array suddenly... are *not*
 in this array, Doctrine will delete them. Just, realize that if you try to
 *reassign* a `CheeseListing` to another `User`, it will *still* delete that

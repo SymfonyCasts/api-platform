@@ -113,6 +113,10 @@ object successfully... then explodes when it tries to add a null title in the
 database. But, that's *exactly* what we want - because it will allow validation
 to do its work... once we add that in a few minutes.
 
+***TIP
+Actually, the auto-validation was not enabled by default in Symfony 4.3, but may be in Symfony 4.4.
+***
+
 Oh, and if you're using Symfony 4.3, you may *already* see a validation error!
 That's because of a new feature that can automatically convert your database
 rules - the fact that we've told Doctrine that `title` is required in the
