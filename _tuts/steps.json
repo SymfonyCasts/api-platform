@@ -391,11 +391,6 @@
             "description": null
         },
         {
-            "id": "frontend-delete-me",
-            "name": "Frontend: delete me",
-            "description": null
-        },
-        {
             "id": "jsonlogin-json-login-simple-controller",
             "name": "JsonLogin: json_login + simple controller",
             "description": null
@@ -443,46 +438,6 @@
         {
             "id": "user-pass-initial-user-from-twig",
             "name": "User: pass initial user from Twig",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me",
-            "name": "JWT: delete me",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me-2",
-            "name": "JWT: delete me 2",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me-3",
-            "name": "JWT: delete me 3",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me-4",
-            "name": "JWT: delete me 4",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me-5",
-            "name": "JWT: delete me 5",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me-6",
-            "name": "JWT: delete me 6",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me-7",
-            "name": "JWT: delete me 7",
-            "description": null
-        },
-        {
-            "id": "jwt-delete-me-8",
-            "name": "JWT: delete me 8",
             "description": null
         },
         {
