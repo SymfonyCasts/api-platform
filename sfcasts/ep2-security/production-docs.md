@@ -1,61 +1,141 @@
-# Production Docs
+# Hello API Security + API Docs on Production?
 
-Coming soon...
+Friends! Welcome to part two of our API Platform series. In this part we're
+talking all about ice cream, um, security. We're talking about security, not uh,
+ice cream. Uh, and it's going to be *almost* as awesome as ice cream, because the
+topic of security - especially API security - is fascinating! We've got API tokens,
+session-based authentication, CSRF attacks, dragon attacks and learning to secure
+our API Platform application down to the smallest details, like letting different
+users see different records *or* even returning or accepting different fields based
+on the user. Yep, we're going to take this *wonderful* base that API platform has
+given us and shape it to act *exactly* like we need from a security perspective.
 
-Welcome to episode two, part two of our API platform tutorial. In this part we're talking all about ice cream. Um, security. We're talking about security, not ice cream. Uh, and it's going to be almost as awesome as ice cream because we are going to crush, uh, both authentication talking about when we should use API tokens or when we should use session based authentication. And then we're going to lock down every single part of our API down to the really small details, like letting different types of users see different fields and other like super complex stuff. So we're going to take this wonderful base that API platform has given us and we're going to carve it to look and act exactly like we need from a security perspective. The great thing about API platform is that it's basically just symphony security. It didn't reinvent the wheel at all. So if you haven't gone through symphony security yet, I highly recommend going through that tutorial then coming back here and things are going to feel very, very good. Of course, there's a lot to know about security of Tokens, CSRF and other stuff. So let's dive in. Step one is do download the course code from this page and get that. When you unzip it, you'll find a start directory that has the same code that you see here. Open up this remi.md file.
+The great thing about API platform is that it's basically just... Symfony security.
+They didn't reinvent the wheel at all. If you haven't gone through our Symfony
+Security tutorial yet, I highly recommend it: you'll feel *much* more dangerous
+after.
 
-Okay.
+Anyways, let's dive into this! As always, to put the lock down on your API Platform
+security skills, download the course code from this page and code along with me.
+After you unzip the file, you'll find a `start/` directory that has the same
+code that you see here. Open up the `README.md` file for all the details on getting
+the app set up. If you coded through part one of this tutorial, um, you *rock*,
+but also, I recommend downloading the new course code because I upgraded a few
+dependencies and added a frontend to the site.
 
-To get set up instructions on how to get this application running. If you code it through part one of this tutorial, I recommend downloading the new course, the new code because I mean we, I upgraded a few dependencies and added a new front end to the site. The two most important steps that you're going to see in the read me is a step to run encore. We're just going to power a small javascript front end that we're going to play with a little bit cause I want to show, I want to actually dive into a little bit about how our javascript or whoever's using our API is going to do some of the authentication stuff and then open up another tab and run symphony serve using the symphony built in, um, built in web server.
+Anyways, one of the last steps in the README will be to open a terminal, move
+into the project and run:
 
-Okay.
+```terminal
+yarn encore dev --watch
+```
 
-Once you've done that, you should be able to flip over and open up a local host Colon, 8,000 Saeilo to cheese whiz and actually this is our fancy front end. What I want to first look at is go to slash API because this is the API that we've been building in part one we have a cheese resource, a used resource that related to each other and we've done actually quite a lot of work to really customize this to the way that we want it. Now if you go back to the homepage, this is a small front end that's built in vjs and it's going to help us actually play with our authentication system.
+to run Encore and build some JavaScript that'll power a small frontend. To make
+things more realistic, we'll do a *little* bit of work in JavaScript to see how
+it interacts with our API from an authentication standpoint. Next, open *another*
+terminal and start the Symfony local web server:
 
-Okay.
+```terminal
+symfony serve
+```
 
-Now before we jump into actually talking about authentication and how we're going to do it, one of the questions that I know I'm going to get is this page here slash. API. This is beautiful. I can play with all my endpoints. People are going to ask, okay, this is great for development, but how can I disable this in production? And the answer is you shouldn't.
+Once that starts, you should be able to fly back over to your browser and open
+up `https://localhost:8000` to see... Cheese Whiz! The peer-to-peer cheese-selling
+app we build in part 1 of this series. Actually, this is our brand new Vue.js-powered
+frontend. Go to `/api`. Ah yes, *this* is the API we built: we have a `CheeseListing`
+resource, a `User` resource, they're related to each other and we've customized
+a ton of other stuff. In a bit, we'll start making this frontend talk to the API.
 
-Yeah.
+## Hiding the Docs on Production?
 
-Well first, let me show you how you can and then I'm going to talk about, we're going to try to convince you why you should keep this on production.
+But before we get there, head back to `/api` to see our beautiful, interactive,
+Swagger documentation. I know some of you are probably thinking: I know, this is
+great for development, but how can I disable this for production?
 
-Okay.
+The answer is... you shouldn't!
 
-Overnight code, open up config packages.
+Well first, let me show you how you *can* disable this on production and *then*
+I'll try to convince you to keep it.
 
-Okay.
+Open up `config/packages/api_platform.yaml`. API Platform is *highly* configurable.
+So, reminder time: if you go to an open terminal, you can see all your current
+configuration - including any default values - by running:
 
-API Platform Dot Yammel a API platform has a lot of configuration. As a reminder, if you go over to your terminal, open up a new tab,
+```terminal
+php bin/console debug:config api_platform
+```
 
-okay,
+You can *also* run:
 
-we can run DBA, config [inaudible] platform any time to see what our current configuration is. This includes defaults or config dump to see sort of an example tree of all the things that you can have in there. Now, one things you're going to see inside of here is enabled docs. Some of the copy of this and what I want to do is only disable the docs in the production environment. But first just to see what happens. I'm actually going to do it in my main configuration files. So enabled docs,
+```terminal
+php bin/console config:dump api_platform
+```
 
-false.
+to see sort an example tree of *all* the possible keys with some explanations.
+One of the options is called `enable_docs`. Copy this. The goal is to disable the
+docs *only* in production, but let's start by disabling them everywhere to see
+how it works.
 
-As soon as I do that, I want to go back and refresh. There's absolutely no changes. This is due to a small bug with a couple of these uh, options here. That control routing. You actually need to,
+Set `enable_docs` to false.
 
-okay.
+Ok, go back and refresh `/api`. Um... there is absolutely *no* change! That's due
+to a small bug with a few of these options: they're not automatically rebuilding
+the routing cache in the `dev` environment. To manually clear it, run:
 
-Manually clear your cash in order to see those changes. So I'll run bin Console clash and cache clear.
+```terminal
+php bin/console cache:clear
+```
 
-That finishes refresh over here and excellent. The documentation has gone well sort of in and instead of a four oh four, it's actually a 500. Um, the really turns out that going to slash API and seeing the documentation was just a convenience thing. The documentation was really stored at slash abs, slash, docs and this is now four four. You can also go to slash API slash docs that Jason to get that same documentation and Jason Format and you can see all that stuff is gone. Now one of the real bummers about, um, about killing your documentation is that our documentation is not just html documentation. One, we talked about Jason LD and Hydra. There's actually a machine readable that can be really handy for API clients to read. Sorry. Now if I go to slash API slash cheeses dot Jason LD.
+Fly back over, refresh and... yep! The documentation is gone. Oh... but instead
+of a 404, it's a 500 error!
 
-Okay.
+It turns out that going to `/api` to see the docs was just a convenience. The
+documentation was *really* stored at `/api/docs` and this *is* now a 404. You
+*could* also go to `/api/docs.json` or `/api/docs.jsonld` before, but now it's
+all gone.
 
-Your end point might be empty right now.
+One of the unfortunate things about removing the documentation is that the docs
+aren't rendered in *just* HTML. In part 1 of this tutorial, we talked about JSON-LD
+and Hydra, and how API Platform generates machine-readable documentation to explain
+your API. If I go to `/api/cheeses.jsonld`, this advertises that we can go to
+`/api/contexts/cheeses` to get more "context". Whelp, that doesn't work anymore.
+The point is: if you disable documentation, realize that you're *also* disabling
+the machine-friendly documentation.
 
-Yeah.
+And if you want to fix the 500 on `/api`, you also need to disable the "entrypoint".
+Right now, if we go to `/api/index.jsonld`, we get a, sort of, "homepage" for our
+API, which tells us what URLs we could go to next to discover more. When we go
+to `/api`, that's the HTML entrypoint and that's... totally broken. To disable
+that page set `enable_entrypoint` to false. Rebuild the cache:
 
-But it actually has information here where if you follow a kind of a tuck context information, we should be able to get more information about what the significance of a cheeses and as soon as you disabled the documentation, this stuff doesn't work anymore. This is documentation so it just simply does not work without the documentation. So if you disabled documentation, you just need to realize you're actually disabling your nice machine readable documentation as well. One thing that we do still have though,
+```terminal-silent
+php bin/console cache:clear
+```
 
-yeah,
+then go refresh. *Now* we get a 404 on this and `/api`.
 
-and of course we have this 500 air on slash. API. If you want to remove, if you want to fix this you have to disable what's called deep entry point because right now if you go to slash index slash API slash index that Jason LD, this is called the entry point for your API and actually gives you some information about like the URLs you can follow to get more information. So the entry points actually are nice, but if you do want to sit in a disabled entry point, you can say enable on your point, false. Go back and rebuilt the cash. Then when you come over here, the entry points going to stop working and the real win here is that if you go to slash API, you actually now get your proper four four. So to fully disable your docs you actually need to disabled both the docs and the entry point, both of which are kind of a bummer. But if you want to do this, uh, to do this properly, I would actually not put these files in here, but I'd go on my prod directory, create a new file, they're called API underscore platform dot Yammel.
+So to fully disable your docs without a 500 error, you need *both* of these keys.
+To make this *only* happen in production, copy these, remove them, and, in the
+`config/packages/prod` directory, create a new `api_platform.yaml` file. Inside,
+start with `api_platform:` then paste.
 
-Then I'd paste then might've put API platform and I paste those things there. So if I change into the prod environment, cleared my cache, I would see that same result here. But as I mentioned, I am not going to do that. And there's a couple of reasons for this. First of all, as I just mentioned, having a documentation, the machine readable documentation and this entry point is actually a nice thing and it can be useful for your own javascript even if you're the only one consuming it. The other thing is disabling your documentation. Like this is really um, security through obscurity. If you don't want other people to use your API, like it doesn't mean that your API doesn't exist.
+Now, if we changed to the `prod` environment and rebuilt the cache, we'd be done!
 
-Yeah,
+But instead... I'm going to comment this out... for two reasons. First, I like the
+documentation, I like the machine-readable documentation and I like the "entrypoint":
+the documentation homepage. And second, more importantly, if you want to hide your
+documentation so that nobody will use your API, that's a bad plan. That's security
+through obscurity. If your API lives out on the web, you need to assume people will
+find it and *properly* secure it. Hey! That's the topic of this tutorial!
 
-your API totally exist and if you're not, even if it, and if it's not properly secured, there's, it's always possible that someone will get at it. So if you're trying to hide this so that people won't find your API so they won't use it, that's not a super a great option. It's not a super great way to do that. Now, at the end of the day, if you really do want to keep the docs and entry point, but you simply just don't want slash API to load, actually let me go back and clear the cache again so we get that back in the Dev environment. Another option is that you could create an event. Nope, I still got an air there. Kept clearing cash again. There we go. Um, you could create an event subscriber on colonel that request and if the URL slash API and the format is html, then you can hide this page. Not. The reason it's not that easy is because it's really goes against the concept of having this API that has all this machine read of that condition. Anyways, do you have any questions about that? Let me know. Let's go.
+Let's change the environment back to `dev`... and then rebuild the cache one more
+time.
+
+At the end of the day, if you're ok keeping the machine-readable docs and the
+entrypoint stuff, but you *really* don't want to expose the pretty HTML docs,
+you could always create an event subscriber on the `kernel.request` event - that's
+now called the `RequestEvent` starting in Symfony 4.3 - and, if the URL is `/api`
+and the request format is HTML, return a 404.
+
+Ok, let's get into the *real* action: let's start figuring out how we're going to
+let users of our API log in.

@@ -1,35 +1,82 @@
-# Auth Errors
+# Authentication Errors
 
-Coming soon...
+We just found out that, if we send a bad email & password to the built-in `json_login`
+authenticator, it sends back a nicely-formed JSON response: an error key set to
+what went wrong.
 
-Okay.
+I think that's great! I can totall work with that! But, if you *do* need more control,
+you can put a key under `json_login` called `failure_handler`. Create a class in
+your code, make it implement `AuthenticationFailureHandlerInterface`, then set
+that class key here. With that, you'll have *full* control to return *whatever*
+response you want on authentication failure.
 
-We just found out that if you use the a Jason underscore login built in authentication mechanism in symphony, if you send invalid credentials, then you actually get back a nice little Jason's response that says with an error key that says invalid credentials. And by the way, I think that's great. I can totally work with that. If you do want to control this, there is a key you can put under here called fill your handler, which you can set to the class name of some class that you've created that implements a fun vacation failure handler. And then you can return whatever a response you want.
+But this is good! Let's use this to show the error on the frontend. If you're
+familiar with Vue.js, I have a data key called `error` which, up here on the login
+form, I use to display an error message. In other words, all *we* need to do is
+set `this.error` to a message and we're in business!
 
-But this is good. We're going to get the air key. So now we can actually update our Java script here to use that. So long informed dot js down here, I'm gonna remove my console that log in. If you are familiar with a view, I just want to show you, I actually have an error, uh, data here, which is going to control a little, uh, air that shows up on top. So if I had to set that air to the right key, then we're going to be in business. In fact, we put that code back here cause that's what I'll do. I'll say if air that data, air response, that data, then this dot air equals air response to that data. Otherwise, in case we get back some air, uh, data that we didn't expect, we can say this. Dot Error Equals on known
+Let's do that! First, *if* `error.response.data`, then
+`this.error = error.response.data.error`. Ah, actually, I messed up here: I
+*should* be checking for `error.response.data.error` - I should be checking to
+make sure the response data has that key. And, I should be printing *just* that
+key. I'll catch half of that mistake in a minute.
 
-air.
+Anyways, if we *don't* see an `error` key, something weird happened: set the error
+to `Unknown error`.
 
-Now for refresh, try that.
+Move over, refresh... and let's fail login again. Doh! It's printing the *entire*
+JSON message. *Now* I'll add the missing `.error` key. But I *should* also include
+on the `if` statement above.
 
-Perfect.
+Try it again... when we fail login... that's perfect!
 
-Oh, almost perfect. I really shut it down. It is dot error on there. So I actually read the air off, not just the whole Jason String.
+## json_login Require a JSON Content-Type
 
-All right. That's how I want to try it. Okay. There we go. That's how we want it to look. Now that's easy enough. But I want to highlight one thing. As I mentioned, axios is really smart because it assumes unlike many, um, uh, Ajax clients that you, you want to communicate in Jason. So one of the things it's doing is we just kind of tell it that we want these email and password fields, but when it makes the request, it is actually sending a request. You look down here with contents, I've header of application slash Jason and it is sending the request payload as Jason. That's not something that all eight a lot of the HB clients kind of make it more look more like a form login.
+But there's one *other* way we could fail login that we're *not* handling. Axios
+is smart... or at least, it's *modern*. We pass it these two fields - `email` and
+`password` and it took care of turning them into JSON. You can see this in our
+network tab... down here... it set the `Content-Type` header to `application/json`
+and turned the body into JSON.
 
-Okay.
+*Most* AJAX clients don't do this. Instead, they send the data in a different
+format that matches what happens when you submit a traditional form. If our AJAX
+client had done that, what do you think the `json_login` authenticator would have
+done? An error?
 
-In that case this would fail but maybe not in the way that you expect. So just to, to make this, um, so I'm going to add another temporarily, add another argument to that post where I'm going to set header ski and then I content type header set two applications slash x www slash form dash URL encoded. This is, this specifies the header that's used. If you just like submit a form in your browser and it's the format when you submit this, your data doesn't go up as Jason, it goes up as a different format and this is really the format that a lot of things default to. If I go over right now and refresh this
+Let's find out! Temporarily, I'm going to add a *third* argument to `.post()`. This
+is an options array and we can use `headers` to set the `Content-Type` header to
+`application/x-www-form-urlencoded`. That's the `Content-Type` header your browser
+usually sends when you submit a form.
 
-and hit it, something interesting happens. You kind of probably expected an air here, some sort of like an invalid format. Can't read the uh, email or password, but you actually beck a 200 status code. And if you look at it, it says user. No. So this is coming from our security controller. It actually hit our security controller. So one of the key things you need to know about the, uh, Jason Login is that it only does its work if it sees that the content type header of the request is application slash Jason or anything containing Jason. If you make an Ajax request up to this end point, you forget to set that header or you have your data in different format. Jason logins simply does nothing. And we end up here inside of our security controller, which is probably not what we want. We probably want to return to the user and that this was a bad request and they need to fix their content that better.
+Go refresh the Javascript... and fill out the form again. I'm expecting that we'll
+get *some* sort of error. Submit and... huh. A 200 status code? And the response
+says `user: null`.
 
-But that's simple enough. We can actually do this right instead of login. So if we get here and we are, there's this point, there's two ways that we can get to this either. Um, we were logged in successfully, which we're going to see in a second. When that happens, it does execute this controller or our Jason Login was never called for some reason probably because the user forgot the content type header. So say if not this Arrow is granted a is authenticated fully. So if they're not logged in for some reason, we'll return this Arrow Jason, and will follow that same error format that's as being used by default and we'll say invalid log and request check of that. The content type content type header is application slash Jason. And then down here I'm also going to put this as a 400 status code. So it looks like it's actually a failure.
+This is coming from our `SecurityController`! Instead of intercepting the request
+and then throwing an error when it saw our mistake it... did nothing! It turns out,
+the `json_login` authenticator *only* does its work if the `Content-Type` header
+contains the word `json`. If you make a request here without that, `json_login`
+does nothing and we end up here in `SecurityController`.... which is probably
+not what we want. We probably want to return a response that tells the user what
+they messed up.
 
-Okay.
+Simple enough! Inside of the `login()` controller, we now know that there are two
+situations when we'll get here: either we hit `json_login` and were successfully
+authenticated - we'll see that soon - *or* we sent an invalid rqeuest.
 
-All right, so let's try this. This time we don't need to change anything on our front end. We hit it, boom, we hit that instantly. So that's a nice way to really make this bulletproof. Sounds go back. I guess we do not actually want this to be sending those headers.
+Cool: if `!$this->isGranted('IS_AUTHENTICATED_FULLY')` - so if they're not logged
+in - return `$this->json()` and follow the same error format that `json_login`
+normally uses: an `error` key set to:
 
-It's refresh now.
+> Invalid login request: check that the Content-Type header is "application/json".
 
-Awesome. We're back to our inbound credentials. So next, let's actually put a really user into the database login and start thinking about like what we actually want to return and how session based storage works.
+And set this to a 400 status code.
+
+I love it! Let's make sure it works. We didn't change any JavaScript, so no refresh
+needed. Submit and... we got it! The "error" side of our login is bulletproof.
+
+Head back to our JavaScript and... I guess we should remove that extra header so
+things work again. Now... we're back to "Invalid credentials".
+
+Next... I think we should try putting in some *valid* credentials! We'll hack a
+user into our database to do this and talk about our session-based authentication.
