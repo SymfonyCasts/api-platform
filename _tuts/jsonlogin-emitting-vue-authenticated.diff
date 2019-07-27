@@ -1,0 +1,19 @@
+diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
+index 791c35d..f298d85 100644
+--- a/assets/js/components/LoginForm.vue
++++ b/assets/js/components/LoginForm.vue
+@@ -45,11 +45,9 @@
+                         password: this.password
+                     })
+                     .then(response => {
+-                        console.log(response.headers);
+-
+-                        //this.$emit('user-authenticated', userUri);
+-                        //this.email = '';
+-                        //this.password = '';
++                        this.$emit('user-authenticated', response.headers.location);
++                        this.email = '';
++                        this.password = '';
+                     }).catch(error => {
+                         if (error.response.data.error) {
+                             this.error = error.response.data.error;

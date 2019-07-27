@@ -1,0 +1,56 @@
+diff --git a/assets/js/components/CheeseWhizApp.vue b/assets/js/components/CheeseWhizApp.vue
+index cd21c35..45ad7e3 100644
+--- a/assets/js/components/CheeseWhizApp.vue
++++ b/assets/js/components/CheeseWhizApp.vue
+@@ -59,6 +59,11 @@
+             return {
+                 user: null
+             }
++        },
++        mounted() {
++            if (window.user) {
++                this.user = window.user;
++            }
+         }
+     }
+ </script>
+diff --git a/src/Controller/FrontendController.php b/src/Controller/FrontendController.php
+index 1c966b2..0c2ddb2 100644
+--- a/src/Controller/FrontendController.php
++++ b/src/Controller/FrontendController.php
+@@ -4,6 +4,7 @@ namespace App\Controller;
+ 
+ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+ use Symfony\Component\Routing\Annotation\Route;
++use Symfony\Component\Serializer\SerializerInterface;
+ 
+ /**
+  * Controller to render a basic "homepage".
+@@ -13,8 +14,10 @@ class FrontendController extends AbstractController
+     /**
+      * @Route("/")
+      */
+-    public function homepage()
++    public function homepage(SerializerInterface $serializer)
+     {
+-        return $this->render('frontend/homepage.html.twig');
++        return $this->render('frontend/homepage.html.twig', [
++            'user' => $serializer->serialize($this->getUser(), 'jsonld')
++        ]);
+     }
+ }
+diff --git a/templates/frontend/homepage.html.twig b/templates/frontend/homepage.html.twig
+index c5b9de6..3eb908c 100644
+--- a/templates/frontend/homepage.html.twig
++++ b/templates/frontend/homepage.html.twig
+@@ -1,6 +1,10 @@
+ {% extends 'base.html.twig' %}
+ 
+ {% block body %}
++    <script>
++        window.user = {{ user|raw }};
++    </script>
++
+     <div id="cheese-app">
+         <cheese-whiz-app
+             entrypoint="{{ path('api_entrypoint') }}"

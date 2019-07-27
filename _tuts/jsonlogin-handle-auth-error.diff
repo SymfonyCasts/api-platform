@@ -1,0 +1,17 @@
+diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
+index e743455..42e7316 100644
+--- a/assets/js/components/LoginForm.vue
++++ b/assets/js/components/LoginForm.vue
+@@ -51,7 +51,11 @@
+                         //this.email = '';
+                         //this.password = '';
+                     }).catch(error => {
+-                        console.log(error.response.data);
++                        if (error.response.data.error) {
++                            this.error = error.response.data.error;
++                        } else {
++                            this.error = 'Unknown error';
++                        }
+                     }).finally(() => {
+                         this.isLoading = false;
+                     })

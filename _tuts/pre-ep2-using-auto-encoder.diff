@@ -1,0 +1,13 @@
+diff --git a/config/packages/security.yaml b/config/packages/security.yaml
+index e684ee4..fb6441c 100644
+--- a/config/packages/security.yaml
++++ b/config/packages/security.yaml
+@@ -1,7 +1,7 @@
+ security:
+     encoders:
+         App\Entity\User:
+-            algorithm: argon2i
++            algorithm: auto
+ 
+     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+     providers:

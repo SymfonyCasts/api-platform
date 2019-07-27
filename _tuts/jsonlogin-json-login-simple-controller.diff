@@ -1,0 +1,42 @@
+diff --git a/config/packages/security.yaml b/config/packages/security.yaml
+index fb6441c..f8a6e1d 100644
+--- a/config/packages/security.yaml
++++ b/config/packages/security.yaml
+@@ -17,6 +17,11 @@ security:
+         main:
+             anonymous: true
+ 
++            json_login:
++                check_path: app_login
++                username_path: email
++                password_path: password
++
+             # activate different ways to authenticate
+             # https://symfony.com/doc/current/security.html#firewalls-authentication
+ 
+diff --git a/src/Controller/SecurityController.php b/src/Controller/SecurityController.php
+new file mode 100644
+index 0000000..58ed831
+--- /dev/null
++++ b/src/Controller/SecurityController.php
+@@ -0,0 +1,20 @@
++<?php
++
++namespace App\Controller;
++
++use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
++use Symfony\Component\HttpFoundation\Request;
++use Symfony\Component\Routing\Annotation\Route;
++
++class SecurityController extends AbstractController
++{
++    /**
++     * @Route("/login", name="app_login", methods={"POST"})
++     */
++    public function login()
++    {
++        return $this->json([
++            'user' => $this->getUser() ? $this->getUser()->getId() : null]
++        );
++    }
++}

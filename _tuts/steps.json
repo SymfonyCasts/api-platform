@@ -366,53 +366,118 @@
             "description": null
         },
         {
-            "id": "jwt-install-jwt",
-            "name": "JWT: Install jwt",
+            "id": "pre-ep2-upgrade-dependencies",
+            "name": "Pre Ep2: upgrade dependencies",
             "description": null
         },
         {
-            "id": "jwt-setup-firewalls",
-            "name": "JWT: setup firewalls",
+            "id": "pre-ep2-updating-recipe",
+            "name": "Pre Ep2: updating recipe",
             "description": null
         },
         {
-            "id": "jwt-remove-provider-key",
-            "name": "JWT: remove provider key",
+            "id": "pre-ep2-using-auto-encoder",
+            "name": "Pre Ep2: using \"auto\" encoder",
             "description": null
         },
         {
-            "id": "jwt-add-authentication-token-route",
-            "name": "JWT: Add authentication_token route",
+            "id": "frontend-install-encore",
+            "name": "Frontend: install encore",
             "description": null
         },
         {
-            "id": "jwt-increase-timeout",
-            "name": "JWT: Increase timeout",
+            "id": "frontend-create-vue-frontend",
+            "name": "Frontend: create vue frontend",
             "description": null
         },
         {
-            "id": "jwt-user-identity-field-email",
-            "name": "JWT: user_identity_field email",
+            "id": "jsonlogin-json-login-simple-controller",
+            "name": "JsonLogin: json_login + simple controller",
             "description": null
         },
         {
-            "id": "jwt-add-empty-subscriber",
-            "name": "JWT: Add empty subscriber",
+            "id": "jsonlogin-login-ajax-request",
+            "name": "JsonLogin: Login AJAX request",
             "description": null
         },
         {
-            "id": "jwt-listen-to-authentication-success",
-            "name": "JWT: listen to authentication success",
+            "id": "jsonlogin-handle-auth-error",
+            "name": "JsonLogin: Handle auth error",
             "description": null
         },
         {
-            "id": "jwt-add-user-id-to-response",
-            "name": "JWT: Add user id to response",
+            "id": "jsonlogin-show-bad-content-type-header",
+            "name": "JsonLogin: show bad content-type header",
             "description": null
         },
         {
-            "id": "jwt-send-back-iri",
-            "name": "JWT: send back IRI",
+            "id": "jsonlogin-error-on-bad-content-type-header",
+            "name": "JsonLogin: error on bad Content-Type header",
+            "description": null
+        },
+        {
+            "id": "jsonlogin-fix-content-type",
+            "name": "JsonLogin: fix Content-Type",
+            "description": null
+        },
+        {
+            "id": "jsonlogin-return-location-header-on-success",
+            "name": "JsonLogin: return Location header on success",
+            "description": null
+        },
+        {
+            "id": "jsonlogin-emitting-vue-authenticated",
+            "name": "JsonLogin: emitting Vue authenticated",
+            "description": null
+        },
+        {
+            "id": "logout-add-logout-handler",
+            "name": "Logout: add logout handler",
+            "description": null
+        },
+        {
+            "id": "user-pass-initial-user-from-twig",
+            "name": "User: pass initial user from Twig",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me",
+            "name": "JWT: delete me",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me-2",
+            "name": "JWT: delete me 2",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me-3",
+            "name": "JWT: delete me 3",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me-4",
+            "name": "JWT: delete me 4",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me-5",
+            "name": "JWT: delete me 5",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me-6",
+            "name": "JWT: delete me 6",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me-7",
+            "name": "JWT: delete me 7",
+            "description": null
+        },
+        {
+            "id": "jwt-delete-me-8",
+            "name": "JWT: delete me 8",
             "description": null
         },
         {
@@ -641,5 +706,5 @@
             "description": null
         }
     ],
-    "sha": "080368a2138ae1c83ce35c9b5e8c36e252230de2"
+    "sha": "0b201d91da18cd833ef91570259d92270ddf5924"
 }

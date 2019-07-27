@@ -1,0 +1,15 @@
+diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
+index 11db5d6..42e7316 100644
+--- a/assets/js/components/LoginForm.vue
++++ b/assets/js/components/LoginForm.vue
+@@ -43,10 +43,6 @@
+                     .post('/login', {
+                         email: this.email,
+                         password: this.password
+-                    }, {
+-                        headers: {
+-                            'content-type': 'application/x-www-form-urlencoded'
+-                        }
+                     })
+                     .then(response => {
+                         console.log(response.data);

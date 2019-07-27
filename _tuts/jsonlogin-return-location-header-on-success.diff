@@ -1,0 +1,50 @@
+diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
+index 42e7316..791c35d 100644
+--- a/assets/js/components/LoginForm.vue
++++ b/assets/js/components/LoginForm.vue
+@@ -45,7 +45,7 @@
+                         password: this.password
+                     })
+                     .then(response => {
+-                        console.log(response.data);
++                        console.log(response.headers);
+ 
+                         //this.$emit('user-authenticated', userUri);
+                         //this.email = '';
+diff --git a/src/Controller/SecurityController.php b/src/Controller/SecurityController.php
+index 088f7b5..467bb16 100644
+--- a/src/Controller/SecurityController.php
++++ b/src/Controller/SecurityController.php
+@@ -2,8 +2,11 @@
+ 
+ namespace App\Controller;
+ 
++use ApiPlatform\Core\Api\IriConverterInterface;
+ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
++use Symfony\Component\HttpFoundation\RedirectResponse;
+ use Symfony\Component\HttpFoundation\Request;
++use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\Routing\Annotation\Route;
+ 
+ class SecurityController extends AbstractController
+@@ -11,7 +14,7 @@ class SecurityController extends AbstractController
+     /**
+      * @Route("/login", name="app_login", methods={"POST"})
+      */
+-    public function login()
++    public function login(IriConverterInterface $iriConverter)
+     {
+         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+             return $this->json([
+@@ -19,8 +22,8 @@ class SecurityController extends AbstractController
+             ], 400);
+         }
+ 
+-        return $this->json([
+-            'user' => $this->getUser() ? $this->getUser()->getId() : null]
+-        );
++        return new Response(null, 204, [
++            'Location' => $iriConverter->getIriFromItem($this->getUser())
++        ]);
+     }
+ }
