@@ -1,5 +1,6 @@
 chapters:
     - production-docs
+    - tokens-cookies
     - json-login
     - auth-errors
     - login-success #raw
