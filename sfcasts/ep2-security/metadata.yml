@@ -4,5 +4,6 @@ chapters:
     - json-login
     - auth-errors
     - login-success
+    - login-response
     - data-page-load
     - samesite-csrf
