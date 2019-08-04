@@ -3,6 +3,6 @@ chapters:
     - tokens-cookies
     - json-login
     - auth-errors
-    - login-success #raw
-    - data-page-load #raw
-    - samesite-csrf #raw
+    - login-success
+    - data-page-load
+    - samesite-csrf
