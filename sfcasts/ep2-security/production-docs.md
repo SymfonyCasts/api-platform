@@ -129,7 +129,7 @@ documentation so that nobody will use your API, that's a bad plan. That's securi
 through obscurity. If your API lives out on the web, you need to assume people will
 find it and you need to *properly* secure it. Hey! That's the topic of this tutorial!
 
-Let's rebuild the cache one more time.
+Rebuild the cache one more time.
 
 At the end of the day, if you're ok keeping the machine-readable docs and the
 entrypoint stuff, but you *really* don't want to expose the pretty HTML docs,
