@@ -47,19 +47,19 @@ Let's find out! Temporarily, I'm going to add a *third* argument to `.post()`. T
 is an options array and we can use a `headers` key to set the `Content-Type` header
 to `application/x-www-form-urlencoded`. That's the `Content-Type` header your browser
 sends when you submit a form. This will tell Axios *not* to send JSON: it will send
-the data an a format that's invalid for the `json_login` authenticator.
+the data in a format that's invalid for the `json_login` authenticator.
 
 Go refresh the Javascript... and fill out the form again. I'm expecting that we'll
 get *some* sort of error. Submit and... huh. A 200 status code? And the response
 says `user: null`.
 
 This is coming from our `SecurityController`! Instead of intercepting the request
-and then throwing an error when it saw the malformed data... did nothing! It turns
-out, the `json_login` authenticator *only* does its work if the `Content-Type` header
-contains the word `json`. If you make a request without that, `json_login`
-does nothing and we end up here in `SecurityController`.... which is probably
-not what we want. We probably want to return a response that tells the user what
-they messed up.
+and then throwing an error when it saw the malformed data... `json_login` did
+nothing! It turns out, the `json_login` authenticator *only* does its work if
+the `Content-Type` header contains the word `json`. If you make a request without
+that, `json_login` does nothing and we end up here in `SecurityController`.... which
+is probably not what we want. We probably want to return a response that tells
+the user what they messed up.
 
 ## Returning an Error on an Invalid Authentication Request
 
