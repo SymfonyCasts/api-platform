@@ -1,0 +1,61 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 416e6f0..6b5b115 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
+  *          },
+  *          "put"={
+- *              "access_control"="is_granted('ROLE_USER') and previous_object.getOwner() == user",
++ *              "access_control"="is_granted('EDIT', previous_object)",
+  *              "access_control_message"="Only the creator can edit a cheese listing"
+  *          },
+  *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+diff --git a/src/Security/Voter/CheeseListingVoter.php b/src/Security/Voter/CheeseListingVoter.php
+index d175cfc..01b6005 100644
+--- a/src/Security/Voter/CheeseListingVoter.php
++++ b/src/Security/Voter/CheeseListingVoter.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Security\Voter;
+ 
++use App\Entity\CheeseListing;
+ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+ use Symfony\Component\Security\Core\User\UserInterface;
+@@ -12,8 +13,8 @@ class CheeseListingVoter extends Voter
+     {
+         // replace with your own logic
+         // https://symfony.com/doc/current/security/voters.html
+-        return in_array($attribute, ['POST_EDIT', 'POST_VIEW'])
+-            && $subject instanceof \App\Entity\BlogPost;
++        return in_array($attribute, ['EDIT'])
++            && $subject instanceof CheeseListing;
+     }
+ 
+     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+@@ -24,16 +25,16 @@ class CheeseListingVoter extends Voter
+             return false;
+         }
+ 
++        /** @var CheeseListing $subject */
++
+         // ... (check conditions and return true to grant permission) ...
+         switch ($attribute) {
+-            case 'POST_EDIT':
+-                // logic to determine if the user can EDIT
+-                // return true or false
+-                break;
+-            case 'POST_VIEW':
+-                // logic to determine if the user can VIEW
+-                // return true or false
+-                break;
++            case 'EDIT':
++                if ($subject->getOwner() === $user) {
++                    return true;
++                }
++
++                return false;
+         }
+ 
+         return false;

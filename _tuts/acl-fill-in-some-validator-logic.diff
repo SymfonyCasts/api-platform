@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 6f20ba8..91ea35f 100644
+index 2b3f6cd..c4a75ae 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
@@ -10,10 +10,10 @@ index 6f20ba8..91ea35f 100644
  use Carbon\Carbon;
  use Doctrine\ORM\Mapping as ORM;
  use Symfony\Component\Serializer\Annotation\Groups;
-@@ -102,6 +103,7 @@ class CheeseListing
+@@ -97,6 +98,7 @@ class CheeseListing
       * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
       * @ORM\JoinColumn(nullable=false)
-      * @Groups({"cheese_listing:read", "cheese_listing:collection:post"})
+      * @Groups({"cheese:read", "cheese:collection:post"})
 +     * @IsValidOwner()
       */
      private $owner;

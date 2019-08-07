@@ -1,0 +1,12 @@
+diff --git a/src/Security/Voter/CheeseListingVoter.php b/src/Security/Voter/CheeseListingVoter.php
+index 01b6005..c1de011 100644
+--- a/src/Security/Voter/CheeseListingVoter.php
++++ b/src/Security/Voter/CheeseListingVoter.php
+@@ -37,6 +37,6 @@ class CheeseListingVoter extends Voter
+                 return false;
+         }
+ 
+-        return false;
++        throw new \Exception(sprintf('Unhandled attribute "%s"', $attribute));
+     }
+ }

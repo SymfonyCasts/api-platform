@@ -1,5 +1,5 @@
 diff --git a/src/Controller/SecurityController.php b/src/Controller/SecurityController.php
-index 58ed831..088f7b5 100644
+index 58ed831..fca3d21 100644
 --- a/src/Controller/SecurityController.php
 +++ b/src/Controller/SecurityController.php
 @@ -13,6 +13,12 @@ class SecurityController extends AbstractController
@@ -8,7 +8,7 @@ index 58ed831..088f7b5 100644
      {
 +        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
 +            return $this->json([
-+                'error' => 'Invalid login request: check that the Content-Type header is "application/json.'
++                'error' => 'Invalid login request: check that the Content-Type header is "application/json".'
 +            ], 400);
 +        }
 +

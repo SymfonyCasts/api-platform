@@ -1,0 +1,9 @@
+diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
+index 6be222e..21b9e16 100644
+--- a/config/packages/api_platform.yaml
++++ b/config/packages/api_platform.yaml
+@@ -16,3 +16,4 @@ api_platform:
+                 - application/hal+json
+ 
+     enable_docs: false
++    enable_entrypoint: false

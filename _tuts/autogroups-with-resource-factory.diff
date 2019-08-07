@@ -1,0 +1,138 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index e942033..577fcf3 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -30,3 +30,7 @@ services:
+     App\Serializer\AdminGroupsContextBuilder:
+         decorates: 'api_platform.serializer.context_builder'
+         arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]
++
++    App\ApiPlatform\AutoGroupResourceMetadataFactory:
++        decorates: 'api_platform.metadata.resource.metadata_factory'
++        arguments: ['@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner']
+diff --git a/src/ApiPlatform/AutoGroupResourceMetadataFactory.php b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
+new file mode 100644
+index 0000000..d0ebc44
+--- /dev/null
++++ b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
+@@ -0,0 +1,76 @@
++<?php
++
++namespace App\ApiPlatform;
++
++use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
++use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
++
++class AutoGroupResourceMetadataFactory implements ResourceMetadataFactoryInterface
++{
++    private $decorated;
++
++    public function __construct(ResourceMetadataFactoryInterface $decorated)
++    {
++        $this->decorated = $decorated;
++    }
++
++    public function create(string $resourceClass): ResourceMetadata
++    {
++        $resourceMetadata = $this->decorated->create($resourceClass);
++
++        $itemOperations = $resourceMetadata->getItemOperations();
++        $resourceMetadata = $resourceMetadata->withItemOperations(
++            $this->updateContextOnOperations($itemOperations, $resourceMetadata->getShortName(), true)
++        );
++
++        $collectionOperations = $resourceMetadata->getCollectionOperations();
++        $resourceMetadata = $resourceMetadata->withCollectionOperations(
++            $this->updateContextOnOperations($collectionOperations, $resourceMetadata->getShortName(), false)
++        );
++
++        return $resourceMetadata;
++    }
++
++    private function updateContextOnOperations(array $operations, string $shortName, bool $isItem)
++    {
++        foreach ($operations as $operationName => $operationOptions) {
++            $operationOptions['normalization_context'] = $operationOptions['normalization_context'] ?? [];
++            $operationOptions['normalization_context']['groups'] = $operationOptions['normalization_context']['groups'] ?? [];
++            $operationOptions['normalization_context']['groups'] = array_unique(array_merge(
++                $operationOptions['normalization_context']['groups'],
++                $this->getDefaultGroups($shortName, true, $isItem, $operationName)
++            ));
++
++            $operationOptions['denormalization_context'] = $operationOptions['denormalization_context'] ?? [];
++            $operationOptions['denormalization_context']['groups'] = $operationOptions['denormalization_context']['groups'] ?? [];
++            $operationOptions['denormalization_context']['groups'] = array_unique(array_merge(
++                $operationOptions['denormalization_context']['groups'],
++                $this->getDefaultGroups($shortName, false, $isItem, $operationName)
++            ));
++
++
++            $operations[$operationName] = $operationOptions;
++        }
++
++        return $operations;
++    }
++
++    private function getDefaultGroups(string $shortName, bool $normalization, bool $isItem, string $operationName)
++    {
++        $shortName = strtolower($shortName);
++        $readOrWrite = $normalization ? 'read' : 'write';
++        $itemOrCollection = $isItem ? 'item' : 'collection';
++
++        return [
++            // {shortName}:{read/write}
++            // e.g. user:read
++            sprintf('%s:%s', $shortName, $readOrWrite),
++            // {shortName}:{item/collection}:{read/write}
++            // e.g. user:collection:read
++            sprintf('%s:%s:%s', $shortName, $itemOrCollection, $readOrWrite),
++            // {shortName}:{item/collection}:{operationName}
++            // e.g. user:collection:get
++            sprintf('%s:%s:%s', $shortName, $itemOrCollection, $operationName),
++        ];
++    }
++}
+diff --git a/src/Serializer/AdminGroupsContextBuilder.php b/src/Serializer/AdminGroupsContextBuilder.php
+index 06db65b..08c7f6d 100644
+--- a/src/Serializer/AdminGroupsContextBuilder.php
++++ b/src/Serializer/AdminGroupsContextBuilder.php
+@@ -22,7 +22,6 @@ final class AdminGroupsContextBuilder implements SerializerContextBuilderInterfa
+         $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);
+ 
+         $context['groups'] = $context['groups'] ?? [];
+-        $context['groups'] = array_merge($context['groups'], $this->addDefaultGroups($context, $normalization));
+ 
+         $isAdmin = $this->authorizationChecker->isGranted('ROLE_ADMIN');
+ 
+@@ -34,31 +33,4 @@ final class AdminGroupsContextBuilder implements SerializerContextBuilderInterfa
+ 
+         return $context;
+     }
+-
+-    private function addDefaultGroups(array $context, bool $normalization)
+-    {
+-        $resourceClass = $context['resource_class'] ?? null;
+-
+-        if (!$resourceClass) {
+-            return;
+-        }
+-
+-        $shortName = (new \ReflectionClass($resourceClass))->getShortName();
+-        $classAlias = strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($shortName)));
+-        $readOrWrite = $normalization ? 'read' : 'write';
+-        $itemOrCollection = $context['operation_type'];
+-        $operationName = $itemOrCollection === 'item' ? $context['item_operation_name'] : $context['collection_operation_name'];
+-
+-        return [
+-            // {class}:{read/write}
+-            // e.g. user:read
+-            sprintf('%s:%s', $classAlias, $readOrWrite),
+-            // {class}:{item/collection}:{read/write}
+-            // e.g. user:collection:read
+-            sprintf('%s:%s:%s', $classAlias, $itemOrCollection, $readOrWrite),
+-            // {class}:{item/collection}:{operationName}
+-            // e.g. user:collection:get
+-            sprintf('%s:%s:%s', $classAlias, $itemOrCollection, $operationName),
+-        ];
+-    }
+ }

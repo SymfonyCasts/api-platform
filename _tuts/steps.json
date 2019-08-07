@@ -391,6 +391,26 @@
             "description": null
         },
         {
+            "id": "swagger-disable-docs",
+            "name": "Swagger: disable docs",
+            "description": null
+        },
+        {
+            "id": "swagger-disable-entrypoint",
+            "name": "Swagger: disable entrypoint",
+            "description": null
+        },
+        {
+            "id": "swagger-disable-in-prod",
+            "name": "Swagger: disable in prod",
+            "description": null
+        },
+        {
+            "id": "swagger-undo-that",
+            "name": "Swagger: undo that",
+            "description": null
+        },
+        {
             "id": "jsonlogin-json-login-simple-controller",
             "name": "JsonLogin: json_login + simple controller",
             "description": null
@@ -451,8 +471,8 @@
             "description": null
         },
         {
-            "id": "security-add-swagger-api-keys",
-            "name": "Security: Add swagger api_keys",
+            "id": "security-delete-me-1",
+            "name": "Security: delete me 1",
             "description": null
         },
         {
@@ -471,8 +491,8 @@
             "description": null
         },
         {
-            "id": "security-todo-show-previous-object",
-            "name": "Security: TODO - show previous_object",
+            "id": "security-show-previous-object",
+            "name": "Security: show previous_object",
             "description": null
         },
         {
@@ -483,6 +503,21 @@
         {
             "id": "security-use-top-level-access-control",
             "name": "Security: use top-level access_control",
+            "description": null
+        },
+        {
+            "id": "voter-make-voter",
+            "name": "Voter: make:voter",
+            "description": null
+        },
+        {
+            "id": "voter-add-edit-case",
+            "name": "Voter: add EDIT case",
+            "description": null
+        },
+        {
+            "id": "voter-exception-on-edge-case",
+            "name": "Voter: exception on edge case",
             "description": null
         },
         {
@@ -526,8 +561,8 @@
             "description": null
         },
         {
-            "id": "validationgroups-add-write-group",
-            "name": "ValidationGroups: add write group",
+            "id": "validationgroups-add-create-group",
+            "name": "ValidationGroups: add create group",
             "description": null
         },
         {
@@ -576,18 +611,38 @@
             "description": null
         },
         {
-            "id": "autogroups-remove-custom-normalize-group",
-            "name": "AutoGroups: remove custom normalize group",
+            "id": "autogroups-with-resource-factory",
+            "name": "AutoGroups: With resource factory",
             "description": null
         },
         {
-            "id": "autogroups-try-removing-top-level-context",
-            "name": "AutoGroups: Try removing top-level context",
+            "id": "autogroups-remove-custom-groups",
+            "name": "AutoGroups: remove custom groups",
             "description": null
         },
         {
-            "id": "autogroups-add-back",
-            "name": "AutoGroups: Add back",
+            "id": "autogroups-correct-cheeses",
+            "name": "AutoGroups: correct cheeses",
+            "description": null
+        },
+        {
+            "id": "autogroups-decorates-priority",
+            "name": "AutoGroups: decorates priority",
+            "description": null
+        },
+        {
+            "id": "autogroups-delete-me1",
+            "name": "AutoGroups: delete me1",
+            "description": null
+        },
+        {
+            "id": "autogroups-delete-me-2",
+            "name": "AutoGroups: delete me 2",
+            "description": null
+        },
+        {
+            "id": "autogroups-delete-me-3",
+            "name": "AutoGroups: delete me 3",
             "description": null
         },
         {
@@ -666,5 +721,5 @@
             "description": null
         }
     ],
-    "sha": "a4fc67e86525d1da3cd96ec155fbe49e85ccb5f0"
+    "sha": "169c4847d949801f964ab0e2be42203064dd8083"
 }

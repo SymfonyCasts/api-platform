@@ -1,39 +1,27 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 971594a..6f20ba8 100644
+index d435d98..2b3f6cd 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -27,7 +27,10 @@ use Symfony\Component\Validator\Constraints as Assert;
-  *     },
-  *     collectionOperations={
-  *          "get",
-- *          "post"={"access_control"="is_granted('ROLE_USER')"}
-+ *          "post"={
-+ *              "access_control"="is_granted('ROLE_USER')",
-+ *              "denormalization_context"={"groups"={"cheese_listing:write", "cheese_listing:collection:post"}},
-+ *          }
-  *     },
-  *     shortName="cheeses",
-  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
-@@ -98,8 +101,7 @@ class CheeseListing
+@@ -96,8 +96,7 @@ class CheeseListing
      /**
       * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
       * @ORM\JoinColumn(nullable=false)
--     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+-     * @Groups({"cheese:read", "cheese:write"})
 -     * @Assert\Valid()
-+     * @Groups({"cheese_listing:read", "cheese_listing:collection:post"})
++     * @Groups({"cheese:read", "cheese:collection:post"})
       */
      private $owner;
  
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 8674e81..810f701 100644
+index c686f81..c1a15d0 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -67,7 +67,7 @@ class User implements UserInterface
+@@ -65,7 +65,7 @@ class User implements UserInterface
  
      /**
       * @ORM\Column(type="string", length=255, unique=true)
--     * @Groups({"user:read", "user:write", "cheese_listing:item:get", "cheese_listing:write"})
-+     * @Groups({"user:read", "user:write", "cheese_listing:item:get"})
+-     * @Groups({"user:read", "user:write", "cheese:item:get", "cheese:write"})
++     * @Groups({"user:read", "user:write", "cheese:item:get"})
       * @Assert\NotBlank()
       */
      private $username;

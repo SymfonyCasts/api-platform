@@ -1,0 +1,20 @@
+diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
+index 21b9e16..ae73e69 100644
+--- a/config/packages/api_platform.yaml
++++ b/config/packages/api_platform.yaml
+@@ -14,6 +14,3 @@ api_platform:
+         jsonhal:
+             mime_types:
+                 - application/hal+json
+-
+-    enable_docs: false
+-    enable_entrypoint: false
+diff --git a/config/packages/prod/api_platform.yaml b/config/packages/prod/api_platform.yaml
+new file mode 100644
+index 0000000..6de140c
+--- /dev/null
++++ b/config/packages/prod/api_platform.yaml
+@@ -0,0 +1,3 @@
++api_platform:
++    enable_docs: false
++    enable_entrypoint: false

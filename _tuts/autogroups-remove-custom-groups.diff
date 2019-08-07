@@ -1,0 +1,39 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 6b5b115..1913a43 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -18,9 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * @ApiResource(
+  *     collectionOperations={"get", "post"},
+  *     itemOperations={
+- *          "get"={
+- *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
+- *          },
++ *          "get",
+  *          "put"={
+  *              "access_control"="is_granted('EDIT', previous_object)",
+  *              "access_control_message"="Only the creator can edit a cheese listing"
+@@ -32,8 +30,6 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *          "post"={"access_control"="is_granted('ROLE_USER')"}
+  *     },
+  *     shortName="cheeses",
+- *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
+- *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"},
+  *     attributes={
+  *          "pagination_items_per_page"=10,
+  *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index a4eb083..2ba0d14 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -27,9 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *          "get",
+  *          "put"={"access_control"="is_granted('ROLE_USER') and object == user"},
+  *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+- *     },
+- *     normalizationContext={"groups"={"user:read"}},
+- *     denormalizationContext={"groups"={"user:write"}},
++ *     }
+  * )
+  * @ApiFilter(PropertyFilter::class)
+  * @UniqueEntity(fields={"username"})
