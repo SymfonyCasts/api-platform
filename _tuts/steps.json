@@ -476,6 +476,11 @@
             "description": null
         },
         {
+            "id": "security-protect-item-operations",
+            "name": "Security: protect item operations",
+            "description": null
+        },
+        {
             "id": "test-install-simple-phpunit",
             "name": "Test: install simple-phpunit",
             "description": null
@@ -483,11 +488,6 @@
         {
             "id": "test-copy-in-test-directory",
             "name": "Test: copy in Test directory",
-            "description": null
-        },
-        {
-            "id": "security-protect-item-operations",
-            "name": "Security: protect item operations",
             "description": null
         },
         {
