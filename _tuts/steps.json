@@ -381,6 +381,11 @@
             "description": null
         },
         {
+            "id": "pre-ep2-add-test-stuff-to-tutorial",
+            "name": "Pre Ep2: Add test stuff to tutorial\/",
+            "description": null
+        },
+        {
             "id": "pre-ep2-install-encore",
             "name": "Pre Ep2: Install encore",
             "description": null
@@ -483,6 +488,16 @@
         {
             "id": "security-only-allow-owners-to-put",
             "name": "Security: only allow owners to PUT",
+            "description": null
+        },
+        {
+            "id": "test-install-simple-phpunit",
+            "name": "Test: install simple-phpunit",
+            "description": null
+        },
+        {
+            "id": "test-copy-in-test-directory",
+            "name": "Test: copy in Test directory",
             "description": null
         },
         {
@@ -721,5 +736,5 @@
             "description": null
         }
     ],
-    "sha": "169c4847d949801f964ab0e2be42203064dd8083"
+    "sha": "1062969efe64b9d171af2b3694a495e44973955e"
 }

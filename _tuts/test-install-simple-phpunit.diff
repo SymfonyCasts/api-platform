@@ -1,0 +1,209 @@
+diff --git a/.env.test b/.env.test
+new file mode 100644
+index 0000000..24a43c0
+--- /dev/null
++++ b/.env.test
+@@ -0,0 +1,4 @@
++# define your env variables for the test env here
++KERNEL_CLASS='App\Kernel'
++APP_SECRET='$ecretf0rt3st'
++SYMFONY_DEPRECATIONS_HELPER=999999
+diff --git a/.gitignore b/.gitignore
+index e9a690c..3ceef2d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -14,3 +14,9 @@
+ npm-debug.log
+ yarn-error.log
+ ###< symfony/webpack-encore-bundle ###
++
++###> symfony/phpunit-bridge ###
++.phpunit
++.phpunit.result.cache
++/phpunit.xml
++###< symfony/phpunit-bridge ###
+diff --git a/bin/phpunit b/bin/phpunit
+new file mode 100755
+index 0000000..4d1ed05
+--- /dev/null
++++ b/bin/phpunit
+@@ -0,0 +1,13 @@
++#!/usr/bin/env php
++<?php
++
++if (!file_exists(dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php')) {
++    echo "Unable to find the `simple-phpunit.php` script in `vendor/symfony/phpunit-bridge/bin/`.\n";
++    exit(1);
++}
++
++if (false === getenv('SYMFONY_PHPUNIT_DIR')) {
++    putenv('SYMFONY_PHPUNIT_DIR='.__DIR__.'/.phpunit');
++}
++
++require dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php';
+diff --git a/composer.json b/composer.json
+index 6a52c04..476f117 100644
+--- a/composer.json
++++ b/composer.json
+@@ -65,6 +65,7 @@
+     },
+     "require-dev": {
+         "symfony/maker-bundle": "^1.11",
++        "symfony/phpunit-bridge": "^4.3",
+         "symfony/profiler-pack": "^1.0"
+     }
+ }
+diff --git a/composer.lock b/composer.lock
+index 1b6a501..6666519 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "67f37afc886c0c4e5b92f38e1f986689",
++    "content-hash": "fb3255c03d1f1073d824c0b8d179f754",
+     "packages": [
+         {
+             "name": "api-platform/api-pack",
+@@ -5264,6 +5264,71 @@
+             ],
+             "time": "2019-07-09T22:19:18+00:00"
+         },
++        {
++            "name": "symfony/phpunit-bridge",
++            "version": "v4.3.3",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/phpunit-bridge.git",
++                "reference": "5a7b67f3c407ad8199cedb10f71a36ab5ccd44ac"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/5a7b67f3c407ad8199cedb10f71a36ab5ccd44ac",
++                "reference": "5a7b67f3c407ad8199cedb10f71a36ab5ccd44ac",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=5.5.9"
++            },
++            "conflict": {
++                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
++            },
++            "suggest": {
++                "symfony/debug": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
++            },
++            "bin": [
++                "bin/simple-phpunit"
++            ],
++            "type": "symfony-bridge",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.3-dev"
++                },
++                "thanks": {
++                    "name": "phpunit/phpunit",
++                    "url": "https://github.com/sebastianbergmann/phpunit"
++                }
++            },
++            "autoload": {
++                "files": [
++                    "bootstrap.php"
++                ],
++                "psr-4": {
++                    "Symfony\\Bridge\\PhpUnit\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Nicolas Grekas",
++                    "email": "p@tchwork.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony PHPUnit Bridge",
++            "homepage": "https://symfony.com",
++            "time": "2019-07-18T13:23:37+00:00"
++        },
+         {
+             "name": "symfony/profiler-pack",
+             "version": "v1.0.4",
+diff --git a/phpunit.xml.dist b/phpunit.xml.dist
+new file mode 100644
+index 0000000..00eda56
+--- /dev/null
++++ b/phpunit.xml.dist
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
++<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
++         backupGlobals="false"
++         colors="true"
++         bootstrap="config/bootstrap.php"
++>
++    <php>
++        <ini name="error_reporting" value="-1" />
++        <server name="APP_ENV" value="test" force="true" />
++        <server name="SHELL_VERBOSITY" value="-1" />
++        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
++        <server name="SYMFONY_PHPUNIT_VERSION" value="6.5" />
++    </php>
++
++    <testsuites>
++        <testsuite name="Project Test Suite">
++            <directory>tests</directory>
++        </testsuite>
++    </testsuites>
++
++    <filter>
++        <whitelist>
++            <directory>src</directory>
++        </whitelist>
++    </filter>
++
++    <listeners>
++        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
++    </listeners>
++</phpunit>
+diff --git a/symfony.lock b/symfony.lock
+index a0565a7..e536e9b 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -247,6 +247,22 @@
+             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+         }
+     },
++    "symfony/phpunit-bridge": {
++        "version": "4.3",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "master",
++            "version": "4.3",
++            "ref": "b0582341f1df39aaf3a9a866cdbe49937da35984"
++        },
++        "files": [
++            ".env.test",
++            "bin/phpunit",
++            "config/bootstrap.php",
++            "phpunit.xml.dist",
++            "tests/.gitignore"
++        ]
++    },
+     "symfony/polyfill-mbstring": {
+         "version": "v1.11.0"
+     },
+diff --git a/tests/.gitignore b/tests/.gitignore
+new file mode 100644
+index 0000000..e69de29
