@@ -1,0 +1,17 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index f40e303..8604af5 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -4,9 +4,12 @@ namespace App\Tests\Functional;
+ 
+ use App\ApiPlatform\Test\ApiTestCase;
+ use App\Entity\User;
++use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+ 
+ class CheeseListingResourceTest extends ApiTestCase
+ {
++    use ReloadDatabaseTrait;
++
+     public function testCreateCheeseListing()
+     {
+         $client = self::createClient();

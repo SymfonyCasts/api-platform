@@ -9,10 +9,15 @@ index 0000000..24a43c0
 +APP_SECRET='$ecretf0rt3st'
 +SYMFONY_DEPRECATIONS_HELPER=999999
 diff --git a/.gitignore b/.gitignore
-index e9a690c..3ceef2d 100644
+index e9a690c..428f6fc 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -14,3 +14,9 @@
+@@ -1,4 +1,3 @@
+-
+ ###> symfony/framework-bundle ###
+ /.env.local
+ /.env.local.php
+@@ -14,3 +13,9 @@
  npm-debug.log
  yarn-error.log
  ###< symfony/webpack-encore-bundle ###
@@ -42,19 +47,20 @@ index 0000000..4d1ed05
 +
 +require dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php';
 diff --git a/composer.json b/composer.json
-index 6a52c04..476f117 100644
+index 6a52c04..5ee7a8b 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -65,6 +65,7 @@
      },
      "require-dev": {
          "symfony/maker-bundle": "^1.11",
-+        "symfony/phpunit-bridge": "^4.3",
-         "symfony/profiler-pack": "^1.0"
+-        "symfony/profiler-pack": "^1.0"
++        "symfony/profiler-pack": "^1.0",
++        "symfony/test-pack": "^1.0"
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 1b6a501..6666519 100644
+index 1b6a501..431afd5 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -62,11 +68,191 @@ index 1b6a501..6666519 100644
          "This file is @generated automatically"
      ],
 -    "content-hash": "67f37afc886c0c4e5b92f38e1f986689",
-+    "content-hash": "fb3255c03d1f1073d824c0b8d179f754",
++    "content-hash": "a3be7326e1fe5f43bad2ad65bb1156ca",
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -5264,6 +5264,71 @@
+@@ -5196,6 +5196,179 @@
+             ],
+             "time": "2019-05-25T20:07:01+00:00"
+         },
++        {
++            "name": "symfony/browser-kit",
++            "version": "v4.3.3",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/browser-kit.git",
++                "reference": "a29dd02a1f3f81b9a15c7730cc3226718ddb55ca"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/a29dd02a1f3f81b9a15c7730cc3226718ddb55ca",
++                "reference": "a29dd02a1f3f81b9a15c7730cc3226718ddb55ca",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.1.3",
++                "symfony/dom-crawler": "~3.4|~4.0"
++            },
++            "require-dev": {
++                "symfony/css-selector": "~3.4|~4.0",
++                "symfony/http-client": "^4.3",
++                "symfony/mime": "^4.3",
++                "symfony/process": "~3.4|~4.0"
++            },
++            "suggest": {
++                "symfony/process": ""
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.3-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Component\\BrowserKit\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony BrowserKit Component",
++            "homepage": "https://symfony.com",
++            "time": "2019-06-11T15:41:59+00:00"
++        },
++        {
++            "name": "symfony/css-selector",
++            "version": "v4.3.3",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/css-selector.git",
++                "reference": "105c98bb0c5d8635bea056135304bd8edcc42b4d"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/css-selector/zipball/105c98bb0c5d8635bea056135304bd8edcc42b4d",
++                "reference": "105c98bb0c5d8635bea056135304bd8edcc42b4d",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.1.3"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.3-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Component\\CssSelector\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Jean-François Simon",
++                    "email": "jeanfrancois.simon@sensiolabs.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony CssSelector Component",
++            "homepage": "https://symfony.com",
++            "time": "2019-01-16T21:53:39+00:00"
++        },
++        {
++            "name": "symfony/dom-crawler",
++            "version": "v4.3.3",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/dom-crawler.git",
++                "reference": "291397232a2eefb3347eaab9170409981eaad0e2"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/291397232a2eefb3347eaab9170409981eaad0e2",
++                "reference": "291397232a2eefb3347eaab9170409981eaad0e2",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.1.3",
++                "symfony/polyfill-ctype": "~1.8",
++                "symfony/polyfill-mbstring": "~1.0"
++            },
++            "conflict": {
++                "masterminds/html5": "<2.6"
++            },
++            "require-dev": {
++                "masterminds/html5": "^2.6",
++                "symfony/css-selector": "~3.4|~4.0"
++            },
++            "suggest": {
++                "symfony/css-selector": ""
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.3-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Component\\DomCrawler\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony DomCrawler Component",
++            "homepage": "https://symfony.com",
++            "time": "2019-06-13T11:03:18+00:00"
++        },
+         {
+             "name": "symfony/maker-bundle",
+             "version": "v1.12.0",
+@@ -5264,6 +5437,71 @@
              ],
              "time": "2019-07-09T22:19:18+00:00"
          },
@@ -138,6 +324,41 @@ index 1b6a501..6666519 100644
          {
              "name": "symfony/profiler-pack",
              "version": "v1.0.4",
+@@ -5292,6 +5530,34 @@
+             "description": "A pack for the Symfony web profiler",
+             "time": "2018-12-10T12:11:44+00:00"
+         },
++        {
++            "name": "symfony/test-pack",
++            "version": "v1.0.6",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/test-pack.git",
++                "reference": "ff87e800a67d06c423389f77b8209bc9dc469def"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/test-pack/zipball/ff87e800a67d06c423389f77b8209bc9dc469def",
++                "reference": "ff87e800a67d06c423389f77b8209bc9dc469def",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.0",
++                "symfony/browser-kit": "*",
++                "symfony/css-selector": "*",
++                "symfony/phpunit-bridge": "*"
++            },
++            "type": "symfony-pack",
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "description": "A pack for functional and end-to-end testing within a Symfony app",
++            "time": "2019-06-21T06:27:32+00:00"
++        },
+         {
+             "name": "symfony/var-dumper",
+             "version": "v4.3.2",
 diff --git a/phpunit.xml.dist b/phpunit.xml.dist
 new file mode 100644
 index 0000000..00eda56
@@ -178,10 +399,40 @@ index 0000000..00eda56
 +    </listeners>
 +</phpunit>
 diff --git a/symfony.lock b/symfony.lock
-index a0565a7..e536e9b 100644
+index a0565a7..242e031 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -247,6 +247,22 @@
+@@ -152,6 +152,9 @@
+     "symfony/asset": {
+         "version": "v4.2.8"
+     },
++    "symfony/browser-kit": {
++        "version": "v4.3.3"
++    },
+     "symfony/cache": {
+         "version": "v4.2.8"
+     },
+@@ -174,6 +177,9 @@
+     "symfony/contracts": {
+         "version": "v1.0.2"
+     },
++    "symfony/css-selector": {
++        "version": "v4.3.3"
++    },
+     "symfony/debug": {
+         "version": "v4.2.8"
+     },
+@@ -183,6 +189,9 @@
+     "symfony/doctrine-bridge": {
+         "version": "v4.2.8"
+     },
++    "symfony/dom-crawler": {
++        "version": "v4.3.3"
++    },
+     "symfony/dotenv": {
+         "version": "v4.2.8"
+     },
+@@ -247,6 +256,22 @@
              "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
          }
      },
@@ -204,6 +455,16 @@ index a0565a7..e536e9b 100644
      "symfony/polyfill-mbstring": {
          "version": "v1.11.0"
      },
+@@ -307,6 +332,9 @@
+     "symfony/stopwatch": {
+         "version": "v4.2.8"
+     },
++    "symfony/test-pack": {
++        "version": "v1.0.6"
++    },
+     "symfony/translation": {
+         "version": "3.3",
+         "recipe": {
 diff --git a/tests/.gitignore b/tests/.gitignore
 new file mode 100644
 index 0000000..e69de29

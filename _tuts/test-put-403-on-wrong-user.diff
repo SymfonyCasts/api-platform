@@ -1,0 +1,33 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index c820991..938b82f 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -30,10 +30,11 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     public function testUpdateCheeseListing()
+     {
+         $client = self::createClient();
+-        $user = $this->createUser('cheeseplease@example.com', 'foo');
++        $user1 = $this->createUser('user1@example.com', 'foo');
++        $user2 = $this->createUser('user2@example.com', 'foo');
+ 
+         $cheeseListing = new CheeseListing('Block of cheddar');
+-        $cheeseListing->setOwner($user);
++        $cheeseListing->setOwner($user1);
+         $cheeseListing->setPrice(1000);
+         $cheeseListing->setDescription('mmmm');
+ 
+@@ -41,7 +42,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $em->persist($cheeseListing);
+         $em->flush();
+ 
+-        $this->logIn($client, 'cheeseplease@example.com', 'foo');
++        $this->logIn($client, 'user2@example.com', 'foo');
++        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
++            'json' => ['title' => 'updated']
++        ]);
++        $this->assertResponseStatusCodeSame(403, 'only author can updated');
++
++        $this->logIn($client, 'user1@example.com', 'foo');
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+             'json' => ['title' => 'updated']
+         ]);

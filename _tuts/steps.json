@@ -386,6 +386,11 @@
             "description": null
         },
         {
+            "id": "pre-ep2-tweaking-test-dir",
+            "name": "Pre Ep2: tweaking Test dir",
+            "description": null
+        },
+        {
             "id": "pre-ep2-install-encore",
             "name": "Pre Ep2: Install encore",
             "description": null
@@ -486,8 +491,103 @@
             "description": null
         },
         {
+            "id": "test-use-phpunit-8",
+            "name": "Test: use PHPUnit 8",
+            "description": null
+        },
+        {
+            "id": "test-override-database-url",
+            "name": "Test: override DATABASE_URL",
+            "description": null
+        },
+        {
             "id": "test-copy-in-test-directory",
             "name": "Test: copy in Test directory",
+            "description": null
+        },
+        {
+            "id": "test-add-test-service",
+            "name": "Test: add test service",
+            "description": null
+        },
+        {
+            "id": "test-first-simple-test",
+            "name": "Test: First simple test",
+            "description": null
+        },
+        {
+            "id": "test-test-for-401",
+            "name": "Test: test for 401",
+            "description": null
+        },
+        {
+            "id": "test-install-http-client",
+            "name": "Test: install http-client",
+            "description": null
+        },
+        {
+            "id": "test-add-content-type",
+            "name": "Test: add Content-Type",
+            "description": null
+        },
+        {
+            "id": "test-send-valid-json",
+            "name": "Test: send valid JSON",
+            "description": null
+        },
+        {
+            "id": "test-create-user-log-in",
+            "name": "Test: create user & log in",
+            "description": null
+        },
+        {
+            "id": "test-install-alicebundle",
+            "name": "Test: install AliceBundle",
+            "description": null
+        },
+        {
+            "id": "test-use-reloaddatabasetrait",
+            "name": "Test: Use ReloadDatabaseTrait",
+            "description": null
+        },
+        {
+            "id": "test-install-monolog-bundle",
+            "name": "Test: install monolog-bundle",
+            "description": null
+        },
+        {
+            "id": "test-add-customapitestcase-base-class",
+            "name": "Test: Add CustomApiTestCase base class",
+            "description": null
+        },
+        {
+            "id": "test-encode-password",
+            "name": "Test: encode password",
+            "description": null
+        },
+        {
+            "id": "test-add-createuserandlogin",
+            "name": "Test: add createUserAndLogIn()",
+            "description": null
+        },
+        {
+            "id": "test-assert-auth-success-with-400",
+            "name": "Test: Assert auth success with 400",
+            "description": null
+        },
+        {
+            "id": "test-remove-extra-content-type",
+            "name": "Test: remove extra Content-Type",
+            "description": null
+        },
+        {
+            "id": "test-add-put-test",
+            "name": "Test: Add put test",
+            "description": null
+        },
+        {
+            "id": "test-put-403-on-wrong-user",
+            "name": "Test: PUT 403 on wrong user",
             "description": null
         },
         {
@@ -498,6 +598,11 @@
         {
             "id": "security-access-control-message",
             "name": "Security: access_control_message",
+            "description": null
+        },
+        {
+            "id": "security-test-for-reassigning-owner",
+            "name": "Security: test for reassigning owner",
             "description": null
         },
         {
@@ -528,6 +633,11 @@
         {
             "id": "voter-exception-on-edge-case",
             "name": "Voter: exception on edge case",
+            "description": null
+        },
+        {
+            "id": "encoding-test-for-user-registration",
+            "name": "Encoding: test for user registration",
             "description": null
         },
         {
@@ -566,8 +676,18 @@
             "description": null
         },
         {
+            "id": "encoding-rename-field-to-password",
+            "name": "Encoding: rename field to password",
+            "description": null
+        },
+        {
             "id": "validationgroups-plainpassword-notblank",
             "name": "ValidationGroups: plainPassword NotBlank",
+            "description": null
+        },
+        {
+            "id": "validationgroups-add-test-for-update",
+            "name": "ValidationGroups: add test for update",
             "description": null
         },
         {
@@ -596,6 +716,11 @@
             "description": null
         },
         {
+            "id": "dynamserialization-add-test-for-phonenumber-admin-only",
+            "name": "DynamSerialization: Add test for phoneNumber admin-only",
+            "description": null
+        },
+        {
             "id": "dynamserialization-chnage-to-admin-read",
             "name": "DynamSerialization: chnage to admin:read",
             "description": null
@@ -608,6 +733,11 @@
         {
             "id": "dynamserialization-add-admin-groups",
             "name": "DynamSerialization: Add admin groups",
+            "description": null
+        },
+        {
+            "id": "dynamserialization-test-for-roles-update",
+            "name": "DynamSerialization: test for roles update",
             "description": null
         },
         {
@@ -731,5 +861,5 @@
             "description": null
         }
     ],
-    "sha": "1062969efe64b9d171af2b3694a495e44973955e"
+    "sha": "6954c6e8800281296be3e90dc2fb9057eaa38899"
 }

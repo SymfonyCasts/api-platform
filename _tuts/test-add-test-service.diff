@@ -1,0 +1,13 @@
+diff --git a/config/services_test.yaml b/config/services_test.yaml
+new file mode 100644
+index 0000000..200a1a6
+--- /dev/null
++++ b/config/services_test.yaml
+@@ -0,0 +1,7 @@
++services:
++    # added so we can use the new API Platform test tools before
++    # they are released. In API Platform 2.5, this won't be needed.
++    test.api_platform.client:
++        class: App\ApiPlatform\Test\Client
++        arguments: ['@test.client']
++        public: true

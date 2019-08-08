@@ -1,0 +1,32 @@
+diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
+index 393727b..bf2e01a 100644
+--- a/src/Test/CustomApiTestCase.php
++++ b/src/Test/CustomApiTestCase.php
+@@ -36,4 +36,13 @@ class CustomApiTestCase extends ApiTestCase
+         ]);
+         $this->assertResponseStatusCodeSame(204);
+     }
++
++    protected function createUserAndLogIn(Client $client, string $email, string $password): User
++    {
++        $user = $this->createUser($email, $password);
++
++        $this->logIn($client, $email, $password);
++
++        return $user;
++    }
+ }
+\ No newline at end of file
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 97bd63e..adc9cd7 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -19,7 +19,6 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         ]);
+         $this->assertResponseStatusCodeSame(401);
+ 
+-        $this->createUser('cheeseplease@example.com', 'foo');;
+-        $this->logIn($client, 'cheeseplease@example.com', 'foo');
++        $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
+     }
+ }

@@ -1,0 +1,14 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 938b82f..c5d5a3e 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -44,7 +44,8 @@ class CheeseListingResourceTest extends CustomApiTestCase
+ 
+         $this->logIn($client, 'user2@example.com', 'foo');
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+-            'json' => ['title' => 'updated']
++            // try to trick security by reassigning to this user
++            'json' => ['title' => 'updated', 'owner' => '/api/users/'.$user2->getId()]
+         ]);
+         $this->assertResponseStatusCodeSame(403, 'only author can updated');
+ 

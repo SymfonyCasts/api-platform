@@ -1,0 +1,1021 @@
+diff --git a/src/ApiPlatform/Test/ApiTestAssertionsTrait.php b/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
+new file mode 100644
+index 0000000..d0ffc6f
+--- /dev/null
++++ b/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
+@@ -0,0 +1,129 @@
++<?php
++
++/*
++ * This file is part of the API Platform project.
++ *
++ * (c) Kévin Dunglas <dunglas@gmail.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++declare(strict_types=1);
++
++namespace App\ApiPlatform\Test;
++
++use App\ApiPlatform\Test\Constraint\ArraySubset;
++use App\ApiPlatform\Test\Constraint\MatchesJsonSchema;
++use PHPUnit\Framework\ExpectationFailedException;
++use Symfony\Contracts\HttpClient\ResponseInterface;
++
++/**
++ * @see \Symfony\Bundle\FrameworkBundle\Test\WebTestAssertionsTrait
++ *
++ * @experimental
++ */
++trait ApiTestAssertionsTrait
++{
++    use BrowserKitAssertionsTrait;
++
++    /**
++     * Asserts that the retrieved JSON contains has the specified subset.
++     *
++     * This method delegates to self::assertArraySubset().
++     *
++     * @param array|string $subset
++     *
++     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
++     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
++     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
++     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
++     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
++     */
++    public static function assertJsonContains($subset, bool $checkForObjectIdentity = true, string $message = ''): void
++    {
++        if (\is_string($subset)) {
++            $subset = json_decode($subset, true);
++        }
++        if (!\is_array($subset)) {
++            throw new \InvalidArgumentException('$subset must be array or string (JSON array or JSON object)');
++        }
++
++        static::assertArraySubset($subset, self::getHttpResponse()->toArray(false), $checkForObjectIdentity, $message);
++    }
++
++    /**
++     * Asserts that the retrieved JSON is equal to $json.
++     *
++     * Both values are canonicalized before the comparision.
++     *
++     * @param array|string $json
++     */
++    public static function assertJsonEquals($json, string $message = ''): void
++    {
++        if (\is_string($json)) {
++            $json = json_decode($json, true);
++        }
++        if (!\is_array($json)) {
++            throw new \InvalidArgumentException('$json must be array or string (JSON array or JSON object)');
++        }
++
++        static::assertEqualsCanonicalizing($json, self::getHttpResponse()->toArray(false), $message);
++    }
++
++    /**
++     * Asserts that an array has a specified subset.
++     *
++     * Imported from dms/phpunit-arraysubset, because the original constraint has been deprecated.
++     *
++     * @copyright Sebastian Bergmann <sebastian@phpunit.de>
++     * @copyright Rafael Dohms <rdohms@gmail.com>
++     *
++     * @see https://github.com/sebastianbergmann/phpunit/issues/3494
++     *
++     * @param iterable $subset
++     * @param iterable $array
++     *
++     * @throws ExpectationFailedException
++     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
++     * @throws \Exception
++     */
++    public static function assertArraySubset($subset, $array, bool $checkForObjectIdentity = false, string $message = ''): void
++    {
++        $constraint = new ArraySubset($subset, $checkForObjectIdentity);
++        static::assertThat($array, $constraint, $message);
++    }
++
++    /**
++     * @param array|string $jsonSchema
++     */
++    public static function assertMatchesJsonSchema($jsonSchema, ?int $checkMode = null, string $message = ''): void
++    {
++        $constraint = new MatchesJsonSchema($jsonSchema, $checkMode);
++        static::assertThat(self::getHttpResponse()->toArray(false), $constraint, $message);
++    }
++
++    private static function getHttpClient(Client $newClient = null): ?Client
++    {
++        static $client;
++
++        if (0 < \func_num_args()) {
++            return $client = $newClient;
++        }
++
++        if (!$client instanceof Client) {
++            static::fail(sprintf('A client must be set to make assertions on it. Did you forget to call "%s::createClient()"?', __CLASS__));
++        }
++
++        return $client;
++    }
++
++    private static function getHttpResponse(): ResponseInterface
++    {
++        if (!$response = self::getHttpClient()->getResponse()) {
++            static::fail('A client must have an HTTP Response to make assertions. Did you forget to make an HTTP request?');
++        }
++
++        return $response;
++    }
++}
+diff --git a/src/ApiPlatform/Test/ApiTestCase.php b/src/ApiPlatform/Test/ApiTestCase.php
+new file mode 100644
+index 0000000..a99dce1
+--- /dev/null
++++ b/src/ApiPlatform/Test/ApiTestCase.php
+@@ -0,0 +1,66 @@
++<?php
++
++/*
++ * This file is part of the API Platform project.
++ *
++ * (c) Kévin Dunglas <dunglas@gmail.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++declare(strict_types=1);
++
++namespace App\ApiPlatform\Test;
++
++use Symfony\Bundle\FrameworkBundle\KernelBrowser;
++use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
++use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
++
++/**
++ * Base class for functional API tests.
++ *
++ * @experimental
++ *
++ * @author Kévin Dunglas <dunglas@gmail.com>
++ */
++abstract class ApiTestCase extends KernelTestCase
++{
++    use ApiTestAssertionsTrait;
++
++    protected function doTearDown(): void
++    {
++        parent::doTearDown();
++        self::getClient(null);
++    }
++
++    /**
++     * Creates a Client.
++     *
++     * @param array $kernelOptions  Options to pass to the createKernel method
++     * @param array $defaultOptions Default options for the requests
++     */
++    protected static function createClient(array $kernelOptions = [], array $defaultOptions = []): Client
++    {
++        $kernel = static::bootKernel($kernelOptions);
++
++        try {
++            /**
++             * @var Client
++             */
++            $client = $kernel->getContainer()->get('test.api_platform.client');
++        } catch (ServiceNotFoundException $e) {
++            if (class_exists(KernelBrowser::class)) {
++                throw new \LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
++            }
++            throw new \LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
++        }
++
++        $client->setDefaultOptions($defaultOptions);
++
++        self::getHttpClient($client);
++        self::getClient($client->getKernelBrowser());
++
++        return $client;
++    }
++}
+diff --git a/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php b/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
+new file mode 100644
+index 0000000..9a23676
+--- /dev/null
++++ b/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
+@@ -0,0 +1,170 @@
++<?php
++
++/*
++ * This file is part of the API Platform project.
++ *
++ * (c) Kévin Dunglas <dunglas@gmail.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++declare(strict_types=1);
++
++/*
++ * This file is part of the Symfony package.
++ *
++ * (c) Fabien Potencier <fabien@symfony.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++namespace App\ApiPlatform\Test;
++
++use PHPUnit\Framework\Constraint\LogicalAnd;
++use PHPUnit\Framework\Constraint\LogicalNot;
++use Symfony\Bundle\FrameworkBundle\KernelBrowser;
++use Symfony\Component\BrowserKit\Test\Constraint as BrowserKitConstraint;
++use Symfony\Component\HttpFoundation\Request;
++use Symfony\Component\HttpFoundation\Response;
++use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
++
++/**
++ * Copied from Symfony, to remove when https://github.com/symfony/symfony/pull/32207 will be merged.
++ *
++ * @internal
++ */
++trait BrowserKitAssertionsTrait
++{
++    public static function assertResponseIsSuccessful(string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new ResponseConstraint\ResponseIsSuccessful(), $message);
++    }
++
++    public static function assertResponseStatusCodeSame(int $expectedCode, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new ResponseConstraint\ResponseStatusCodeSame($expectedCode), $message);
++    }
++
++    public static function assertResponseRedirects(string $expectedLocation = null, int $expectedCode = null, string $message = ''): void
++    {
++        $constraint = new ResponseConstraint\ResponseIsRedirected();
++        if ($expectedLocation) {
++            $constraint = LogicalAnd::fromConstraints($constraint, new ResponseConstraint\ResponseHeaderSame('Location', $expectedLocation));
++        }
++        if ($expectedCode) {
++            $constraint = LogicalAnd::fromConstraints($constraint, new ResponseConstraint\ResponseStatusCodeSame($expectedCode));
++        }
++
++        self::assertThat(self::getResponse(), $constraint, $message);
++    }
++
++    public static function assertResponseHasHeader(string $headerName, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new ResponseConstraint\ResponseHasHeader($headerName), $message);
++    }
++
++    public static function assertResponseNotHasHeader(string $headerName, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new LogicalNot(new ResponseConstraint\ResponseHasHeader($headerName)), $message);
++    }
++
++    public static function assertResponseHeaderSame(string $headerName, string $expectedValue, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new ResponseConstraint\ResponseHeaderSame($headerName, $expectedValue), $message);
++    }
++
++    public static function assertResponseHeaderNotSame(string $headerName, string $expectedValue, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new LogicalNot(new ResponseConstraint\ResponseHeaderSame($headerName, $expectedValue)), $message);
++    }
++
++    public static function assertResponseHasCookie(string $name, string $path = '/', string $domain = null, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new ResponseConstraint\ResponseHasCookie($name, $path, $domain), $message);
++    }
++
++    public static function assertResponseNotHasCookie(string $name, string $path = '/', string $domain = null, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), new LogicalNot(new ResponseConstraint\ResponseHasCookie($name, $path, $domain)), $message);
++    }
++
++    public static function assertResponseCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = ''): void
++    {
++        self::assertThat(self::getResponse(), LogicalAnd::fromConstraints(
++            new ResponseConstraint\ResponseHasCookie($name, $path, $domain),
++            new ResponseConstraint\ResponseCookieValueSame($name, $expectedValue, $path, $domain)
++        ), $message);
++    }
++
++    public static function assertBrowserHasCookie(string $name, string $path = '/', string $domain = null, string $message = ''): void
++    {
++        self::assertThat(self::getClient(), new BrowserKitConstraint\BrowserHasCookie($name, $path, $domain), $message);
++    }
++
++    public static function assertBrowserNotHasCookie(string $name, string $path = '/', string $domain = null, string $message = ''): void
++    {
++        self::assertThat(self::getClient(), new LogicalNot(new BrowserKitConstraint\BrowserHasCookie($name, $path, $domain)), $message);
++    }
++
++    public static function assertBrowserCookieValueSame(string $name, string $expectedValue, bool $raw = false, string $path = '/', string $domain = null, string $message = ''): void
++    {
++        self::assertThat(self::getClient(), LogicalAnd::fromConstraints(
++            new BrowserKitConstraint\BrowserHasCookie($name, $path, $domain),
++            new BrowserKitConstraint\BrowserCookieValueSame($name, $expectedValue, $raw, $path, $domain)
++        ), $message);
++    }
++
++    public static function assertRequestAttributeValueSame(string $name, string $expectedValue, string $message = ''): void
++    {
++        self::assertThat(self::getRequest(), new ResponseConstraint\RequestAttributeValueSame($name, $expectedValue), $message);
++    }
++
++    public static function assertRouteSame($expectedRoute, array $parameters = [], string $message = ''): void
++    {
++        $constraint = new ResponseConstraint\RequestAttributeValueSame('_route', $expectedRoute);
++        $constraints = [];
++        foreach ($parameters as $key => $value) {
++            $constraints[] = new ResponseConstraint\RequestAttributeValueSame($key, $value);
++        }
++        if ($constraints) {
++            $constraint = LogicalAnd::fromConstraints($constraint, ...$constraints);
++        }
++
++        self::assertThat(self::getRequest(), $constraint, $message);
++    }
++
++    private static function getClient(KernelBrowser $newClient = null): ?KernelBrowser
++    {
++        static $client;
++
++        if (0 < \func_num_args()) {
++            return $client = $newClient;
++        }
++
++        if (!$client instanceof KernelBrowser) {
++            static::fail(sprintf('A client must be set to make assertions on it. Did you forget to call "%s::createClient()"?', __CLASS__));
++        }
++
++        return $client;
++    }
++
++    private static function getResponse(): Response
++    {
++        if (!$response = self::getClient()->getResponse()) {
++            static::fail('A client must have an HTTP Response to make assertions. Did you forget to make an HTTP request?');
++        }
++
++        return $response;
++    }
++
++    private static function getRequest(): Request
++    {
++        if (!$request = self::getClient()->getRequest()) {
++            static::fail('A client must have an HTTP Request to make assertions. Did you forget to make an HTTP request?');
++        }
++
++        return $request;
++    }
++}
+diff --git a/src/ApiPlatform/Test/Client.php b/src/ApiPlatform/Test/Client.php
+new file mode 100644
+index 0000000..70eed34
+--- /dev/null
++++ b/src/ApiPlatform/Test/Client.php
+@@ -0,0 +1,215 @@
++<?php
++
++/*
++ * This file is part of the API Platform project.
++ *
++ * (c) Kévin Dunglas <dunglas@gmail.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++declare(strict_types=1);
++
++namespace App\ApiPlatform\Test;
++
++use Symfony\Bundle\FrameworkBundle\KernelBrowser;
++use Symfony\Component\DependencyInjection\ContainerInterface;
++use Symfony\Component\HttpClient\HttpClientTrait;
++use Symfony\Component\HttpKernel\KernelInterface;
++use Symfony\Component\HttpKernel\Profiler\Profile;
++use Symfony\Contracts\HttpClient\HttpClientInterface;
++use Symfony\Contracts\HttpClient\ResponseInterface;
++use Symfony\Contracts\HttpClient\ResponseStreamInterface;
++
++/**
++ * Convenient test client that makes requests to a Kernel object.
++ *
++ * @experimental
++ *
++ * @author Kévin Dunglas <dunglas@gmail.com>
++ */
++final class Client implements HttpClientInterface
++{
++    use HttpClientTrait;
++
++    /**
++     * @see HttpClientInterface::OPTIONS_DEFAULTS
++     */
++    public const API_OPTIONS_DEFAULTS = [
++        'auth_basic' => null,
++        'auth_bearer' => null,
++        'query' => [],
++        'headers' => ['accept' => ['application/ld+json']],
++        'body' => '',
++        'json' => null,
++        'base_uri' => 'http://example.com',
++    ];
++
++    private $kernelBrowser;
++
++    private $defaultOptions = self::API_OPTIONS_DEFAULTS;
++
++    /**
++     * @var Response
++     */
++    private $response;
++
++    /**
++     * @param array $defaultOptions Default options for the requests
++     *
++     * @see HttpClientInterface::OPTIONS_DEFAULTS for available options
++     */
++    public function __construct(KernelBrowser $kernelBrowser, array $defaultOptions = [])
++    {
++        $this->kernelBrowser = $kernelBrowser;
++        $kernelBrowser->followRedirects(false);
++        if ($defaultOptions) {
++            $this->setDefaultOptions($defaultOptions);
++        }
++    }
++
++    /**
++     * Sets the default options for the requests.
++     *
++     * @see HttpClientInterface::OPTIONS_DEFAULTS for available options
++     */
++    public function setDefaultOptions(array $defaultOptions): void
++    {
++        [, $this->defaultOptions] = self::prepareRequest(null, null, $defaultOptions, self::API_OPTIONS_DEFAULTS);
++    }
++
++    /**
++     * {@inheritdoc}
++     *
++     * @return Response
++     */
++    public function request(string $method, string $url, array $options = []): ResponseInterface
++    {
++        $basic = $options['auth_basic'] ?? null;
++        [$url, $options] = self::prepareRequest($method, $url, $options, $this->defaultOptions);
++        $resolvedUrl = implode('', $url);
++
++        $server = [];
++        // Convert headers to a $_SERVER-like array
++        foreach ($options['headers'] as $key => $value) {
++            if ('content-type' === $key) {
++                $server['CONTENT_TYPE'] = $value[0] ?? '';
++
++                continue;
++            }
++
++            // BrowserKit doesn't support setting several headers with the same name
++            $server['HTTP_'.strtoupper(str_replace('-', '_', $key))] = $value[0] ?? '';
++        }
++
++        if ($basic) {
++            $credentials = \is_array($basic) ? $basic : explode(':', $basic, 2);
++            $server['PHP_AUTH_USER'] = $credentials[0];
++            $server['PHP_AUTH_PW'] = $credentials[1] ?? '';
++        }
++
++        $info = [
++            'response_headers' => [],
++            'redirect_count' => 0,
++            'redirect_url' => null,
++            'start_time' => 0.0,
++            'http_method' => $method,
++            'http_code' => 0,
++            'error' => null,
++            'user_data' => $options['user_data'] ?? null,
++            'url' => $resolvedUrl,
++            'primary_port' => 'http:' === $url['scheme'] ? 80 : 443,
++        ];
++        $this->kernelBrowser->request($method, $resolvedUrl, [], [], $server, $options['body'] ?? null);
++
++        return $this->response = new Response($this->kernelBrowser->getResponse(), $this->kernelBrowser->getInternalResponse(), $info);
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function stream($responses, float $timeout = null): ResponseStreamInterface
++    {
++        throw new \LogicException('Not implemented yet');
++    }
++
++    /**
++     * Gets the latest response.
++     *
++     * @internal
++     */
++    public function getResponse(): ?Response
++    {
++        return $this->response;
++    }
++
++    /**
++     * Gets the underlying test client.
++     *
++     * @internal
++     */
++    public function getKernelBrowser(): KernelBrowser
++    {
++        return $this->kernelBrowser;
++    }
++
++    // The following methods are proxy methods for KernelBrowser's ones
++
++    /**
++     * Returns the container.
++     *
++     * @return ContainerInterface|null Returns null when the Kernel has been shutdown or not started yet
++     */
++    public function getContainer(): ?ContainerInterface
++    {
++        return $this->kernelBrowser->getContainer();
++    }
++
++    /**
++     * Returns the kernel.
++     */
++    public function getKernel(): KernelInterface
++    {
++        return $this->kernelBrowser->getKernel();
++    }
++
++    /**
++     * Gets the profile associated with the current Response.
++     *
++     * @return Profile|false A Profile instance
++     */
++    public function getProfile()
++    {
++        return $this->kernelBrowser->getProfile();
++    }
++
++    /**
++     * Enables the profiler for the very next request.
++     *
++     * If the profiler is not enabled, the call to this method does nothing.
++     */
++    public function enableProfiler(): void
++    {
++        $this->kernelBrowser->enableProfiler();
++    }
++
++    /**
++     * Disables kernel reboot between requests.
++     *
++     * By default, the Client reboots the Kernel for each request. This method
++     * allows to keep the same kernel across requests.
++     */
++    public function disableReboot(): void
++    {
++        $this->kernelBrowser->disableReboot();
++    }
++
++    /**
++     * Enables kernel reboot between requests.
++     */
++    public function enableReboot(): void
++    {
++        $this->kernelBrowser->enableReboot();
++    }
++}
+diff --git a/src/ApiPlatform/Test/Constraint/ArraySubset.php b/src/ApiPlatform/Test/Constraint/ArraySubset.php
+new file mode 100644
+index 0000000..55886a2
+--- /dev/null
++++ b/src/ApiPlatform/Test/Constraint/ArraySubset.php
+@@ -0,0 +1,129 @@
++<?php
++
++/*
++ * This file is part of the API Platform project.
++ *
++ * (c) Kévin Dunglas <dunglas@gmail.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++declare(strict_types=1);
++
++namespace App\ApiPlatform\Test\Constraint;
++
++use PHPUnit\Framework\Constraint\Constraint;
++use PHPUnit\Framework\ExpectationFailedException;
++use SebastianBergmann\Comparator\ComparisonFailure;
++use SebastianBergmann\RecursionContext\InvalidArgumentException;
++
++/**
++ * Constraint that asserts that the array it is evaluated for has a specified subset.
++ *
++ * Uses array_replace_recursive() to check if a key value subset is part of the
++ * subject array.
++ *
++ * Imported from dms/phpunit-arraysubset-asserts, because the original constraint has been deprecated.
++ *
++ * @copyright Sebastian Bergmann <sebastian@phpunit.de>
++ * @copyright Rafael Dohms <rdohms@gmail.com>
++ *
++ * @see https://github.com/sebastianbergmann/phpunit/issues/3494
++ */
++final class ArraySubset extends Constraint
++{
++    private $subset;
++    private $strict;
++
++    public function __construct(iterable $subset, bool $strict = false)
++    {
++        $this->strict = $strict;
++        $this->subset = $subset;
++    }
++
++    /**
++     * Evaluates the constraint for parameter $other.
++     *
++     * If $returnResult is set to false (the default), an exception is thrown
++     * in case of a failure. null is returned otherwise.
++     *
++     * If $returnResult is true, the result of the evaluation is returned as
++     * a boolean value instead: true in case of success, false in case of a
++     * failure.
++     *
++     * @param iterable $other
++     *
++     * @throws ExpectationFailedException
++     * @throws InvalidArgumentException
++     *
++     * @return iterable|bool|null
++     */
++    public function evaluate($other, string $description = '', bool $returnResult = false)
++    {
++        //type cast $other & $this->subset as an array to allow
++        //support in standard array functions.
++        $other = $this->toArray($other);
++        $this->subset = $this->toArray($this->subset);
++        $patched = array_replace_recursive($other, $this->subset);
++        if ($this->strict) {
++            $result = $other === $patched;
++        } else {
++            $result = $other == $patched;
++        }
++        if ($returnResult) {
++            return $result;
++        }
++        if ($result) {
++            return null;
++        }
++
++        $f = new ComparisonFailure(
++            $patched,
++            $other,
++            var_export($patched, true),
++            var_export($other, true)
++        );
++        $this->fail($other, $description, $f);
++    }
++
++    /**
++     * Returns a string representation of the constraint.
++     *
++     * @throws InvalidArgumentException
++     */
++    public function toString(): string
++    {
++        return 'has the subset '.$this->exporter()->export($this->subset);
++    }
++
++    /**
++     * Returns the description of the failure.
++     *
++     * The beginning of failure messages is "Failed asserting that" in most
++     * cases. This method should return the second part of that sentence.
++     *
++     * @param mixed $other evaluated value or object
++     *
++     * @throws InvalidArgumentException
++     */
++    protected function failureDescription($other): string
++    {
++        return 'an array '.$this->toString();
++    }
++
++    private function toArray(iterable $other): array
++    {
++        if (\is_array($other)) {
++            return $other;
++        }
++        if ($other instanceof \ArrayObject) {
++            return $other->getArrayCopy();
++        }
++        if ($other instanceof \Traversable) {
++            return iterator_to_array($other);
++        }
++        // Keep BC even if we know that array would not be the expected one
++        return (array) $other;
++    }
++}
+diff --git a/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php b/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
+new file mode 100644
+index 0000000..26585de
+--- /dev/null
++++ b/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
+@@ -0,0 +1,83 @@
++<?php
++
++/*
++ * This file is part of the API Platform project.
++ *
++ * (c) Kévin Dunglas <dunglas@gmail.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++declare(strict_types=1);
++
++namespace App\ApiPlatform\Test\Constraint;
++
++use JsonSchema\Validator;
++use PHPUnit\Framework\Constraint\Constraint;
++
++/**
++ * Asserts that a JSON document matches a given JSON Schema.
++ *
++ * @author Kévin Dunglas <dunglas@gmail.com>
++ *
++ * @experimental
++ */
++final class MatchesJsonSchema extends Constraint
++{
++    private $schema;
++    private $checkMode;
++
++    /**
++     * @param array|string $schema
++     */
++    public function __construct($schema, ?int $checkMode = null)
++    {
++        $this->checkMode = $checkMode;
++        $this->schema = \is_array($schema) ? (object) $schema : json_decode($schema);
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function toString(): string
++    {
++        return 'matches the provided JSON Schema';
++    }
++
++    /**
++     * @param array $other
++     */
++    protected function matches($other): bool
++    {
++        if (!class_exists(Validator::class)) {
++            throw new \RuntimeException('The "justinrainbow/json-schema" library must be installed to use "assertMatchesJsonSchema()". Try running "composer require --dev justinrainbow/json-schema".');
++        }
++
++        $other = (object) $other;
++
++        $validator = new Validator();
++        $validator->validate($other, $this->schema, $this->checkMode);
++
++        return $validator->isValid();
++    }
++
++    /**
++     * @param object $other
++     */
++    protected function additionalFailureDescription($other): string
++    {
++        $other = (object) $other;
++
++        $validator = new Validator();
++        $validator->check($other, $this->schema);
++
++        $errors = [];
++        foreach ($validator->getErrors() as $error) {
++            $property = $error['property'] ? $error['property'].': ' : '';
++            $errors[] = $property.$error['message'];
++        }
++
++        return implode("\n", $errors);
++    }
++}
+diff --git a/src/ApiPlatform/Test/Response.php b/src/ApiPlatform/Test/Response.php
+new file mode 100644
+index 0000000..05a8176
+--- /dev/null
++++ b/src/ApiPlatform/Test/Response.php
+@@ -0,0 +1,187 @@
++<?php
++
++/*
++ * This file is part of the API Platform project.
++ *
++ * (c) Kévin Dunglas <dunglas@gmail.com>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++declare(strict_types=1);
++
++namespace App\ApiPlatform\Test;
++
++use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
++use Symfony\Component\HttpClient\Exception\ClientException;
++use Symfony\Component\HttpClient\Exception\JsonException;
++use Symfony\Component\HttpClient\Exception\RedirectionException;
++use Symfony\Component\HttpClient\Exception\ServerException;
++use Symfony\Component\HttpClient\Exception\TransportException;
++use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
++use Symfony\Contracts\HttpClient\ResponseInterface;
++
++/**
++ * HTTP Response.
++ *
++ * @internal
++ *
++ * Partially copied from \Symfony\Component\HttpClient\Response\ResponseTrait
++ *
++ * @author Kévin Dunglas <dunglas@gmail.com>
++ */
++final class Response implements ResponseInterface
++{
++    private $httpFoundationResponse;
++    private $browserKitResponse;
++    private $headers;
++    private $info;
++    private $content;
++    private $jsonData;
++
++    public function __construct(HttpFoundationResponse $httpFoundationResponse, BrowserKitResponse $browserKitResponse, array $info)
++    {
++        $this->httpFoundationResponse = $httpFoundationResponse;
++        $this->browserKitResponse = $browserKitResponse;
++
++        $this->headers = $httpFoundationResponse->headers->all();
++
++        // Compute raw headers
++        $responseHeaders = [];
++        foreach ($this->headers as $key => $values) {
++            foreach ($values as $value) {
++                $responseHeaders[] = sprintf('%s: %s', $key, $value);
++            }
++        }
++
++        $this->content = $httpFoundationResponse->getContent();
++        $this->info = [
++            'http_code' => $httpFoundationResponse->getStatusCode(),
++            'error' => null,
++            'response_headers' => $responseHeaders,
++        ] + $info;
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function getInfo(string $type = null)
++    {
++        if ($type) {
++            return $this->info[$type] ?? null;
++        }
++
++        return $this->info;
++    }
++
++    /**
++     * Checks the status, and try to extract message if appropriate.
++     */
++    private function checkStatusCode(): void
++    {
++        if (500 <= $this->info['http_code']) {
++            throw new ServerException($this);
++        }
++
++        if (400 <= $this->info['http_code']) {
++            throw new ClientException($this);
++        }
++
++        if (300 <= $this->info['http_code']) {
++            throw new RedirectionException($this);
++        }
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function getContent(bool $throw = true): string
++    {
++        if ($throw) {
++            $this->checkStatusCode();
++        }
++
++        return $this->content;
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function getStatusCode(): int
++    {
++        return $this->info['http_code'];
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function getHeaders(bool $throw = true): array
++    {
++        if ($throw) {
++            $this->checkStatusCode();
++        }
++
++        return $this->headers;
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function toArray(bool $throw = true): array
++    {
++        if ('' === $content = $this->getContent($throw)) {
++            throw new TransportException('Response body is empty.');
++        }
++
++        if (null !== $this->jsonData) {
++            return $this->jsonData;
++        }
++
++        $contentType = $this->headers['content-type'][0] ?? 'application/json';
++
++        if (!preg_match('/\bjson\b/i', $contentType)) {
++            throw new JsonException(sprintf('Response content-type is "%s" while a JSON-compatible one was expected.', $contentType));
++        }
++
++        try {
++            $content = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | (\PHP_VERSION_ID >= 70300 ? \JSON_THROW_ON_ERROR : 0));
++        } catch (\JsonException $e) {
++            throw new JsonException($e->getMessage(), $e->getCode());
++        }
++
++        if (\PHP_VERSION_ID < 70300 && JSON_ERROR_NONE !== json_last_error()) {
++            throw new JsonException(json_last_error_msg(), json_last_error());
++        }
++
++        if (!\is_array($content)) {
++            throw new JsonException(sprintf('JSON content was expected to decode to an array, %s returned.', \gettype($content)));
++        }
++
++        return $this->jsonData = $content;
++    }
++
++    /**
++     * Returns the internal HttpKernel response.
++     */
++    public function getKernelResponse(): HttpFoundationResponse
++    {
++        return $this->httpFoundationResponse;
++    }
++
++    /**
++     * Returns the internal BrowserKit reponse.
++     */
++    public function getBrowserKitResponse(): BrowserKitResponse
++    {
++        return $this->browserKitResponse;
++    }
++
++    /**
++     * {@inheritdoc}.
++     */
++    public function cancel(): void
++    {
++        $this->info['error'] = 'Response has been canceled.';
++    }
++}

@@ -1,0 +1,108 @@
+diff --git a/composer.json b/composer.json
+index 5ee7a8b..50627de 100644
+--- a/composer.json
++++ b/composer.json
+@@ -12,6 +12,7 @@
+         "symfony/dotenv": "4.3.*",
+         "symfony/flex": "^1.1",
+         "symfony/framework-bundle": "4.3.*",
++        "symfony/http-client": "4.3.*",
+         "symfony/webpack-encore-bundle": "^1.6",
+         "symfony/yaml": "4.3.*"
+     },
+diff --git a/composer.lock b/composer.lock
+index 431afd5..cc28339 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "a3be7326e1fe5f43bad2ad65bb1156ca",
++    "content-hash": "10a15770b73e16b16e4c6f56c3af9e13",
+     "packages": [
+         {
+             "name": "api-platform/api-pack",
+@@ -3094,6 +3094,68 @@
+             "homepage": "https://symfony.com",
+             "time": "2019-06-26T06:50:02+00:00"
+         },
++        {
++            "name": "symfony/http-client",
++            "version": "v4.3.3",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/http-client.git",
++                "reference": "7759fabfbdf7f57a1d29655550b49c4ff04891a5"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/http-client/zipball/7759fabfbdf7f57a1d29655550b49c4ff04891a5",
++                "reference": "7759fabfbdf7f57a1d29655550b49c4ff04891a5",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.1.3",
++                "psr/log": "^1.0",
++                "symfony/http-client-contracts": "^1.1.4",
++                "symfony/polyfill-php73": "^1.11"
++            },
++            "provide": {
++                "psr/http-client-implementation": "1.0",
++                "symfony/http-client-implementation": "1.1"
++            },
++            "require-dev": {
++                "nyholm/psr7": "^1.0",
++                "psr/http-client": "^1.0",
++                "symfony/http-kernel": "^4.3",
++                "symfony/process": "^4.2"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.3-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Component\\HttpClient\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Nicolas Grekas",
++                    "email": "p@tchwork.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony HttpClient component",
++            "homepage": "https://symfony.com",
++            "time": "2019-07-24T10:16:23+00:00"
++        },
+         {
+             "name": "symfony/http-foundation",
+             "version": "v4.3.2",
+diff --git a/symfony.lock b/symfony.lock
+index 242e031..360ecf2 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -238,6 +238,9 @@
+             "src/Kernel.php"
+         ]
+     },
++    "symfony/http-client": {
++        "version": "v4.3.3"
++    },
+     "symfony/http-foundation": {
+         "version": "v4.2.8"
+     },

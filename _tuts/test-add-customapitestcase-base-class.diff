@@ -1,0 +1,86 @@
+diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
+new file mode 100644
+index 0000000..d116e9a
+--- /dev/null
++++ b/src/Test/CustomApiTestCase.php
+@@ -0,0 +1,36 @@
++<?php
++
++namespace App\Test;
++
++use App\ApiPlatform\Test\ApiTestCase;
++use App\ApiPlatform\Test\Client;
++use App\Entity\User;
++
++class CustomApiTestCase extends ApiTestCase
++{
++    protected function createUser(string $email, string $password): User
++    {
++        $user = new User();
++        $user->setEmail($email);
++        $user->setUsername(substr($email, 0, strpos($email, '@')));
++        $user->setPassword($password);
++
++        $em = self::$container->get('doctrine')->getManager();
++        $em->persist($user);
++        $em->flush();
++
++        return $user;
++    }
++
++    protected function logIn(Client $client, string $email, string $password)
++    {
++        $client->request('POST', '/login', [
++            'headers' => ['Content-Type' => 'application/json'],
++            'json' => [
++                'email' => $email,
++                'password' => $password
++            ],
++        ]);
++        $this->assertResponseStatusCodeSame(204);
++    }
++}
+\ No newline at end of file
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 8604af5..dbd88df 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -2,11 +2,11 @@
+ 
+ namespace App\Tests\Functional;
+ 
+-use App\ApiPlatform\Test\ApiTestCase;
+ use App\Entity\User;
++use App\Test\CustomApiTestCase;
+ use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+ 
+-class CheeseListingResourceTest extends ApiTestCase
++class CheeseListingResourceTest extends CustomApiTestCase
+ {
+     use ReloadDatabaseTrait;
+ 
+@@ -19,22 +19,7 @@ class CheeseListingResourceTest extends ApiTestCase
+         ]);
+         $this->assertResponseStatusCodeSame(401);
+ 
+-        $user = new User();
+-        $user->setEmail('cheeseplease@example.com');
+-        $user->setUsername('cheeseplease');
+-        $user->setPassword('$argon2id$v=19$m=65536,t=6,p=1$AIC3IESQ64NgHfpVQZqviw$1c7M56xyiaQFBjlUBc7T0s53/PzZCjV56lbHnhOUXx8');
+-
+-        $em = self::$container->get('doctrine')->getManager();
+-        $em->persist($user);
+-        $em->flush();
+-
+-        $client->request('POST', '/login', [
+-            'headers' => ['Content-Type' => 'application/json'],
+-            'json' => [
+-                'email' => 'cheeseplease@example.com',
+-                'password' => 'foo'
+-            ],
+-        ]);
+-        $this->assertResponseStatusCodeSame(204);
++        $this->createUser('cheeseplease@example.com', '$argon2id$v=19$m=65536,t=6,p=1$AIC3IESQ64NgHfpVQZqviw$1c7M56xyiaQFBjlUBc7T0s53/PzZCjV56lbHnhOUXx8');
++        $this->logIn($client, 'cheeseplease@example.com', 'foo');
+     }
+ }

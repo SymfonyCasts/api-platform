@@ -1,0 +1,20 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 59c8448..756faa0 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -14,7 +14,6 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     {
+         $client = self::createClient();
+         $client->request('POST', '/api/cheeses', [
+-            'headers' => ['Content-Type' => 'application/json'],
+             'json' => [],
+         ]);
+         $this->assertResponseStatusCodeSame(401);
+@@ -22,7 +21,6 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
+ 
+         $client->request('POST', '/api/cheeses', [
+-            'headers' => ['Content-Type' => 'application/json'],
+             'json' => [],
+         ]);
+         $this->assertResponseStatusCodeSame(400);

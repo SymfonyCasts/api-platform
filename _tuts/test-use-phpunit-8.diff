@@ -1,0 +1,13 @@
+diff --git a/phpunit.xml.dist b/phpunit.xml.dist
+index 00eda56..d45120b 100644
+--- a/phpunit.xml.dist
++++ b/phpunit.xml.dist
+@@ -12,7 +12,7 @@
+         <server name="APP_ENV" value="test" force="true" />
+         <server name="SHELL_VERBOSITY" value="-1" />
+         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+-        <server name="SYMFONY_PHPUNIT_VERSION" value="6.5" />
++        <server name="SYMFONY_PHPUNIT_VERSION" value="8.2" />
+     </php>
+ 
+     <testsuites>

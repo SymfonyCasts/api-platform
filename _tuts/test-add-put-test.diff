@@ -1,0 +1,61 @@
+diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
+index bf2e01a..f5c668a 100644
+--- a/src/Test/CustomApiTestCase.php
++++ b/src/Test/CustomApiTestCase.php
+@@ -5,6 +5,7 @@ namespace App\Test;
+ use App\ApiPlatform\Test\ApiTestCase;
+ use App\ApiPlatform\Test\Client;
+ use App\Entity\User;
++use Doctrine\ORM\EntityManagerInterface;
+ 
+ class CustomApiTestCase extends ApiTestCase
+ {
+@@ -45,4 +46,9 @@ class CustomApiTestCase extends ApiTestCase
+ 
+         return $user;
+     }
++
++    protected function getEntityManager(): EntityManagerInterface
++    {
++        return self::$container->get('doctrine')->getManager();
++    }
+ }
+\ No newline at end of file
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 756faa0..c820991 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Tests\Functional;
+ 
++use App\Entity\CheeseListing;
+ use App\Entity\User;
+ use App\Test\CustomApiTestCase;
+ use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+@@ -25,4 +26,25 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         ]);
+         $this->assertResponseStatusCodeSame(400);
+     }
++
++    public function testUpdateCheeseListing()
++    {
++        $client = self::createClient();
++        $user = $this->createUser('cheeseplease@example.com', 'foo');
++
++        $cheeseListing = new CheeseListing('Block of cheddar');
++        $cheeseListing->setOwner($user);
++        $cheeseListing->setPrice(1000);
++        $cheeseListing->setDescription('mmmm');
++
++        $em = $this->getEntityManager();
++        $em->persist($cheeseListing);
++        $em->flush();
++
++        $this->logIn($client, 'cheeseplease@example.com', 'foo');
++        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
++            'json' => ['title' => 'updated']
++        ]);
++        $this->assertResponseStatusCodeSame(200);
++    }
+ }

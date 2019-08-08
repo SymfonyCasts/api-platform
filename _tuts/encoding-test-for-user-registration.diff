@@ -1,0 +1,34 @@
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+new file mode 100644
+index 0000000..eaf88e5
+--- /dev/null
++++ b/tests/Functional/UserResourceTest.php
+@@ -0,0 +1,27 @@
++<?php
++
++namespace App\Tests\Functional;
++
++use App\Test\CustomApiTestCase;
++use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
++
++class UserResourceTest extends CustomApiTestCase
++{
++    use ReloadDatabaseTrait;
++
++    public function testCreateUser()
++    {
++        $client = self::createClient();
++
++        $client->request('POST', '/api/users', [
++            'json' => [
++                'email' => 'cheeseplease@example.com',
++                'username' => 'cheeseplease',
++                'password' => 'brie'
++            ]
++        ]);
++        $this->assertResponseStatusCodeSame(201);
++
++        $this->logIn($client, 'cheeseplease@example.com', 'brie');
++    }
++}
+\ No newline at end of file

@@ -1,8 +1,8 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index d578601..b844002 100644
+index 494eec1..403b904 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -87,6 +87,7 @@ class User implements UserInterface
+@@ -89,6 +89,7 @@ class User implements UserInterface
  
      /**
       * @ORM\Column(type="string", length=50, nullable=true)

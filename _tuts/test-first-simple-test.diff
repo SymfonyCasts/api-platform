@@ -1,0 +1,19 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+new file mode 100644
+index 0000000..e995998
+--- /dev/null
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -0,0 +1,13 @@
++<?php
++
++namespace App\Tests\Functional;
++
++use App\ApiPlatform\Test\ApiTestCase;
++
++class CheeseListingResourceTest extends ApiTestCase
++{
++    public function testCreateCheeseListing()
++    {
++        $this->assertEquals(42, 42);
++    }
++}
