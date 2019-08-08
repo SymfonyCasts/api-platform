@@ -476,8 +476,13 @@
             "description": null
         },
         {
-            "id": "security-delete-me-1",
-            "name": "Security: delete me 1",
+            "id": "test-install-simple-phpunit",
+            "name": "Test: install simple-phpunit",
+            "description": null
+        },
+        {
+            "id": "test-copy-in-test-directory",
+            "name": "Test: copy in Test directory",
             "description": null
         },
         {
@@ -488,16 +493,6 @@
         {
             "id": "security-only-allow-owners-to-put",
             "name": "Security: only allow owners to PUT",
-            "description": null
-        },
-        {
-            "id": "test-install-simple-phpunit",
-            "name": "Test: install simple-phpunit",
-            "description": null
-        },
-        {
-            "id": "test-copy-in-test-directory",
-            "name": "Test: copy in Test directory",
             "description": null
         },
         {
