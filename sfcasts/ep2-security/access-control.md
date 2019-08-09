@@ -1,86 +1,84 @@
-# Access Control
+# ApiResource access_control
 
-Coming soon...
+There are two big parts to security in any app. First, how does your user authenticate?
+How do they log in? Honestly, *that* is the *trickiest* part... and it has really
+nothing to do with API Platform. We're authenticating via the `json_login` authenticator
+and a session coookie. That's a great solution for many applications. But in the
+bonus part of the security tutorial, we'll talk about some other types of applications
+and solutions.
 
-When it comes to security, there are really two big pieces. The first piece is how
-are you going to authenticate, how are your users going to log in? And that's what
-we've been talking about so far and that is really the trickiest part and it has
-nothing to do with API platform. It's just a complicated topic, um, in general and
-something that a Symfony solves for you. In our case, we've decided to log in via
-Ajax using the JSON Login authenticator and then we're relying on our server to send
-back a cookie so that we're automatically logged in. That is a great solution for our
-type of application, but I'm already getting so many questions about different types
-of applications. Like if you have microservices that talk to each other over an API
-or you have multiple API APIs with a JavaScript front end or that later in this
-tutorial, or maybe even actually an extra to a whole extra tutorial access.
+Regardless of how your users authenticate, step two of security - *authorization* -
+will look the same. Authorization is all about denying access to read or perform
+different operations... and this is enforced in a way that's *independent* of how
+you log in. So even if the way clients of your API authenticate will be *much*
+different than what we're doing, all this authorization stuff will still be relevant.
 
-We're going to talk a lot more about authentication. So if I haven't talked about
-your authentication use case yet, don't worry about it. We're going to cover it
-later. The important thing right now is that regardless of how you authenticate, once
-you authenticate, regardless of how you authenticate, then you get to step two of
-security, which is off authorization. Authorization is all about denying users access
-to some resource and you do that independently of how you log of how you login. So
-even if I haven't talked about your authentication use case yet, everything else is
-going to be relevant. Talking about authorization, the great thing about API platform
-is once you've handled that is that authorization is really just done by Symfony
-security system. For example, once you're logged in, the easiest way if you wanted to
-protect part of your API is to use access control. We could, for example, say that a
+## Denying access with access_control in security.yaml
 
-all the end point under `/api/cheeses` require `ROLE_ADMIN`. We can do that with access
-control, just like normal Symfony, but most of the time in normal Symfony, most of
-the time, instead of access control, I usually protect my resources on a controller
-level. And of course for the API platform, we are not the ones building the majority
-of our controllers. Uh, it's happening. Uh, API platforms hammering that
-automatically. So an API platform, what you think of is um, really the way you think
-about it is protecting your API on an operation by operation basis. So for example,
-you might make this operation require you to be logged in and this other operation,
-not the `POST` operation being logged in but to `GET` operation maybe to be anonymous. So
-check this out. That's what we're going to start
+When a user logs in - no matter *how* they authenticate or where your user data is
+stored - your login mechanism assigns that user a set of roles. In our app, those
+roles are stored in the database and we'll eventually let admin users modify them
+via our API. Anyways, the simplest way to prevent access to an endpoint is by making
+sure the user has a role. And the *easiest* way to do that is via `access_control`
+in `security.yaml`.
 
-with here
+We could, for example, say that every URL that matches the `^/api/cheeses` regular
+expression - so anything that *starts* with `/api/cheeses` - requires `ROLE_ADMIN`.
+This is normal, boring Symfony security... and I love it!
 
-with the cheeses, the `GET` endpoint for the collection I want to route, I want to
-keep that public so that anyone can fetch all the cheese listings in the system. But in
-order to create a cheese listing me `POST` operation, you need to be authenticated. We
-need to know who is actually creating that. So over in source, open up 
-`src/Entity/CheeseListing.php` and you say you've already listened our item item
-operations here we have a get to item operation at Pope and put item operation. We've
-temporarily remove the delete item operation so you can't delete cheese listings down
-below. I'm going to repeat this by saying `collectionOperations`. And right now to
-start, I'm just going to say `get` and `post` what that's doing is just repeating the
-operations that we already have. So this will make no changes on the frontend.
+## Using access_control on your ApiResource
 
-Oh, except I will get a syntax error. Forgot my comma. This will make no change to my
-API because we already have the get and pillows, post collection operations. So
-repeating them here has no effect, but now I can start customizing them. So for the
-`POST` collection operation, that's the operation that actually creates a new cheese
-listing. We want the user to be logged in so we can actually say `"post"={}`
- And here we can put a number of different options just like we did up
-here, um, for the good item operation. But instead of normalization context, this
-time we're going to say `access_control` and set that to in quotes, a little expression
-`is_granted()`. And then with single quotes, `ROLE_USER`. Cool. So let's try that right
-now. If you look down here, I am actually not logged in. So if I tried to make a
-post, so if I tried to make a `POST` here, what else said, owner `/api/user/6` with
-my new user, Bryce, 10 bucks, title food, doesn't matter. We're good on here. Hit
-execute and perfect `401` error 
+This might work for some situations, but most of the time you'll need more flexibility.
+In a traditional Symfony app, I typically add security to my controllers. But...
+in API Platform... um... we don't create any controllers! Ok, so instead of thinking
+about protecting each controller, we'll think about protecting each API *operation*.
+Maybe we want this collection `GET` operation to be accessible anonymously but we
+want to require you to be logged in to `POST` and create a new `CheeseListing`.
+
+Open up that entity: `src/Entity/CheeseListing.php`. We already have an
+`itemOperations` key, which we used to remove the `delete` operation and so
+that we could customize the normalization groups on `get`. We can do something
+similar with a `collectionOperations` option. Start by setting this to
+`get` and `post`.
+
+If we did *nothing* else, this would change *nothing*. Oh... except that I have
+a syntax error! Silly comma! Anyways, API Platform adds two collection operations
+by default - `get` and `post` - so we're simply repeating what it was already doing.
+But *now* we can start customizing these operations.
+
+For the `post` operation - that's how we create new cheese listings - we really
+need the user to be authenticated to do this. Set `post` to `{}` with a new
+`access_control` option inside. We're going to set this to a mini-expression:
+`is_granted()` passing that, inside single quotes `ROLE_USER` - that's the role
+that we've give to *every* user.
+
+Let's try that! The web debug toolbar tells me that I'm *not* logged in right
+now. Let's make a `POST` request... set the owner to `/api/users/6` - that's
+my user id... though that value doesn't matter yet... nor do any of the others.
+Hit Execute and... perfect! A `401` error:
 
 > Full authentication is required to access this resource.
- 
-that'd be logged in. That would, that would work.
 
-So let's tie things up a little bit more here. Um, if you look at our item
-operations, our put item operation is interesting because that should, that's
-something that's that w that's something where you should also need to be logged in
-in order to edit a cheese listing. So up here on my item, I'm going to repeat,
-actually copied this and I'm going to say put requires you to be logged in. And
-actually now I'm going to put the delete operation back and we'll say `delete`. But
-let's say that you can only delete if you are an admin user. So `ROLE_ADMIN`.
+If we logged in, that would work.
 
-Oh, this put endpoint. This, put security isn't quite correct because what I really
-want to do is make a cheese listing editable only if you are the owner of this cheese
-listings. You can't update other peoples, but we'll worry about that in a second. So
-for your refresh now, perfect. The delete end points back and we try to put end
-point, for example, while just update, she's listing one. I think that's a valid
-cheese listing. Only include the title and perfect for one. Now, one little Gotcha. I
-do want you to be aware about at this point. No, I'm not going to talk about that.
-All right, let's just stop.`
+Let's tighten up our `itemOperations` too. The `PUT` operations - editing a
+`CheeseListing` - is an interesting case... we definitely need the user to
+be logged in... but we *probably* also only want the "owner" of a `CheeseListing`
+to be able to edit it. Let's just handle the first part now. I'll copy my
+whole `access_control` config, then paste. Let's also re-add the delete operation...
+but maybe only admin users can do this - how about we check for some `ROLE_ADMIN`.
+
+Go refresh the docs... yes! The DELETE operation is back! And notice that the docs
+are... basically "static" as far as security is concerned: it documents the *whole*
+API, including operations that you might not have access to - it doesn't magically
+read your roles and hide or show different operations. That's done on purpose - I
+just wanted to highlight that fact.
+
+Try the `PUT` endpoint... I think I have a `CheeseListing` with id 1 and... just
+send the `title` field. Another 401.
+
+Next, our security setup is about to get smarter and more complex. The goal is
+to make sure that only the "owner" of a `CheeseListing` can update that
+`CheeseListing`... and maybe also admin users. To *really* know that things are
+working, I think it's time to bootstrap a basic system to functionally test our
+API.

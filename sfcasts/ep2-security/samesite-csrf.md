@@ -1,75 +1,106 @@
-# Samesite Csrf
+# SameSite Cookies & CSRF Attacks
 
-Coming soon...
+Before we go further into API platform, we need to have a quick chat about
+CSRF attacks. This is a complicated topic, so let me give you the important
+highlights. If you're consuming your API from JavaScript, you have two basic
+options for authentication. First, you can use HttpOnly cookies, which is how
+sessions work. Or second, you could return some sort of "access token" on login
+and store that in JavaScript. Generally speaking, storing access tokens in
+JavaScript is dangerous practice because it can be stolen if some bad JavaScript
+somehow runs on your page. If the access tokens have a short lifetime, that helps...
+but then they're less useful... because your user would need to constantly log
+in. Sheesh, this stuff is complex!
 
-Before we go further to API platform itself. I wanted to do a very quick, important
-aside here about CSRF tokens and CSRF attacks. Long story short, because this is a
-very complicated topic, if you use session based authentication, it doesn't matter if
-you're using an API or building a traditional web app, you are vulnerable to CSRF
-attacks at CSRF attacks, which basically is an attack where,
+Anyways, *that* is the principle reason why I recommend using HttpOnly cookie-based
+authentication - like a session - for your JavaScript frontend.
 
-the simplest example is someone submits someone creates a form on another, on another
-site, but they make it submit back to your site. So if someone happens to be logged
-into your site and they go fill out that form thinking they're filling it out on that
-other site, it actually submits to your site and there since they are logged into
-your site, the session cookie is sent to your site and they have now been tricked
-into taking some action on your behalf, on, on someone else's behalf.
+But... using an HttpOnly cookie - whether that's a session cookie or something clever
+like a JWT - is vulnerable to its *own* type of attack: a CRSF attack. Boo! The
+simplest example of a CSRF attack is this: an attacker puts an HTML form on *their*
+site, but makes the `action` attribute submit to *our* site. Then, when someone
+who is logged into our site visits the bad site, the attacker tricks that user
+into filling out this form - making it look like they're ordering free ice cream,
+when in fact that endpoint on our site sends the *attacker* ice cream instead.
+They've been tricked into taking some action on our site that they didn't intend.
 
-This is a real risk because it means that if you're, if your API is not protected,
-bad users could make bad people, could make your users do things on your site, could
-take control of users on your site and make them do anything that they wanted.
-This is why traditionally in a form with Symfonys Form component, we have CSRF
-tokens. And if you Google for douglas csrf after actually is a bundle out there called
-`DouglasAngularCsrfBundle`, which is something that helps you protect against CSRF
-attacks. Run an API. It says angular, but it's just a generic bundle. But
-unfortunately what this requires you to do is actually requires you to manage CSRF
-tokens on your JavaScript and like send a CSRF token, um,
-with every single law endpoint that you do.
+## Avoiding CSRF Attacks
 
-but it is the safest thing to do if you want CSRF protection is to do this. However,
-recently browsers have come and finally saved the day and allowed us to build a
-session based application without CSRF tokens that is a safe from CSRF attacks. The
-technology behind it is something called a `samesite cookie`.
+This problem has traditionally been solved with a CSRF token - an extra field that
+must be sent on that form submit that proves that the request originated on the
+*real* site - not from some other site. Symfony's form component adds CSRF tokens
+automatically.
 
-Which you can read about on the web. It's actually a kind of taking over right now.
-Basically the problem with the reason that CSRF was a problem is that when another
-site,
+And if you Google for "douglas csrf", you'll find a bundle caled
+`DouglasAngularCsrfBundle` whch helps you generate and use CSRF tokens in your
+API. Yea, the name says "Angular", but it works with anything.
 
-when you submit that form on the other site, the request goes back to our site in the
-session cookie is sent with that request. That really shouldn't happen. That's
-actually a bit of a security risk. We should be able to say that only requests that
-originated from my domain should actually send the session cookie. If an a request
-originates somehow from another domain, like they've submitted a form over to our
-sites, then um, then a it wouldn't, uh, then it wouldn't be sent and this basically
-more or less kills CSRF attacks as the caveat being that we need to make sure that
-our get our safe methods like `GET`, `HEAD` don't have side effects because someone could
-still, um, because somebody could still have a goes if you click a link on someone
-else's site to make a hit request, that would still send the cookie on over, over on
-our side. So all you need to do to use this is two things. First, if you open up a
-`config/packages/framework.yaml`. If you started a new Symfony project, like we just
-did, you already have this, it's this `framework.session.cookie_samesite: lax`, you
-agree more about the lax versus strict but lax is probably the one you want because
-the strict setting means that if somebody even clicks a link, an external link over
-to your site, they won't be logged in on the first request.
+The *downside* is that managing CSRF tokens in an API is... annoying: you need
+to manage CSRF tokens and send that field manually from your JavaScript on *every*
+request. If you're using cookie-based authentication and need to 100% prevent
+a CSRF attack for an endpoint, this is the time-tested way to do that.
 
-The only Gotcha on this one is that not all browsers support, not all browsers
-support `samesite` cookies. And if a browser doesn't support a same site cookie, it
-means that they're going to treat it like a normal cookie. So you need to look long
-and hard at, um, what, uh, so the only true way to, to, uh, prevent CSRF tokens with
-the samesite cookie is actually to block of to your site from any browsers that don't
-support it. Now you can see the browsers that don't support it or opera mini black,
-blackberry browser, um, I 11 does support it, but some like very earlier versions of
-it don't. So it really is getting down to just like the last few ser servers. So the
-bulletproof thing here is to use samesite cookies. And if you really need to prevent
-CSRF token attacks, even for the couple of users you have that are using older
-browsers, you need to prevent them from coming to your site. This is the future of,
-um, of CSRF tax in the samesite cookies. And it is a wonderful way to, uh, to do
-things. If for some reason you need to allow those, uh, old, um, browsers access,
+## Hello SameSite Cookies
 
-then you're going to need to use true CSRF tokens or you're not going to be able to
-use session based authentication. You're going to need to use a token based
-authentication, which as we'll talk about later for JavaScript, has its own attack
-vectors. If you have more questions about this, ask me. It's really, we're really in
-a spot right now where the samesite cookies and disabling, uh, older browsers is the
-best path forward. Um, but it's very nuanced in their pros and cons to all the
-different approaches from a security standpoint.
+But... there is a *new* way to prevent CSRF attacks that is emerging... a solution
+that is implemented inside browsers themselves. It's called a "SameSite" cookie...
+which you can red about *all* over the web.
+
+The basic reason that CSRF attacks are possible is that when you submit that form
+on the "bad" site, any cookies that *our* domain set are sent with that request...
+even though the request isn't "originating" from our domain. For most cookies that...
+should probably not happen. Instead, we should be able to say:
+
+> Hey browsers! See this session cookie that my Symfony app is setting? I want
+> you to *only* send that back to my app if the request *originates* from
+> my domain.
+
+That *is* now possible by setting a special "property" when you add a cookie
+called "SameSite".
+
+So... because Symfony is responsible for creating the session cookie... how can
+we tell it to use this cool SameSite property? It already is. Open up
+`config/packages/framework.yaml`. If you've started a Symfony project anytime
+recently - like we did for this tutorial, then you probably already have
+this key: `framework.session.cookie_samesite` set to `lax`. Yep, our session
+cookie is *already* setting `SameSite` to `lax`.
+
+What does `lax` mean? Well, the other possible setting is `strict`. If `SameSite`
+is set to `strict`, then the cookie will *never* be sent when a third-party
+initiates a request to our site... even if they literally click a link to visit
+our site... meaning... they wouldn't be logged in when they arrive. The `lax`
+setting is different because the cookie *will* be sent for "top-level" GET requests...
+meaning GET requests where the address bar changes. In other words, clicking
+a link.
+
+## Caveats with SameSite
+
+So, `lax` is probably what you need and it *should* protect your API from CSRF
+attacks... as long as you're aware of two things. First, you need to make sure
+that your GET endpoints never *do* anything - they should just return data. If
+you, for example, allowed users to send ice cream via a GET request, then that
+endpoint is vulnerable to CSRF attacks. It's ok to *return* information on a GET
+request because, while third parties can *initiate* GET requests, they can't
+read the returned data, unless you went out of your way to allow this.
+
+And second... most... but not *all* browsers support SameSite cookie. If a user
+visits your site in a browser that doesn;t support `SameSite` cookies, it will
+treat it like a normal cookie. That means everything will work fine, but *that*
+user would be vulnerable to a CSRF attack.
+
+If that's a problem, you'll either need to implement CSRF tokens *or* block old
+browsers from using your site... since they're basically using a vulnerable browser.
+As you can see from [caniuse](https://caniuse.com/#feat=same-site-cookie-attribute),
+the browser  that don't suport it are Opera Mini, Blackberry browser and a few other
+minor ones. IE 11 *does* support it on Windows 10.
+
+I know... it's crazy! If you use API tokens in JavaScript, they can be stolen
+by other JavaScript. If you use the safer HttpOnly cookies, then you need to worry
+about CSRF protection... unless you use SameSite cookies... which protects *almost*
+every browser. Oh... the world API authentication. The typical recommendation is,
+regardless of what you choose to do, you need to be aware of what you're protected
+against and what you're not.
+
+*Now* it's time to turn to *authorization*, which answers questions like: how can
+we lock down certain resources or operations? How can we hide fields from some
+users or allow only some types of users to update specific fields? Ah...
+we're going to dream up *every* way of customizing access to our API.

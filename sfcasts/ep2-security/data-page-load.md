@@ -1,101 +1,133 @@
-# Data Page Load
+# Logout & Passing API Data to JS on Page Load
 
-Coming soon...
+Hey! We can log in and our JavaScript even *knows* when we log in an who we are:
+it's prints our username & a log out link that goes to `/logout`... which doesn't
+actually work yet... cause we haven't enabled that yet in Symfony.
 
-Hey, we can login and our application even knows that we logged in when we do it and
-it's already printing a little log out link here that goes to `/logout`. That doesn't
-actually work yet. We haven't set that up in Symfony so I want to make sure we do
-that real quick if we have.
+## Adding Logout
 
-so to do that I'm going to add `logout:` and below that I'll say `path: app_logout`,
-which just like `app_login` it's going to be a route that we're just going
-to create in a second. This logout built in lock up mechanism is really nice because
-it's just going to destroy the authentication in the session. If we were doing some
-sort of token based authentication, we would need to um,
-Actually have a user send that token and then we would destroy it.
+Wait... but what does "logging out" even *mean* in an API context? Whelp, like
+everything, it depends on *how* you authenticate. Because we're using a session
+cookie, logging out basically means removing the user information from the session.
+If you were using some sort of API token, it would mean *invalidating* that token
+on your authentication server - like, removing it from some tokens table. But,
+we'll talk more about that type of authentication a bit later - on a special
+security part 2 of this tutorial.
 
-All right. Once we've done that, I'm going to go over to my source `SecurityController`
-and we're going to create a little `public function logout()`. I'll put my `@Route()`
-rout above that was `"/logout"` and `name="app_logout"`. So just like before, this just
-needs to exist. As long as this route exists, we don't even need a controller for it.
-The route just needs to exist for this `logout` key to be able to do its magic. So in
-fact, in this case it will never, the controller will never get reached and we can
-just say 
+Anyways, no surprise that Symfony has built-in support for logging the user out
+of the session. In `config/packages/security.yaml`, in our firewall add `logout:`
+then, below, say `path: app_logout`. Just like `app_login`, this is the name of
+that we're going to create next. When a user accesses this route, they'll be logged
+out.
+
+To create that route, open `src/Controller/SecurityController.php`, add
+`public function logout()` with an `@Route()` above. Set its URL to `/logout`
+and name it `app_logout`.
+
+Just like with the `app_login` route, the route just... *needs* to exist... otherwise
+the user will see a 404 when they go to `/logout`. As long as it *does* exist,
+when the user goes to `/logout`, the logout mechanism will intercept the request,
+remove the user from the session, then redirect them to the homepage... which
+is configurable.
+
+This means that, unless we've messed something up, the controller will *never*
+be reached. Let's *scream* in case it some how is: throw an exception with:
 
 > should not be reached
 
-Cool. So now we go over, I can hit log out and you'll see it's on my web. Do you have
-a tuber analysis? I'm logged in. I'm gonna come back. I am logged out. Cool. Alright.
-There is one other, a sort of interesting problem between our JavaScript and our
-front end and it is that if I log in our, our view application now once the Ajax call
-finishes, it sees that we're logged in. But as soon as we refresh, that's gone. Our
-Web, our trooper knows we're logged in, but our VUE instance doesn't know where
-logged in. And that sort of makes sense. If you think about it, when it first starts
-loading the entire page, if you look at the html off your, you can ignore all the web
-depot toolbar stuff down here. The entire application looks basically like this.
-There's nothing in the html that says who we're logged in as. And so one option is
-that as soon as the page loads, we could actually have our VUE application, make an
-Ajax requests to some endpoint that says, Hey, who am I logged in as? This is the
-classic `/me` endpoint.
+Let's try the flow: move over, hit log out and... before it loads, you *can* see
+that we're currently logged in. And now... gone! We are anonymous.
 
-This last man points are very useful, they're super not restful. So again, don't let
-uh, following restful rules get in the way of being practical with your application.
-A but `/me` URLs are not restful. Um, so what is the other option?
+## Passing Data to JavaScript on Page Load
 
-the other option is actually quite nice. It's just to hint to your view application
-on page load, who your user is. And you can do this in two different ways.
+Before we keep going with all this API & security goodness, our app has a bug.
+If we log in... as soon as the AJAX call finishes, we've made our Vue.js frontend
+smart enough to update and say that we're logged in. But as soon as we refresh,
+that's gone! Gasp! Our web debug toolbar knows we're logged in... but our JavaScript
+does not. And... it makes sense: when we first load the page... if you look at
+the HTML source - you can ignore all the web debug toolbar stuff down here... the
+entire application looks like this. There's no HTML or JavaScript data that
+hints to Vue that we're logged in.
 
-Okay.
+How can we fix that? There are basically two options. First, as soon as the page
+loads, we could make an AJAX request to some endpoint and say:
 
-Basically if you look, if you go to the templates directory, frontend and open
-homepage, daddy's still on a twig. This is the page we're looking at and you can see
-that there's nothing here at all except for the actual view application. Though I
-have past in something called an `entrypoint`, um, which we're not using right now,
-but uh, this, I'm actually passing this piece of data in there. That's something that
-could be useful on Semi Java JavaScript application. So basically here this is, this
-is actually gives us an opportunity to pass in, um, some data. So one of the things
-we can do here is we can just pass the user IRI and then instead of our
-application here, we would be able to read that data off and make an Ajax recall Ajax
-call to get that user's information just like this or only downside to this is there
-might be a slight delay before we actually figure out who's logged in.
+> Hey! Who am I logged in as?
 
-So another option is actually inside of our twig template to dump the entire user,
-JSON LD, a structure. So basically save it from making that second Ajax, that Ajax
-request on page load. Here's how this looks. A first, I'm going to go to 
-`src/Controller/FrontendController.php` This is the controller behind that `homepage.html.twig`
-Not very impressive. Here I'm gonna add a `SerializerInterface $serializer` argument. And
-now I'm going to pass an argument into my a controller called `user`. And I'm gonna set
-this to `$serializer->serialize()` passing it, `$this->getUser()` and then `jsonld` so that
-we get the, this turns into the, so if they're not logged in, this will um, be null.
-If we are logged in, this should be done. Big, Nice JSON LD structure being passed as
-a variable under our template. Now that we have that,
+To make this happen, we would need some sort of a `/me` endpoint: something that
+would return information about *who* we are. A useful, but not-so-RESTful endpoint.
 
-we can create a `<script>` tag very simply, I'm going to say, 
-`window.user = {{ user|raw }}` Literally dumped that JSON Structure as a JavaScript object.
+But the *other* option is quite nice: send user data from your HTML *into* Vue on
+page load.
 
-And finally over here in our `CheeseWhizApp`,
+Open up the template for this page: `templates/frontend/homepage.html.twig`. Yep,
+nothing here but some small HTML to bootstrap the Vue app... though I *am* doing
+one interesting thing: I'm passing in a prop called `entrypoint`. I'm not using
+that anywhere... it's just an example. That `entrypoint` value is the URL to
+our documentation "homepage". In theory, we could reference that dynamic URL
+in our Vue app and use it to figure out what other URLs we want to call. Anyways,
+this is a nice way to pass simple data into Vue.
 
-inside my JavaScript, I don't usually like to reference global variables, but as long
-as I do it near the top level of my component, I'm pretty, I'm okay with it. I'm
-going to add a new `mounted()` callback. This is something that view will automatically
-call right after this components and mounted into the screen and here we can say if
-`window.user` just to be safe, and then `this.user = window.user` and it's just
-that simple snuck over and refresh. Did you application instantly knows that I'm
-logged in. If I log out and knows I'm logged out,
+Anyways, back to our goal: telling Vue which user is logged in. *One* option
+is to pass the current user's IRI here as another prop. Then, we could use that
+inside of Vue to make an AJAX call on page load... but without needing a `/me`
+endpoint. That's really the *simplest* option, though it does have a minor downside:
+there will be a *slight* delay on page load before our app knows who's logged in
+and updates.
 
-and when I login it knows instantly that I'm logged in, so that was a fully nice
-ready to go login system. All right, authentication is done. It really is that
-simple. If you had some, if you have some more custom authentication system that is
-more complex than email and password, what you can, what you're going to want to do
-is instead of leveraging the JSON Login, you're going to create a custom guard
-authenticator, but the whole end purpose is the same. You're going to want to return
-the same information on success, the same type of thing on failure and ultimately you
-don't need to return a token or anything like that. You just need to make sure that
-your authenticator logs the user end and then allow the firewall to set the session
-cookie like normal. Later we're going to talk about API token authentication proof.
-Now we have an authentication system. We are logged in. So now we can turn to what we
-really need to talk about with API Platform, which is how we locked down the
-resources, how we make sure that certain users can only see certain, um, certain, uh,
-access, certain end points or how different users see different fields. Everything we
-can think of with authorization controlling the actual access, uh, of our API to
-different users.
+## Serializing Data Directly to JavaScript
+
+To avoid that AJAX call we can dump that data *directly* into Vue. Check it out:
+start in `src/Controller/FrontendController.php` This is the controller behind
+the `homepage.html.twig` template.. and it's not very impressive. Add a
+`SerializerInterface $serializer` argument... and then pass a new argument to
+the template called `user`. I want this to be the JSON-LD version of our user - the
+*exact* same thing that we would get back from making an AJAX request. Set this
+to `$serializer->serialize()` passing it `$this->getUser()` and `jsonld` for the
+format. If the user is *not* logged in, the new `user` variable will just be null...
+but if they *are* logged in, we'll get our big, nice JSON-LD structure.
+
+Now that we have this, create a `script` tag and set the data on a global variable...
+how about: `window.user = {{ user|raw }}`.
+
+This dumps that JSON Structure as a JavaScript object... and now it's accessible
+to our JS!
+
+Head over to `CheeseWhizApp` to use it. Generally, speaking, I don't like to use
+or reference global variables from my JavaScript. As a compromise, I typically
+like to *only* reference global variables from my *top* level component. If a
+deeper component needs it, I'll pass it down as a prop.
+
+Anyways, create a new `mounted()` function - Vue will automatically call this
+after the component is "mounted" to the page. Now, if `window.user`, so, if it's
+*not* null, then `this.user = window.user`.
+
+It's just that simple! Sneak over and refresh your browser. And... our JavaScript
+*instantly* knows we're logged in. If we log out... yep! That doesn't break anything
+either. Woo! Yea... this is kinda fun!
+
+## More Complex Authentication
+
+Ok! Authentication... including logging out and the frontend is done! If you're
+feeling great about this approach for you app, awesome! But if you're screaming:
+
+> Ryan! My app is more complex... I have multiple APIs that talk to each other...
+> or... my API will be exposed publicly... or I have some other reason that
+> prevents me from this simple session-based authentication!
+
+Don't worry. Because I've already gotten *so* many questions & feedback from the
+start of this tutorial, we're planning to create a separate, part 2 of this security
+tutorial where we'll try to cover as many different "types" of applications, the
+right authentication mechanism to use, and how to set that up. We'll also talk
+about OAuth.
+
+But in general, if you need a more custom authentication system - perhaps you
+can't use `json_login` because your login is more complex than just handling an
+email & password... of you're already planning some sort of token-based authentication -
+you can build that system by creating a custom Guard authenticator, which is something
+we talk about in our security tutorial.
+
+Next, before we dive deep into denying and granting access to our API for different
+users, we nee to talk about CSRF attacks and SameSite cookies. It turns out, if
+you use a cookie-based authentication - like we are - then you may be vulnerable
+to CSRF attacks. Fortunately, there's a new, beautiful way to mitigate that.
