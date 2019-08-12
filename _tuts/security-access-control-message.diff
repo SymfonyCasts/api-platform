@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index bf75d55..089c4c8 100644
+index 7ec095a..222ccc7 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -21,7 +21,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -20,7 +20,10 @@ use Symfony\Component\Validator\Constraints as Assert;
   *          "get"={
   *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
   *          },
@@ -14,3 +14,15 @@ index bf75d55..089c4c8 100644
   *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
   *     },
   *     collectionOperations={
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 938b82f..df1b9b9 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -47,6 +47,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
+             'json' => ['title' => 'updated']
+         ]);
+         $this->assertResponseStatusCodeSame(403, 'only author can updated');
++        var_dump($client->getResponse()->getContent(true));
+ 
+         $this->logIn($client, 'user1@example.com', 'foo');
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [

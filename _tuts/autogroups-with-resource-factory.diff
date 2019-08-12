@@ -1,41 +1,11 @@
-diff --git a/config/services.yaml b/config/services.yaml
-index e942033..577fcf3 100644
---- a/config/services.yaml
-+++ b/config/services.yaml
-@@ -30,3 +30,7 @@ services:
-     App\Serializer\AdminGroupsContextBuilder:
-         decorates: 'api_platform.serializer.context_builder'
-         arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]
-+
-+    App\ApiPlatform\AutoGroupResourceMetadataFactory:
-+        decorates: 'api_platform.metadata.resource.metadata_factory'
-+        arguments: ['@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner']
 diff --git a/src/ApiPlatform/AutoGroupResourceMetadataFactory.php b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
-new file mode 100644
-index 0000000..d0ebc44
---- /dev/null
+index 9f1dde6..d0ebc44 100644
+--- a/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
 +++ b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
-@@ -0,0 +1,76 @@
-+<?php
-+
-+namespace App\ApiPlatform;
-+
-+use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
-+use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
-+
-+class AutoGroupResourceMetadataFactory implements ResourceMetadataFactoryInterface
-+{
-+    private $decorated;
-+
-+    public function __construct(ResourceMetadataFactoryInterface $decorated)
-+    {
-+        $this->decorated = $decorated;
-+    }
-+
-+    public function create(string $resourceClass): ResourceMetadata
-+    {
-+        $resourceMetadata = $this->decorated->create($resourceClass);
-+
+@@ -18,6 +18,59 @@ class AutoGroupResourceMetadataFactory implements ResourceMetadataFactoryInterfa
+     {
+         $resourceMetadata = $this->decorated->create($resourceClass);
+ 
 +        $itemOperations = $resourceMetadata->getItemOperations();
 +        $resourceMetadata = $resourceMetadata->withItemOperations(
 +            $this->updateContextOnOperations($itemOperations, $resourceMetadata->getShortName(), true)
@@ -46,8 +16,8 @@ index 0000000..d0ebc44
 +            $this->updateContextOnOperations($collectionOperations, $resourceMetadata->getShortName(), false)
 +        );
 +
-+        return $resourceMetadata;
-+    }
+         return $resourceMetadata;
+     }
 +
 +    private function updateContextOnOperations(array $operations, string $shortName, bool $isItem)
 +    {
@@ -91,7 +61,7 @@ index 0000000..d0ebc44
 +            sprintf('%s:%s:%s', $shortName, $itemOrCollection, $operationName),
 +        ];
 +    }
-+}
+ }
 diff --git a/src/Serializer/AdminGroupsContextBuilder.php b/src/Serializer/AdminGroupsContextBuilder.php
 index 06db65b..08c7f6d 100644
 --- a/src/Serializer/AdminGroupsContextBuilder.php

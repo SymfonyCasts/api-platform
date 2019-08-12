@@ -1,0 +1,41 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index e942033..577fcf3 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -30,3 +30,7 @@ services:
+     App\Serializer\AdminGroupsContextBuilder:
+         decorates: 'api_platform.serializer.context_builder'
+         arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]
++
++    App\ApiPlatform\AutoGroupResourceMetadataFactory:
++        decorates: 'api_platform.metadata.resource.metadata_factory'
++        arguments: ['@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner']
+diff --git a/src/ApiPlatform/AutoGroupResourceMetadataFactory.php b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
+new file mode 100644
+index 0000000..9f1dde6
+--- /dev/null
++++ b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
+@@ -0,0 +1,23 @@
++<?php
++
++namespace App\ApiPlatform;
++
++use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
++use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
++
++class AutoGroupResourceMetadataFactory implements ResourceMetadataFactoryInterface
++{
++    private $decorated;
++
++    public function __construct(ResourceMetadataFactoryInterface $decorated)
++    {
++        $this->decorated = $decorated;
++    }
++
++    public function create(string $resourceClass): ResourceMetadata
++    {
++        $resourceMetadata = $this->decorated->create($resourceClass);
++
++        return $resourceMetadata;
++    }
++}

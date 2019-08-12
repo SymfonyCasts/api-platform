@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 59da307..4f4a3b0 100644
+index 47f3fe5..8636c33 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -21,7 +21,8 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -20,7 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
   *          "get"={
   *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
   *          },

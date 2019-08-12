@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index d435d98..2b3f6cd 100644
+index 0f4fa89..b3a850d 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -96,8 +96,7 @@ class CheeseListing
+@@ -95,8 +95,7 @@ class CheeseListing
      /**
       * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
       * @ORM\JoinColumn(nullable=false)

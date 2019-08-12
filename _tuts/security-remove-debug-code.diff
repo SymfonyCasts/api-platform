@@ -1,0 +1,12 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index df1b9b9..938b82f 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -47,7 +47,6 @@ class CheeseListingResourceTest extends CustomApiTestCase
+             'json' => ['title' => 'updated']
+         ]);
+         $this->assertResponseStatusCodeSame(403, 'only author can updated');
+-        var_dump($client->getResponse()->getContent(true));
+ 
+         $this->logIn($client, 'user1@example.com', 'foo');
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [

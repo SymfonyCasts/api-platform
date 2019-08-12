@@ -1,8 +1,15 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index d1f9858..f1190e4 100644
+index d1f9858..49c990c 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -23,6 +23,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -16,13 +16,16 @@ use Symfony\Component\Validator\Constraints as Assert;
+ 
+ /**
+  * @ApiResource(
+- *     collectionOperations={"get", "post"},
+  *     itemOperations={
+  *          "get"={
+  *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
   *          },
   *          "put"
   *     },

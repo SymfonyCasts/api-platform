@@ -601,6 +601,11 @@
             "description": null
         },
         {
+            "id": "security-remove-debug-code",
+            "name": "Security: remove debug code",
+            "description": null
+        },
+        {
             "id": "security-test-for-reassigning-owner",
             "name": "Security: test for reassigning owner",
             "description": null
@@ -633,6 +638,11 @@
         {
             "id": "voter-exception-on-edge-case",
             "name": "Voter: exception on edge case",
+            "description": null
+        },
+        {
+            "id": "voter-check-for-role-admin",
+            "name": "Voter: check for ROLE_ADMIN",
             "description": null
         },
         {
@@ -751,6 +761,11 @@
             "description": null
         },
         {
+            "id": "autogroups-empty-resource-factory",
+            "name": "AutoGroups: empty resource factory",
+            "description": null
+        },
+        {
             "id": "autogroups-with-resource-factory",
             "name": "AutoGroups: With resource factory",
             "description": null
@@ -861,5 +876,5 @@
             "description": null
         }
     ],
-    "sha": "6954c6e8800281296be3e90dc2fb9057eaa38899"
+    "sha": "462bb514482836e8c4b0eea4eb2f757b0370fef1"
 }

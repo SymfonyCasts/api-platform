@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 1913a43..d435d98 100644
+index 0ef1fcd..0f4fa89 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
   *          "get",
   *          "post"={"access_control"="is_granted('ROLE_USER')"}
   *     },
@@ -11,7 +11,7 @@ index 1913a43..d435d98 100644
   *     attributes={
   *          "pagination_items_per_page"=10,
   *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
-@@ -57,7 +57,7 @@ class CheeseListing
+@@ -56,7 +56,7 @@ class CheeseListing
  
      /**
       * @ORM\Column(type="string", length=255)
@@ -20,7 +20,7 @@ index 1913a43..d435d98 100644
       * @Assert\NotBlank()
       * @Assert\Length(
       *     min=2,
-@@ -69,7 +69,7 @@ class CheeseListing
+@@ -68,7 +68,7 @@ class CheeseListing
  
      /**
       * @ORM\Column(type="text")
@@ -29,7 +29,7 @@ index 1913a43..d435d98 100644
       * @Assert\NotBlank()
       */
      private $description;
-@@ -78,7 +78,7 @@ class CheeseListing
+@@ -77,7 +77,7 @@ class CheeseListing
       * The price of this delicious cheese, in cents
       *
       * @ORM\Column(type="integer")
@@ -38,7 +38,7 @@ index 1913a43..d435d98 100644
       * @Assert\NotBlank()
       */
      private $price;
-@@ -96,7 +96,7 @@ class CheeseListing
+@@ -95,7 +95,7 @@ class CheeseListing
      /**
       * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
       * @ORM\JoinColumn(nullable=false)
@@ -47,7 +47,7 @@ index 1913a43..d435d98 100644
       * @Assert\Valid()
       */
      private $owner;
-@@ -123,7 +123,7 @@ class CheeseListing
+@@ -122,7 +122,7 @@ class CheeseListing
      }
  
      /**
@@ -56,7 +56,7 @@ index 1913a43..d435d98 100644
       */
      public function getShortDescription(): ?string
      {
-@@ -144,7 +144,7 @@ class CheeseListing
+@@ -143,7 +143,7 @@ class CheeseListing
      /**
       * The description of the cheese as raw text.
       *
@@ -65,7 +65,7 @@ index 1913a43..d435d98 100644
       * @SerializedName("description")
       */
      public function setTextDescription(string $description): self
-@@ -174,7 +174,7 @@ class CheeseListing
+@@ -173,7 +173,7 @@ class CheeseListing
      /**
       * How long ago in text that this cheese listing was added.
       *

@@ -1,16 +1,14 @@
 diff --git a/src/Serializer/AdminGroupsContextBuilder.php b/src/Serializer/AdminGroupsContextBuilder.php
-index 6f74733..06db65b 100644
+index 3ccdf26..06db65b 100644
 --- a/src/Serializer/AdminGroupsContextBuilder.php
 +++ b/src/Serializer/AdminGroupsContextBuilder.php
-@@ -20,14 +20,45 @@ final class AdminGroupsContextBuilder implements SerializerContextBuilderInterfa
-     public function createFromRequest(Request $request, bool $normalization, ?array $extractedAttributes = null): array
+@@ -21,12 +21,44 @@ final class AdminGroupsContextBuilder implements SerializerContextBuilderInterfa
      {
          $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);
--        $resourceClass = $context['resource_class'] ?? null;
-+
+ 
 +        $context['groups'] = $context['groups'] ?? [];
 +        $context['groups'] = array_merge($context['groups'], $this->addDefaultGroups($context, $normalization));
- 
++
          $isAdmin = $this->authorizationChecker->isGranted('ROLE_ADMIN');
  
 -        if (isset($context['groups']) && $isAdmin) {

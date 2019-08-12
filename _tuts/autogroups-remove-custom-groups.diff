@@ -1,10 +1,10 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 6b5b115..1913a43 100644
+index 0d3c606..0ef1fcd 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -18,9 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -17,9 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+ /**
   * @ApiResource(
-  *     collectionOperations={"get", "post"},
   *     itemOperations={
 - *          "get"={
 - *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
@@ -13,7 +13,7 @@ index 6b5b115..1913a43 100644
   *          "put"={
   *              "access_control"="is_granted('EDIT', previous_object)",
   *              "access_control_message"="Only the creator can edit a cheese listing"
-@@ -32,8 +30,6 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -31,8 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
   *          "post"={"access_control"="is_granted('ROLE_USER')"}
   *     },
   *     shortName="cheeses",

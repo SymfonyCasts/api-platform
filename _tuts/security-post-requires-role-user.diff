@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index f1190e4..59da307 100644
+index 49c990c..47f3fe5 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
   *     },
   *     collectionOperations={
   *          "get",
