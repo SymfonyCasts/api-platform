@@ -8,3 +8,15 @@ chapters:
     - data-page-load
     - samesite-csrf
     - access-control
+    - test-setup                #raw
+    - api-tests                 #raw
+    - rock-solid-test-setup     #raw
+    - acl-cheese-owner          #raw
+    - previous-object           #raw
+    - access-control-voter      #raw
+    - encode-user-password      #raw
+    - validation-groups         #raw
+    - conditional-field-setup   #raw
+    - context-builder           #raw
+    - auto-groups               #raw
+    - resource-metadata-factory #raw
