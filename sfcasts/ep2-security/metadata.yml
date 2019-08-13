@@ -8,7 +8,7 @@ chapters:
     - data-page-load
     - samesite-csrf
     - access-control
-    - test-setup                #raw
+    - test-setup
     - api-tests                 #raw
     - rock-solid-test-setup     #raw
     - acl-cheese-owner          #raw
