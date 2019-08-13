@@ -24,6 +24,8 @@ key. I'll catch half of my mistake in a minute.
 Anyways, if we *don't* see an `error` key, something weird happened: set the error
 to `Unknown error`.
 
+[[[ code('6c5619511c') ]]]
+
 Move over, refresh... and let's fail login again. Doh! It's printing the *entire*
 JSON message. *Now* I'll add the missing `.error` key. But I *should* also include
 it on the `if` statement above.
@@ -48,6 +50,8 @@ is an options array and we can use a `headers` key to set the `Content-Type` hea
 to `application/x-www-form-urlencoded`. That's the `Content-Type` header your browser
 sends when you submit a form. This will tell Axios *not* to send JSON: it will send
 the data in a format that's invalid for the `json_login` authenticator.
+
+[[[ code('73aca4bc98') ]]]
 
 Go refresh the Javascript... and fill out the form again. I'm expecting that we'll
 get *some* sort of error. Submit and... huh. A 200 status code? And the response
@@ -74,6 +78,8 @@ uses: an `error` key set to:
 > Invalid login request: check that the Content-Type header is "application/json".
 
 And set this to a 400 status code.
+
+[[[ code('97d390e75d') ]]]
 
 I love it! Let's make sure it works. We didn't change any JavaScript, so no refresh
 needed. Submit and... we got it! The "error" side of our login is bulletproof.

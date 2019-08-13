@@ -5,9 +5,13 @@ If your login system looks similar to the traditional email & password or userna
 In `config/packages/security.yaml`, under the `main` firewall, add a new key:
 `json_login`. Below that, set `check_path` to `app_login`.
 
+[[[ code('94b833a560') ]]]
+
 This is the name of a route that we're going to create in a second - and we'll
 set its URL to `/login`. Below this, set `username_path` to `email` - because
 that's what we'll use to log in, and `password_path` set to `password`.
+
+[[[ code('d7ea2326a7') ]]]
 
 With this setup, when we send a `POST` request to `/login`, the `json_login`
 authenticator will automatically start running, look for JSON in the request,
@@ -37,6 +41,8 @@ and hit tab to auto-complete that and add the `use` statement. Set the URL to
 `/login`, then `name="app_login"` and also `methods={"POST"}`: nobody needs to
 make a GET request to this.
 
+[[[ code('1d27b305ac') ]]]
+
 Initially, you need to have this route here *just* because that's the way
 Symfony works: you can't POST to `/login` and have the `json_login` authenticator
 do its magic unless you *at least* have a route. If you don't have a route, the
@@ -51,6 +57,8 @@ But... hmm... I don't really know what we should return yet - I haven't thought
 about what might be useful. For now, let's return `$this->json()` with an array,
 and a `user` key set to either the authenticated user's id or null.
 
+[[[ code('1f068f4e37') ]]]
+
 ## AJAX Login in Vue.js
 
 Let's try this! When we go to `https://localhost:8000`, we see a small frontend
@@ -61,9 +69,11 @@ use something a bit more realistic. This login form comes from
 It's mostly HTML: the only real functionality is that, when we submit the form,
 it won't *actually* submit. Instead, Vue will call the `handleSubmit()` function.
 Inside, uncomment that big axios block. Axios is a really nice utility for making
-AJAX requests. This will make a POST requerst to `/login` and send up two fields
+AJAX requests. This will make a POST request to `/login` and send up two fields
 of data `email` and `password`. `this.email` and `this.password` will be whatever
 the user entered into those boxes.
+
+[[[ code('f29530f5a8') ]]]
 
 One important detail about axios is that it will automatically encode these two fields
 as JSON. A lot of AJAX libraries do *not* do this... and it'll make a *big* difference.

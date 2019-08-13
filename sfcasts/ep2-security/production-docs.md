@@ -78,6 +78,8 @@ how it works.
 
 Set `enable_docs` to false.
 
+[[[ code('8e0111aa8c') ]]]
+
 Ok, go back and refresh `/api`. Um... there is absolutely *no* change! That's due
 to a small dev-only bug with a few of these options: when we change those options,
 they're not causing the routing cache to rebuild automatically. No big problem,
@@ -109,6 +111,8 @@ API, which tells us what URLs we could go to next to discover more. When we go
 to `/api`, that's the HTML entrypoint and that's... totally broken. To disable
 that page set `enable_entrypoint` to false. Rebuild the cache:
 
+[[[ code('1c66fc7b23') ]]]
+
 ```terminal-silent
 php bin/console cache:clear
 ```
@@ -119,6 +123,8 @@ So to fully disable your docs without a 500 error, you need *both* of these keys
 To make this *only* happen in production, copy them, delete them, and, in the
 `config/packages/prod` directory, create a new `api_platform.yaml` file. Inside,
 start with `api_platform:` then paste.
+
+[[[ code('aaf2f407f6') ]]]
 
 If we changed to the `prod` environment and rebuilt the cache, we'd be done!
 
