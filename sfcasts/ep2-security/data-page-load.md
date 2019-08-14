@@ -20,6 +20,8 @@ then, below, say `path: app_logout`. Just like `app_login`, this is the name of
 a route that we're going to create next. When a user accesses this route, they'll
 be logged out.
 
+[[[ code('1d9033f0ff') ]]]
+
 To create that, open `src/Controller/SecurityController.php` and add
 `public function logout()` with `@Route()` above. Set the URL to `/logout`
 and name it `app_logout`.
@@ -35,6 +37,8 @@ be reached. Let's *scream* in case it somehow *is* executed: Throw an exception
 with:
 
 > should not be reached
+
+[[[ code('4453014d80') ]]]
 
 Let's try the flow: move over, hit log out and... before it loads, you *can* see
 that we're currently logged in. And now... gone! We are anonymous.
@@ -88,8 +92,12 @@ the template called `user`. I want this to be the JSON-LD version of our user - 
 format. If the user is *not* logged in, the new `user` variable will be null...
 but if they *are* logged in, we'll get our big, nice JSON-LD structure.
 
+[[[ code('744966023f') ]]]
+
 Now that we have this, create a `script` tag and set the data on a global variable...
 how about: `window.user = {{ user|raw }}`.
+
+[[[ code('c58901280f') ]]]
 
 Hey! Our user data is accessible to JavaScript!
 
@@ -98,8 +106,10 @@ or reference global variables from my JavaScript. As a compromise, I like to
 *only* reference global variables from my *top* level component. If a deeper
 component needs it, I'll pass it down as a prop.
 
-Create a new `mounted()` function - Vue will automatically call this after the component is "mounted" to the page - and if `window.user`, so, if it's
-*not* null, then `this.user = window.user`.
+Create a new `mounted()` function - Vue will automatically call this after the component is "mounted"
+to the page - and if `window.user`, so, if it's *not* null, then `this.user = window.user`.
+
+[[[ code('048a424728') ]]]
 
 It's that simple! Sneak over and refresh your browser. And... our JavaScript
 *instantly* knows we're logged in. If we log out... yep! Our app doesn't explode.

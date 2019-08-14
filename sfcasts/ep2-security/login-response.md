@@ -47,9 +47,13 @@ the `IriConverterInterface` type-hint. Now, set the `Location` header to
 `$iriConverter->getIriFromItem()` - which is one of a few useful methods on this
 class - and pass `$this->getUser()`.
 
+[[[ code('d462cd0049') ]]]
+
 Cool! Let's see what this look like! Go back to `LoginForm.vue`. Right now,
 on success, we're logging `response.data`. Change that to  `response.headers` so
 we can see what the headers look like.
+
+[[[ code('e948ba488b') ]]]
 
 Back on our browser, refresh the homepage. By the way, you can see that the Vue.js
 app is reporting that we are *not* currently authenticated... even though the web
@@ -74,6 +78,8 @@ a `user` variable. We're not going to get too much into the details of `Vue.js`,
 but when we render the `LoginForm` component, we pass it a callback via
 the `v-on` attribute.
 
+[[[ code('197f7a7418') ]]]
+
 This basically means that, inside of `LoginForm.vue`, once the user is authenticated,
 we should dispatch an event called `user-authenticated`. When we do that, Vue
 will execute this `onUserAuthenticated` method. *That* accepts a `userUri` argument,
@@ -85,6 +91,8 @@ Phew! Let me show you what this looks inside `LoginForm.vue`. Uncomment the last
 three lines in the callback. This dispatches the `user-authenticated` event and
 passes it the user IRI that it needs. The `userUri` variable doesn't exist, but
 we know how to get that: `response.headers.location`. I'll take out my `console.log()`.
+
+[[[ code('958cf78cb8') ]]]
 
 Let's do this! Move over, refresh, then login as `quesolover@example.com`, password
 `foo`. And... oh boo:
