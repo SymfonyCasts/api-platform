@@ -10,7 +10,7 @@ chapters:
     - access-control
     - test-setup
     - backport-api-tests
-    - api-tests                 #raw
+    - api-tests
     - rock-solid-test-setup     #raw
     - acl-cheese-owner          #raw
     - previous-object           #raw
