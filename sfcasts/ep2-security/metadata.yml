@@ -13,7 +13,7 @@ chapters:
     - api-tests
     - test-user-login
     - rock-solid-test-setup
-    - acl-cheese-owner          #raw
+    - acl-cheese-owner
     - previous-object           #raw
     - access-control-voter      #raw
     - encode-user-password      #raw
