@@ -42,6 +42,8 @@ to customize the normalization groups of `get`. We can do something
 similar with a `collectionOperations` option. Start by setting this to
 `get` and `post`.
 
+[[[ code('4c7838622d') ]]]
+
 If we stopped here, this would change *nothing*. Oh... except that I have
 a syntax error! Silly comma! Anyways, API Platform adds two collection operations
 by default - `get` and `post` - so we're simply repeating what it was already doing.
@@ -52,6 +54,8 @@ need the user to be authenticated to do this. Set `post` to `{}` with a new
 `access_control` option inside. We're going to set this to a mini-expression:
 `is_granted()` passing that, inside single quotes `ROLE_USER` - that's the role
 that our app gives to *every* user.
+
+[[[ code('ca94f235ae') ]]]
 
 Let's try that! The web debug toolbar tells me that I'm *not* logged in right
 now. Let's make a `POST` request... set the owner to `/api/users/6` - that's
@@ -69,6 +73,8 @@ to be able to edit it. Let's just handle the first part now. I'll copy my
 whole `access_control` config and paste. While we're here, let's also re-add the
 delete operation... but maybe only admin users can do this. Check for some
 `ROLE_ADMIN` role.
+
+[[[ code('d5b381fa8a') ]]]
 
 Go refresh the docs... yes! The DELETE operation is back! Notice that the docs
 are... basically "static" as far as security is concerned: it documents the *whole*

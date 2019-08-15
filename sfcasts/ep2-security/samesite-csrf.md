@@ -68,6 +68,8 @@ recently - like we did for this tutorial - then you probably already have
 this key: `framework.session.cookie_samesite` set to `lax`. Yep, our session
 cookie is *already* setting `SameSite` to `lax`.
 
+[[[ code('557789855c') ]]]
+
 What does `lax` mean? Well, the other possible setting is `strict`. If `SameSite`
 is set to `strict`, then the cookie will *never* be sent when a third-party
 initiates a request to our site... even if they literally click a link to visit
