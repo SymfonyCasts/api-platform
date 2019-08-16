@@ -26,6 +26,8 @@ Open that file up. One of the keys here is called `SYMFONY_PHPUNIT_VERSION`,
 which at the time I recorded this is set to 7.5 in the recipe. You can leave
 this or change it to the latest version of PHPUnit, which for me is 8.2
 
+[[[ code('416e2842e6') ]]]
+
 But wait... why are we controlling the version of PHPUnit via some variable in
 an XML file? Isn't PHPUnit a dependency in our `composer.json` file? Actually...
 no! When you use Symfony's PHPUnit bridge, you *don't* require PHPUnit directly.
@@ -54,8 +56,12 @@ file will *only* be loaded in the `test` environment... which allows *us* to cre
 test-specific settings. For example, I like to use a different database for my
 tests so that running them doesn't mess with my development database.
 
+[[[ code('ae2f44f22c') ]]]
+
 Inside `.env`, copy the `DATABASE_URL` key, paste it in `.env.test` and add a little
 `_test` at the end.
+
+[[[ code('cb72af0955') ]]]
 
 Cool, right? One of the gotchas of the `.env` system is that the `.env.local`
 file is *normally* loaded last and allows us to override settings for our local
