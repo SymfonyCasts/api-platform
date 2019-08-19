@@ -44,6 +44,8 @@ and create a new file: `services_test.yaml`. Thanks to its name, this file will
 `class: App\ApiPlatform\Test\Client` and `arguments: ['@test.client']`. Also add
 `public: true`.
 
+[[[ code('ecef4a0542') ]]]
+
 These two steps completely replicate what ApiPlatform will give you in version 2.5.
 Well... unless they change something. I don't normally show unreleased features...
 because they might change... but these tools are *so* useful, I just *had* to
@@ -63,6 +65,8 @@ Make this extend `ApiTestCase` - that's one of the new classes we just moved int
 our app. If you're using API Platform 2.5, the namespace will be totally different -
 it'll start with `ApiPlatform\Core`.
 
+[[[ code('8d0bd36911') ]]]
+
 The first thing I want to test is the POST operation - the operation that creates
 a new `CheeseListing`. A few minutes ago, under `collectionOperations`, we added
 an access control that made it so that you *must* be logged into use this. Oh...
@@ -72,6 +76,8 @@ the first... so let's remove the extra one.
 Anyways, for our first test, I want to make sure this security *is* working.
 Add `public function testCreateCheeseListing()`. And inside, make sure this all
 isn't an elaborate dream with `$this->assertEquals(42, 42)`.
+
+[[[ code('4ca7ed3bf9') ]]]
 
 Ok! Run that with:
 
