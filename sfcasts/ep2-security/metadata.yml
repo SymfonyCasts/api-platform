@@ -15,7 +15,7 @@ chapters:
     - rock-solid-test-setup
     - acl-cheese-owner
     - previous-object
-    - access-control-voter      #raw
+    - access-control-voter
     - encode-user-password      #raw
     - validation-groups         #raw
     - conditional-field-setup   #raw
