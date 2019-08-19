@@ -16,7 +16,7 @@ chapters:
     - acl-cheese-owner
     - previous-object
     - access-control-voter
-    - encode-user-password      #raw
+    - encode-user-password
     - validation-groups         #raw
     - conditional-field-setup   #raw
     - context-builder           #raw
