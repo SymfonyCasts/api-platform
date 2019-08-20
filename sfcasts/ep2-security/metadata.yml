@@ -18,7 +18,7 @@ chapters:
     - previous-object
     - access-control-voter
     - encode-user-password
-    - validation-groups         #raw
+    - validation-groups
     - conditional-field-setup   #raw
     - context-builder           #raw
     - auto-groups               #raw
