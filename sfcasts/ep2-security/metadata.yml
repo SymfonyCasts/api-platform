@@ -12,6 +12,7 @@ chapters:
     - backport-api-tests
     - api-tests
     - test-user-login
+    - test-reset-database
     - rock-solid-test-setup
     - acl-cheese-owner
     - previous-object

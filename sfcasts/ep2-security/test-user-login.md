@@ -1,70 +1,125 @@
 # Logging in Inside the Test
 
-Note about 400 on deserialization error before security.
+We've added two options when we make the request: a `Content-Type` header, to tell
+API Platform that any data we send will be JSON-formatted, and a `json` option set
+to an empty array which is enough to *at least* send some valid JSON in the body
+of the request.
 
-we've got it. And you can actually see what there's some log messages dumped out
-above here. Um, coming for applications as full authentication is required to access
-this resource. We'll talk about where this is coming from in a little bit and
-actually how to remove it because it gets a little bit annoying up there. Okay. So we
-had a four oh one status code. We've proven that you actually need to log in to hit
-this endpoint. So the next thing I want to test is actually let's log in and then see
-if we get, if, if uh, if we get a 200 status code or two oh one status code. So to do
-that we need a user in the database and we're always gonna assume that our database
-is empty to start. And so if we want to use her, we're going to create one. So
-`$user = new User()`
+Because, before we added the `json` option, we got this error: a 400 Bad Request
+with... some details in the body that indicate we sent *invalid* JSON.
 
-and then I'll just set some information on that like `setEmail()`, an email, we'll call
-it `setUsername()`. And then the only other field that we need right now is the
-a password. Now remember right now or to keep things simple, the password is password
-field is actually the encoded password field in the database. We haven't set up any
-mechanism yet to encode the password. So once again, I'm going to go over here and
-run bin Console security and code password
+## Deserialization Before Security
 
-```terminal
-php bin/console security:encode-password
-```
+But... wait a second. *Assuming* our `access_control` security is set up correctly...
+shouldn't we get denied access *before* API Platform tries to deserialize the JSON
+data we're sending to the endpoint?
 
-[inaudible] and code dash password taken Fu. It will give me string. I can pat use
-here and I'll pass that as my password. [inaudible].
+This is a little bit of a security gotcha... and even as I'm recording this, it
+looks like API Platform may change how this works in their next version. Progress!
 
-Now next thing we need to do is actually save this to the database. Now normally in
-Symfony we use autowiring everywhere to get our services. The test is unique
-environment where you're not going to have to use autowiring. Instead you're going
-to get the container infects the services you need off by their id. So to get the NC
-manager you can say `$em = self::$container` So that's a nice
-property. That Symfony sets up with the container and they can say `->get()` kit and you
-can say the name of the service at d. And the easiest way to get the entity managers
-get a service called `doctrine` and say `->getManager()` on the end of that. Then we'll do
-an `$em->persist($user)`
+When you send data to an endpoint API platform does the following things in
+this order. First, it deserializes the JSON into whatever resource object we're
+working with - like a `CheeseListing` object. Second, it applies the
+security access controls. And *third* it applies our validation rules.
 
-`$em->flush()`
+Do you see the problem? It's subtle. If API Platform has any problems deserializing
+the JSON into the object, the user of our API will see an error about that... even
+if that user doesn't have access to perform the operation. The JSON syntax error
+is one example of this. But there are other examples, like if you send a
+badly-formatted date string to a date field, you'll get a normalization error about
+this... even if you don't have access to that operation.
 
-and we're good. So now that we have this used in the database, we can actually log in
-as this user. So I'm going to copy of my client error requests from before. This time
-we're going to make a `POST` request
+This is probably not a *huge* deal in most cases, but it *is* possible for a user
+to get *some* details about how your endpoints work... even if that user don't
+have access to them. Of course... they still can't *do* anything with those
+endpoints... but I *do* want you to be aware of this.
 
-two `/login`.
+But... at this *very* moment, there's a pull request open on API Platform to
+rename `access_control` to something else - probably `security` - and to change
+the behavior so that security runs *before* deserialization. In other words,
+if this *does* concern you, it's likely to not behave like this in the future.
 
-I'll keep the header and this time we are going to send some JSON Fields. We will
-send `email`, set two our `cheeseplease@example.com`
-
-`'password' => 'foo'` and that's it.
-
-I'll also copy my response. Got Up here and we should get back a two Oh four response
-code. I'll try copying that again cause that's what we're returning from our security
-end point. If you all can controller `SecurityController` on success, return the `204`
-status code. All right, so let's try that out. Spin back over
+Ok, but now that we *are* sending valid JSON, let's see if the test passes! Run:
 
 ```terminal
 php bin/phpunit
 ```
 
- and it works and for the more astute, if you've done
-testing before, you probably already see a problem which is that if I run it again it
-explodes because his duplicate entry `cheeseplease@example.com` so one of the things
-that we need to tie, we need to talk about, it's one of the annoying things about
-functional tests is that we can't just create the same user in the database every
-single time. We need to actually take care of cleaning our database before every
-test, making it empty so that when you create this user here, that user is not
-already in the database. So let's do that next to actually take our test to the next
-level.
+And... we've got it! Green!
+
+## Creating the User in the Database
+
+We've proven that you *do* need to log in to execute this operation. So now...
+let's log in and make sure it works!
+
+To do that, we *first* need to put a user in the database. Cool! We got this:
+`$user = new User()` and then fill in the email `setEmail()` and username
+with `setUsername()`. The only other field that's required on the user is the
+`password`. Remember, that field is the *encoded* password. For now, let's cheat
+and generate an encoded password manually. Find your terminal and, once again, run:
+
+```terminal
+php bin/console security:encode-password
+```
+
+Let's pass this `foo` and... it gives me this giant, encoded password string.
+Copy that, and paste it into `setPassword()`.
+
+The `User` object is ready! To save this to the database, it's the same as being
+inside our code: we need to get the entity manager, then call persist and flush
+on it. But, *normally*, to get the entity manager - or any service - we use
+autowiring. Tests are the *one* place where autowiring doesn't work... because
+you're, sort of, "outside" of your application.
+
+Instead, we'll fetch the services from the container by their *ids*. Try this:
+`$em = self::$container` - a parent class sets the container on this nice property -
+`->get()` and the service id. Use `doctrine` then say `->getManager()`.
+
+You can *also* use the type-hint you use for autowiring as the service id. In
+other words, `self::$container->get(EntityManagerInterface::class)` would work
+super well. And actually... it's probably a bit simpler than what I did.
+
+Anyways, now that we have the entity manager, use the famous: `$em->persist($user)`
+and  `$em->flush()`.
+
+## POST to Login
+
+Hey! We've got a user in the database! To test if an *authenticated* user can create
+a cheese listing... um... how can we authenticate as this user? Well, because we're
+using traditional session-based authentication... we just need to log in! Make
+a `POST` request to `/login`. I'll keep the header, but this time we *will* send
+some JSON data: `email` set to `cheeseplease@example.com` and
+`password => 'foo'`.
+
+And we should probably assert that this worked. Copy the response status code
+assertion, paste it down here, and check that this returns 204... because 204 is
+what we decided to return from `SecurityController`.
+
+We're not *quite* yet making an authenticated request to create a new
+`CheeseListing`... but let's check our progress! Find your terminal and run:
+
+```terminal
+php bin/phpunit
+```
+
+Got it! Woo! We're now logged in and ready to start making *authenticated* requests.
+
+Except... if you've done functional tests before... you might see a problem. Try
+running the tests again:
+
+```terminal-silent
+php bin/phpunit
+```
+
+Explosion!
+
+> Duplicate entry `cheeseplease@example.com`
+
+coming from the database. *The* most annoying thing about functional tests is
+that you need to control what's in the database... including what might be
+"left over" in the database from a previous test. This is nothing specific to
+API Platform... though the API Platform team *does* have some tools to help
+with this.
+
+Next, let's guarantee that the database is in a clean state before each test is
+executed.
