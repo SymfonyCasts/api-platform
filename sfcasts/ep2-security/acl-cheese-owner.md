@@ -1,142 +1,151 @@
-# Acl Cheese Owner
+# ACL: Only Owners can PUT a CheeseListing
 
-Coming soon...
+Back to security! We need to make sure that you can *only* make a PUT request
+to update a `CheeseListing` if you are the *owner* of that `CheeseListing`. As
+a reminder, each `CheeseListing` is related to one `User` via an `$owner` property.
+Only *that* `User` should be able to update this `CheeseListing`.
 
-All right back to security stuff. We want to make sure that if you use the put end
-points to update a `CheeseListing` that only you can only do that if you are the owner
-of that `CheeseListing`. So as a reminder here, we actually have a relationship
-between `CheeseListing`, an end `User` which is cheese listing as an `$owner` property and
-it's set to the user that owns this cheese listing. So makes perfect sense that we
-only want a that user trialed ended it right now all we have is that you just need to
-be logged in. So fixing this is actually fairly easy but because things are getting a
-bit more complicated and security's important, I want to read a test for this first.
-So radio task for creating a cheese listing. Let's create one down here and 
-`public function testUpdateCheeseListing()` and I'll start off with 
-`$client = self::createClient()`
-And then I'm going to create a `User` with `$user = $this->createUser()`
-pass and our, no, `cheeseplease@example.com` password `foo`. Now one really important
-thing with the way that the test stuff works is that you want to do 
-`$client = self::createClient()` on the first line always. Because what that really does
-behind the scenes is it creates this client object that's ready to make tests to test
-your API. Um, but also boot Symfonys container, which gives you access to light the
-entity manager and saving things to the database. So nope, and not Craig's your log
-an extra month and say, just create user.
+Let's start this by writing a new test. In the test class, add
+`public function testUpdateCheeseListing()` and start off with the normal
+`$client = self::createClient()`. passing this `cheeseplease@example.com` and
+password `foo`. Wait, I only want to use `createUser()` - we'll log in manually
+a bit lower.
 
-Um, so if we actually swapped these two lines, this, uh, create user alignment, have
-an air because the container isn't ready yet. So always start with client, uh, e the
-`createClient()` call. All right, now let's think about this. In order to test up adding
-a cheese listening, the first thing we need is a Cheese Listing in the database. So
-similar to user, we're just going to create one by hand. 
-`$cheeseListing = new CheeseListing()`, uh, we can actually pass the `title` right here. 
-So let's say block of Cheddar. Then `$cheeseListing->setOwner()` and we're going to 
-set this to be owned by that `$user`. Then the other fields are needed. 
-We need to `setPrice()`, so I'll say $10 and
-we also need to `setDescription()` and find down here we can see a better database by
-getting the entity manager. Now if you open up your a custom area test case, we've
-already seen how to get the entity manager. I'm actually gonna copy this line here
-and let's actually get a shortcut for getting the antiquey manager cause it's another
-really common thing that you'll need. So `protected function getEntityManager()`.
-This will return in `EntityManagerInterface`.
+## Always Start with self::createClient()
 
-And then down here I'll just return `self::$container->get('doctrine')->getManager()`
-perfect. So now we can use this in here. C `$em = $this->getEntityManager()`
-and then we'll `$em->persist($cheeseListing)` and `$em->flush()`,
-right? So that is a very nice set up for our test. Now it actually tests the end
-point. The first thing we're to do is we're just going to test that. Hey, if you log
-in, you get a `200` status code, we're going to log. If you log in as this user, you
-get a `200` status code. So this is kind of the expected situation. So I'll see 
-`$this->logIn()` pass out the `$client`, our email, our password.
+Notice that the *first* line of my test is `$client = self::createClient()`...
+even though we haven't needed to *use* that client object yet. It turns out, making
+this the first line of *every* test method is important. Yes, this of course creates
+a simple `$client` object that will help us make requests into our API. But it
+*also* boot Symfony's container, which is what gives us access to the entity manager
+and any other services. If we swapped these two lines and put `$this->createUser()`
+first, it would totally *not* work! The container wouldn't be available yet.
+The moral of the story is: always start with `self::createClient()`.
 
-Then we'll make a request. So client error request. In this case it's going to be a
-`PUT` request and the URL is going to be `/api/cheeses/` and then the id of that Jesus
-thing. So `$cheeseListing->getId()`. Now for the options, most of the time the only thing
-you're going to need going to need to pass and the only thing we'll need to pass here
-is the actual dating on a sense. So we want to send JSON and let's just update the
-title field policy `'title' => 'updated'`. That should be enough to be a valid request. Now on
-edit, what we get back is we get back a `200` status code and it actually, I believe it
-will say that down here. Yep. When it's updated, what we get is a `200` status code. So
-we'll say `$this->assertResponseStatusCodeSame(200)` all right, perfect. I'm actually
-gonna copy the name of this method. `testUpdateCheeseListing`. So we can run over
-here and say 
+## Testing PUT /api/cheeses/{id}
+
+Ok, let's think about this: in order to test updating a `CheeseListing`, we
+*first* need to make sure there's a `CheeseListing` in the database to update!
+Let's create one! `$cheeseListing = new CheeseListing()` and we can pass a
+title right here: "Block of Cheddar". Next say `$cheeseListing->setOwner()` and
+make sure this `CheeseListing` is *owned* by the user we just created. Fill in
+the last required fields: `setPrice()` to $10 and `setDescription()`.
+
+Now, we need the entity manager! Go back to `CustomApiTestCase`. We got the entity
+manager here so we could save the user. Copy that. Needing the entity manager
+is *so* common, let's create another shortcut for it:
+`protected function getEntityManager()` that will return `EntityManagerInterface`.
+Inside, `return self::$container->get('doctrine')->getManager()`.
+
+Cool! Let's use that: `$em = $this->getEntityManager()`,
+`$em->persist($cheeseListing)` and `$em->batman()`. Kidding. But wouldn't that
+be cool? `$em->flush()`.
+
+Great setup! Now... to the *real* work. To start, let's test the "happy" case:
+let's test that *if* we log in with this user and try to make a `PUT` request
+to update a cheese listing, we'll get a 200 status code.
+
+Easy peasy: `$this->logIn()` passing `$client`, the email and password. Now
+that we're authenticated, use `$client->request()` to make a `PUT` request to
+`/api/cheeses/` and then the id of that `CheeseListing`: `$cheeseListing->getId()`.
+
+For the options, most of the time, the only option you'll need here is the `json`
+option set to the data you want to send. Let's *just* send a `title` field set
+to `updated`. That's enough data for a valid update request.
+
+What status code will we get back on success? You don't have to guess. Down on
+the docs... it tells us: 200 on success.
+
+Cool: `$this->assertResponseStatusCodeSame(200)`.
+
+Perfect start! Copy the method name so we can execute *just* this test. At your
+terminal, run:
 
 ```terminal
 php bin/phpunit --filter=testUpdateCheeseListing
 ```
 
-we'll just run that one test.
-And if you scroll up from all those deprecation warnings, yes it works.
+And... above those deprecation warnings... yes! It works.
 
-So now let's enhance those tests for the more interesting case, which is what if I
-try to edit this and I'm not the owner. So first thing I'm going to rename this user
-variable to `$user1` and uh, change the email to `user1@example.com`. And then down
-here, `user1@example.com` because now I'm going to create a user 2. So say 
-`$user2 = $this->createUser()` and we'll just make that email address `user2@example.com`
+That's no surprise... and we haven't *really* tested the security we want.
+What we *really* want to test is what happens if I login and try to edit a
+`CheeseListing` that I do *not* own. Ooooo.
 
-and then copy the entire login request, assert response status code thing and paste
-that right above here. So before we test the actual case down here of you know what
-if I actually log in as the user that owns that cheese listing before we test this,
-let's actually test what happens if we log in as somebody that doesn't own this. So
-we're going to log in as `user2@example.com` we're going to make that exact same
-request. In this case, the status code we're expecting is `403` which means
-we are logged in but we should not have access to do this. So we'll check for `403`
- this time when we test 
+Rename this `$user` variable to `$user1`, change the email to
+`user1@example.com` and update the email below on the `logIn()` call. That'll
+keep things easier to read... because *now* I'm going to create a *second* user:
+`$user2 = $this->createUser()` with `user2@example.com` and the same password.
 
-```terminal-silent
-php bin/phpunit --filter=testUpdateCheeseListing
-```
- 
- we should see a failure and we do ask perfect and failed
-a certain `403` we actually back a `200` it did allow us to change to modify the
-object.
+Next, copy the entire login, request, assert-response-status-code stuff and paste
+it right *above* here: before we test the "happy" case where the owner tries to
+edit their *own* `CheeseListing`, let's first see what happens when a *non-owner*
+tries to edit it.
 
-All right, so let's back back to API platform security stuff. Whenever you use the
-access control here, I mentioned you set this to sort of a mini expression. This uses
-Symfony's expression language and you're using an `is_granted()` function. So this is a
-true expression and you can actually make this expression a bit more interesting by
-saying `and`, and then inside a period API platform and gives you access to a couple of
-variables, whatever object you're currently, um, working with. So in our case, a
-`CheeseListing` is available via an `object` variable and we can even call methods on it
-as soon as a `object.getOwner()` that's calling to get her on here `==` and another
-variable it gives you access to as the currently authenticated user, which is either
-going to be our user object or null. So we can say `object.getOwner() == user`.
-So basically give us access if we're logged in and if the logged in user is the owner
-of this object. Now we are in the test again 
+Log in this time as `user2@example.com`. We're going to make the exact same request,
+but *this* time we're expecting `403` status code, which means we *are* logged in,
+but we do *not* have access to perform this operation.
+
+I *love* it! With any luck, this should *fail*: our `access_control` is *not*
+smart enough to prevent this yet. Try the test:
 
 ```terminal-silent
 php bin/phpunit --filter=testUpdateCheeseListing
 ```
 
-and yes, it passes. So the one other
-option that you're going to see sometimes it's really less important. Um, but in
-addition to `access_control`, I just want to show this. There is also another thing you
-can put here called `access_control_message`. We can set this to something like 
+And... yes! We expected a 403 status code but got back 200.
+
+## Using object.owner in access_control
+
+Ok, let's fix this!
+
+The `access_control` option - which will probably be renamed to `security` in
+API Platform 2.5 - allows you to write an "expression" inside of it using Symfony's
+expression language. This `is_granted()` thing is a *function* that's available
+in that, sort of, Twig-like expression language.
+
+We can make this expression more interesting by saying `and` to add *more* logic.
+API Platform gives us a few *variables* to work with inside the expression, including
+one that represents the *object* we're working with on this operation... in other
+words, the `CheeseListing`. That variable is called `object`. Another is `user`,
+which is the currently-authenticated `User` or `null` of the user is anonymous.
+
+Knowing that, we can say `and object.getOwner() == user`.
+
+Yea... that's it! Try the test again and...
+
+```terminal-silent
+php bin/phpunit --filter=testUpdateCheeseListing
+```
+
+It passes! I told you the actual security part of this was going to be easy!
+*Most* of the work was the test, but I *love* that I can *prove* this works.
+
+## access_control_message
+
+While we're here, in addition to `access_control`, there's one other option
+called `access_control_message`. Set this to:
 
 > only the creator can edit a cheese listing
 
-If you read on test immediately, that's not gonna make any difference. And make sure
-you have a comma here at the previous line. Yeah, that looks good. Now if you're in
-the test immediately, it's not gonna make any difference because this is just
-changing the message that's shown to the user. Yeah, it passes. But I want to show
-you what that looks like. So, uh, right after me assert the four three status go and
-I'm actually going to `var_dump()` Um, nope. Here, part of 
-`$client->getResponse->getContent()`. We can see what that looks like and then we'll rerun the
-tests over here and there you go.
+And make sure you have a comma after the previous line.
+
+If you run the test... this makes *no* difference. But this option *did* just
+change the message the user will see. Check it out: after the 403 status code,
+add `var_dump()` of `$client->getResponse()->getContent()` and pass that `false`.
+Normally, if you call `getContent()` on an "error" response - a 400 or 500 level
+response - it throws an exception. This tells it *not* to, which will let us
+see that response's content. Try the test:
 
 ```terminal-silent
 php bin/phpunit --filter=testUpdateCheeseListing
 ```
 
-Inside of `getContent()`, we're actually gonna pass `false`. So by the thought, when you
-can't get content on the response object, it's going to throw it if it, if it was a,
-if the response was an error, we'll actually throw an exception and say, hey, this
-was an air. If you actually want to get what the actual current, the error content
-looks like, pass the false here so that it won't throw an exception. 
+The `hydra:title` says "An error occurred" but the `hydra:description` says:
 
-```terminal-silent
-php bin/phpunit --filter=testUpdateCheeseListing
-```
+> only the creator can edit a cheese listing.
 
-And then s you
-can totally see here as you can see, the `hydra:title` An error occurred, but the 
-`hydra:description` is only the creator can end a cheese listing. So do you want to get more
-context? That's the way to do it. Or I would take out my `var_dump()`.
+So, the `access_control_message` is *just* a way to improve the error your user
+sees. And, in API Platform 2.5, it'll probably be renamed to `security_message`.
+
+Remove the `var_dump()`. Next, there's a bug in this security! It's subtle.
+Let's find it and squash it!
