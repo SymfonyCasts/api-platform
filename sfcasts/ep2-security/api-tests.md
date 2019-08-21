@@ -5,6 +5,8 @@ of HTTP client - whether it be in JavaScript, PHP, Python, whatever. So, no surp
 that to *test* our API, we'll do the exact same thing. Create a client object with
 `$client = self::createClient()`.
 
+[[[ code('147feb58bc') ]]]
+
 This creates a, sort of, "fake" client, which is another feature that comes from
 the API Platform test classes. I say "fake" client because instead of making
 *real* HTTP requests to our domain, it makes them directly into our Symfony
@@ -23,6 +25,8 @@ stuff. Because we haven't logged in, this request will *not* be authenticated...
 and so our access control rules *should* block access. Since we're *anonymous*,
 that should result in a 401 status code. Let's assert that!
 `$this->assertResponseStatusCodeSame(401)`.
+
+[[[ code('820b4ba896') ]]]
 
 That assertion is *not* part of PHPUnit: we get that - and a bunch of other nice
 assertions - from API Platform's test classes.
@@ -107,6 +111,8 @@ The most straightforward way to fix this is to *change* that header. Add a third
 argument - an options array - with a `headers` option to another array, and
 `Content-Type` set to `application/json`.
 
+[[[ code('1983fb3aaa') ]]]
+
 Ok, try the tests again:
 
 ```terminal-silent
@@ -119,6 +125,8 @@ JSON data... but we're actually sending *no* data. Any empty string is technical
 invalid JSON.
 
 Add another key to the options array: `json` set to an empty array.
+
+[[[ code('bcc9cdb2f7') ]]]
 
 This is a really nice option: we pass it an array, and then the client will
 automatically `json_encode` that for us and send that as the *body* of the request.
