@@ -1,102 +1,117 @@
-# Previous Object
+# ACL & previousObject
 
-Coming soon...
+Via the `access_control` on the `PUT` operation, we were pretty easily able to
+make sure that only the *owner* of this `CheeseListing` can edit it. If you
+aren't the owner, access denied! We asserted that in our test.
 
-It's the `access_control` on the `PUT` endpoint. We were pretty easily able to make sure
-that only the owner of this cheese listing can edit it, otherwise you won't be in the
-act and access denied. And this is something that we have actually assertive inside
-of our test. So check this out. I'm going to try to trick our security system. So
-right now we're logging in as `user2@example.com` but the `CheeseListing` we're trying
-to update here is owned by `user1@example.com` which is why we're ultimately getting
-the `403` status code.
+Now... I'm going to *trick* the security system. We're logged in as
+`user2@example.com` but the `CheeseListing` we're trying to update is owned by
+`user1@example.com`... which is why we're ultimately getting the `403` status code.
 
-But one of the fields that you can update at least currently is you can actually
-update the `owner` field. So let's update the honor fields who 
-`/api/users/` user2 right. We should not be allowed to do this just because,
+But, at least for now, we've configured the serialization groups to allow for
+the `owner` field to be *updated* via the PUT request. Let's try changing the
+`owner` field to `/api/users/` then `$user2->getId()`.
 
-At the moment we start this request, this `CheeseListing` is owned by user1 so this
-should absolutely be rejected. But if you move over and around the test, 
+Clearly, this should *not* be allowed. But if you move over and run the test:
 
 ```terminal-silent
 php bin/phpunit --filter=testUpdateCheeseListing
 ```
 
-it's allowed. Check this out. We expected a `403`, we've got a `200` this is a very
-important Gotcha. With how API platform does their security. So the process of when a
-request comes in, the process looks like this, the first and that API platform does,
-is it deserializes the JSON into an object? So it actually goes to the process of
-calling JSON Decode and actually following, follow the serializer rules to create the
-`CheeseListing` object. Because of this, if you actually, because of this, if I'm, even
-if you use those and have access to an endpoint, if they submit, if they submit
-really invalidated, like invalid JSON or an owner, a field that I'm
+The test fails! We expected a `403` status code but got `200`! What?
 
-that's malformed, they will actually get a `400` status code a instead of a `403`
-So that's something that you need to watch out for.
+I mentioned a bit earlier that when a request comes in, API Platform goes through
+three steps in this order. First it deserializes the JSON into the `CheeseListing`
+object. Second it applies our `access_control` security and *third* it executes
+our validation rules.
 
-So the first step of the process is the deserealization. Then security is applied and
-then validation is applied. The validation rules. So what's happening in this case is
-by the time that we call, our `access_control` is run here. This object is the updated
-object, meaning the owner has already been changed. And so now the owner is equal to
-the currently logged in user. So actually object is probably not something that you
-should use most of the time. Instead you're going to use something called 
-`previous_object`. Previous object is basically what I would use in pretty much all cases and
-less. For some reason you actually wanted to do an access control decision based on
-the posted data. So as soon as we change this back to `previous_object`
-now when we were on tests, 
+See the problem? By the time API Platform processes our `access_control`, this
+`object` has been updated! Its owner has *already* been changed. I mean, it hasn't
+been updated in the database of course, but the object in memory has the *new*
+owner, which causes access to be granted.
+
+## Hello previous_object
+
+There are two solutions to this depending on your API Platform version.
+
+In API Platform 2.4, instead of `object`, use `previous_object`. Very simply:
+`previous_object` is the `CheeseListing` *before* the JSON is processed and
+`object` is the `CheeseListing` *after* the JSON has been deserialized.
+
+In API Platform 2.5, you'll do something different: use the new `security` option
+instead of `access_control`. It's just that simple: `security` and `access_control`
+work identically, except that `security` runs *before* the object is updated from
+the JSON. There's also another option called `security_post_denormalize` if you
+want to run a security check *after* deserialization. In that case, the `object`
+variable is the *updated* object.
+
+Phew! For us on API Platform 2.4, as soon as we change to `previous_object`...
+it should work! Try the tests:
 
 ```terminal-silent
 php bin/phpunit --filter=testUpdateCheeseListing
 ```
 
-can I scroll up? Yes, it works. So use `previous_object`
-All right, so now I have a really nice `access_control` for our um, `CheeseListing`
-Um, so let's repeat this. Uh, same thing over on our `User` entity right now
-you can see that we don't have actually any `access_control` stuff over here. So let's
-start by saying `itemOperations=`
+Scroll up... yes! All better.
 
-and we'll make the `get` item operation. I'm going to steal some stuff over here. I'm
-going to go steal an `access_control` entry from my user. So if we want to fetch a
-user's Day, let's say that you need to at least be logged into fetch another users
-user data. So use the `ROLE_USER` access control. And then if you want to post a user,
-the next one is `PUT`, if you want to updates a user, you're probably gonna need to be
-logged in and you're only going to be able to update your own. So here we're going to
-say `is_granted('ROLE_USER') and object == user`. So we're going to say only if this
-object is actually equal to this currently authenticated user. In this case we don't
-need to use `previous_object` cause there's no way to actually change the entire
-object. Um, so either of those would work just fine in that case.
+## access_control on User
 
-And then for the last one here, for item operations, `delete`. Let's say that you can
-only delete if you are an admin. So we'll do the `access_control` for `ROLE_ADMIN`.
-Cool. And above this I'm actually gonna. Now I'm going to do `collectionOperations`
-and same thing `get`, let's say get, you need to be logged in. And then for `post`
-posting a collection, that's actually how you create a user. So that's actually
-registration. So for post, I am going to just leave nothing. Okay, cool. So this was
-simple enough that I didn't have a test for it. Let's at least kind of make sure one
-of them works. Oh, of course. Syntax Air [inaudible] with my `itemOperations`,
-probably extra common there at the end. Refresh that again. Oh t closed parentheses,
-super. Oh I have a syntax. Air, uh, expected t clause penalty has got item
-operations. That is actually something missing, a common, they're actually missing a
-common there. And I have an extra comma right there. You're fresh. That all right.
-Cool. So if I right now I am actually anonymous at phone and get users execute and
-perfect. I get the `401` status code on that
+Ok, we've got really nice `access_control` now for `CheeseListing`. Let's repeat
+this for our `User`... because we don't have *any* access control stuff here now.
 
-Now in addition to doing the access control, like on the operation level, you can
-also do it at the resource level. Um, the one weird thing is that in this case it's
-actually gonna call the `accessControl` with an upper case c instead of a lower case.
-And you'd see a couple of these extra require a `ROLE_USER`. So if I wanted to, I could
-actually say `accessControl=` `ROLE_USER` and then I don't have to have,
+Start by saying `itemOperations={}`. For the `get` operation... let's steal an
+`access_control` from my `CheeseListing`. Let's see... to be able to fetch a single
+User, let's say that you need to at least be logged in to fetch another user's
+data. So, `ROLE_USER`.
 
-that `access_control` on get anymore. I can just say `get`, I don't need access
-control down here on `get` either. But because we were not posed to be anonymous, we
-want to do this, we would still need to actually now override post and say 
-`IS_AUTHENTICATED_ANONYMOUSLY`. So the default is `ROLE_USER`. So get is going to require 
-`ROLE_USER` on both collection and item and all the other ones completely replaced on that.
-So the post endpoint is going to be allowed to be anonymous. So we can actually try
-that over here by open up the post here and I'm just going to send an empty body just
-to see if I have access and well I don't, I got a `500` air. Ah, another syntax error.
-Boy, I'm terrible with that. Flip over, add the comma on. Get as soon as annotation
-is even for me, they're tricky. I'm going to have to record this whole thing. Aren't
-I? Such a fucking disaster? It's going great. Actually, I forgot that. Come on. The
-end of both gets, so now let's go around alternative reexecute and there we got 400
-this value should not be blank, so I proved it. I actually got through security. That
-one is still anonymous.
+For the `put` operation, you're probably going to need to be logged in and...
+you should probably only be able to update your *own* record. Use
+`is_granted('ROLE_USER') and object == user`.
+
+In this case, because we're not checking a specific property, we can safely
+use `object` instead of `previous_object`.
+
+Finally, for `delete`, let's say that you can only delete a `User` if you're an
+admin: `access_control` looking for `ROLE_ADMIN`.
+
+Cool! Time for `collectionOperations`. For `get`, let's say that you need to be
+logged in... and for `post`, for *creating* a `User`, that's registration! Put
+nothing here: anonymous users need to be able to do this.
+
+Very nice! We could create some tests for this, but now that we're getting
+comfortable... and because these access rules are still *fairly* simple, I'll
+skip it and test once manually.
+
+Go refresh the docs to do that. And... syntax error! I am *super* lazy with my
+commas. Try it again. My web debug toolbar tells me we're *not* logged in. So
+if we try the GET collection operation... 401 status code. Perfect!
+
+## Top (Resource) Level accessControl
+
+Until now, we've been adding the access control rules on an operation-by-operation
+basis. But you can also add rules at the *resource* level. Add `accessControl`...
+this time with a *capital* C - the top-level options are camel case. A few of
+our operations require `ROLE_USER`... so, if we want to, we could say
+`accessControl="is_granted('ROLE_USER')"`.
+
+This becomes the *default* access control that will be used for all operations
+*unless* an operation overrides this with their *own* `access_control`. This
+means that we don't need repeat the `access_control` on the `get` collection or
+item operations. But! We *do* now need to set `access_control` on the `post`
+operation to look for `IS_AUTHENTICATED_ANONYMOUSLY`. We're overriding the
+default access control and making sure that *anyone* can access this opperation.
+
+Using the resource-level versus operation-level access control is totally a
+matter of taste... and it fits better on some resources than others.
+
+Let's make sure this works... open the `POST` operation, send an empty body and
+500 error! Let's see... bah! Another annotation error. I like annotations... but
+I'll admit they can get a bit big with API Platform... and I'm clearly a bit lazy
+today with my commas!
+
+Let's execute that operation again and... got it! A 400 error: this value should
+not be blank.
+
+Next, let's *also* making it possible for an admin user to be able to edit
+*any* `CheeseListing`. We *could* push our `access_control` logic further...
+but it's probably time to talk about voters.
