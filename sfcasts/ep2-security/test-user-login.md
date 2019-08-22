@@ -65,6 +65,8 @@ php bin/console security:encode-password
 Let's pass this `foo` and... it gives me this giant, encoded password string.
 Copy that, and paste it into `setPassword()`.
 
+[[[ code('78b1a0d48b') ]]]
+
 The `User` object is ready! To save this to the database, it's the same as being
 inside our code: we need to get the entity manager, then call persist and flush
 on it. But, *normally*, to get the entity manager - or any service - we use
@@ -82,6 +84,8 @@ super well. And actually... it's probably a bit simpler than what I did.
 Anyways, now that we have the entity manager, use the famous: `$em->persist($user)`
 and  `$em->flush()`.
 
+[[[ code('3f19fa0dce') ]]]
+
 ## POST to Login
 
 Hey! We've got a user in the database! To test if an *authenticated* user can create
@@ -91,9 +95,13 @@ a `POST` request to `/login`. I'll keep the header, but this time we *will* send
 some JSON data: `email` set to `cheeseplease@example.com` and
 `password => 'foo'`.
 
+[[[ code('d1ee2f4eac') ]]]
+
 And we should probably assert that this worked. Copy the response status code
 assertion, paste it down here, and check that this returns 204... because 204 is
 what we decided to return from `SecurityController`.
+
+[[[ code('db8de20e2c') ]]]
 
 We're not *quite* yet making an authenticated request to create a new
 `CheeseListing`... but let's check our progress! Find your terminal and run:
