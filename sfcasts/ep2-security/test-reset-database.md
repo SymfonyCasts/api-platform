@@ -43,6 +43,8 @@ an *extra*, unrelated, feature that helps manage your database in the test envir
 Back in our test class... once PHPStorm finishes reindexing we're going to use
 a new trait: `use ReloadDatabaseTrait`.
 
+[[[ code('d96699a06f') ]]]
+
 That's it! *Just* by having this, before each test method is called, the trait
 will handle emptying our database tables and reloading our Alice YAML fixtures...
 which of course we don't have. So, it'll *just* empty the database.
