@@ -23,4 +23,4 @@ chapters:
     - conditional-field-setup
     - context-builder
     - auto-groups
-    - resource-metadata-factory #raw
+    - resource-metadata-factory
