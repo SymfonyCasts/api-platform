@@ -25,7 +25,7 @@ php bin/phpunit --filter=testUpdateCheeseListing
 
 It fails! We expected a `403` status code but got `200`! What?
 
-I mentioned a earlier that when a request comes in, API Platform goes through
+I mentioned earlier that when a request comes in, API Platform goes through
 three steps in a specific order. First it deserializes the JSON and updates the
 `CheeseListing` object. Second it applies our `access_control` security and *third*
 it executes our validation rules.

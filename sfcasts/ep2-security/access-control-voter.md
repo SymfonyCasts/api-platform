@@ -116,12 +116,12 @@ For that, we'll check to see if the user has some `ROLE_ADMIN` role.
 To check if a user has a role from inside a voter, we *could* call the `getRoles()`
 method on the `User` object... but that won't work if you're using the role hierarchy
 feature in `security.yaml`. A more robust option - and my preferred way of doing
-this - is use the `Security` service.
+this - is to use the `Security` service.
 
 Add `public function __construct()` with one argument: `Security $security`. I'll
 hit Alt + Enter -> Initialize Fields to create that property and set it
 
-Inside `voterOnAttribute`, for the `EDIT` attribute, if
+Inside `voteOnAttribute`, for the `EDIT` attribute, if
 `$this->security->isGranted('ROLE_ADMIN')`, return true.
 
 That's *lovely*. I don't have a test for this... but you *could* add one
@@ -137,7 +137,7 @@ php bin/phpunit --filter=testUpdateCheeseListing
 
 All good.
 
-I *love* voters, and this is way I handle access controls in API Platform.
+I *love* voters, and this is the way I handle access controls in API Platform.
 Sure, if you're just checking for a role, no problem: use `is_granted('ROLE_ADMIN')`.
 But if your logic gets *any* more complex, use a voter.
 
