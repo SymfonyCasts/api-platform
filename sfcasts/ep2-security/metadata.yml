@@ -21,6 +21,7 @@ chapters:
     - encode-user-password
     - validation-groups
     - conditional-field-setup
+    - test-roles-reload
     - context-builder
     - auto-groups
     - resource-metadata-factory
