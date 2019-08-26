@@ -20,7 +20,7 @@ chapters:
     - plain-password
     - encode-user-password
     - validation-groups
-    - conditional-field-setup   #raw
-    - context-builder           #raw
+    - conditional-field-setup
+    - context-builder
     - auto-groups               #raw
     - resource-metadata-factory #raw
