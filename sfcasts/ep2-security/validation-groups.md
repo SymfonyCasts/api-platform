@@ -1,77 +1,96 @@
 # Validation Groups
 
-Coming soon...
+We're missing some validation related to the new password setup. If we send an
+empty POST request to `/api/users`, I get a `400` error because we're missing
+the email and username fields. See what's missing? No validation error for the
+missing password!
 
-You don't know, we're missing some validation right now with our new setup. Like if I
-sense a empty POST requests up to `/api/users`, I get a `400` air because I'm missing
-the email and the username. But look, there's no violation here for password. We
-forgot to put validation on our password field. So no problem. We know that the
-password field in our API is actually called `plainPassword`. So here we are going to
-add `@Assert/NotBlank()` and good. Now it's required and I can even execute that
-immediately and now we see that the `password` field is required. Um, but you may have
-noticed a problem. This is gonna make the `password` field required. When I edit a user
-to, if I edit a user and I only want to update, for example, the username, that's
-going to be problem because that play and `password` field, it's going to be blank. And
-it's actually getting me a validation error. Let's actually fix this. But first I
-want to write a test for this just to make sure that we really keep things solid. So
-in `UserResourceTest`, let's make a `public function testUpdateUser()`
+No problem. We know that the password field in our API is actually the
+`plainPassword` property in `User`. Above this, add `@Assert/NotBlank()`.
 
-`$client = self::createClient()` then and then to update the user, we're going to
-need to create a user. So I'll say `$this->createUserAndLogin()` will do both of
-those at the same time onwhenyou use my normal `cheeseplease@example.com` password `foo`, Huh?
+We're good! If we try that operation again... `password` *is* now required.
 
-Perfect. And now we'll make the `$client->request()`. We'll make the `PUT` request to
-`/api/users/` and then `$user->getId()`. And then for the data we'll just send, let's just
-say like brisk, pretend like we're updating or username. So I'll say `username`
-to `newusername`. Cool. That is a completely valid thing to do. This should give say
-`200` status code. So I'll say `$this->assertResponseIsSuccessful()`. That's actually a
-kind of a more generic way just to check for a `200` level status code. And then one of
-the other astrick assertion, which is really cool is you can say `->assertJsonContains()`
-and you can give it a subset of the fields that you expect to be in there. So one of
-the fields that we expect as we expect it to be `username` field and it should now be
+Sigh. But like all good things in programming, fixing one problem... creates a
+*new* problem. This will make the `password` field required when *editing* a user.
+Think about it: since the `plainPassword` field isn't persisted to the database,
+at the beginning of every request, it will be empty. So if we only want to update
+the `username` of a `User`, the `plainPassword` property will be blank and we'll
+get the validation error.
+
+## Testing the User Update
+
+Before we fix this, let's add a quick test. In `UserResourceTest`, add a new
+`public function testUpdateUser()` with the usual `$client = self::createClient()`
+to start.
+
+Let's create a user and login at the same time with `$this->createUserAndLogin()`.
+Pass that the `$client` and the normal `cheeseplease@example.com` and password
+`foo`.
+
+Great! Let's see if we can update *just* the username: `$client->request()` to make
+a `PUT` request to `/api/users/` and then `$user->getId()`. For the `json` data,
+pass only `username` set to `newusername`.
+
+This should be a totally valid PUT request. To make sure it works, use
+`$this->assertResponseIsSuccessful()`... which is a nice assertion to make sure
+the response is *any* 200 level status code, like 200, 201, 204 or whatever.
+
+And... to be extra cool, let's assert that the response *does* contain the updated
+username. we'll test that the field *did* update. For that, there's a really nice
+assertion: `$this->assertJsonContains()`. You can pass this any subset of fields you
+want to check for. We want to assert that the json *contains* a `username` field
 set to `newusername`.
 
-That's not going to be the only field that we get back, but that should be one of the
-fields that we get back. Cool. So let's try that. I'm not copying `testUpdateUser`
+It's gorgeous! Copy the method name, find your terminal, and run:
 
 ```terminal
 php bin/phpunit --filter=testUpdateUser
 ```
 
-and you look
-perfect gas, it fails. You can say we get back `400` requests, bad requests because
-we're getting this value should not be blank on passwords of updating. All right, so
-how do we fix this? The answer is with validation groups. So one of the things that
-you can do, and you don't need to do it too often, but this is a perfect case for it,
-is whenever you have an assertion here, you can actually add a `groups={}` option and
-you can put that mellish and into a group. Now these group names are just kinda like
-the um, similar to like the normalization groups. You just kind of make up their
-name. And I'm not going to get too technical with this. I'm just going to say I'm
-gonna put this into a group called `create`. This is something that should only be used
-when I create a user object.
+And... it fails! 400 bad request because of the validation error on `password`.
 
-Then now by default, when you validate something, whenever you have a, an, an assert
-like a certain not link, all of these assertions go into a group called default. And
-whenever you, um, s validate something, by default, it's going to validate all the
-constraints inside of the group called `default`. So now we want to do, because as soon
-as we make this change, if we rerun our test now, it's actually went to work. Yeah.
-Because our put endpoint is only running things in the default group. The problem now
-is that we have means that our post endpoint is also only running things in the
-default group. So this is actually, this constraints basically never been used. So we
-want to say is on the collection post collection operation. We want to validate the
-default group and the create group. So I'm gonna break this `access_control` down on
-the next line here just for readability. We'll add a comma and that one we can do
-here is we can say `"validation_groups"=` and then set this to an array.
-Instead of here we'll put `default` cause we want to still run the normal validation
-constraints. And then we'd say `create`.
+## Validation Groups
 
-All right, so let's go back here. And this time what I'm gonna do is I'm running a
+So... how *do* we fix this? We want this field to be required for the `POST` operation...
+but *not* for the PUT operation. The answer is validation groups. Check this out:
+*every* assertion has an option called `groups`. These are kinda like normalization
+groups: you just make up a name. Let's put this into an... I don't know... group
+called `create`.
+
+If you *don't* specify `groups` on an assertion, the validator automatically puts
+that constraint into a group called `Default`. And... by... default... the validator
+will only execute constraints that are in this group called `Default`.
+
+We can see this, if you rerun the test now:
+
+```terminal-silent
+php bin/phpunit --filter=testUpdateUser
+```
+
+It passes! The `NotBlank` constraint above `plainPassword` is now *only* in a group
+called `create` and so, when the validator runs all constraints in the `Default`
+group, it's not included. The `NotBlank` constraint will now *never* be used.
+
+Which... is not exactly what we wanted. We don't want it to be included on the
+`PUT` operation but we *do* want it to be included on the `POST` operation.
+Fortunately, we can specify validation groups on an operation-by-operation basis.
+
+Let's break this `access_control` onto the next line for readability. Add a comma
+then say `"validation_groups"={}`. Inside, put `Default` then `create`.
+
+The POST operation should execute all validation constraints in *both* the
+`Default` and `create` groups.
+
+Find your terminal and, this time, run *all* the user tests:
 
 ```terminal
 php bin/phpunit test/Functional/UserResourceTest.php
 ```
 
-and then I'm going to run actually the entire tests,
-functional user resource test that PHP files from to make sure we check both create
-and [inaudible] and points and scroll up. Yes, they both work. So validation groups,
-something that occasionally you need. That's how you do them.
+Green!
+
+Next, sometimes, based on who is logged in, you might need to show additional fields
+are *hide* some fields. The same is true when creating or updating a resource: an
+admin user might have access to *write* some field, but not normal API users.
+
+Let's start getting this all set up next!
