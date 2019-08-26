@@ -22,5 +22,5 @@ chapters:
     - validation-groups
     - conditional-field-setup
     - context-builder
-    - auto-groups               #raw
+    - auto-groups
     - resource-metadata-factory #raw
