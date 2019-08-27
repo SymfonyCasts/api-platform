@@ -22,6 +22,7 @@ chapters:
     - validation-groups
     - conditional-field-setup
     - test-roles-reload
+    - service-decoration
     - context-builder
     - auto-groups
     - resource-metadata-factory
