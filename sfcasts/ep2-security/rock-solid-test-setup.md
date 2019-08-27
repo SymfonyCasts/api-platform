@@ -9,6 +9,8 @@ Inside `src/`, create a new directory called `Test/`. Then, add a new class:
 have been using so far. If you're using API platform 2.5, the namespace will start
 with the `ApiPlatform\Core` namespace.
 
+[[[ code('77ac3b4c7f') ]]]
+
 ## Base Class with createUser() and logIn()
 
 We're creating a new base class that all our functional tests will extend. Why?
@@ -29,6 +31,8 @@ variable and the `$password` variable. This will temporarily *still* be the
 username, let's be clever! Grab the substring of the email from the zero position
 to wherever the `@` symbol is located. Basically, use everything *before* the `@` symbol.
 
+[[[ code('35110b839d') ]]]
+
 We're also going to need to log in from... basically every test. Add a
 `protected function logIn()`. To accomplish this, we'll need to make a request...
 which means we need the `Client` object. Add that as the first argument followed
@@ -38,6 +42,8 @@ time `$password` will be the plain text password. We shouldn't need to return an
 Let's sharpen our code-stealing skills once again by going back to our test, copying
 these last two lines, pasting them, and making `$email` and `$password` dynamic.
 
+[[[ code('a9fb736af3') ]]]
+
 Woo! Time to shorten our code! Change the test class to extend our shiny new
 `CustomApiTestCase`. Below, replace *all* the user stuff with
 `$this->createUser('cheeseplease@example.com')` and... aw... dang! I should
@@ -46,6 +52,8 @@ redo... and paste as the second argument.
 
 Replace the login stuff too with `$this->login()`, passing `$client` that same
 `cheeseplease@example.com` and the plain text password: `foo`.
+
+[[[ code('7b99972f9e') ]]]
 
 Let's check things! Go tests go!
 
@@ -73,6 +81,8 @@ we use normally for autowiring. Now say `->encodePassword()` and pass the
 `$user` object and then the plain text password: `$password`. Finish this with
 `$user->setPassword($encoded)`.
 
+[[[ code('d88d514154') ]]]
+
 Beautiful!
 
 And this point... I'm happy! Heck, I'm thrilled! But... I *do* have *one* more
@@ -84,7 +94,12 @@ the `User`. Inside say `$user = $this->createUser()` with `$email` and `$passwor
 then `$this->logIn()` with `$client`, `$email`, `$password`. At the bottom,
 `return $user`.
 
+[[[ code('7dce438cf7') ]]]
+
 Nice! Now we can shorten things a *little* bit more: `$this->createUserAndLogIn()`.
+
+[[[ code('dab01c8d4a') ]]]
+
 Let's try it! Run:
 
 ```terminal
@@ -105,6 +120,8 @@ and so this will fail validation: a 400 error. If you wanted to make this a bit
 more useful, you could pass *real* data here - like a `title`, `description`,
 etc - and test that we get back a 201 successful status code.
 
+[[[ code('cffe4d3b2f') ]]]
+
 Let's try this!
 
 ```terminal-silent
@@ -114,6 +131,8 @@ php bin/phpunit
 It works! Oh, but one last, *tiny* bit of cleanup. See this `headers` key? We
 can remove that... and we have one more in `CustomApiTestCase` that we can
 also remove.
+
+[[[ code('4a93093578') ]]]
 
 But wait... didn't we need this so that API Platform knows we're sending data
 in the right format? Absolutely. But... when you pass the `json` option, the
