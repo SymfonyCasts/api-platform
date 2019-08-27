@@ -11,6 +11,8 @@ Let's start by writing a test. In the test class, add
 `cheeseplease@example.com` and password `foo`. Wait, I only want to use
 `createUser()` - we'll log in manually a bit later.
 
+[[[ code('c0ce1ecb66') ]]]
+
 ## Always Start with self::createClient()
 
 Notice that the *first* line of my test is `$client = self::createClient()`...
@@ -31,14 +33,20 @@ title right here: "Block of Cheddar". Next say `$cheeseListing->setOwner()` and
 make sure this `CheeseListing` is *owned* by the user we just created. Now fill in
 the last required fields: `setPrice()` to $10 and `setDescription()`.
 
+[[[ code('c9c519765a') ]]]
+
 To save, we need the entity manager! Go back to `CustomApiTestCase`... and copy
 the code we used to get the entity manager. Needing the entity manager
 is *so* common, let's create another shortcut for it:
 `protected function getEntityManager()` that will return `EntityManagerInterface`.
 Inside, `return self::$container->get('doctrine')->getManager()`.
 
+[[[ code('bfce946574') ]]]
+
 Let's use that: `$em = $this->getEntityManager()`, `$em->persist($cheeseListing)`
 and `$em->batman()`. Kidding. But wouldn't that be awesome? `$em->flush()`.
+
+[[[ code('f6ccc18588') ]]]
 
 Great setup! Now... to the *real* work. Let's test the "happy" case first:
 let's test that *if* we log in with this user and try to make a `PUT` request
@@ -48,14 +56,20 @@ Easy peasy: `$this->logIn()` passing `$client`, the email and password. Now
 that we're authenticated, use `$client->request()` to make a `PUT` request to
 `/api/cheeses/` and then the id of that `CheeseListing`: `$cheeseListing->getId()`.
 
+[[[ code('1b2bea5087') ]]]
+
 For the options, most of the time, the only thing you'll need here is the `json`
 option set to the data you need to send. Let's *just* send a `title` field set
 to `updated`. That's enough data for a valid PUT request.
+
+[[[ code('d196436fd7') ]]]
 
 What status code will we get back on success? You don't have to guess. Down on
 the docs... it tells us: 200 on success.
 
 Assert that `$this->assertResponseStatusCodeSame(200)`.
+
+[[[ code('05d8d554d8') ]]]
 
 Perfect start! Copy the method name so we can execute *just* this test. At your
 terminal, run:
@@ -75,6 +89,8 @@ Rename this `$user` variable to `$user1`, change the email to
 keep things easier to read... because *now* I'm going to create a *second* user:
 `$user2 = $this->createUser()` with `user2@example.com` and the same password.
 
+[[[ code('67ad9dfdf9') ]]]
+
 Now, copy the *entire* login, request, assert-response-status-code stuff and paste
 it right *above* here: before we test the "happy" case where the *owner* tries to
 edit their *own* `CheeseListing`, let's first see what happens when a *non-owner*
@@ -83,6 +99,8 @@ tries this.
 Log in this time as `user2@example.com`. We're going to make the exact same request,
 but *this* time we're expecting a `403` status code, which means we *are* logged in,
 but we do *not* have access to perform this operation.
+
+[[[ code('ddeb21a2e8') ]]]
 
 I *love* it! With any luck, this should *fail*: our `access_control` is *not*
 smart enough to prevent this yet. Try the test:
@@ -110,6 +128,8 @@ is `user`, which is the currently-authenticated `User` or `null` if the user is 
 
 Knowing that, we can say `and object.getOwner() == user`.
 
+[[[ code('e241b84872') ]]]
+
 Yea... that's it! Try the test again and...
 
 ```terminal-silent
@@ -128,12 +148,16 @@ Set this to:
 
 ... and make sure you have a comma after the previous line.
 
+[[[ code('8f546e6680') ]]]
+
 If you run the test... this makes *no* difference. But this option *did* just
 change the message the user sees. Check it out: after the 403 status code,
 `var_dump()` `$client->getResponse()->getContent()` and pass that `false`.
 Normally, if you call `getContent()` on an "error" response - a 400 or 500 level
 response - it throws an exception. This tells it *not* to, which will let us
 see that response's content. Try the test:
+
+[[[ code('c619c58582') ]]]
 
 ```terminal-silent
 php bin/phpunit --filter=testUpdateCheeseListing
