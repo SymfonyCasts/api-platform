@@ -14,6 +14,8 @@ be useful for admin users to be able to do this. But... this complicates things
 *beautifully*! Let's try changing the `owner` field to `/api/users/` then
 `$user2->getId()`.
 
+[[[ code('1d8f7a61eb') ]]]
+
 Clearly, this should *not* be allowed: the user that *doesn't* own this `CheeseListing`
 is trying to edit it and... make themselves the owner! Naughty!
 
@@ -53,6 +55,8 @@ if you want to run a security check *after* deserialization. In that case, the
 Phew! For us on API Platform 2.4, as soon as we change to `previous_object`...
 it should work! Try the test:
 
+[[[ code('b700f1f4a3') ]]]
+
 ```terminal-silent
 php bin/phpunit --filter=testUpdateCheeseListing
 ```
@@ -68,9 +72,13 @@ Start by saying `itemOperations={}`. For the `get` operation... let's steal an
 `access_control` from `CheeseListing`. Let's see... to be able to fetch a single
 User, let's say that you need to at *least* be logged in. So, `ROLE_USER`.
 
+[[[ code('416a905390') ]]]
+
 For the `put` operation, you're probably going to need to be logged in and...
 you should probably only be able to update your *own* record. Use
 `is_granted('ROLE_USER') and object == user`.
+
+[[[ code('4d7372ad7e') ]]]
 
 In this case, because we're not checking a specific property, we can safely
 use `object` instead of `previous_object`: you can send data to change a specific
@@ -79,9 +87,13 @@ property... but not the entire object.
 Finally, for `delete`, let's say that you can only delete a `User` if you're an
 admin: `access_control` looking for `ROLE_ADMIN`.
 
+[[[ code('7c9c254ad8') ]]]
+
 Cool! Next, `collectionOperations`! For `get`, let's say that you need to be
 logged in... and for `post`, for *creating* a `User`... hey, that's registration!
 Put nothing here: this must be available to anonymous users.
+
+[[[ code('5e3d4984a5') ]]]
 
 Very nice! We could create some tests for this, but now that we're getting
 comfortable... and because these access rules are still *fairly* simple, I'll
@@ -99,12 +111,16 @@ this time with a *capital* C - the top-level options are camel case. A few of
 our operations require `ROLE_USER`... so, if we want to, we could say
 `accessControl="is_granted('ROLE_USER')"`.
 
+[[[ code('68a96421d8') ]]]
+
 This becomes the *default* access control that will be used for all operations
 *unless* an operation overrides this with their *own* `access_control`. This
 means that we don't need to repeat `access_control` on the `get` collection or
 `get` item operations. But! We *do* now need to set `access_control` on the `post`
 operation to look for `IS_AUTHENTICATED_ANONYMOUSLY`. We're overriding the
 default access control and making sure that *anyone* can access this operation.
+
+[[[ code('a4c57775cb') ]]]
 
 Using the resource-level versus operation-level access control is a matter of
 taste... and resource-level controls fit better on some resources than others.
