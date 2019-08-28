@@ -1,0 +1,39 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index b561e35..3fcf3ef 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -98,6 +98,7 @@ class CheeseListing
+      * @ORM\JoinColumn(nullable=false)
+      * @Groups({"cheese:read", "cheese:collection:post"})
+      * @IsValidOwner()
++     * @Assert\NotBlank()
+      */
+     private $owner;
+ 
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index a134fa2..c8c7272 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -22,16 +22,17 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $authenticatedUser = $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
+         $otherUser = $this->createUser('otheruser@example.com', 'foo');
+ 
+-        $client->request('POST', '/api/cheeses', [
+-            'json' => [],
+-        ]);
+-        $this->assertResponseStatusCodeSame(400);
+-
+         $cheesyData = [
+             'title' => 'Mystery cheese... kinda green',
+             'description' => 'What mysteries does it hold?',
+             'price' => 5000
+         ];
++
++        $client->request('POST', '/api/cheeses', [
++            'json' => $cheesyData,
++        ]);
++        $this->assertResponseStatusCodeSame(400, 'missing owner');
++
+         $client->request('POST', '/api/cheeses', [
+             'json' => $cheesyData + ['owner' => '/api/users/'.$otherUser->getId()],
+         ]);

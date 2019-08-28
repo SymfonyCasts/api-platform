@@ -1,0 +1,16 @@
+diff --git a/src/Validator/IsValidOwnerValidator.php b/src/Validator/IsValidOwnerValidator.php
+index 4c94354..377e294 100644
+--- a/src/Validator/IsValidOwnerValidator.php
++++ b/src/Validator/IsValidOwnerValidator.php
+@@ -32,6 +32,11 @@ class IsValidOwnerValidator extends ConstraintValidator
+             return;
+         }
+ 
++        // allow admin users to change owners
++        if ($this->security->isGranted('ROLE_ADMIN')) {
++            return;
++        }
++
+         if (!$value instanceof User) {
+             throw new \InvalidArgumentException(sprintf('@IsValidOwner constraint must be put on a property container a User object'));
+         }

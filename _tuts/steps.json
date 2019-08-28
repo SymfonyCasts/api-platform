@@ -821,13 +821,18 @@
             "description": null
         },
         {
-            "id": "normalizer-add-cacheablesupportsmethodinterface",
-            "name": "Normalizer: Add CacheableSupportsMethodInterface",
+            "id": "normalizer-delete-me1",
+            "name": "Normalizer: delete me1",
             "description": null
         },
         {
             "id": "normalizer-check-true-security",
             "name": "Normalizer: check true security",
+            "description": null
+        },
+        {
+            "id": "normalizer-fix-phonenumber-test",
+            "name": "Normalizer: fix phoneNumber test",
             "description": null
         },
         {
@@ -838,6 +843,11 @@
         {
             "id": "acl-group-to-only-allow-cl-owner-on-post",
             "name": "ACL: group to only allow CL.owner on POST",
+            "description": null
+        },
+        {
+            "id": "acl-test-with-bad-cl-owner",
+            "name": "ACL: test with bad CL.owner",
             "description": null
         },
         {
@@ -853,6 +863,16 @@
         {
             "id": "acl-finishing-validator",
             "name": "ACL: Finishing validator",
+            "description": null
+        },
+        {
+            "id": "acl-allow-admin-to-change",
+            "name": "ACL: allow admin to change",
+            "description": null
+        },
+        {
+            "id": "acl-add-notblank-validation",
+            "name": "ACL: add NotBlank validation",
             "description": null
         },
         {
@@ -876,5 +896,5 @@
             "description": null
         }
     ],
-    "sha": "462bb514482836e8c4b0eea4eb2f757b0370fef1"
+    "sha": "83b3c0b9a8cbed75f934326661372abd362fadcb"
 }

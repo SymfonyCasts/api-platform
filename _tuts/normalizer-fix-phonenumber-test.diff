@@ -1,0 +1,14 @@
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+index abbb1e0..a802fc4 100644
+--- a/tests/Functional/UserResourceTest.php
++++ b/tests/Functional/UserResourceTest.php
+@@ -51,7 +51,8 @@ class UserResourceTest extends CustomApiTestCase
+     public function testGetUser()
+     {
+         $client = self::createClient();
+-        $user = $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
++        $user = $this->createUser('cheeseplease@example.com', 'foo');
++        $this->createUserAndLogIn($client, 'authenticated@example.com', 'foo');
+ 
+         $user->setPhoneNumber('555.123.4567');
+         $em = $this->getEntityManager();
