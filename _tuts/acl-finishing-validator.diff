@@ -10,7 +10,7 @@ index f003a37..9aea431 100644
 +    public $anonymousMessage = 'Cannot set owner unless you are authenticated';
  }
 diff --git a/src/Validator/IsValidOwnerValidator.php b/src/Validator/IsValidOwnerValidator.php
-index 71a121a..4c94354 100644
+index 71a121a..79a51ae 100644
 --- a/src/Validator/IsValidOwnerValidator.php
 +++ b/src/Validator/IsValidOwnerValidator.php
 @@ -2,11 +2,20 @@
@@ -49,7 +49,7 @@ index 71a121a..4c94354 100644
 +        }
 +
 +        if (!$value instanceof User) {
-+            throw new \InvalidArgumentException(sprintf('@IsValidOwner constraint must be put on a property container a User object'));
++            throw new \InvalidArgumentException('@IsValidOwner constraint must be put on a property containing a User object');
 +        }
 +
 +

@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
-index a4ddf0b..230674a 100644
+index e2ba9f7..a56f46d 100644
 --- a/src/Serializer/Normalizer/UserNormalizer.php
 +++ b/src/Serializer/Normalizer/UserNormalizer.php
 @@ -3,6 +3,7 @@
@@ -7,10 +7,10 @@ index a4ddf0b..230674a 100644
  
  use App\Entity\User;
 +use Symfony\Component\Security\Core\Security;
+ use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
  use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
  use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
- use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
-@@ -13,6 +14,13 @@ class UserNormalizer implements ContextAwareNormalizerInterface, NormalizerAware
+@@ -14,6 +15,13 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
  
      private const ALREADY_CALLED = 'USER_NORMALIZER_ALREADY_CALLED';
  
@@ -24,18 +24,19 @@ index a4ddf0b..230674a 100644
      /**
       * @param User $object
       */
-@@ -43,6 +51,13 @@ class UserNormalizer implements ContextAwareNormalizerInterface, NormalizerAware
+@@ -44,7 +52,14 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
  
-     private function userIsOwner(User $object)
+     private function userIsOwner(User $user): bool
      {
 -        return mt_rand(0, 10) > 5;
-+        /** @var User|null $user */
-+        $user = $this->security->getUser();
++        /** @var User|null $authenticatedUser */
++        $authenticatedUser = $this->security->getUser();
 +
-+        if (!$user) {
++        if (!$authenticatedUser) {
 +            return false;
 +        }
 +
-+        return $user->getEmail() === $object->getEmail();
++        return $authenticatedUser->getEmail() === $user->getEmail();
      }
- }
+ 
+     public function hasCacheableSupportsMethod(): bool

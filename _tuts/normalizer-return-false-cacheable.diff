@@ -1,0 +1,12 @@
+diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
+index 442192d..e2ba9f7 100644
+--- a/src/Serializer/Normalizer/UserNormalizer.php
++++ b/src/Serializer/Normalizer/UserNormalizer.php
+@@ -49,6 +49,6 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
+ 
+     public function hasCacheableSupportsMethod(): bool
+     {
+-        return true;
++        return false;
+     }
+ }

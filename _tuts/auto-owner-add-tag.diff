@@ -1,0 +1,12 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index 1102e44..95444ae 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -38,3 +38,6 @@ services:
+         # implications!
+         decoration_priority: -20
+         arguments: ['@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner']
++
++    App\Doctrine\CheeseListingSetOwnerListener:
++        tags: [doctrine.orm.entity_listener]
+\ No newline at end of file

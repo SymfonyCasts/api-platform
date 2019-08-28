@@ -1,18 +1,18 @@
 diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
-index 78a409b..da34406 100644
+index 384fd52..851b7b9 100644
 --- a/src/Serializer/Normalizer/UserNormalizer.php
 +++ b/src/Serializer/Normalizer/UserNormalizer.php
-@@ -3,17 +3,13 @@
- namespace App\Serializer\Normalizer;
+@@ -4,17 +4,13 @@ namespace App\Serializer\Normalizer;
  
  use App\Entity\User;
+ use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 +use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 +use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
  use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 -use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  
--class UserNormalizer implements NormalizerInterface
-+class UserNormalizer implements NormalizerInterface, NormalizerAwareInterface
+-class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
++class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface, NormalizerAwareInterface
  {
 -    private $normalizer;
 -

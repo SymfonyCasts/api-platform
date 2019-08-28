@@ -1,0 +1,30 @@
+diff --git a/src/Doctrine/CheeseListingSetOwnerListener.php b/src/Doctrine/CheeseListingSetOwnerListener.php
+new file mode 100644
+index 0000000..16483a5
+--- /dev/null
++++ b/src/Doctrine/CheeseListingSetOwnerListener.php
+@@ -0,0 +1,12 @@
++<?php
++
++namespace App\Doctrine;
++
++use App\Entity\CheeseListing;
++
++class CheeseListingSetOwnerListener
++{
++    public function prePersist(CheeseListing $cheeseListing)
++    {
++    }
++}
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index b561e35..14ad100 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -45,6 +45,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * @ApiFilter(RangeFilter::class, properties={"price"})
+  * @ApiFilter(PropertyFilter::class)
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
++ * @ORM\EntityListeners({"App\Doctrine\CheeseListingSetOwnerListener"})
+  */
+ class CheeseListing
+ {

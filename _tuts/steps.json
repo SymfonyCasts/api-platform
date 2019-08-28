@@ -806,6 +806,11 @@
             "description": null
         },
         {
+            "id": "normalizer-return-false-cacheable",
+            "name": "Normalizer: return false cacheable",
+            "description": null
+        },
+        {
             "id": "normalizer-check-true-security",
             "name": "Normalizer: check true security",
             "description": null
@@ -856,6 +861,26 @@
             "description": null
         },
         {
+            "id": "auto-owner-enhance-test",
+            "name": "Auto-owner: enhance test",
+            "description": null
+        },
+        {
+            "id": "auto-owner-create-listener",
+            "name": "Auto-owner: create listener",
+            "description": null
+        },
+        {
+            "id": "auto-owner-finish-logic",
+            "name": "Auto-owner: finish logic",
+            "description": null
+        },
+        {
+            "id": "auto-owner-add-tag",
+            "name": "Auto-owner: add tag",
+            "description": null
+        },
+        {
             "id": "extension-empty-cheeselistingispublishedextension",
             "name": "Extension: Empty CheeseListingIsPublishedExtension",
             "description": null
@@ -876,5 +901,5 @@
             "description": null
         }
     ],
-    "sha": "83b3c0b9a8cbed75f934326661372abd362fadcb"
+    "sha": "b6748dccfac15a4bb4f18336515024c49265d4fe"
 }
