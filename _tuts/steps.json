@@ -786,21 +786,6 @@
             "description": null
         },
         {
-            "id": "autogroups-delete-me1",
-            "name": "AutoGroups: delete me1",
-            "description": null
-        },
-        {
-            "id": "autogroups-delete-me-2",
-            "name": "AutoGroups: delete me 2",
-            "description": null
-        },
-        {
-            "id": "autogroups-delete-me-3",
-            "name": "AutoGroups: delete me 3",
-            "description": null
-        },
-        {
             "id": "normalizer-make-usernormalizer",
             "name": "Normalizer: make UserNormalizer",
             "description": null
@@ -818,11 +803,6 @@
         {
             "id": "normalizer-fix-recursion",
             "name": "Normalizer: fix recursion",
-            "description": null
-        },
-        {
-            "id": "normalizer-delete-me1",
-            "name": "Normalizer: delete me1",
             "description": null
         },
         {
