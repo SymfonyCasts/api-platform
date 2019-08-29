@@ -26,3 +26,8 @@ chapters:
     - context-builder
     - auto-groups
     - resource-metadata-factory
+    - custom-normalizer # raw
+    - normalizer-chain  # raw
+    - custom-field      # raw
+    - owner-cleanup     # raw
+    - custom-validator  # raw
