@@ -881,6 +881,16 @@
             "description": null
         },
         {
+            "id": "extension-test-get-cl-collection",
+            "name": "Extension: test get CL collection",
+            "description": null
+        },
+        {
+            "id": "extension-change-test-for-published",
+            "name": "Extension: change test for published",
+            "description": null
+        },
+        {
             "id": "extension-empty-cheeselistingispublishedextension",
             "name": "Extension: Empty CheeseListingIsPublishedExtension",
             "description": null
@@ -896,10 +906,35 @@
             "description": null
         },
         {
+            "id": "extension-test-for-single-item",
+            "name": "Extension: test for single item",
+            "description": null
+        },
+        {
+            "id": "extension-assert-404-on-test",
+            "name": "Extension: assert 404 on test",
+            "description": null
+        },
+        {
             "id": "extension-add-extension-item-interface",
             "name": "Extension: add extension item interface",
             "description": null
+        },
+        {
+            "id": "relation-add-failing-test",
+            "name": "Relation: add failing test",
+            "description": null
+        },
+        {
+            "id": "relation-add-filtered-getter",
+            "name": "Relation: add filtered getter",
+            "description": null
+        },
+        {
+            "id": "relation-fix-update-published-test",
+            "name": "Relation: fix update published test",
+            "description": null
         }
     ],
-    "sha": "b6748dccfac15a4bb4f18336515024c49265d4fe"
+    "sha": "dc4b5e5ddf36a5453408716e020e07aa4821681d"
 }

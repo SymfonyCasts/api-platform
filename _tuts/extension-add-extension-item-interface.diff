@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
-index f11c0cb..f41af02 100644
+index f11c0cb..ea612c3 100644
 --- a/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 +++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 @@ -3,12 +3,13 @@
@@ -17,7 +17,7 @@ index f11c0cb..f41af02 100644
  {
      private $security;
  
-@@ -18,6 +19,20 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
+@@ -18,6 +19,16 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
      }
  
      public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
@@ -30,10 +30,6 @@ index f11c0cb..f41af02 100644
 +        $this->addWhere($queryBuilder, $resourceClass);
 +    }
 +
-+    /**
-+     * @param QueryBuilder $queryBuilder
-+     * @param string $resourceClass
-+     */
 +    private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
      {
          if ($resourceClass !== CheeseListing::class) {

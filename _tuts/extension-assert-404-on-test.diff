@@ -1,0 +1,19 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 5517a7f..4753849 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -114,12 +114,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $cheeseListing1->setOwner($user);
+         $cheeseListing1->setPrice(1000);
+         $cheeseListing1->setDescription('cheese');
++        $cheeseListing1->setIsPublished(false);
+ 
+         $em = $this->getEntityManager();
+         $em->persist($cheeseListing1);
+         $em->flush();
+ 
+         $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
+-        $this->assertResponseStatusCodeSame(200);
++        $this->assertResponseStatusCodeSame(404);
+     }
+ }
