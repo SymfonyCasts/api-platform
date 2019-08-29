@@ -23,11 +23,15 @@ Call it `CheeseListingVoter`. I commonly have one voter for each entity or "reso
 that has complex access rules. This creates
 `src/Security/Voter/CheeseListingVoter.php`.
 
+[[[ code('913b156c8b') ]]]
+
 ## Updating access_control
 
 Before we dive into the new class, go to `CheeseListing`. Instead of saying
 `is_granted('ROLE_USER') and previous_object.getOwner() == user`, simplify
 to `is_granted('EDIT', previous_object)`.
+
+[[[ code('7e2dc8f472') ]]]
 
 This... deserves some explanation. The word `EDIT`... well... I just invented that.
 We could use `EDIT` or `MANAGE` or `CHEESE_LISTING_EDIT`... it's *any* word that
@@ -68,6 +72,8 @@ We're going to design our voter to decide access if the `$attribute` is `EDIT` -
 and we may support other strings later... like maybe `DELETE` - *and* if
 `$subject` is an `instanceof CheeseListing`.
 
+[[[ code('e334a5fc6f') ]]]
+
 If anything else is passed - like `ROLE_ADMIN` - `supports()` will return false
 and Symfony will know to ask a different voter.
 
@@ -89,6 +95,8 @@ So, if `$attribute` is equal to `EDIT`, let's put our security business logic.
 If  `$subject->getOwner() === $user`, return true! Access granted. Otherwise,
 return false.
 
+[[[ code('4692dd0779') ]]]
+
 That's it! Oh, in case we make a typo and pass some *other* attribute
 to `is_granted()`, the end of this function always return `false` to deny access.
 That's cool, but let's make this mistake *super* obvious. Throw a big exception:
@@ -96,6 +104,8 @@ That's cool, but let's make this mistake *super* obvious. Throw a big exception:
 > Unhandled attribute "%s"
 
 and pass that `$attribute`.
+
+[[[ code('1c0c84b885') ]]]
 
 I love it! Our `access_control` is simple: `is_granted('EDIT', previous_object)`.
 If we've done our job, this will call our voter and everything will work just like
@@ -121,8 +131,12 @@ this - is to use the `Security` service.
 Add `public function __construct()` with one argument: `Security $security`. I'll
 hit Alt + Enter -> Initialize Fields to create that property and set it
 
+[[[ code('5d5492c473') ]]]
+
 Inside `voteOnAttribute`, for the `EDIT` attribute, if
 `$this->security->isGranted('ROLE_ADMIN')`, return true.
+
+[[[ code('7053e60f8b') ]]]
 
 That's *lovely*. I don't have a test for this... but you *could* add one
 in `CheeseListingResourceTest` by creating a *third* user, giving them
