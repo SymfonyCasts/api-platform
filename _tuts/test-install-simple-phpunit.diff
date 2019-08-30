@@ -28,7 +28,7 @@ index e9a690c..428f6fc 100644
 +/phpunit.xml
 +###< symfony/phpunit-bridge ###
 diff --git a/bin/phpunit b/bin/phpunit
-new file mode 100755
+new file mode 100644
 index 0000000..4d1ed05
 --- /dev/null
 +++ b/bin/phpunit
