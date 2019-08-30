@@ -30,9 +30,13 @@ Before we get there, let's write a test to make sure this works. In the
 this extend our nice `CustomApiTestCase` and use the `ReloadDatabaseTrait` so
 the database gets emptied before each test.
 
+[[[ code('e8a680adc2') ]]]
+
 Because we're testing the POST endpoint, add
 `public function testCreateUser()` with our usual start:
 `$client = self::createClient()`.
+
+[[[ code('91c26a2a57') ]]]
 
 In this case... we don't need to put anything into the database before we start...
 so we can jump *straight* to the request: `$client->request()` to make a `POST`
@@ -44,9 +48,13 @@ encoded password... but to the plain text password. How about: `brie`. At the
 end, toast to our success by asserting that we get this 201 success status code:
 `$this->assertResponseStatusCodeSame(201)`.
 
+[[[ code('f73990bd83') ]]]
+
 But... this won't be enough to make sure that the password was *correctly* encoded.
 Nope, to know for sure, let's try to login: `$this->logIn()` passing the
 `$client`, the email and the password: `brie`.
+
+[[[ code('01e5674cce') ]]]
 
 That's all we need! The `logIn()` method has a built-in assertion. So if the password
 is *not* correctly encoded, we'll know with a big, giant test failure.
@@ -81,6 +89,8 @@ But this field will *not* be persisted to Doctrine: it exists *just* as temporar
 storage. Make this *writable* with `@Groups({"user:write"})`... then *stop* exposing
 the `password` field itself.
 
+[[[ code('4a600af7af') ]]]
+
 So, yes, this will temporarily mean that the POSTed field needs to be called
 *plainPassword* - but we'll fix that in a few minutes with `@SerializedName`.
 
@@ -89,6 +99,8 @@ getter and setter for this field. Oh... except I don't want those up here! I
 want them *all* the way at the bottom. And... we can tighten this up a bit:
 this will return a nullable string, the argument on the setter will be a string
 and all of my setters return `self` - they all have `return $this` at the end.
+
+[[[ code('e0d0a3d13c') ]]]
 
 ## eraseCredentials
 
