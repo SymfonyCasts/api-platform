@@ -31,3 +31,6 @@ chapters:
     - custom-field      # raw
     - owner-cleanup     # raw
     - custom-validator  # raw
+    - entity-listener   # raw
+    - query-extension   # raw
+    - item-extension    # raw
