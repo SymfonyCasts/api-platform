@@ -39,8 +39,12 @@ This class will be responsible for "persisting" `User` objects. Make it implemen
 which is the same, except that all 3 methods are passed the "context", in case
 you need the `$context` to help your logic.
 
+[[[ code('bc5b619599') ]]]
+
 Anyways I'll go to the Code -> Generate menu - or Command+N on a Mac - and select
 "Implement Methods" to generate the three methods this interface requires.
+
+[[[ code('bcd91d610c') ]]]
 
 And... we're... ready! As *soon* as you create a class that implements
 `DataPersisterInterface`, API Platform will immediately start using that. This
@@ -49,6 +53,8 @@ means that, *whenever* an object is saved - or removed - it will *now* call
 
 In our case, if data is a `User` object, we *do* support saving this object.
 Say that with: `return $data instanceof User`.
+
+[[[ code('0502322de1') ]]]
 
 As *soon* as API Platform finds *one* data persister whose `supports()` returns
 `true`, it calls `persist()` on that data persister and does *not* call any
@@ -68,10 +74,14 @@ Add `public function __construct()` with the `EntityManagerInterface $entityMana
 argument to autowire that into our class. I'll hit my favorite Alt + Enter and
 select "Initialize fields" to create that property and set it.
 
+[[[ code('8270c0c454') ]]]
+
 Down in `persist()`, it's pretty simple: `$this->entityManager->persist($data)`
 and `$this->entityManager->flush()`. Data persisters are also called when an object
 is being deleted. In `remove()`, we need `$this->entityManager->remove($data)`
 and `$this->entityManager->flush()`.
+
+[[[ code('cb762f7cc4') ]]]
 
 Congrats! We now have a data persister that... does *exactly* the same thing as
 the core Doctrine data persister! But... oh yea... now, we're dangerous. *Now*
@@ -90,11 +100,15 @@ And... there it is: `UserPasswordEncoderInterface`. Add the argument -
 `UserPasswordEncoderInterface $userPasswordEncoder` - hit "Alt + Enter" again
 and select "Initialize fields" to create that property and set it.
 
+[[[ code('f52721600a') ]]]
+
 Now, down in `persist()`, we know that `$data` will always be an instance of `User`.
 ... because that's the only time our `supports()` method returns `true`. I'm going
 to add a little PHPdoc above this to help my editor.
 
 > Hey PhpStorm! `$data` is a `User`! Ok?,
+
+[[[ code('ad13a4eee9') ]]]
 
 Let's think. This endpoint will be called both when *creating* a user, but also
 when it's being updated. And... when someone *updates* a `User` record, they may
@@ -113,6 +127,8 @@ needs to. Again, this is probably not *needed* because this field isn't saved
 to the database anyways... but it might avoid the `plainPassword` from being
 serialized to the session via the security system.
 
+[[[ code('1458b4c72a') ]]]
+
 And... done! Aren't data persisters positively lovely?
 
 Oh, well, we're not *quite* finished yet. The field in our API is still called
@@ -121,6 +137,8 @@ Oh, well, we're not *quite* finished yet. The field in our API is still called
 
 No problem. Inside `User`, find the `plainPassword` property and give it a new
 identity: `@SerializedName("password")`.
+
+[[[ code('111f9fb735') ]]]
 
 Let's check that on the docs... under the POST operation... perfect!
 
