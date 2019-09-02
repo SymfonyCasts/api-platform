@@ -27,7 +27,7 @@ chapters:
     - auto-groups
     - resource-metadata-factory
     - custom-normalizer
-    - normalizer-chain  # raw
+    - normalizer-chain
     - custom-field      # raw
     - owner-cleanup     # raw
     - custom-validator  # raw
