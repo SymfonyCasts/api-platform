@@ -8,6 +8,8 @@ the missing password!
 No problem. We know that the password field in our API is actually the
 `plainPassword` property in `User`. Above this, add `@Assert\NotBlank()`.
 
+[[[ code('acd739c8d4') ]]]
+
 We're good! If we try that operation again... `password` *is* now required.
 
 Sigh. But like many things in programming, fixing one problem... creates a
@@ -26,9 +28,13 @@ start. Then, create a user and login at the same time with
 `$this->createUserAndLogin()`. Pass that the `$client` and the
 normal `cheeseplease@example.com` with password `foo`.
 
+[[[ code('3bd1cbb3fc') ]]]
+
 Great! Let's see if we can update *just* the username: use `$client->request()`
 to make a `PUT` request to `/api/users/` `$user->getId()`. For the `json` data,
 pass only `username` set to `newusername`.
+
+[[[ code('5659ed7c9a') ]]]
 
 This should be a totally valid PUT request. To make sure it works, use
 `$this->assertResponseIsSuccessful()`... which is a nice assertion to make sure
@@ -39,6 +45,8 @@ username: we'll test that the field *did* update. For that, there's a really nic
 assertion: `$this->assertJsonContains()`. You can pass this any subset of fields you
 want to check. We want to assert that the json *contains* a `username` field
 set to `newusername`.
+
+[[[ code('29a7afde36') ]]]
 
 It's gorgeous! Copy the method name, find your terminal, and run:
 
@@ -55,6 +63,8 @@ operation... but *not* for the PUT operation. The answer is validation groups.
 Check this out: *every* constraint has an option called `groups`. These are kinda
 like normalization groups: you just make up a name. Let's put this into a... I
 don't know... group called `create`.
+
+[[[ code('d26373536d') ]]]
 
 If you *don't* specify `groups` on a constraint, the validator automatically puts
 that constraint into a group called `Default`. And... by... default... the validator
@@ -76,6 +86,8 @@ Fortunately, we can specify validation groups on an operation-by-operation basis
 
 Let's break this `access_control` onto the next line for readability. Add a comma
 then say `"validation_groups"={}`. Inside, put `Default` then `create`.
+
+[[[ code('218a47c9e9') ]]]
 
 The POST operation should execute all validation constraints in *both* the
 `Default` and `create` groups.
