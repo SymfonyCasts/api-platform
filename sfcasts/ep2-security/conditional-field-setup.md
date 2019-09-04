@@ -20,6 +20,8 @@ We'll get there. For now, let's add this to the API for *all* users by adding
 back to this in a few minutes and make sure that *only* admin users can write
 to this field.
 
+[[[ code('ebad546aaf') ]]]
+
 ## Adding a phoneNumber Field
 
 Let me give you another example: suppose each `User` has a `phoneNumber` field.
@@ -38,6 +40,8 @@ php bin/console make:entity
 Update the `User` entity, add a new `phoneNumber` field that's a string, length,
 how about `50` and say "yes" to `nullable`: the field will be optional.
 
+[[[ code('ad2aa717ab') ]]]
+
 Cool! We now have a nice new `phoneNumber` property in `User`. Generate the migration
 with:
 
@@ -46,7 +50,11 @@ php bin/console make:migration
 ```
 
 Let's double-check that migration file... and... it looks good: it adds the
-`phone_number` field but nothing else. Run it with:
+`phone_number` field but nothing else. 
+
+[[[ code('0ced3fbeae') ]]]
+
+Run it with:
 
 ```terminal
 php bin/console doctrine:migrations:migrate
@@ -63,6 +71,8 @@ php bin/console doctrine:schema:update --force --env=test
 Now that the field is in the database, let's expose it to the API. I'll steal
 the `@Groups()` from above and put this in `user:read` and `user:write`.
 
+[[[ code('d7f7eba888') ]]]
+
 Ok! This is a perfectly boring field that is readable and writable by everyone who
 has access to these operations.
 
@@ -74,12 +84,16 @@ normal `$client = self::createClient()`. Create a user & log in with
 `$user = $this->createUserAndLogin()`, email `cheeseplease@example.com`, password
 `foo` and... I forgot the first argument: `$client`.
 
+[[[ code('a29f3b3e84') ]]]
+
 That method creates a *super* simple user: with just the `username`, `email`
 and `password` fields filled in. But this time, we *also* want to set the
 `phoneNumber`. We can do that manually with `$user->setPhoneNumber('555.123.4567')`,
 and then saving it to the database. Set the entity manager to an `$em` variable -
 we'll need it a few times - and then, because we're *updating* the `User`, all we
 need is `$em->flush()`.
+
+[[[ code('0fb30d8723') ]]]
 
 In this test, we're *not* logged in as an admin user: we're logged in by the user
 that we're *fetching*. Our goal is for the API to return the `phoneNumber` field
@@ -91,13 +105,19 @@ to  `/api/users/` and then `$user->getId()`. To start, let's do a sanity check:
 `$this->assertJsonContains()` to make sure that the response contains the
 the `username` field set to `cheeseplease`.
 
+[[[ code('a6b4c94f10') ]]]
+
 But what we *really* want assert is that the `phoneNumber` field is *not* in the
 response. There's no fancy assert for this so... we'll do it by hand. Start with
 `$data = $client->getResponse()->toArray()`.
 
+[[[ code('85cbcdc1a2') ]]]
+
 This handy function will see that the response is JSON and automatically
 `json_decode()` it into an array... or throw an exception if something went wrong.
 Now we can use `$this->assertArrayNotHasKey('phoneNumber', $data)`.
+
+[[[ code('f72da6a60a') ]]]
 
 Boom! That's enough to make the test fail... because that field *should* be in
 the response right now. Copy the `testGetUser` method name and... try it:
