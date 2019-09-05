@@ -31,7 +31,7 @@ chapters:
     - normalizer-chain
     - normalizer-aware
     - custom-field
-    - owner-cleanup     # raw
+    - owner-cleanup
     - custom-validator  # raw
     - entity-listener   # raw
     - query-extension   # raw

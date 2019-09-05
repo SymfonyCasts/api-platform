@@ -1,74 +1,87 @@
-# Owner Cleanup
+# Locking down the CheeseListing.owner Field
 
-Coming soon...
+Inside `CheeseListing`, the `owner` property - that's the related `User` object
+that owns this `CheeseListing` - is required in the database. *And*, thanks to
+the `cheese:write` group, it's a *writable* field in our API.
 
-Right now when we create a cheese listing, the owner property is uh, is of course
-rideable has the cheese calling right crew, which means it's actually something that
-we can
+In fact, even though I've forgotten to add an `@Assert\NotBlank` constraint to
+this property, an API client *must* send this field when creating a new
+`CheeseListing`. They can also *change* the `owner` by sending the field via a
+PUT request. We even add some fanciness where, when you create or edit a
+`CheeseListing`, you can modify the owner's username all at the same time.
+This works because that property is in the `cheese:write` group... oops. I forgot
+to change this group when we were refactoring - that's how it should look.
+The `cheese:item:get` group means this field will be embedded when when we GET
+a *single* `CheeseListing` - that's the "item operation" - and `cheese:write`
+means it's writable when using *any* write operation for `CheeseListing`. That's
+some crazy stuff we set up on our previous tutorial.
 
-[inaudible].
+## Removing username Updatable Fanciness
 
-It's actually something that we can send when we create the cheese listing, but right
-now technically it's also something that we could change would be the put and point
-because this is simply a allowed on both operations. We even add some fanciness where
-when you create or edit achieves listing, you can actually modify the username
-property on user. Check out our last chapter for this, our last tutorial for this,
-but because this has the cheese listing calling, right? Actually that should be
-cheese calling, right? I missed that one from earlier when we are renaming our items
-because we have this cheese calling, right?
+But now, I want to simplify in two ways. First, I only want the `owner` property
+to be set when we *creating* the `CheeseListing`, I don't want it to be
+*changeable*. And second, let's get rid the fanciness of being able to edit the
+`username` property via a `CheeseListing` endpoint. For that second part, remove
+the `cheese:write` property from `username`. We can now also take off the
+`@Assert\Valid()` annotation. This caused the `User` to be validated during
+the `CheeseListing` operations. That was needed to make sure someone didn't
+set the `username` to an invalid value while updating a `CheeseListing`.
 
-That actually cascades down and allows us to when we uh, are passing you on or we can
-pass an object where the username is changed and actually change that using that
-user's username at the same time that we are creating or updating a cheese listing.
-So kind of crazy. We're going to simplify this now a little bit. I want to say that I
-only want the owner property to be a added. When we create the cheeses thing, I don't
-want it to be updated and I'm also going to remove this kind of extra fanciness of
-being able to update the username. So I'm just going to move the cheese colon right
-from username and user. Then I can remove the assert /valid which we had to have to
-make sure that the username that we were changing to is valid. And here for cheese
-colon, right.
+## Making owner *only* Settable on POST
 
-If you remember from our, from our auto group resource metadata factory, this monster
-we created, we actually already have something set up where you can um, uh, where you
-can use a special group name if you want a operation, if you want a a fuel to be
-accessible only for a specific operation. So to make this something that we can only
-send on the post request, we can use cheese, colon collection, colon and post that's
-using the a the last one down here at cheese and then item or collection and the
-operation. And Post. Cool. So now we can, now the owner field is not editable. Now
-for setting this field, when you create a cheeses listing, we really have two
-options. The first option is we could add something in our code so that when you
-said, so that you don't need a pass the owner at all, that when you discredit a
-title, press and description, we automatically see who is authenticated and assign
-the cheese listing to the currently authenticated user. That's actually a pretty nice
-feature. Would make your API a little bit like fairly user friendly for most cases.
-Um, it's not perfectly restful, it's maybe not as restful,
+Now, how can we make the `owner` property settable for the POST operation but
+*not* the PUT operation?
 
-but that is a valid way to do that. And you could do that with a custom data
-persister like we already have for our user or you can implement an event listener to
-do that, which is something that we'll talk about in the next tutorial. So that is
-something that you can do, but I'm going to kind of keep it the a bit more than
-manual way. I want to continue to, um, force my user to pass the owners string when
-they post a cheese listing. It's just a matter of flexibility by forcing the user to
-pass this, we could it.
+Open up `AutoGroupResourceMetadataFactory`. This monster automatically adds three
+normalization groups in all situations. We can use this last one to include a field
+*only* for a specific operation. Change `cheese:write` to `cheese:collection:post`.
+That follows the pattern: "short name", colon, collection, colon, then the operation
+name: `post`.
 
-And part of the reason is because I later maybe I want to create an admin interface
-where I allow admin users to assign the owner to different users. Maybe we're
-creating cheese listings over the phone or something like that. So I want to keep
-owner as part of my API. Of course, if we allow the owner to be sent, well the
-problem is that we can't just allow anyone to create a cheesesteak and say that
-someone else owns it. This is actually the first time where the data itself can be
-valid or invalid based on the user. The way to fix this is actually via validation.
-The topic of validation and security end up being very, very tight. Some people,
+Congratulations, the `owner` an no longer be changed.
 
-we could prevent this operation entirely or prevent this field from being set
-entirely at via security. But if the field itself has some valid or invalid data,
-even if that validated, it depends on who's logged in, that needs to be done via
-validation. So first let's actually right, I'm going to update one of our tests, uh,
-to kind of show the functionality we looking for. So I'm going to go to open our CI's
-listing resource test and inside test create listing. All we're doing right now it's,
-we're basically uh, verifying that you do need to be logged in to use the end. So if
-you posting a four oh one down here, you get a 400 status code because of the
-validation error. But after you log in, you do have access. So let's actually extend
+## Should Owner Be Set Automatically?
+
+But... hold up. Isn't it kinda weird that we allow the API client to send the
+`owner` field at all? I mean... shouldn't we instead *not* make `owner` part of
+our API and then write some code to automatically set this to the
+currently-authenticated user?
+
+Um, maybe. Automatically setting the `owner` property *is* kinda nice... and
+it would also make our API easier to use. We *will* talk about how to do this
+later. But I don't want to completely remove `owner` from my API. Why? Well,
+what if we created an admin interface where admin users could create cheese
+listings on *behalf* of users. In that case, we *would* want the `owner` field
+to be part of our API.
+
+But.. hmm if we allow the `owner` field to be sent... we can't just allow
+*anyone* to create a `CheeseListing` and set the `owner` to whoever they want.
+Sure, maybe an admin user should be able to do this... but how can we prevent a
+normal user from setting the `owner` to someone else?
+
+## Two Ways to Protect a Writable Field
+
+Backing up, if the behavior of the way a field can be *written* is dependent
+on the authenticated user, you have two options. First, you could prevent some
+users from writing to the field entirely. That's done by putting the property
+into a special serialization group then dynamically adding that group either
+in a context builder or in a custom normalizer. Or second, if the field should
+be writable by *all* users... but the data that's *allowed* to be set on the field
+depends on *who* is logged in, then the solution is validation.
+
+So here's our goal: prevent the API client from POSTing an `owner` value that
+is *different* than their own IRI... with an exception added for admin users:
+they can set `owner` to anyone.
+
+Let's codify this into a test first. Open `CheeseListingResourceTest`. Inside
+`testCreateListing()`, we're basically verifying that you *do* need to be logged
+in to use the operation. We get a 401 before we're authenticated... then after
+logging in, we get a 400 status code because access will be granted, but it
+will fail validation.
+
+TODO
+
+So let's actually extend
 this a little bit first. I'm actually going to set this a set, a new authenticated
 user variable equal to the user that we're logging in as I'm going to create another
 user a year other user.
