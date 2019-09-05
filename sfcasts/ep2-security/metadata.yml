@@ -29,6 +29,7 @@ chapters:
     - uncached-metadata
     - custom-normalizer
     - normalizer-chain
+    - normalizer-aware
     - custom-field      # raw
     - owner-cleanup     # raw
     - custom-validator  # raw
