@@ -1,87 +1,117 @@
-# Custom Field
+# Normalizer & Completely Custom Fields
 
-Coming soon...
+Our `UserNormalizer` is now totally set up. These classes are beautiful & flexible:
+we can add custom normalization groups on an object-by-object basis. They're also
+weird: you need to know about this `NormalizerAwareInterface` thing... and you need
+to understand the idea of setting a flag into the `$context` to avoid calling yourself
+recursively. But once you've got that setup, you're *gold*!
 
-Our user normalizer is now totally set up. These classes are beautiful, they're
-flexible, they allow you to add groups dynamically. They're just a little weird to
-set up because you need to know about this normalizer aware interface and you need to
-understand, um, why you needed to send it. This idea of setting a flag so that, uh,
-we're not calling yourselves recursively. So normalizes are great. They do have a
-little bit of weirdness with them, but we've got that now. So now we're really
-dangerous because every time are you object, um, cause the job of a normal as just to
-take this object and turn it into an array, that's what this data is here and return
-it. So we can use this to add custom groups to the context like we have, but we can
-also just add custom fields at this point. Now whenever you can, you should add
-custom fields, sort of the correct way.
+## Options for Adding Custom Fields
 
-You should, uh, you know, add a, like we did in cheese listing where we wanted to add
-a custom field called short description. So we added a get short description method
-and put it in a group and boom, we have a custom field. Um, you should do that
-because then it actually shows up like a real field in here. It's in the
-documentation. Life is good. Sometimes you can't do that. So example right now is I'm
-going to add a very not restful field, uh, to our user that whenever we finish a
-user, I would add a little ease me field here that over your turn. True or false. So
-if I'm fetching, uh, cause I'm logged in as good a dude, uh, or returned his me,
-we'll return true. Just for this one record. We can't put this on the user entity
-itself because we can't, we don't know who was logged in. We don't have access to
-that. So one way to do this is with a custom normalizer. Oh, but before we get there,
-I almost forgot we need to actually make this user, is it owner at work correctly? So
-at the top of this, let's create a public function underscore,_score construct. We
-will auto wire these security class and then I'll have all tenter go to initialize
-fields to create that property, et cetera. Then down here we'll say user =
-[inaudible].
+And if you look more closely... we're even *more* dangerous now than you might
+realize. The job of a normalizer is to turn an object - our `User` object - into
+an array of data and return it. You can tweak which data is included by adding
+more groups to the `$context`... but you could also add custom fields... right
+here!
 
-Oh,
+Well, hold on a minute. Whenever possible, if you need to add a custom field,
+you should do it the "correct" way. In `CheeseListing`, when we wan ted to add
+a custom field called `shortDescription`, we did that by adding a
+`getShortDescription()` method and putting it in the `cheese:read` group. Boom!
+custom field!
 
-I'll say authenticated user = this->Security Arrow, get user [inaudible] and above
-this off for a little help from my editor. I'll say this is either going to be a user
-object or null. If the user's not logged in. I'll say if not user, if not
-authenticated, user return, false. Otherwise we'll return authenticated user Arrow,
-get email = = = user arrow, get email. We could actually just compare those objects
-themselves comparing the emails. Fine as well. All right, so now if we run over here
-and try this request again, shouldn't see phone number only on that third field, so
-let's see here. Yep, no email, no email or phone number and that there's a phone
-number for the one user that we are logged in as awesome. This does actually break
-one of our tests. However, Ben PHP, PHP bin /PHP units.
+Why is this the *correct* way of doing it? Because this causes the field to be
+seen & documented correctly.
 
-Okay.
+But, there are two downsides - or maybe limitations - to this "correct" way of
+doing things. First, if you have *many* custom fields... it starts to get ugly:
+you might have a *bunch* of custom getter and setter fields *just* to support
+your API. And second, if you need a *service* to generate the data for the custom
+field, then you *can't* use this approach. Right now, I want to add a custom `isMe`
+field to `User`. We coudln't, for example, add a new `isMe()` method in `User`
+that returns true or false based on whether this `User` matches the
+currently-authenticated user... because we need a service to know who that is.
 
-Most of our tests will pass, but we do get one failure failed. Asserting that an
-array does not have a key from user resource test lines 66 so if you check out tests,
-functional user resource test lines 66 this is actually the test where we are testing
-to make sure that if you set a phone number on a user and then you make request to
-it, you do not get that key back. But then down here when you become an Admin user,
-we do get that key back. While I would not change that behavior a little bit, um,
-because now we've changed it so that in addition to an Admin user, the owner is also
-gets back the phone number and here since we are logging in as the same user or
-logging in as a cheese please an example of that common. Then we're also fetching
-that same user. It is actually returning and phone number field. So what we can do
-here is let's just change this to create user. So we are going to create that same
-user and we are going to fetch that same user, but we're not gonna log in as that
-user. Instead we will
+So... since we can't add an `isMe` field the *right* way... how *can* we add it?
+There are two answers. First, the... "second" correct way is to use a DTO class.
+That's something we'll talk about in a future tutorial. It takes more work, but
+it *would* result in your custom fields being documented properly. Or second, you
+can hack the field into your response via a normalizer. That's what we'll do.
 
-great user and login a different user.
+## Adding Proper Security
 
-Great.
+Oh, but before we get there, I almost forgot that we need to make this
+`userIsOwner()` method work correctly. At a constructor at the top of the class
+and autowire the `Security` class. I'll hit Alt -> Enter and go to
+"Initialize Fields" to create that property and set it. Down in the method, say
+`$authenticatedUser = $this->security->getUser()` and I'll add some PHPDoc above
+this to tell my editor that this will be a `User` object or null if the user is
+*not* logged in. Then, if `!$authenticatedUser`, return false. Otherwise, return
+`$authenticatedUser->getEmail() === $user->getEmail()`. We could also compare the
+objects themselves.
 
-Authenticated at example
+Let's try this: if we fetch the collction of all users, the `phoneNumber` field
+should *only* be included in *our* user record. And.. no `phoneNumber`, no
+`phoneNumber` and... yes! The `phoneNumber` shows up *only* on the third record:
+the user that we're logged in as.
 
-that kind of fit
+## Fixing the Tests
 
-so that you were fetching cheese please. An example of that. Com we're logged in as a
-different user so we should not see that phone number field. So that should make this
-pass on the test again and above definitions. Yes, we got it. All right, so let's go
-back to adding that is me field in the user normalizer it's actually really simple.
-You can see this data here is an array. So we're free to add whatever fields we want.
-So up here I'll, I'll set a variable called his owner. I'll set that to the
-this->user is owner and I'll use the is owner variable if statement. Then down here
-we'll say data Lasker girl racket is me,
+Oh, but this *does* break one of our tests. Run all of them:
 
-people's is owner. That's it. Swing back over here. Try this end point again and
-that's it. There we go. Is me False? Is me false and is made true. So that's a super
-powerful way to add fields. The one thing you need to realize is that API platforms
-documentation has no idea that that exists. So it's not going to document that at
-all. It's still going to say that you know, the only things, well, that's actually a
-refresh this page. If you refresh this page and go over the documentation for that,
-it's not going to have any idea that that is me. Field is being returned. So that's
-kind of the price you get for the happiness.
+```terminal
+php bin/phpunit
+```
+
+Most of these will pass, but... we *do* get one failure:
+
+> Failed asserting that an array does not have the key `phoneNumber` from
+> UserResourceTest.php line 66.
+
+Let's open that test and see what's going on. Ah yes: this is the test where we're
+checking to make sure that if you set a `phoneNumber` on a `User` and make a GET
+request for that `User`, you do *not* get the `phoneNumber` field back *unless*
+you're logged in as an admin.
+
+But we've now changed that: in addition to an admin user, the owner *also*
+gets back the `phoneNumber`. And since we're logging in as `cheeseplease@example.com`
+and then fetching that same user's data, it *is* returning the `phoneNumber` field.
+To fix this, let's create another log in as a *different* user.
+
+Change `createUserAndLogin()` to just `createUser()`... and remove the first argument.
+Now use `$this->createUserAndLogin()` to log in as a totally *different* user.
+This means we're making a GET request for the `cheeseplease@example.com` user data
+but we're logging *in* as this *other* user. So, we should *not* see the
+`phoneNumber` field.
+
+Run the tests again:
+
+```terminal-silent
+php bin/phpunit
+```
+
+And... all green.
+
+## Adding the Custom isMe Field
+
+Ok, back to our original mission... which will be *delightfully* simple: adding
+a custom `isMe` field to `User`. Because `$data` is an array, we can add whatever
+we want. Up here, I'll create a variable called `$isOwner` set to what we have
+in the if statement: `$this->userIsOwner($object)`. Now we can use `$isOwner`
+in the `if` *and* add the custom field: `$data['isMe'] = $isOwner`.
+
+Et voilà! Test it! Execute the operation again and... there it is: `isMe` false,
+false and true! Just remember the downside to this approach: our documentation
+has *no* idea that an `isMe` field exists. If we refresh this page and open the
+docs for fetching a single `User`... yep! There's mention of `isMe`. Of course,
+you *could* add a `public function isMe()` in user, put it in the `user:read`
+group, always return false, then *override* the `isMe` key in your normalizer.
+That would give you the custom field *and* the docs. But that's... getting kinda
+hacky.
+
+Next, let's look more at the `owner` field on `CheeseListing`. It's interesting:
+we're currently allowing the user to *set* this property when they POST to create
+a `User`. Does that make sense? Or should it be set automatically? And if
+we *do* want an API user to be able to send the `owner` field in the JSON, how
+do we prevent them from creating a `CheeseListing` and setting the `owner` to
+some *other* user? It's time to see where security & validation intersect.
