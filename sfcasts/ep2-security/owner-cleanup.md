@@ -79,39 +79,44 @@ in to use the operation. We get a 401 before we're authenticated... then after
 logging in, we get a 400 status code because access will be granted, but it
 will fail validation.
 
-TODO
+Let's make this test a bit more interesting! Create a new `$authenticatedUser`
+variable set to who we're logged in as. Then create an `$otherUser` variable
+set to... *another* user in the database.
 
-So let's actually extend
-this a little bit first. I'm actually going to set this a set, a new authenticated
-user variable equal to the user that we're logging in as I'm going to create another
-user a year other user.
+Here's the plan: I want to make *another* POST request to `/api/users` with *valid*
+data... except that we'll set the `owner` field to this `$otherUser`... a user
+that we are *not* logged in as. Start by creating a `$cheeseData` array set to
+some data: a `title`, `description` and `price`. These are the three required
+fields other than `owner`.
 
-Cool, cool.
+Now, copy the request and status code assertion from before, paste down here and
+set the `json` to `$cheeseData` *plus* the `owner` property set to `/api/users/`
+and then `$otherUser->getId()`.
 
-He pulls this Arrow, create user for other user@example.com password Fu and, and then
-down here, let's create a new variable. I'll call it cheesy data. And I want to set
-up some valid data for creating a cheese listing. So I'll set a title two mystery
-cheese kind of green description.
+In this case, the status code should *still* be 400 once we've coded all of this:
+passing the wrong owner will be a *validation* error. I'll add a little message
+to the assertion to make it obvious while it's failing:
 
-Okay,
+> not passing the correct owner
 
-and a price. These are the three required fields other than owner? No, I'm here. I
-want a copy of my client error request and my assert from earlier and we're going to
-do on here is instead of passing an empty JSON, I'm going to pass that cheesy data
-but I am going to pass an owner but I'm going to pass other and I set the owner to
-/API /users /and then the other user->get id
+I like it! We're logging in as `cheeseplease@example.com`... then we're trying to
+create a `CheeseListing` that's owned by a totally *different* user. This is the
+behavior we want to prevent.
 
-and then down here I'm going to start that. This is a foreignness task code and just
-as a little message air message to make it obvious what's failing here. I'll say not
-passing be correct owner. So if you look what's happening here, we are logging in as
-CI's pleased as an example@example.com. But then down here we're trying to create a
-cheese listing and say it's owned by a totally different user. This is actually the
-behavior. This is the thing that we want to prevent. Now, while we're here, I'll copy
-of these two lines again and change other user to authenticated user. And we want to
-say, Hey, if you do this, if you actually passed the owner to yourself, this should
-be a two oh one that status-quo. That's the happy case. So let's copy the method name
-here and test great Jesus' name. I'll spin over PHP bin /PHP unit dash dash filter =
-test create cheese listing. And yes, it fails. Check this out. Failed asserting
-response subset as code is 402 oh one created. So we actually were able to, um,
-create this cheese listing. You can see the failures online 39, uh, instead it to the
-wrong owner. So next, let's create a custom validator to prevent this.
+While we're here, copy these two lines again and change `$otherUser` to
+`$authenticatedUser`. This *should* be allowed, so change the assertion to look
+for the happy 201 status code.
+
+You know the drill: once you've written a test, you get to celebrate by watching
+it fail! Copy the method name, flip over to your terminal and run:
+
+```terminal
+php bin/phpunit --filter=testCreateCheeseListing
+```
+
+And... it fails!
+
+> Failed asserting response status code is 400 - got 201 Created.
+
+So we *are* currently able to create cheese listings and set the owner as a different
+user. Cool! Next, let's prevent this with a custom validator.
