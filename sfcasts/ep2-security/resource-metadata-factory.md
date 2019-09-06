@@ -3,7 +3,7 @@
 Using a context builder to dynamically add groups is a great option when the
 groups you're adding are *contextual* to who is authenticated... like we add
 `admin:read` *only* if the user is an admin. That's because the context builder
-isn't taken into account when you're documentation is built. For these "extra"
+isn't taken into account when your documentation is built. For these "extra"
 admin fields... that may not be a huge deal. But the more you put into the
 context builder, the less perfect your docs become.
 
@@ -24,7 +24,7 @@ one *seriously* scary-looking class declaration line.
 Next, go to Code -> Generate - or Command+N on a Mac - and select "Implement Methods". This interface only requires one method.
 
 So... what the heck does this class do? It's job is pretty simple: given an
-API Resource class - like `App\Entity\User` - it's job is to read all the API
+API Resource class - like `App\Entity\User` - its job is to read all the API
 Platform *metadata* for that class - usually via annotations - and return it as
 a `ResourceMetadata` object. Yep, this `ResourceMetadata` object contains *all* of
 the configuration from our `ApiResource` annotation... which API Platform *then*
@@ -37,7 +37,7 @@ factory. This means that instead of, sort of, *adding* this as some *additional*
 resource metadata factory, we need to completely *replace* the core resource metadata
 factory with our own. Yep, it's service decoration to the rescue!
 
-The first step to class decoration has... *nothing* to do with Symfony: it's the
+The first step to decoration has... *nothing* to do with Symfony: it's the
 implementation of the decorator pattern. That sounds fancy. Create a
 `public function __construct()` where the first argument will be the "decorated",
 "core" object. This means that it will have the same interface as this class:
@@ -48,7 +48,7 @@ Inside the method, call the decorated class so it can do all the heavy-lifting:
 `$resourceMetadata = $this->decorated->create($resourceClass)`. Then,
 return this at the bottom: we won't make any modifications yet.
 
-The *second* step to class decoration is *all* about Symfony: we need to tell it to
+The *second* step to decoration is *all* about Symfony: we need to tell it to
 use *our* class as the core "resource metadata factory" instead of the normal
 one... but to pass us the normal one as our first argument. Open up
 `config/services.yaml`. We've done all this before with the context builder:

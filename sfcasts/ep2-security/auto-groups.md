@@ -12,7 +12,7 @@ which is a bit ugly... but also error prone. When it comes to controlling which
 fields are and are *not* exposed to our API, this stuff is important!
 
 So here's my idea: in `AdminGroupsContextBuilder`, we have the ability to
-dynamically and groups. Could we detect that we're *normalizing* a `CheeseListing`
+dynamically add groups. Could we detect that we're *normalizing* a `CheeseListing`
 *item* and automatically add the `cheese_listing:read` and `cheese_listing:item:get`
 groups? The answer is... of course! But the final solution may not look *quite*
 like you expect.
@@ -22,7 +22,7 @@ like you expect.
 Let's start in `AdminGroupsContextBuilder`. At the bottom, I'm going to paste in
 a new method: `private function addDefaultGroups()`. You can copy the method from
 the code block on this page. This looks at which entity we're working with, whether
-it's being normalized or denormalized and exactly the exact *operation* that's
+it's being normalized or denormalized and the exact *operation* that's
 currently being executed. It uses this information to always add *three* groups.
 The first is easy: `{class}:{read/write}`. So `user:read`, `cheese_listing:read`
 or `cheese_listing:write`. That matches the main groups we've been using.
@@ -77,8 +77,8 @@ return all of those fields.
 
 If you try the operation... and hit Execute... it *only* returns the fields we expect.
 So... we've added these "automatic" groups... which is kinda nice. But we've
-positively *destroyed* our documentation. Can we have both automatic fields *and*
-good documentation? Yes!... by leveraging something called a resource metadata
+positively *destroyed* our documentation. Can we have both automatic groups *and*
+good documentation? Yes! By leveraging something called a resource metadata
 factory: a wild, low-level, advanced feature of API Platform.
 
 Let's dig into that next.

@@ -9,23 +9,24 @@ only to admin users by using these two groups.
 
 But... the context builder - and also the more advanced resource metadata factory -
 has a tragic flaw! We can only change the context *globally*. What I mean is, we're
-deciding which groups should be normalizing or denormalizing a specific *class*...
-no matter how many different objects we might be working with. It does *not* allow
-us to change the groups on an object-by-object basis.
+deciding which groups should be used for normalizing or denormalizing a specific
+*class*... no matter how many different objects we might be working with. It
+does *not* allow us to change the groups on an object-by-object basis.
 
 Let me give you a concrete example: in addition to making the `$phoneNumber` readable
 by admin users, I *now* want a user to *also* be able to read their *own*
-`phoneNumber`: if I make a request that contains data for my *own* `User` object,
-it *should* include the `phoneNumber` field.
+`phoneNumber`: if I make a request and the response will contain data for my
+*own* `User` object, it *should* include the `phoneNumber` field.
 
 You might think:
 
-> Ok, let's add some new group, like `owner:read`... and add that group dynamically.
+> Ok, let's put `phoneNumber` in some new group, like `owner:read`... and add
+> that group dynamically in the context builder.
 
 That's great thinking! But... look in the context builder, look at what's passed to
 the `createFromRequest()` method... or really, what's *not* passed: it does *not*
 pass us the specific *object* that's being serialized. Nope, this method is called
-just *once* per request per *class*.
+just *once* per request.
 
 ## Creating a Normalizer
 
@@ -77,7 +78,7 @@ Let's add some PHPDoc above this to help my editor.
 The goal here is to check to see if the `User` object that's being normalized is
 the *same* as the currently-authenticated `User`. If it is, we'll add that
 `owner:read` group. Add that check on top: if `$this->userIsOwner($object)` -
-that's a method we'll create in a second - then, add the group. The `$context`
+that's a method we'll create in a minute - then, add the group. The `$context`
 is passed as the third argument... and we're passing *it* to the core normalizer
 below. Let's modify it first! Use `$context['groups'][] = 'owner:read`.
 
