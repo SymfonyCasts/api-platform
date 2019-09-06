@@ -82,8 +82,12 @@ So I'll put a comment about this: we're refreshing the user and elevating them
 to an admin. Saying `->flush()` is enough for this to save because we've just
 queried for this object.
 
+[[[ code('113576a637') ]]]
+
 Below, say `$this->logIn()` and pass this `$client` and... the same two arguments
 as before: the email & password.
+
+[[[ code('983a17dcbb') ]]]
 
 Wait... why do we need to log in again? Weren't we already logged in... and didn't
 we just change this user's roles in the database? Yep! Unrelated to the test
@@ -98,6 +102,8 @@ updated roles.
 Finally, down here, we can do the same `$client->request()` as before. In fact,
 let's copy it from above, including the `assertJsonContains()` part. But this
 time, assert that there *should* be a `phoneNumber` field set to `555.123.4567`.
+
+[[[ code('5549506e81') ]]]
 
 Phew! Ok, we already know this will fail: when we make a `GET` request for a `User`,
 it *is* currently returning the `phoneNumber` field: the test is failing on
@@ -126,6 +132,8 @@ on a user-by-user basis... or via *any* dynamic information. You can't say:
 But... doing this *is* possible. On `User`, above `$phoneNumber`, we're going to
 leave the `user:write` group so it's *writable* by anyone with access to a write
 operation. But instead of `user:read`, change this to `admin:read`.
+
+[[[ code('52d4749e49') ]]]
 
 That's a *new* group name that I... just invented. Nothing uses this group, so
 if we try the test now:
