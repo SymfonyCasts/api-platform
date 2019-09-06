@@ -7,31 +7,32 @@ serialization context *if* the authenticated user has `ROLE_ADMIN`.
 So... we're pretty cool! We can easily run around and expose input our output fields
 only to admin users by using these two groups.
 
-But... the context builder - and also more advanced resource metadata factory - has
-a tragic flaw! We can only change the context *globally*. What I mean is, we're
-deciding which groups should be used for this *entire* request. It does *not* allow
+But... the context builder - and also the more advanced resource metadata factory -
+has a tragic flaw! We can only change the context *globally*. What I mean is, we're
+deciding which groups should be normalizing or denormalizing a specific *class*...
+no matter how many different objects we might be working with. It does *not* allow
 us to change the groups on an object-by-object basis.
 
 Let me give you a concrete example: in addition to making the `$phoneNumber` readable
-by admin users, I *now* want it to *also* be readable by the user *itself*: if I
-make a request to fetch my *own* data, I want the endpoint to return the `phoneNumber`
-field.
+by admin users, I *now* want a user to *also* be able to read their *own*
+`phoneNumber`: if I make a request that contains data for my *own* `User` object,
+it *should* include the `phoneNumber` field.
 
 You might think:
 
-> Ok, let's add some new group like `owner:read` and add that group dynamically.
+> Ok, let's add some new group, like `owner:read`... and add that group dynamically.
 
-That's great thinking! But look in the context builder, look at what's passed to
+That's great thinking! But... look in the context builder, look at what's passed to
 the `createFromRequest()` method... or really, what's *not* passed: it does *not*
-pass us the *object* that's being serialized. Nope, this method is called just
-*once* per request and creates the context for *any* objects that may be serialized.
+pass us the specific *object* that's being serialized. Nope, this method is called
+just *once* per request per *class*.
 
 ## Creating a Normalizer
 
 Ok, no worries. Context builders are a *great* way to add or remove groups on
 a global or class-by-class basis. But they are *not* the way to dynamically add
 or remove groups on an object-by-object basis. Nope, for that we need a custom
-normalizer. We can user MakerBundle to help us. Run:
+normalizer. Let's convince MakerBundle to create one for us. Run:
 
 ```terminal
 php bin/console make:serializer:normalizer
@@ -44,35 +45,34 @@ format you want - like JSON or XML.
 
 When a `User` object is serialized, it's already going through a core normalizer
 that looks at our normalization groups & reads the data via the getter methods.
-We're now going to hook *into* that process so that we an change the normalization
+We're now going to hook *into* that process so that we can change the normalization
 groups *before* that core normalizer does its job.
 
 Go check out the new class: `src/Serializer/Normalizer/UserNormalizer.php`. This
 works a bit differently than the context builder - it works more like the voter
-system. The serializer doesn't have just *one* normalizer, it has *many* of them.
+system. The serializer doesn't have just *one* normalizer, it has *many* normalizers.
 Each time it needs to normalize something, it loops over *all* the normalizers,
 calls `supportsNormalization()` and passes us the data that it needs to normalize.
 If we return `true` from `supportsNormalization()`, it means that *we* know how
-to normalize this data. And so, the serializer will call our `normalize()` method.
+to normalize this data. And so, the serializer will call *our* `normalize()` method.
 Our normalizer is then the *only* normalizer that will be called for this data:
 we are 100% responsible for transforming the object into an array.
 
 ## Normalizer Logic
 
 Of course... we don't *really* want to *completely* take over the normalization
-process. What we *really* want to do is change the normalization groups and then
+process. What we *really* want to do is change the normalization groups... and then
 call the *core* normalizer so it can do its normal work. That's why the class was
-generated with a constructor and we're autowiring a class called `ObjectNormalizer`.
-This is the main, core, normalizer: it's the one that's responsible for reading
-the data via our getter methods. Right now, our normalizer is basically... just
-offloading all the work to it.
+generated with a constructor where we're autowiring a class called `ObjectNormalizer`.
+This is the main, core, normalizer for objects: it's the one that's responsible
+for reading the data via our getter methods. So... cool! Our custom normalizer is basically... just offloading all the work to the *core* normalizer!
 
-Ok, let's start customizing this! For `supportsNormalization()`, return
+Let's start customizing this! For `supportsNormalization()`, return
 `$data instanceof User`. So if the thing that's being normalized is a `User` object,
 we handle that.
 
-Now we know that `normalize()` will *only* be called if `$object` is an instance
-of `User`. Let's add some PHPDoc above this to help my editor.
+Now we know that `normalize()` will *only* be called if `$object` is a `User`.
+Let's add some PHPDoc above this to help my editor.
 
 The goal here is to check to see if the `User` object that's being normalized is
 the *same* as the currently-authenticated `User`. If it is, we'll add that
@@ -84,45 +84,41 @@ below. Let's modify it first! Use `$context['groups'][] = 'owner:read`.
 That's lovely! A normalizer is only used for... um... *normalizing* an object to
 an array - it is *not* used for *denormalizing* an array back into an object. That's
 why we're always adding `owner:read` here. If you wanted to create this *same*
-feature for denormalization... and add an `owner:write` group - you'll need to
+feature for denormalization... and add an `owner:write` group.. you'll need to
 create a separate *denormalizer* class. There's no MakerBundle command to generate
-it, but the logic will be almost identical to this.
+it, but the logic will be almost identical to this... and you can even make your
+*one* normalizer class implement both `NormalizerInterface` *and*
+`DenormalizerInterface`.
 
-Oh, also, we don't need to check for the existing of a `groups` key on the array
-because, in our system, we are *always* setting at least one group. So, this will
-always, already exist.
+Oh, also, we don't need to check for the existence of a `groups` key on the array
+because, in our system, we are *always* setting at least one group.
 
-Let's add that private function: `private function userIsOwner()`. This will take
-a `User` object and return a `bool`. For now, fake this: `return rand(0, 10) > 5`.
+Let's add that missing method: `private function userIsOwner()`. This will take
+a `User` object and return a `bool`. For now, fake it: `return rand(0, 10) > 5`.
 
 And... I think that's it! Like with voters, this is a situation where we *don't*
 need to add any configuration: as soon as we create a class and make it implement
-`NormalizerInterface`, API Platform will see it and start using it.
+`NormalizerInterface`, the serializer will see it and start using it.
 
-So... let's try it! Back on the docs, I'm currently *not* logged in. Let's refresh
-the page... and create a new user to make sure we have one. Let's see, email
+So... let's take this for a test drive! Back on the docs, I'm currently *not*
+logged in. Let's refresh the page... and create a new user. How about email
 `goudadude@example.com`, password `foo`, same username, no `cheeseListings`, but
 *with* a `phoneNumber`. Execute and... perfect! A 201 status code. Copy that
-`email`... then go back to the homepage to log in: `goudadude@example.com` and
-password `foo`.
+`email`... go back to the homepage.. and log in: `goudadude@example.com`,
+password `foo` and... go!
 
-Cool! Now that we're authenticated, head back to `/api`. Yep, on the web debug
-toolbar, we *are* logged in. Let's try the GET operation to fetch a collection
-of users. Because of our random logic, I'd expect *some* results to show the
-`phoneNumber` and some not. Execute and... the first user has no `phoneNumber`,
-second user, no `phoneNumber` and the third user... also has no `phoneNumber`.
-Huh. That was hopefully just bad luck. Try it again. And... yes! This time
-*two* of the three users has a `phoneNumber` field. Our group is being added dynamically
-on an object-by-object basis!
+Cool! Now that we're authenticated, head back to `/api`. Yep, the web debug
+toolbar *confirms* that I'm a "gouda dude". Let's try the GET operation to fetch
+a collection of users. Because of our random logic, I'd expect *some* results to
+show the `phoneNumber` and some not. Execute and... the first user has no
+`phoneNumber`, second user no `phoneNumber` and the third user... also has
+no `phoneNumber`. Huh. Maybe... bad luck? Try it again. And... yes! This time
+*two* of the three users have a `phoneNumber` field. Our group is being added
+dynamically on an object-by-object basis! Normalizers rock!
 
-So by using a normalizer, we're able to add dynamic groups on an object-by-object
-basis. And we could dynamically add an `owner:write` field during denormalization
-by creating a class, making it implement `DenormalizerInterface` and repeating
-some very similar logic.
-
-But.. what a second. Something is wrong... we're missing the JSON-LD fields from
+But... wait a second. Something is wrong! We're missing the JSON-LD fields for
 these users. Well, ok, we have them on the top-level for the collection itself...
-and even the embedded `CheeseListing` data has them... but each user is now missing
+and even the embedded `CheeseListing` data has them... but each user is missing
 `@id` and `@type`. Something in our new normalizer killed the JSON-LD stuff!
 
-Next, let's figure out what's going on and fix it!
+Next, let's figure out what's going on, find this bug, then *crush* it!
