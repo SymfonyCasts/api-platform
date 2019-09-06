@@ -1,158 +1,94 @@
 # Custom Validator
 
-Coming soon...
+Here's the situation: all authenticated users should have access to create a
+`CheeseListing`... and one of the required that can be passed is `owner`. But
+the data passed to the `owner` field can be valid or invalid depending on who
+you're authenticated as. For a normal user, I'm supposed to set this to my own
+IRI: if I try to set it to a *different* IRI, that should be denied. But for an
+*admin* user, they *should* be allowed to set the IRI to anyone.
 
-Here's the situation, all authenticated users should have access to create a 
-`CheeseListing` and every authenticated user should need to be able to pass the `owner` field.
-But the data passed to `owner` field can be valid or invalid depending on who you're
-logged in as. I'm supposed to set this to my own user, IRI, if I try to set it to
-somebody else's to a different owner, that should be denied except for maybe if I'm
-an Admin user, which we'll talk about later. This is what we just showed in our test
-here. We tried to `POST` and create a `CheeseListing` and send the `owner` to this other
-user. The problem is that we're actually logged in, uh, as this authenticated user.
-So we're logged in as `cheeseplease@example.com`, but we're trying to set this owner
-to this other users, IRI, that should give us a 400 status code. It's actually a
-validation error. But right now if we run our tests right, but when we ran our tests
-a second ago, it's actually allowing this. So the way to prevent this is via a custom
-validator. So find your console and run 
+When the *value* of a field may be allowed or not allowed based on who is
+authenticated user, that should be protected via validation... which is why we're
+expecting a 400 status code - not a 403.
+
+## Generating the Custom Validator
+
+Ok, so how can we make sure the `owner` field is set to the currently-authenticated
+user? Via a *custom* validator. Find your terminal and kick things off with:
 
 ```terminal
 php bin/console make:validator
 ```
 
-We're gonna print a new validated called `IsValidOwner`.
+Call it `IsValidOwner`. If you're not familiar with validators, each validation
+constraint consists of *two* classes - you can see them both inside the
+`src/Validator/` directory. The first class represents the *annotation* that we
+will use to activate this... and it's usually empty, except for a few properties
+that are typically public. Each public property will become an *option* that you
+can pass to the annotation. More on that in a minute.
 
-If you're not too familiar with validators, every validator has two classes. Let's go
-check them out inside the `src/Validator/` directly. The first one actually
-represents the annotation we're going to use and it usually contains, and it doesn't
-contain anything but just options that you want, options that you want. Um, a
-configurable on your annotation. We'll talk more about this in a second. The other
-one, which typically has the same name plus the word validator is actually what will
-be called during validation. So here we are going to be past the, we passed the
-`$value`, we can run it whatever business logic we want on that and we'll actually set a
-violation, a validation failure, um, uh, if that fails. So to see this in practice,
-the way this is going to work is inside `CheeseListing` the property that we want to
-validate is this `$owner` property. We want to make sure that this `$owner` property is set
-to a valid owner based on the currently authenticated user. So this is actually where
-it will add `@IsValidOwner()` and right here if we wanted to we could actually
-customize that message. Uh, uh, any public properties that you have on this, uh,
-class, um, it can be customized as options of the annotation.
+The other class, which typically has the same name plus the word "Validator", is
+what will be called to do the actual *work* of validation. The validation system
+will pass us the `$value` that we're validation and then we can do whatever
+business logic we need on that to determine if it's valid or not. If the value
+is invalid, you can use this cool `buildViolation` thing to set the error.
 
-In fact, this message one, which we too typically have, let's actually change this to
+## Using the Validation Constraint
 
-> Cannot set owner to a different user 
+To see this in practice, open up `CheeseListing`. The property that we need to
+validate is `$owner`: we want to make sure that it is set to a "valid" owner...
+based on whatever crazy logic we want. To activate the new validator, add
+`@IsValidOwner()`. This is where we could customize the `message` option...
+or *any* other public properties we decide to have on the annotation class.
 
-Now the way this works is now that we have,
-when the `CheeseListing` object is being validated and thinks to this `@IsValidOwner()`
-the validation system is going to automatically call our `validate()` function on
-that validator. It's going to pass us the `$value` which is going to be the value of
-this property. So it's going to be the `User` object and it's going pass us the
-`$constraint`. That constraint is actually an instance of our annotation class. So is
-valid owner no notice the first thing it does is actually checks to see if the `$value`
-is sort of empty. And if it is, it does not add a validation error. I want to talk a
-little bit, we'll talk more about that in a second. But it's actually what a
-different annotation to make sure that this property is actually set.
+Actually, let's change the *default* value for `$message`:
 
-So just to see if this is working, let's not add any logic. Let's just add a bill, a
-validation error in every situation, ms `setParameter()`, a way to fill in like a wild
-card value. If you wanted a something like that inside of your message, we're not
-going to take advantage of that. So I'm actually just going to get rid of that set.
-And so are basically saying here is I want to `buildViolation()`, a
-`$constraint->message` is actually going to be the message for that violation, which is
-just going to be this property right here. Okay, so if we move over, let's run our
-test again.
+> Cannot set owner to a different user
+
+Ok, now that we've added this annotation, whenever the `CheeseListing` object is
+being validated, the validation system will *now* call `validate()` on
+`IsValidOwnerValidator`. The `$value` will be the value of the `$owner` property.
+So, a `User` object. It also passes us `$constraint`, which will be an instance
+of the `IsValidOwner` class with any options set configured set on its public
+properties.
+
+## Avoid Validating Empty Values
+
+The *first* thing the validator does is interesting... it checks to see if the
+`$value` is, sort of, empty - if it's null. If it *is* null, instead of adding
+a validation error, it does the opposite! It returns.. which means that, as far
+as this validator is concerned, the value is valid. Why? The philosophy is that
+if you want this field to be *required*, you should add an *additional* annotation
+to the property - the `@Assert\NotBlank` constraint. We'll do that a bit later.
+*Our* validator only has to do it's job if there *is* a value set.
+
+## The setParameter() Wildcard
+
+To see if this is working... ah, let's just try it! Sure, we haven't added *any*
+logic yet... and so this constraint will *always* have an error... but let's make
+sure we that error shows up!
+
+Oh, and this `setParameter()` thing is a way for you to add "wildcards" to the
+message. Like, if you set `{{ value }}` to the email of the `User` object, you
+could reference that dynamically in your message with that same `{{ value }}`.
+We don't need that, so let's remove it. Oh, and just to be *totally* clear, the
+`$constraint->message` part is referencing the `$message` property on the annotation
+class. So, we *should* see our customized error.
+
+Let's try it! Go tests go!
 
 ```terminal-silent
 php bin/phpunit --filter=testCreateCheeseListing
 ```
 
-And if we scroll up, awesome. It is failing and it's actually failing. If you look,
-it's getting back a a 400 bad request and it's saying 
+If we scroll up... awesome! It's failing: it's getting back a a 400 bad request
+with:
 
 > Cannot set owner to different user
 
+Hey! That's our validation message! The failure comes from
+`CheeseListingResourceTest` line 44. Once we use a *valid* `owner` IRI, validation
+*still* fails because... of course... we haven't added our real logic yet!
 
-So you can see that's actually where that a validation message shows up. This
-is coming from `CheeseListingResourceTest` line 44
-so basically down here once we lock, once we get our setting into a valid owner, it's
-of course setting a validation error in that case cause right now our validator is
-always failing so now we need to do is actually make this smarter. So for us to do
-that we're going to need to know who's logged in som to add the 
-`public function __construct()` and will on a wire our usual favorite `Security` class.
-I'll do the Alt + Enter Initialize fields to create that property and set it
-for the logic itself. We'll start down here and say `$user = $this->security->getUser()`
-Now that `$user` like they might not like in Fieri, they the user might not even
-be logged in. That's not possible with this particular post endpoint, but just for
-the sake of writing, making our validator tight, let's say if `!$user instanceof User`
-
-then let's actually add a violation here and I could hard-code the message but let's
-create another configurable message over here called `$anonymousMessage` call. 
-
-> Cannot set owner unless you are authenticated
-
-Then over here we can do the same things as down there because if 
-`$this->context->buildViolation()`, this time we'll use `$constraint->anonymousMessage` there, 
-`->addViolation()` and then we'll return so that this function doesn't keep running and just
-returns without one validation error. Now the other thing we know that the `$value`
-object here should be a `User` object cause we're expecting this `IsValidOwner`
-annotation to be set on a property where the value of that property is the is it `User`
-object. But you know we could accidentally, it's possible that we might actually put
-this on some other property. So let's just add a sanity check here. Let's say if 
-`!$value instanceof User` and here it's not a validation error. This is a programming
-error. So I'm going to say `throw new \InvalidArgumentException()` with
-
-> @IsValidOwner constraint must be put on a property containing a User object
-
-Finally, we know we have a user, we have `$user` and `$value` are both `User` objects. 
-So we just need to compare that. So if `$value->getId() !== $user->getId()`, you
-probably could just compare those `$value` directly to `$user`. But ID is fine. Then we'll
-actually have our violation that reads off our normal message property from our
-constraint class. And that should be it. That covers all the cases. So let's switch
-back over, run our test 
-
-```terminal-silent
-php bin/phpunit --filter=testCreateCheeseListing
-```
-
-and it passes. Perfect. Okay. Now a second ago I kind of
-pointed out that this validator starts by checking to see if the value is basically
-not set. You know, if then this would happen if somebody forgot to pass an owner
-property entirely. Nydia is that the validator itself as a best practice, um,
-shouldn't throw up a validation error on this, on that we actually want it to be
-required. We should set that with another annotation. And actually I have [inaudible]
-hmm. No I need to scratch all that cause I did not order kill it all from it now a
-second ago. So the nice thing about having a the owner property be something that is,
-is still in our API is as I mentioned earlier, we might in the future have an admin
-interface where maybe an Admin user can set the owner to anything. And we can put
-that logic right into our validator if we want. So we already have a security object
-auto wired in here.
-
-So once we verify that the user is actually logged in, we can say, well 
-`$this->security->isGranted('ROLE_ADMIN')`, then we're just going to return. This
-is going to prevent us down here from actually checking to make sure that the user
-has a role. So that's just the power of things you can do with the validator. Now one
-thing I mentioned earlier is that a typically in validators, you'll first check to
-see if the value is empty. And if it is you won't do anything. So this can happen
-right now if somebody made a request and forgot to set the owner property. And the
-reason we do that is we typically say that, hey, if you actually want this to, uh,
-this value to be required, you should put that on your, um, you should actually add a
-`@Assert/NotBlank()` annotation to above that property itself.
-
-And we actually haven't done that yet. And that, which is actually a smell of a bug
-in our application to make that obvious. If I go to a `CheeseListing` resource, let's
-actually move this `$cheesyData`, oh, align here and you remember this original request
-here, we log in as `cheeseplease@example.com` and we're just sending an empty data
-and making sure that we had access with a `400` status request. Well now I'm actually
-going to add that `$cheesyData` here. I should still get a `400`, uh, uh, response and
-I'll even add a [inaudible] test to failure and make this a more obvious, um, because
-we should still be missing the owner field. We should get a `400` area here because
-we're not passing the owner.
-
-But if you go over and run the test, because we're missing the annotation, we
-actually exploded. They `500` error. It's actually having an error because it's trying
-to insert that into the database. But the `$owner` property is, the `owner_id` column is
-requiring the database, so that's an easy fix, flat `@Assert/NotBlank()`. This makes sure
-that the, it's a valid owner if the owner is set and then we leave, uh, have and not
-blank actually make sure that this property itself is set to the test. Again, we are
-solid. Next, let's do something with filtering collections. Based on that `CheeseListing`
-`isPublished`.
+Let's do that next: let's make sure the `$owner` is set to the currently-authenticated
+user. *Then* we'll go further and allow admin users to set the `$owner` to anyone.
