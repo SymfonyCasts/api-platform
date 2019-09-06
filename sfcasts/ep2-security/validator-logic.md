@@ -1,5 +1,7 @@
 # Security Logic in the Validator
 
+Coming soon...
+
 so basically down here once we lock, once we get our setting into a valid owner, it's
 of course setting a validation error in that case cause right now our validator is
 always failing so now we need to do is actually make this smarter. So for us to do
