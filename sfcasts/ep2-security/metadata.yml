@@ -33,6 +33,6 @@ chapters:
     - custom-field
     - owner-cleanup
     - custom-validator
-    - entity-listener   # raw
+    - entity-listener
     - query-extension   # raw
     - item-extension    # raw
