@@ -27,6 +27,8 @@ is an admin.
 
 Paste the code and rename the class to `AdminGroupsContextBuilder`.
 
+[[[ code('49f5824f86') ]]]
+
 ## Service Declaration & Decoration
 
 A lot of times in Symfony, when you're "hooking" into some existing process, like
@@ -43,6 +45,8 @@ with the class name... which is also the service id:
 `App\Serializer\AdminGroupsContextBuilder`. Then, I'll look back at the docs,
 copy these three lines... and paste. Change the `BookContextBuilder` part of the
 argument to `AdminGroupsContextBuilder`.
+
+[[[ code('0c02c6302f') ]]]
 
 If you've never seen this `decorates` option before, welcome to service decoration!
 It's a slightly advanced feature of Symfony's container but it is *incredibly*
