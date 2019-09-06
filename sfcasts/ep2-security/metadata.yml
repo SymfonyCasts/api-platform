@@ -35,4 +35,4 @@ chapters:
     - custom-validator
     - entity-listener
     - query-extension   # raw
-    - item-extension    # raw
+    - item-extension
