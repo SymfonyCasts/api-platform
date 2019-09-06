@@ -32,7 +32,7 @@ chapters:
     - normalizer-aware
     - custom-field
     - owner-cleanup
-    - custom-validator  # raw
+    - custom-validator
     - entity-listener   # raw
     - query-extension   # raw
     - item-extension    # raw
