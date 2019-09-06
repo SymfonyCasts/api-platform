@@ -34,5 +34,5 @@ chapters:
     - owner-cleanup
     - custom-validator
     - entity-listener
-    - query-extension   # raw
+    - query-extension
     - item-extension
