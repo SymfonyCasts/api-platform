@@ -11,7 +11,7 @@ PUT request. We even added some fanciness where, when you create or edit a
 `CheeseListing`, you can modify the owner's username all at the same time.
 This works because that property is in the `cheese:write` group... oops. I forgot
 to change this group when we were refactoring - that's how it should look.
-The `cheese:item:get` group means this field will be embedded when when we GET
+The `cheese:item:get` group means this field will be embedded when we GET
 a *single* `CheeseListing` - that's the "item operation" - and `cheese:write`
 means it's writable when using *any* write operation for `CheeseListing`. That's
 some crazy stuff we set up on our previous tutorial.
@@ -19,12 +19,12 @@ some crazy stuff we set up on our previous tutorial.
 ## Removing username Updatable Fanciness
 
 But now, I want to simplify in two ways. First, I only want the `owner` property
-to be set when we *creating* the `CheeseListing`, I don't want it to be
+to be set when we *create* the `CheeseListing`, I don't want it to be
 *changeable*. And second, let's get rid of the fanciness of being able to edit the
 `username` property via a `CheeseListing` operation. For that second part, remove
-the `cheese:write` property from `username`. We can now also take off the
+the `cheese:write` group from `username`. We can now also take off the
 `@Assert\Valid()` annotation. This caused the `User` to be validated during
-the `CheeseListing` operations...which was needed to make sure someone didn't
+the `CheeseListing` operations... which was needed to make sure someone didn't
 set the `username` to an invalid value while updating a `CheeseListing`.
 
 ## Making owner *only* Settable on POST
@@ -33,7 +33,7 @@ Now, how can we make the `owner` property settable for the POST operation but
 *not* the PUT operation?
 
 Open up `AutoGroupResourceMetadataFactory`. This monster automatically adds three
-normalization groups in all situations. We can use this last one to include a field
+serialization groups in all situations. We can use this last one to include a field
 *only* for a specific operation. Change `cheese:write` to `cheese:collection:post`.
 That follows the pattern: "short name", colon, collection, colon, then the operation
 name: `post`.
@@ -72,15 +72,15 @@ Second, if the field *should* be writable by *all* users... but the data that's
 *allowed* to be set on the field depends on *who* is logged in, then the solution
 is validation.
 
-Here's our goal: prevent the API client from POSTing an `owner` value that
+Here's our goal: prevent an API client from POSTing an `owner` value that
 is *different* than their own IRI... with an exception added for admin users:
 they can set `owner` to anyone.
 
 Let's codify this into a test first. Open `CheeseListingResourceTest`. Inside
-`testCreateListing()`, we're basically verifying that you *do* need to be logged
-in to use the operation. We get a 401 before we're authenticated... then after
-logging in, we get a 400 status code because access will be granted... but our
-empty data will fail validation.
+`testCreateCheeseListing()`, we're basically verifying that you *do* need to be
+logged in to use the operation. We get a 401 before we're authenticated... then
+after logging in, we get a 400 status code because access will be granted... but
+our empty data will fail validation.
 
 Let's make this test more interesting! Create a new `$authenticatedUser`
 variable set to who we're logged in as. Then create an `$otherUser` variable

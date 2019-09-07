@@ -29,8 +29,8 @@ can pass to the annotation. More on that in a minute.
 
 The other class, which typically has the same name plus the word "Validator", is
 what will be called to do the actual *work* of validation. The validation system
-will pass us the `$value` that we're validation and then we can do whatever
-business logic we need  to determine if it's valid or not. If the value is invalid,
+will pass us the `$value` that we're validating and then we can do whatever
+business logic we need to determine if it's valid or not. If the value is invalid,
 you can use this cool `buildViolation()` thing to set an error.
 
 ## Using the Validation Constraint
