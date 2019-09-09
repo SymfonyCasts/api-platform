@@ -16,6 +16,8 @@ service via the `Security` type-hint. Well... these are both ways to do the
 `$isAdmin = $this->authorizationChecker->isGranted('ROLE_ADMIN')`. Then, if
 `$context['groups']` and `$isAdmin`... we should add the extra group!
 
+[[[ code('35221d59d6') ]]]
+
 But... why am I checking *if* `$context['groups']`? Well, first, I should probably
 be checking if `isset($context['groups'])`. And second... it doesn't really matter
 for us. In *theory*, if you had a resource with *no* groups configured, it would
@@ -33,6 +35,8 @@ That's what this normalization flag here is telling us.
 
 Cool! We can say, *if* the object is being normalized, add `admin:read`, else,
 add `admin:write`.
+
+[[[ code('28bca08618') ]]]
 
 We're done! I'll even remove this `$resourceClass` thing. That tells us the *class*
 of the object that's being serialized or deserialized... which we don't need
@@ -75,12 +79,16 @@ Because we're *not* logged in as an admin user, once we've finished our work,
 the `roles` field should simply be ignored. It won't cause a validation error...
 it just won't be processed at all.
 
+[[[ code('81a229b776') ]]]
+
 To make sure it's ignored, at the bottom, say `$em = $this->getEntityManager()`
 and then query for a fresh user from the database:
 `$user = $em->getRepository(User:class)->find($user->getId())`. I'll put some
 PHPDoc above this to tell PhpStorm that this will be a `User` object. Finish
 with `$this->assertEquals()` that we expect `['ROLE_USER']` to be returned from
 `$user->getRoles()`.
+
+[[[ code('28daf65670') ]]]
 
 Why `ROLE_USER`? Because even if the `roles` property is empty in the database...
 the `getRoles()` method *always* returns *at least* `ROLE_USER`.
@@ -94,6 +102,8 @@ php bin/phpunit --filter=testUpdateUser
 It... yes - fails! Our API *does* let us write to the `roles` property. How do we
 fix this? You probably already know... and it's *gorgeously* simple. Change
 the group to `admin:write`.
+
+[[[ code('b0375dc024') ]]]
 
 Run the test again:
 
