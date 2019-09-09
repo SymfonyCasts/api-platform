@@ -1,86 +1,113 @@
 # Security Logic in the Validator
 
-Coming soon...
+Our custom validator *is* being used... but it doesn't have any *real* logic yet:
+it *always* add a "violation". Meaning, this validator *always* fails. Let's fix
+that: let's fail is the `owner` - that's the `$value` we're validating - is being
+set to a `User` that's *different* than the currently-authenticated user.
 
-so basically down here once we lock, once we get our setting into a valid owner, it's
-of course setting a validation error in that case cause right now our validator is
-always failing so now we need to do is actually make this smarter. So for us to do
-that we're going to need to know who's logged in som to add the
-`public function __construct()` and will on a wire our usual favorite `Security` class.
-I'll do the Alt + Enter Initialize fields to create that property and set it
-for the logic itself. We'll start down here and say `$user = $this->security->getUser()`
-Now that `$user` like they might not like in Fieri, they the user might not even
-be logged in. That's not possible with this particular post endpoint, but just for
-the sake of writing, making our validator tight, let's say if `!$user instanceof User`
+To figure out who's logged in, add `public function __construct()` and autowire
+our favorite `Security` service. I'll hit Alt + Enter and go to "Initialize fields"
+to create that property and set it.
 
-then let's actually add a violation here and I could hard-code the message but let's
-create another configurable message over here called `$anonymousMessage` call.
+## Making sure the User Is Authenticated
+
+For the logic itself, start with `$user = $this->security->getUser()`. For this
+particular operation, we've added security to *guarantee* that the user will be
+authenticated. But just to be safe - or in case we decide to use this validation
+constraint for some other operation - let's double-check that the user is logged
+in: if `!$user instanceof User`, then add a violation.
+
+I could hardcode the message... but to be a bit fancier - and make it configurable
+each time we use this constraint, on the annotation class, add a public property
+called `$anonymousMessage` set to:
 
 > Cannot set owner unless you are authenticated
 
-Then over here we can do the same things as down there because if
-`$this->context->buildViolation()`, this time we'll use `$constraint->anonymousMessage` there,
-`->addViolation()` and then we'll return so that this function doesn't keep running and just
-returns without one validation error. Now the other thing we know that the `$value`
-object here should be a `User` object cause we're expecting this `IsValidOwner`
-annotation to be set on a property where the value of that property is the is it `User`
-object. But you know we could accidentally, it's possible that we might actually put
-this on some other property. So let's just add a sanity check here. Let's say if
-`!$value instanceof User` and here it's not a validation error. This is a programming
-error. So I'm going to say `throw new \InvalidArgumentException()` with
+Back in the validator, do the same thing as below: `$this->context->buildViolation()`,
+then the message - `$constraint->anonymousMessage` - and `->addViolation()`. Then
+return so the function doesn't keep running: set the validation error and exit.
+
+## Checking the Owner
+
+At this point we know the user is authenticated. We *also* know that the `$value`
+variable *should* be a `User` object... because we're expecting that the `IsValidOwner`
+annotation will be set on a property that contains a `User`. But... because I
+*love* making mistakes... I might someday accidentally put this onto some *other*
+property that does *not* container a `User` object. If that helps, no problem!
+Let's send future us a clear message that we're doing something... kinda silly:
+if `!$value instanceof User`, then `throw new \InvalidArgumentException()` with
 
 > @IsValidOwner constraint must be put on a property containing a User object
 
-Finally, we know we have a user, we have `$user` and `$value` are both `User` objects.
-So we just need to compare that. So if `$value->getId() !== $user->getId()`, you
-probably could just compare those `$value` directly to `$user`. But ID is fine. Then we'll
-actually have our violation that reads off our normal message property from our
-constraint class. And that should be it. That covers all the cases. So let's switch
-back over, run our test
+I'm not using a violation here because this isn't a user-input problem - it's a
+programmer bug.
+
+*Finally*, we know that both `$user` and `$value` are both `User` objects. All we
+need to do know is compare them. So if `$value->getId() !== $user->getId()`, then
+we have a problem. And yes, you could also compare the objects themselves instead
+of the id's.
+
+Move the violation code into the if statement and... we're done! If someone sends
+the `owner` IRI of a different `User`, boom! Validation error! Let's see if our
+test passes:
 
 ```terminal-silent
 php bin/phpunit --filter=testCreateCheeseListing
 ```
 
-and it passes. Perfect. Okay. Now a second ago I kind of
-pointed out that this validator starts by checking to see if the value is basically
-not set. You know, if then this would happen if somebody forgot to pass an owner
-property entirely. Nydia is that the validator itself as a best practice, um,
-shouldn't throw up a validation error on this, on that we actually want it to be
-required. We should set that with another annotation. And actually I have [inaudible]
-hmm. No I need to scratch all that cause I did not order kill it all from it now a
-second ago. So the nice thing about having a the owner property be something that is,
-is still in our API is as I mentioned earlier, we might in the future have an admin
-interface where maybe an Admin user can set the owner to anything. And we can put
-that logic right into our validator if we want. So we already have a security object
-auto wired in here.
+And... it does!
 
-So once we verify that the user is actually logged in, we can say, well
-`$this->security->isGranted('ROLE_ADMIN')`, then we're just going to return. This
-is going to prevent us down here from actually checking to make sure that the user
-has a role. So that's just the power of things you can do with the validator. Now one
-thing I mentioned earlier is that a typically in validators, you'll first check to
-see if the value is empty. And if it is you won't do anything. So this can happen
-right now if somebody made a request and forgot to set the owner property. And the
-reason we do that is we typically say that, hey, if you actually want this to, uh,
-this value to be required, you should put that on your, um, you should actually add a
-`@Assert/NotBlank()` annotation to above that property itself.
+## Allowing Admins to do Anything
 
-And we actually haven't done that yet. And that, which is actually a smell of a bug
-in our application to make that obvious. If I go to a `CheeseListing` resource, let's
-actually move this `$cheesyData`, oh, align here and you remember this original request
-here, we log in as `cheeseplease@example.com` and we're just sending an empty data
-and making sure that we had access with a `400` status request. Well now I'm actually
-going to add that `$cheesyData` here. I should still get a `400`, uh, uh, response and
-I'll even add a [inaudible] test to failure and make this a more obvious, um, because
-we should still be missing the owner field. We should get a `400` area here because
-we're not passing the owner.
+The *nice* thing about this setup is that the `owner` field is *still* part
+of our API. We did that for a very specific reason: we want to make it possible
+for an *admin* user to send an `owner` field set to *any* user. Right now, our
+validator would *block* that. So... let's make it a *little* bit smarter.
 
-But if you go over and run the test, because we're missing the annotation, we
-actually exploded. They `500` error. It's actually having an error because it's trying
-to insert that into the database. But the `$owner` property is, the `owner_id` column is
-requiring the database, so that's an easy fix, flat `@Assert/NotBlank()`. This makes sure
-that the, it's a valid owner if the owner is set and then we leave, uh, have and not
-blank actually make sure that this property itself is set to the test. Again, we are
-solid. Next, let's do something with filtering collections. Based on that `CheeseListing`
-`isPublished`.
+Because we already have a `Security` object autowired into the class, we can jump
+straight to check for the admin role: of `$this->security->isGranted('ROLE_ADMIN')`,
+then return. That will prevent the *real* owner check from happening below.
+
+## Requiring Owner
+
+A few minutes ago, we talked about how the validator starts by checking to see if
+the `$value` is null. That would happen if an API client simply *forgets* to send
+the `owner` field. When that happens, our validator doesn't add a violation. Instead,
+it returns... which basically means:
+
+> In the eyes of this validator, the value *is* valid.
+
+We did that because *if* you want the field to be required, that should be done
+by adding a *separate* validation constraint - the `NotBlank` annotation. The
+fact that we're *missing* this is a bug... and let's prove it before we fix it.
+
+In `CheeseListingResourceTest`, let's move this `$cheesyData`, up above one more
+request. This request is the one that makes sure that after we log in, we *can*
+use this operation: we will get a 400 status code due to a validation error, but
+not the 404 that would be expected if you were denied access.
+
+Now, pass `$cheesyData` to that operation. We should *still* get a 400 response:
+we're passing *some* data, but this should return a validation error due to the
+missing `owner` field.
+
+But when you run the test:
+
+```terminal-silent
+php bin/phpunit --filter=testCreateCheeseListing
+```
+
+It's a big, giant 500 error! It's trying to insert that record into the database,
+which is failing because the `owner_id` column is required.
+
+To fix this, above `owner`, add the missing `@Assert\NotBlank()`. The value must
+now *not* be blank *and* it must be a valid owner. Try the test now:
+
+```terminal-silent
+php bin/phpunit --filter=testCreateCheeseListing
+```
+
+It's green! Next, allowing `owner` to be part of our API is great for admin users.
+But it's also inconvenient for normal users. Could we *allow* the `owner` field
+to be sent when creating a `CheeseListing`... but automatically set it to the
+currently-authenticated user if it's missing? And if so, how can we do that? That's
+next.
