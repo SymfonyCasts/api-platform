@@ -36,4 +36,5 @@ chapters:
     - validator-logic
     - entity-listener
     - query-extension
-    - item-extension
+    - query-item-extension
+    - filtered-collection

@@ -28,7 +28,7 @@ had five. Now some of those IRIs, if you followed them, might four, four, if
 that cheeses things in publish, but at least it wouldn't expose any of the data on
 those unpublished listings. As a reminder, the um, cheese listings are returning the
 `title` on `price` key here because on the `CheeseListing` entity, you go look at the
-`$title` thing, they have the group's `user:read` here and down above `$price` a 
+`$title` thing, they have the group's `user:read` here and down above `$price` a
 `user:read`. Some of the users see realized since it's a user, the `user:read`
 group.
 
@@ -42,26 +42,26 @@ our unpublished cheeses listing and get a `404` let's also make a request, I
 `GET` request to `/api/users` and then `$user->getId()`. So we're creating this up here
 actually because fetching a user requires you to be logged in. Let's change this to
 `createUserAndLogIn()` and pass the `$client`. It's for logging in as this user. We're
-going to make a request for that user down here. I'll say 
+going to make a request for that user down here. I'll say
 `$data = $client->getResponse()->toArray()`, and we want to see here as we want to see that this
 `cheeseListings` property is empty. This `User` does have one `CheeseListing`, but since it's not
-published, it shouldn't show up in this collection. So we can say 
+published, it shouldn't show up in this collection. So we can say
 `$this->assertEmpty($data['cheeseListings']);`
 
-So if you move a right now and try the test again, 
+So if you move a right now and try the test again,
 
 ```terminal-silent
 php bin/phpunit --filter=testGetCheeseListingItem
 ```
 
-perfect, it fails, 
+perfect, it fails,
 
 > Failed asserting that an array is empty.
 
 because it is not empty. All right, so how do we fix
 this? Well, we know that API platforms calling `getCheeseListings()`, so what we can do
 below here is just create a new method called `getPublishedCheeseListings()` that will
-also return that same `Collection`. Instead of here, we can say return 
+also return that same `Collection`. Instead of here, we can say return
 `$this->cheeseListings->filter()`, which is because remember the cheese thing is actually a
 Doctrine collection. We'll pass this a `function(){}` that will get a `CheeseListing`
 argument. Inside here we'll say return `$cheeseListing->getIsPublished()`, so the
@@ -95,15 +95,15 @@ cheese listings. So if she'd have her now and rerun that test.
 php bin/phpunit --filter=testGetCheeseListingItem
 ```
 
-Yes it passes. And actually to be safe, let's rerun all of our tests 
+Yes it passes. And actually to be safe, let's rerun all of our tests
 
 ```terminal-silent
 php bin/phpunit
 ```
 
 when we do get
-one failure. So if we checked this out here, the failure is coming from 
-`testUpdateCheeseListing()` 
+one failure. So if we checked this out here, the failure is coming from
+`testUpdateCheeseListing()`
 
 > Failed asserting that Response status code is 403
 
