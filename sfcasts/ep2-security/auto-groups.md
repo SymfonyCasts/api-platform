@@ -27,6 +27,8 @@ currently being executed. It uses this information to always add *three* groups.
 The first is easy: `{class}:{read/write}`. So `user:read`, `cheese_listing:read`
 or `cheese_listing:write`. That matches the main groups we've been using.
 
+[[[ code('9fd55332ac') ]]]
+
 The next is more specific: the class name, then `item` or `collection`, which is
 whether this is an "item operation" or a "collection operation" - then `read` or
 `write`. If we're making a `GET` request to `/api/users`, this would add
@@ -41,15 +43,25 @@ That will make sure that if the `groups` key does *not* exist, it will be added
 and set to an empty array. Now say `$context['groups'] = array_merge()` of
 `$context['groups']` and `$this->addDefaultGroups()`, which needs the `$context`
 and whether or not the object is being normalized. So, the `$normalization` argument.
+
+[[[ code('1716a9e06d') ]]]
+
 We can remove the `$context['groups']` check in the `if` statement because it will
 *definitely* be set already.
+
+[[[ code('2611486645') ]]]
 
 Oh, and just to clean things up, let's remove any possible duplications:
 `$context['groups'] = array_unique($context['groups'])`.
 
+[[[ code('e7f2f685a2') ]]]
+
 That's it! We can *now* go into `CheeseListing`, for example, and remove the
-normalization and denormalization context options. In fact, let's prove everything
-still works by running the tests:
+normalization and denormalization context options. 
+
+[[[ code('686cb60ad9') ]]]
+
+In fact, let's prove everything still works by running the tests:
 
 ```terminal
 php bin/phpunit
