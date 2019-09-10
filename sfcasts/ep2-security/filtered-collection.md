@@ -1,127 +1,164 @@
-# Item Extension
+# Filtering Related Collections
 
-Coming soon...
+There are two places where our API returns a collection of cheese listings: the
+first is the `GET` operation for `/api/cheeses` and our extension class takes
+care of filtering out unpublished listings. The second... is down here, when
+you fetch a single user. Remember - we decided to *embed* the collection of
+cheese listings that are owned by this user. But... surprise! Our query extension
+class does *not* filter this! Why? The extension class is only used when API Platform
+needs to make a direct *query* for a `CheeseListing`. In practice, this means
+it's used for the `CheeseListing` operations. But for a `User` resource, API
+platform queries for the `User` and then, to get the `cheeseListings` property,
+it simply calls `getCheeseListings()`. And guess what? That method returns the
+*full*, unfiltered collection of related cheese listings.
 
-Oh, that's nice. But there's another place in our system where cheeses, things are
-returned. The extension thing takes care of the collection of cheeses and even takes
-care of trying to fetch an individual `CheeseListing`. But if you fetch an individual
-user that actually returns the cheese listings as well and our extension class does
-not handle those extension classes, only used to modify the query for the top level
-resource someone we're actually working with the `CheeseListing` resource, so one of
-these operations up here that the Ma, the query is going to be modified, but when a
-user is being serialized in order to get this `$cheeseListings` property, all API
-platform does is go to the `User` class and call, `getCheeseListings()` and that always
-returns the full collection of cheeses, things, not the filtered collection. So a few
-things to think about when you have a relation like this. The first thing is having
-relation like this only really works if the number of items in the relation is never
-going to be too huge. If you have, if a users could have a hundred cheese listings,
-they're all going to be returned here and that's going to slow down your uh, your
-endpoint and it's not very user friendly anyways, it's that case. It would be better
-to have a user use the `CheeseListing` and point and then filter it. Use a filter to
-filter it by the owner.
+## Careful with Collections
 
-But if you do, but if you know that you're not going to have too many cheeses, things
-that you do want to embed it here for convenience, you have a couple of options when
-it comes to not sharing the published uh, thing. First thing is instead of embedding
-these two properties here, you could just, um, have the IRI shown in that case if you
-had five. Now some of those IRIs, if you followed them, might four, four, if
-that cheeses things in publish, but at least it wouldn't expose any of the data on
-those unpublished listings. As a reminder, the um, cheese listings are returning the
-`title` on `price` key here because on the `CheeseListing` entity, you go look at the
-`$title` thing, they have the group's `user:read` here and down above `$price` a
-`user:read`. Some of the users see realized since it's a user, the `user:read`
-group.
+When you decide to expose a collection relation like this in your API, I want you
+to keep something in mind: exposing a collection relationship is only practical
+if you know that the number of related items will always be reasonably small. If
+a user could have *hundreds* of cheese listings... well... then *all* of them
+will be queried for, hydrated & returned whenever someone fetches that user's
+data. That's overkill and will *really* slow things down... if not eventually
+kill that API call entirely. In that case, it would be better to *not* embed
+`cheeseListings` and instead direct an API client to make a `GET` request to
+`/api/cheeses` & use the `owner` filter instead. The response will the paginate
+and keep things at a reasonable size.
 
-Since we have this above `price` and `title`, it includes the title and price fields. If
-we remove that, then this would only return an array of IRI strengths. But if you,
-okay, but if you really want to filter this properly, if you really do want to have
-this `cheeseListings` property and you really do want to have it filtered and only
-each of the published ones, we absolutely can do that. So first, let's actually
-modify our tests a little bit to test for this. So after we make it get requests for
-our unpublished cheeses listing and get a `404` let's also make a request, I
-`GET` request to `/api/users` and then `$user->getId()`. So we're creating this up here
-actually because fetching a user requires you to be logged in. Let's change this to
-`createUserAndLogIn()` and pass the `$client`. It's for logging in as this user. We're
-going to make a request for that user down here. I'll say
-`$data = $client->getResponse()->toArray()`, and we want to see here as we want to see that this
-`cheeseListings` property is empty. This `User` does have one `CheeseListing`, but since it's not
-published, it shouldn't show up in this collection. So we can say
-`$this->assertEmpty($data['cheeseListings']);`
+## IRIs Instead of Embedded Data?
 
-So if you move a right now and try the test again,
+But if you *do* know that a collection will never become too huge and you *do*
+want to expose it like this... how can we hide the unpublished listings? There
+are two options. First, instead of embedding these two properties, you could
+configure API Platform to return only the IRI. This is only a... partial solution.
+
+As a reminder, each item under `cheeseListings` contains two fields: `title` and
+`price`. Why only those two fields? Because, in the `CheeseListing` entity, the
+`title` property is in a group called `user:read`... and the `price` property is
+*also* in this group. When API Platform serializes a `User`, we've configured
+it to use the `user:read` normalization group. By putting these two properties
+into that group, we're telling API Platform to *embed* these fields.
+
+If we removed the `user:read` group from *all* the properties in `CheeseListing`,
+then the `cheeseListings` field on `User` would return an array or IRI strings
+*instead* of embedded data.
+
+Ok... why does that help us? Well... it sort of doesn't. That field would *still*
+contain the IRI's for *all* cheese listings owned by this user... but if an API
+client made a request to the IRI of an unpublished listing, it would 404. They
+wouldn't be able to see the *data* of the unpublished listing... which is great...
+but the IRI *would* still show up here... which is kinda weird.
+
+## Truly Filtering the Collection
+
+If you *really* want to filter this properly, if you *really* want the `cheeseListings`
+property to only contain *published* listings, we can absolutely do that.
+
+Let's modify our test a little bit to look for this. After we make a get request
+for our unpublished `CheesesListing` and assert the `404`, let's *also* make a
+`GET` request to `/api/users/` and then `$user->getId()` - the id of the `$user`
+we created above that owns this `CheeseListing`. Change that line to
+`createUserAndLogIn()` and pass `$client`... because you need to be authenticated
+to fetch a single user's data.
+
+After the request, fetch the returned data with
+`$data = $client->getResponse()->toArray()`. We want to assert that the
+`cheeseListings` property is empty: this `User` *does* have one `CheeseListing`,
+but it's not published. Assert that with `$this->assertEmpty($data['cheeseListings'])`.
+
+Let's make sure this fails...
 
 ```terminal-silent
 php bin/phpunit --filter=testGetCheeseListingItem
 ```
 
-perfect, it fails,
+And... it does:
 
 > Failed asserting that an array is empty.
 
-because it is not empty. All right, so how do we fix
-this? Well, we know that API platforms calling `getCheeseListings()`, so what we can do
-below here is just create a new method called `getPublishedCheeseListings()` that will
-also return that same `Collection`. Instead of here, we can say return
-`$this->cheeseListings->filter()`, which is because remember the cheese thing is actually a
-Doctrine collection. We'll pass this a `function(){}` that will get a `CheeseListing`
-argument. Inside here we'll say return `$cheeseListing->getIsPublished()`, so the
-filter, if you're not familiar with it, it's basically gonna loop over every single
-item and `$cheeseListings`. Call our call back for each `CheeseListing` and if we return
-true from here, it'll be returned and a new collection and if not it won't be.
+## Adding getPublishedCheeseListings()
 
-So the end result of this is that we get a collection of `CheeseListing`, but only
-the published ones. Now again, if you have many cheat, if a users can have, could
-have many cheese listings that this is not an efficient way to do this if there were
-30 cheeses because it needs to query for all of the cheeses things, the database
-first, only if you're going to, even if you're only going to return some of them, if
-you really care about that, you can look at our doctrine extensions, tutorial docking
-queries tutorial. We do talk about a more efficient way to write this function, to
-avoid that performance it. But if you have, if you only have, if you don't have that
-many cheese listings, it doesn't really matter. Now that we have this new function,
-we can make it part of our API.
+Great! So... how can we filter this collection? Let's think about it: we know that
+API Platform calls `getCheeseListings()` to get the data for the `cheeseListings`
+property. So... what if we made this method return only the *published* cheese
+listings?
 
-So I'm going to go up to the `$cheeseListings` property and right now this is in the
-groups `user:read` and `user:write` I'm going to copy that. I'm going to
-take it out of `user:read`. When we're writing to this field, I still want to
-write to this property directly, which means use the normal adder and remover
-methods. When we're reading from it, I want to use the other method. So I'll add the
-`@Groups()` down to `getPublishedCheeseListings()` and put it in a `user:read`
-group. Now if we just stopped there, this would give us a new `publishedCheeseListings`
-property, but we can fix that with `@SerializedName("cheeseListings")`
-and that should give us a `cheeseListings` property that only returns the published
-cheese listings. So if she'd have her now and rerun that test.
+Yea... that's the key! Well, but instead of modifying that method - it's a getter
+method for the `cheeseListings` property... so it really should return everything -
+let's create a new method: `public function getPublishedCheeseListings()` that will
+return that same `Collection`. Inside, return `$this->cheeseListings->filter()`,
+which is a method on Doctrine's collection object. Pass this a callback
+`function(){}` with a single `CheeseListing` argument. All that method needs is
+`return $cheeseListing->getIsPublished()`.
+
+If you're not familiar with the `filter()` method, that's ok - it's a bit more
+common in the JavaScript world... or "functional programming" in general. The
+`filter()` method will loop over *all* of the `CheeseListing` objects in the
+collection and execute the callback for each one. If our callback returns true,
+that `CheeseListing` is added to a *new* collection... which is ultimately returned.
+If our callback returns false, it's not.
+
+The end result is that this method returns a collection of only the *published*
+`CheeseListing` objects... which is perfect! Side note: this method is inefficient
+because Doctrine will query for *all* of the related cheese listings... and then
+we'll only return the published ones. If number of items in the collection will
+always be pretty small, no big deal. But if you're worried about this, there *is*
+a more efficient way to filter the collection, which we cover in our
+[Doctrine Relations tutorial](https://symfonycasts.com/screencast/doctrine-relations/collection-criteria).
+
+But no matter *how* you filter the collection, you'll now have a *new* method
+that returns only the *published* listings. Let's make it part of our API!
+Find the `$cheeseListings` property.Tight now this is in the `user:read` and
+`user:write` groups. Copy that and take it *out* of the `user:read` group. We
+still want to *write* directly to this field... by letting the serializer call
+our `addCheeseListing()` and `removeCheeseListing()` methods, but we *won't*
+use it for *reading* data.
+
+Instead, above the new method, paste the `@Groups` and put this in *just* `user:read`.
+If we just stopped now, this would give us a new `publishedCheeseListings` property.
+We can improve that by adding `@SerializedName("cheeseListings")`.
+
+I love it! Our API *still* exposes a `cheeseListings` field... but it will now
+*only* contain *published* listings. But don't take my word for it, run that
+test!
 
 ```terminal-silent
 php bin/phpunit --filter=testGetCheeseListingItem
 ```
 
-Yes it passes. And actually to be safe, let's rerun all of our tests
+Yes! It passes! To be safe, let's run *all* the tests:
 
-```terminal-silent
+```terminal
 php bin/phpunit
 ```
 
-when we do get
-one failure. So if we checked this out here, the failure is coming from
-`testUpdateCheeseListing()`
+And... ooh - we do get one failure from `testUpdateCheeseListing()`:
 
 > Failed asserting that Response status code is 403
 
-cause we got 404 and then a big long stack trace there. So if you check this out, look
-for a `testUpdateCheeseListing()`. As a reminder, what we're doing here, the failure is
-coming from down here on line 67 and actually see that we look a little bit closer.
-Yup. Line 67 we were basically we were testing that you can't update a `CheeseListing`
-that's owned by somebody else, but instead of going `403`, we're getting a `404`
-And the problem is that this `CheeseListing` is not published. And this is
-actually really cool. Our r a extension class is actually preventing us from even
-fetching this single `CheeseListing` for editing cause it's not published. So this is
-actually our Accenture class doing exactly what we want. So let's set this to publish
-that our test actually works and we'll go back over here and run the test again
+And... it looks like we got a 404. Let's check this out... find
+`testUpdateCheeseListing()`. The failure is coming from down here on line 67.
+We're testing that you can't update a `CheeseListing` that's owned by a different
+user... but instead of getting a `403`, we're getting a `404`.
+
+The problem is that this `CheeseListing` is not published. This is *awesome*!
+Our query extension class is preventing us from fetching a this single
+`CheeseListing` for editing... because it's not published. I wasn't even thinking
+about this case, but API Platform acted intelligently.
+
+Let's set this to be published... and run the test again:
 
 ```terminal-silent
 php bin/phpunit
 ```
 
-and all green.
+All green! That's it friends! We made! We added *one* type of API authentication
+and then customized access in *every* possible way I could think of: preventing
+access on an operation-by-operation basis, voters for more complex control, hiding
+fields based on the user, adding custom fields based on the user, validating data...
+again... based on who is logged in and even controlling database queries based
+on security. Phew! In the an upcoming tutorial, we'll talk about custom operations,
+DTO objects and any other customizations we can dream up. Are we still missing
+something you wish was covered? Let us know!
 
-All right. That's it.
+Alright friends, see ya next time!
