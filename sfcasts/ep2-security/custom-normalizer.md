@@ -111,11 +111,13 @@ password `foo` and... go!
 Cool! Now that we're authenticated, head back to `/api`. Yep, the web debug
 toolbar *confirms* that I'm a "gouda dude". Let's try the GET operation to fetch
 a collection of users. Because of our random logic, I'd expect *some* results to
-show the `phoneNumber` and some not. Execute and... the first user has no
-`phoneNumber`, second user no `phoneNumber` and the third user... also has
-no `phoneNumber`. Huh. Maybe... bad luck? Try it again. And... yes! This time
-*two* of the three users have a `phoneNumber` field. Our group is being added
-dynamically on an object-by-object basis! Normalizers rock!
+show the `phoneNumber` and some not. Execute and... hey! The first user has a
+`phoneNumber` field! It's null... because apparently we didn't set a `phoneNumber`
+for that user, but the field *is* there. And, thanks to the randomness, there
+is *no* `phoneNumber` for the second and third users. If you try the operation
+again... yes! This time the first *and* second users have that field, but not
+the third. Hey! Our we're now dynamically adding the `owner:read` group on an
+object-by-object basis! Normalizers rock!
 
 But... wait a second. Something is wrong! We're missing the JSON-LD fields for
 these users. Well, ok, we have them on the top-level for the collection itself...
