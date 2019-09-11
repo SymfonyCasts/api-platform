@@ -116,7 +116,7 @@ show the `phoneNumber` and some not. Execute and... hey! The first user has a
 for that user, but the field *is* there. And, thanks to the randomness, there
 is *no* `phoneNumber` for the second and third users. If you try the operation
 again... yes! This time the first *and* second users have that field, but not
-the third. Hey! Our we're now dynamically adding the `owner:read` group on an
+the third. Hey! We're now dynamically adding the `owner:read` group on an
 object-by-object basis! Normalizers rock!
 
 But... wait a second. Something is wrong! We're missing the JSON-LD fields for
