@@ -129,7 +129,7 @@ Just... be careful with this: the reason the logic is normally cached is that
 API Platform calls this function *many* times during a request. So, any logic
 you add here needs to be lightning quick. You may even decide to add a
 `private $resourceMetadata` array property where you store the `ResourceMetadata`
-object for each class as you calculate it. Then, if `created()` is called on the
+object for each class as you calculate it. Then, if `create()` is called on the
 same request for the same `$resourceClass`, you can return it from this array
 instead of running our logic over and over again.
 
