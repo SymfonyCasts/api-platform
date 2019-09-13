@@ -751,6 +751,11 @@
             "description": null
         },
         {
+            "id": "dynamserialization-change-to-admin-write",
+            "name": "DynamSerialization: Change to admin:write",
+            "description": null
+        },
+        {
             "id": "dynamserialization-protect-roles",
             "name": "DynamSerialization: protect roles",
             "description": null
@@ -936,5 +941,5 @@
             "description": null
         }
     ],
-    "sha": "1843b6d59daf46852be497294b93817f53e3c9c7"
+    "sha": "093680f137977239084bf71408df4e7610152d40"
 }
