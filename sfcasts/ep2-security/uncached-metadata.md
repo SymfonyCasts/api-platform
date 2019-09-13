@@ -53,14 +53,22 @@ But first, we added the `shortName` option in part 1 of this tutorial to change 
 URLs from `/api/cheese_listings` to `/api/cheeses`. Now, change the `shortName`
 to just `cheese`.
 
+[[[ code('46a495d08a') ]]]
+
 If you refresh the docs... surprise! All of the URLs are *still* `/api/cheeses`:
 API Platform automatically takes the `shortName` and makes it *plural* when creating
 the URLs. So, this change... didn't really.. change anything! I did it just so we
 could keep all of our group names singular. I'll do a find and replace to change
-`cheese_listing:` to `cheese:`. Then, in `User`, there's *one* other spot we need
-to change. Above `username`, change this to `cheese:item:get`. Don't forget to
+`cheese_listing:` to `cheese:`. 
+
+[[[ code('b1c6f4827a') ]]]
+
+Then, in `User`, there's *one* other spot we need to change. 
+Above `username`, change this to `cheese:item:get`. Don't forget to
 *also* change `cheese_listing:write` to `cheese:write`. I'll catch that mistake a
 bit later.
+
+[[[ code('18bd9565ec') ]]]
 
 Phew! Ok, go refresh the docs... and open the GET operation for `/api/cheeses`.
 Yay! It properly advertises that it will return an array of the correct fields.
@@ -90,6 +98,8 @@ But what if our resource metadata factory... *wasn't* cached? Duh, duh, duh!
 
 Check this out: in `config/services.yaml`, add a new option to the service:
 `decoration_priority` set to -20.
+
+[[[ code('e8398dad80') ]]]
 
 Wow... yea... we just took an already-advanced concept and... went even deeper.
 When we decorate a core service, we might not be the *only* service decorating it:

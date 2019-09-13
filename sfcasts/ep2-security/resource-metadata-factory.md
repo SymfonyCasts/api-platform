@@ -21,7 +21,11 @@ Inside the  `ApiPlatform/` directory, create a new class called
 `AutoGroupResourceMetadataFactory`. Make this implement `ResourceMetadataFactoryInterface` and then take a break... cause we just created
 one *seriously* scary-looking class declaration line.
 
+[[[ code('17745c019c') ]]]
+
 Next, go to Code -> Generate - or Command+N on a Mac - and select "Implement Methods". This interface only requires one method.
+
+[[[ code('7c72f91b23') ]]]
 
 So... what the heck does this class do? It's job is pretty simple: given an
 API Resource class - like `App\Entity\User` - its job is to read all the API
@@ -44,9 +48,13 @@ implementation of the decorator pattern. That sounds fancy. Create a
 `ResourceMetadataFactoryInterface $decorated`. Hit Alt + Enter and go to
 "Initialize Fields" to create that property and set it.
 
+[[[ code('b9fdcf7dcd') ]]]
+
 Inside the method, call the decorated class so it can do all the heavy-lifting:
 `$resourceMetadata = $this->decorated->create($resourceClass)`. Then,
 return this at the bottom: we won't make any modifications yet.
+
+[[[ code('b6738c7c8c') ]]]
 
 The *second* step to decoration is *all* about Symfony: we need to tell it to
 use *our* class as the core "resource metadata factory" instead of the normal
@@ -64,6 +72,8 @@ bit deeper if it's not documented. What we're doing is *so* advanced that you
 `api_platform.metadata.resource.metadata_factory`. And for the "inner" thing,
 copy our service id and paste below to make:
 `@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner`.
+
+[[[ code('4e70b6217c') ]]]
 
 Cool! Since our resource metadata factory isn't *doing* anything yet... everything
 should still work *exactly* like before. Let's see if that's true! Find your
@@ -83,9 +93,14 @@ These are low-level, boring functions that will do the hard work for us:
 identical to the method we copied into our context builder. You can copy both of
 these from the code block on this page.
 
-Next, up in `create()`, I'll paste in a bit more code. This is *way* more code
-than I normally like to paste in magically... but adding all the groups requires
-some pretty ugly & boring code. We start by getting the `ResourceMetadata` object
+[[[ code('b610d31864') ]]]
+
+Next, up in `create()`, I'll paste in a bit more code. 
+
+[[[ code('51aa40206c') ]]]
+
+This is *way* more code than I normally like to paste in magically... but adding
+all the groups requires some pretty ugly & boring code. We start by getting the `ResourceMetadata` object
 from the core, decorated resource metadata factory. That `ResourceMetadata` object
 has a method on it called `getItemOperations()`, which returns an array of
 configuration that matches the `itemOperations` for whatever resource we're
@@ -102,6 +117,8 @@ some subtle bug in my logic. But... it *should* work.
 And *thanks* to this new stuff, the code in `AdminGroupsContextBuilder` is
 redundant: remove the private function on the bottom... and the line on top
 that called it.
+
+[[[ code('08fc1037bb') ]]]
 
 Ok... let's see what happens! Refresh the docs. The *first* thing you'll notice
 is on the bottom: there are now *tons* of models! This is the downside of this
