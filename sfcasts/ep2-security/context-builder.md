@@ -103,7 +103,7 @@ It... yes - fails! Our API *does* let us write to the `roles` property. How do w
 fix this? You probably already know... and it's *gorgeously* simple. Change
 the group to `admin:write`.
 
-[[[ code('b0375dc024') ]]]
+[[[ code('8b61dd88c5') ]]]
 
 Run the test again:
 
