@@ -9,6 +9,8 @@ that because we're directly calling a *specific* normalizer - `ObjectNormalizer`
 So... how can we call the "normalizer chain" instead of this specific normalizer?
 By implementing a new interface: `NormalizerAwareInterface`.
 
+[[[ code('138f6dc4a5') ]]]
+
 This requires us to have a single new method `setNormalizer()`. When the serializer
 system see that a normalizer has this interface, *before* it uses that normalizer,
 it will call `setNormalizer()` and pass a normalizer object... that *really* holds
@@ -20,6 +22,8 @@ So, we *won't* autowire `ObjectNormalizer` anymore: remove the constructor and
 that property. Instead, `use NormalizerAwareTrait`. That trait is just a shortcut:
 it has a `setNormalizer()` method and it stores the normalizer on a protected
 property.
+
+[[[ code('eb90b7938b') ]]]
 
 The end result is that `$this->normalizer` is *now* the main, normalizer chain.
 We add the group, then pass `User` back through the original process.
@@ -50,6 +54,8 @@ Remove `NormalizerInterface` and replace it with `ContextAwareNormalizerInterfac
 We can do that because it extends `NormalizerInterface`. The only difference is
 that this interface requires our method to have one extra argument: `array $context`.
 
+[[[ code('4c2609cc1f') ]]]
+
 For the flag, let's add a constant: `private const ALREADY_CALLED` set to, how
 about, `USER_NORMALIZER_ALREADY_CALLED`. Now, in `normalize()`, right *before*
 calling the original chain, set this: `$context[self::ALREADY_CALLED] = true`.
@@ -57,14 +63,19 @@ Finally, in `supportsNormalization()`, if `isset($context[self::ALREADY_CALLED])
 return false. That will allow the "normal" normalizer to be used on the second
 call.
 
+[[[ code('326e8f3354') ]]]
+
 We've done it! We've fixed the recursion! Let's celebrate by hitting Execute and...
 more recursion!
 
 ## Removing hasCacheableSupportsMethod()
 
 Because... we're missing *one* subtle detail. Find the `hasCacheableSupportsMethod()`
-method - this was generated for us - and return `false`. Go back up, hit Execute
-and... it works! The `phoneNumber` field is still randomly included... because we
+method - this was generated for us - and return `false`. 
+
+[[[ code('4edae3b2e1') ]]]
+
+Go back up, hit Execute and... it works! The `phoneNumber` field is still randomly included... because we
 have some random logic in our normalizer... but the `@id` and `@type` JSON-LD stuff
 is back!
 

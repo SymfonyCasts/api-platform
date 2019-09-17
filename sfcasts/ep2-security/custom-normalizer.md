@@ -49,8 +49,11 @@ that looks at our normalization groups & reads the data via the getter methods.
 We're now going to hook *into* that process so that we can change the normalization
 groups *before* that core normalizer does its job.
 
-Go check out the new class: `src/Serializer/Normalizer/UserNormalizer.php`. This
-works a bit differently than the context builder - it works more like the voter
+Go check out the new class: `src/Serializer/Normalizer/UserNormalizer.php`. 
+
+[[[ code('e552154f0f') ]]]
+
+This works a bit differently than the context builder - it works more like the voter
 system. The serializer doesn't have just *one* normalizer, it has *many* normalizers.
 Each time it needs to normalize something, it loops over *all* the normalizers,
 calls `supportsNormalization()` and passes us the data that it needs to normalize.
@@ -72,8 +75,12 @@ Let's start customizing this! For `supportsNormalization()`, return
 `$data instanceof User`. So if the thing that's being normalized is a `User` object,
 we handle that.
 
+[[[ code('212ef6e7a0') ]]]
+
 Now we know that `normalize()` will *only* be called if `$object` is a `User`.
 Let's add some PHPDoc above this to help my editor.
+
+[[[ code('9732dd0102') ]]]
 
 The goal here is to check to see if the `User` object that's being normalized is
 the *same* as the currently-authenticated `User`. If it is, we'll add that
@@ -96,6 +103,8 @@ because, in our system, we are *always* setting at least one group.
 
 Let's add that missing method: `private function userIsOwner()`. This will take
 a `User` object and return a `bool`. For now, fake it: `return rand(0, 10) > 5`.
+
+[[[ code('1de2216072') ]]]
 
 And... I think that's it! Like with voters, this is a situation where we *don't*
 need to add any configuration: as soon as we create a class and make it implement
