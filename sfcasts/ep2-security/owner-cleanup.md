@@ -86,7 +86,7 @@ Let's make this test more interesting! Create a new `$authenticatedUser`
 variable set to who we're logged in as. Then create an `$otherUser` variable
 set to... *another* user in the database.
 
-Here's the plan: I want to make *another* POST request to `/api/users` with *valid*
+Here's the plan: I want to make *another* POST request to `/api/cheeses` with *valid*
 data... except that we'll set the `owner` field to this `$otherUser`... a user
 that we are *not* logged in as. Start by creating a `$cheesyData` variable set to
 an array with `title`, `description` and `price`. These are the three required
