@@ -26,7 +26,7 @@ query is used for a *single* item.
 
 Let's write a quick test for this. Copy the collection test method, paste the
 entire thing, rename it to `testGetCheeseListingItem()`... and I'll remove cheese
-listings two and three. This time, make the `GET` request to `/api/cheese/`
+listings two and three. This time, make the `GET` request to `/api/cheeses/`
 and then `$cheeseListing1->getId()`.
 
 This is an *unpublished* `CheeseListing`... so we eventually want this to *not*
