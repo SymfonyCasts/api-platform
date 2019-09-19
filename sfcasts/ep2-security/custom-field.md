@@ -51,6 +51,8 @@ to tell my editor that this will be a `User` object or null if the user is
 `$authenticatedUser->getEmail() === $user->getEmail()`. We could also compare the
 objects themselves.
 
+[[[ code('f89254b370') ]]]
+
 Let's try this: if we fetch the collection of all users, the `phoneNumber` field
 should *only* be included in *our* user record. And... no `phoneNumber`, no
 `phoneNumber` and... yes! The `phoneNumber` shows up *only* on the third record:
@@ -81,8 +83,11 @@ will *also* see their own `phoneNumber`. Because we're logging in as
 
 To fix the test, change `createUserAndLogin()` to just `createUser()`... and
 remove the first argument. Now use `$this->createUserAndLogin()` to log in as a
-totally *different* user. Now we're making a GET request for the `cheeseplease@example.com` user data but we're *authenticated* as this *other*
-user. So, we should *not* see the `phoneNumber` field.
+totally *different* user. Now we're making a GET request for the `cheeseplease@example.com` 
+user data but we're *authenticated* as this *other* user. 
+So, we should *not* see the `phoneNumber` field.
+
+[[[ code('55f893cb3d') ]]]
 
 Run the tests again:
 
@@ -99,6 +104,8 @@ a custom `isMe` field to `User`. Because `$data` is an array, we can add whateve
 fields we want. Up here, I'll create a variable called `$isOwner` set to what we
 have in the if statement: `$this->userIsOwner($object)`. Now we can use `$isOwner`
 in the `if` *and* add the custom field: `$data['isMe'] = $isOwner`.
+
+[[[ code('f61fdf399f') ]]]
 
 Et voilà! Test it! Execute the operation again and... there it is: `isMe` false,
 false and true! Just remember the downside to this approach: our documentation
