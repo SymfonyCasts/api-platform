@@ -27,11 +27,15 @@ will use to activate this... and it's usually empty, except for a few properties
 that are typically public. Each public property will become an *option* that you
 can pass to the annotation. More on that in a minute.
 
+[[[ code('ec7dcc98bc') ]]]
+
 The other class, which typically has the same name plus the word "Validator", is
 what will be called to do the actual *work* of validation. The validation system
 will pass us the `$value` that we're validating and then we can do whatever
 business logic we need to determine if it's valid or not. If the value is invalid,
 you can use this cool `buildViolation()` thing to set an error.
+
+[[[ code('262efbe2e2') ]]]
 
 ## Using the Validation Constraint
 
@@ -41,9 +45,13 @@ based on whatever crazy logic we want. To activate the new validator, add
 `@IsValidOwner()`. This is where we could customize the `message` option...
 or *any* public properties we decide to put on the annotation class.
 
+[[[ code('a8e3c75665') ]]]
+
 Actually, let's change the *default* value for `$message`:
 
 > Cannot set owner to a different user
+
+[[[ code('f245466fd8') ]]]
 
 Ok, now that we've added this annotation, whenever the `CheeseListing` object is
 being validated, the validation system will *now* call `validate()` on
