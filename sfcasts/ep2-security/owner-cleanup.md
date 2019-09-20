@@ -27,6 +27,8 @@ the `cheese:write` group from `username`. We can now also take off the
 the `CheeseListing` operations... which was needed to make sure someone didn't
 set the `username` to an invalid value while updating a `CheeseListing`.
 
+[[[ code('fafdfdce01') ]]]
+
 ## Making owner *only* Settable on POST
 
 Now, how can we make the `owner` property settable for the POST operation but
@@ -37,6 +39,8 @@ serialization groups in all situations. We can use this last one to include a fi
 *only* for a specific operation. Change `cheese:write` to `cheese:collection:post`.
 That follows the pattern: "short name", colon, collection, colon, then the operation
 name: `post`.
+
+[[[ code('5333ca55da') ]]]
 
 Congratulations, the `owner` can no longer be changed.
 
@@ -86,19 +90,27 @@ Let's make this test more interesting! Create a new `$authenticatedUser`
 variable set to who we're logged in as. Then create an `$otherUser` variable
 set to... *another* user in the database.
 
+[[[ code('9e1d6fd405') ]]]
+
 Here's the plan: I want to make *another* POST request to `/api/cheeses` with *valid*
 data... except that we'll set the `owner` field to this `$otherUser`... a user
 that we are *not* logged in as. Start by creating a `$cheesyData` variable set to
 an array with `title`, `description` and `price`. These are the three required
 fields other than `owner`.
 
+[[[ code('9a894f7e2b') ]]]
+
 Now, copy the request and status code assertion from before, paste down here and
 set the `json` to `$cheesyData` *plus* the `owner` property set to `/api/users/`
 and then `$otherUser->getId()`.
 
+[[[ code('1d2bb7bafe') ]]]
+
 In this case, the status code should *still* be 400 once we've coded all of this:
 passing the wrong owner will be a *validation* error. I'll add a little message
 to the assertion to make it obvious why it's failing:
+
+[[[ code('6bc8b9ebfc') ]]]
 
 > not passing the correct owner
 
@@ -109,6 +121,8 @@ behavior we want to prevent.
 While we're here, copy these two lines again and change `$otherUser` to
 `$authenticatedUser`. This *should* be allowed, so change the assertion to look
 for the happy 201 status code.
+
+[[[ code('6ee80997e0') ]]]
 
 You know the drill: once you've written a test, you get to celebrate by watching
 it fail! Copy the method name, flip over to your terminal and run:
