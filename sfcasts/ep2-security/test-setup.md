@@ -26,6 +26,10 @@ Open that file up. One of the keys here is called `SYMFONY_PHPUNIT_VERSION`,
 which at the time I recorded this is set to 7.5 in the recipe. You can leave
 this or change it to the latest version of PHPUnit, which for me is 8.2
 
+***TIP
+PHPUnit 8.2 requires PHP 7.2. If you're using PHP 7.1, stay with PHPUnit 7.5.
+***
+
 [[[ code('416e2842e6') ]]]
 
 But wait... why are we controlling the version of PHPUnit via some variable in
