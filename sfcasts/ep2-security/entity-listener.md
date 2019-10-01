@@ -19,8 +19,12 @@ and `price`, we expect it to return a `400` error because we forgot to send the
 `owner` field. Let's change this to expect a `201` status code. Once we finish
 this feature, only sending `title`, `description` and `price` *will* work.
 
+[[[ code('2388c8ccd8') ]]]
+
 To start, take off the `NotBlank` constraint from `$owner` - we definitely don't
 want it to be required anymore.
+
+[[[ code('2acd595fb8') ]]]
 
 If we run the tests now...
 
@@ -65,6 +69,8 @@ happen to a specific entity. In our case, we want to run some code *before* a
 `CheeseListing` is created. That's called "pre persist" in Doctrine. Add
 `public function prePersist()` with a `CheeseListing` argument.
 
+[[[ code('aa74adc28f') ]]]
+
 Two things about this. First, the name of this method *is* important: Doctrine
 will look at all the public functions in this class and use the *names* to determine
 which methods should be called when. Calling this `prePersist()` will mean
@@ -84,6 +90,8 @@ one item inside: the *full* class name of the entity listener class:
 `App\Doctrine\`... and then I'll get lazy and copy the class name:
 `CheeseListingSetOwnerListener`.
 
+[[[ code('67215347cc') ]]]
+
 That's it for the basic setup! Thanks to this annotation and the method being
 called `prePersist()`, Doctrine will automatically call this *before* it
 persists - meaning *inserts* - a new `CheeseListing`.
@@ -95,11 +103,17 @@ currently-authenticated user, add an `__construct()` method, type-hint the
 `Security` service and then press Alt + Enter and select "Initialize fields" to
 create that property and set it.
 
+[[[ code('88aa1d2d23') ]]]
+
 Next, inside the method, start by seeing if the owner was already set: if
 `$cheeseListing->getOwner()`, just return: we don't want to override that.
 
+[[[ code('29cbd58019') ]]]
+
 Then if `$this->security->getUser()` - so *if* there is a currently-authenticated
 `User`, call `$cheeseListing->setOwner($this->security->getUser())`.
+
+[[[ code('07a35d3111') ]]]
 
 Cool! Go tests go!
 
@@ -132,6 +146,8 @@ definition: `App\Doctrine\` and go grab the `CheeseListingSetOwnerListener`
 class name again. We're doing this so that we can add a *little* bit of *extra*
 service configuration. Specifically, we need to add a *tag* called
 `doctrine.orm.entity_listener`.
+
+[[[ code('f3e449e335') ]]]
 
 This says:
 

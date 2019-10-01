@@ -8,10 +8,17 @@ listings... that's a problem... because we've just filtered them out entirely!
 No worries, let's add the same admin "exception" that we've added to a few other
 places. Start with `public function __construct()` so we can autowire the `Security`
 service. I'll hit Alt + Enter and click "Initialized fields" to create that property
-and set it. Down in the method, very nicely, if
-`$this->security->isGranted('ROLE_ADMIN')`, return and do nothing. Whoops, I
-added an extra exclamation point to make this *not*. Don't do that! I'll fix
-it in a few minutes.
+and set it. 
+
+[[[ code('18c3f01705') ]]]
+
+Down in the method, very nicely, if `$this->security->isGranted('ROLE_ADMIN')`, 
+return and do nothing. 
+
+[[[ code('e9bc085610') ]]]
+
+Whoops, I added an extra exclamation point to make this *not*. Don't do that! 
+I'll fix it in a few minutes.
 
 Anyways, apart from my mistake, admin users can now fetch *every* `CheeseListing`
 once again.
@@ -33,6 +40,8 @@ This is an *unpublished* `CheeseListing`... so we eventually want this to *not*
 be accessible. But... because we haven't added the logic yet, let's start by testing
 the current functionality. Assert that the response code is 200.
 
+[[[ code('c4f3488ae2') ]]]
+
 Copy that method name, and let's make sure it passes:
 
 ```terminal
@@ -44,6 +53,8 @@ let's say `$cheeseListing->setIsPublished(false)`. That `CheeseListing` was
 already unpublished - that's the default - but this is more clear to me. For the
 status code, when a `CheeseListing` is unpublished, we *want* it to return
 a 404. Try the test now:
+
+[[[ code('309168dc97') ]]]
 
 ```terminal-silent
 php bin/phpunit --filter=testGetCheeseListingItem
@@ -62,12 +73,18 @@ one more time. And... ha! We could have guessed that method name: `applyToItem()
 This is called whenever API Platform is making a query for a *single* item...
 and we basically want to make the *exact* same change to the query.
 
+[[[ code('a0c10b68f4') ]]]
+
 I'll hit Control+t, which, on a Mac, is the same as going to the Refactor menu
 on top and selecting "Refactor this". Let's extract this logic to a "Method" - call
 it `addWhere`.
 
+[[[ code('03aa5cf7e2') ]]]
+
 Cool! That gives us a new `private function addWhere()`... and `applyToCollection()`
 is already calling it. Do the same thing in `applyToItem()`.
+
+[[[ code('d077a4ee0d') ]]]
 
 Let's try this! Run the test again and...
 

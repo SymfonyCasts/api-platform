@@ -16,6 +16,8 @@ add `public function testGetCheeseListingCollection()` and then go to work:
 `$client = self::createClient()` and `$user = $this->createUser()` with
 any email and password.
 
+[[[ code('3b11f69594') ]]]
+
 We're not logging *in* as this user simply because the `CheeseListing` collection
 operation doesn't require authentication. Now, let's make some cheese! I'll create
 `$cheeseListing1`... with a bunch of data... then use that to create
@@ -23,15 +25,21 @@ operation doesn't require authentication. Now, let's make some cheese! I'll crea
 `CheeseListing` objects. To save them, grab the entity manager -
 `$em = $this->getEntityManager()` - persist all three... and call `flush()`.
 
+[[[ code('0a59166899') ]]]
+
 The stage for our test is set. Because the default value for the
 `isPublished` property is false... all of these new listings will be *unpublished*.
 Fetch these by using `$client->request()` to make a `GET` request to `/api/cheeses`.
+
+[[[ code('973fd2ad46') ]]]
 
 Because we haven't added any logic to hide *unpublished* listings yet, at this
 moment, we would expect this to return *3* results. Move over to the docs... and
 try the operation. Ah, cool! Hydra adds a very useful field: `hydra:totalItems`.
 Let's use that! In the test, `$this->assertJsonContains()` that there will be
 a `hydra:totalItems` field set to `3`.
+
+[[[ code('4db5a7e769') ]]]
 
 Copy the method name and flip over to your terminal: this test *should* pass
 because we have *not* added any filtering yet. Try it:
@@ -49,6 +57,8 @@ it for `$cheeseListing3`.
 
 Once we're done with the feature, we will only want the second *two* to be returned.
 Change the assertion to 2. Now we have a failing test.
+
+[[[ code('5585246d6f') ]]]
 
 ## Automatic Filtering
 
@@ -90,6 +100,8 @@ class called `CheeseListingIsPublishedExtension`. Make this implement
 Command + N on a Mac - and select "Implement Methods" to generate the *one*
 method that's required by this interface: `applyToCollection()`.
 
+[[[ code('423e270154') ]]]
+
 Very simply: as soon as we create a class that implements this interface, *every*
 single time that API Platform makes a Doctrine query for a *collection* of results,
 like a collection of users or a collection of cheese listings, it will call this
@@ -106,12 +118,16 @@ querying for a collection of *any* type of object, we only want to do our logic
 for cheese listings. No problem: if `$resourceClass !== CheeseListing::class`
 return and do nothing.
 
+[[[ code('c07cbe9e29') ]]]
+
 Now... we just need to add the `WHERE isPublished=1` part to the query. To do
 that will require a *little* bit of fanciness. Start with
 `$rootAlias = $queryBuilder->getRootAlias()[0]`. I'll explain that in a minute.
 Then `$queryBuilder->andWhere()` with `sprintf('%s.isPublished = :isPublished')`
 passing `$rootAlias` to fill in that `%s` part. For the `isPublished` parameter,
 set it with `->setParameter('isPublished', true)`.
+
+[[[ code('2f815ecadd') ]]]
 
 This *mostly* looks like normal query logic... the weird part being that "root
 alias" thing. Because someone *else* originally created this query, we don't

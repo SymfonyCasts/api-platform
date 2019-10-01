@@ -1,4 +1,4 @@
-# Filtering Related Collections
+ # Filtering Related Collections
 
 There are two places where our API returns a collection of cheese listings. The
 first is the `GET` operation for `/api/cheeses`... and our extension class takes
@@ -63,10 +63,14 @@ we created above that owns this `CheeseListing`. Change that line to
 `createUserAndLogIn()` and pass `$client`... because you need to be authenticated
 to fetch a single user's data.
 
+[[[ code('44c9891662') ]]]
+
 After the request, fetch the returned data with
 `$data = $client->getResponse()->toArray()`. We want to assert that the
 `cheeseListings` property is empty: this `User` *does* have one `CheeseListing`...
 but it's not published. Assert that with `$this->assertEmpty($data['cheeseListings'])`.
+
+[[[ code('4289c482ce') ]]]
 
 Let's make sure this fails...
 
@@ -91,6 +95,8 @@ return that property exactly. Instead, create a new method:
 Inside, return `$this->cheeseListings->filter()`, which is a method on Doctrine's
 collection object. Pass this a callback `function(){}` with a single `CheeseListing`
 argument. All that function needs is `return $cheeseListing->getIsPublished()`.
+
+[[[ code('a68f888c81') ]]]
 
 If you're not familiar with the `filter()` method, that's ok - it's a bit more
 common in the JavaScript world... or "functional programming" in general. The
@@ -119,6 +125,8 @@ use it for *reading* data.
 Instead, above the new method, paste the `@Groups` and put this in *just* `user:read`.
 If we stopped now, this would give us a new `publishedCheeseListings` property.
 We can improve that by adding `@SerializedName("cheeseListings")`.
+
+[[[ code('2972b59d15') ]]]
 
 I love it! Our API *still* exposes a `cheeseListings` field... but it will now
 *only* contain *published* listings. But don't take my word for it, run that
@@ -151,6 +159,8 @@ to tweak the query extension class to allow for an *owner* to fetch their *own*
 unpublished cheese listings... but I'll leave that step for you.
 
 Let's set this to be published... and run the test again:
+
+[[[ code('fd9773a493') ]]]
 
 ```terminal-silent
 php bin/phpunit
