@@ -108,6 +108,12 @@ like a collection of users or a collection of cheese listings, it will call this
 method and pass us a pre-built `QueryBuilder`. Then... we can mess with that
 query however we want!
 
+***TIP
+If you're loading data from something *other* than Doctrine (or have a
+custom "data provider"... a topic we haven't talked about yet), then
+this class won't have any effect.
+***
+
 In fact, this is how pagination and filters work internally: both are implemented
 as Doctrine *extensions*.
 
