@@ -57,7 +57,7 @@ the `cheese_listing:read` group. Copy that. The `owner` property, of course, alr
 has this group above it, which is why we see it in our API. Inside `User`, find
 `$username`... and add `cheese_listing:read` to that.
 
-[[[ code('ea55c9eadf') ]]]
+[[[ code('2bd7945b33') ]]]
 
 Let's try this thing! Move back over and... Execute! And... ha! Perfect!
 It expands to an object and includes the `username`.
