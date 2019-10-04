@@ -104,7 +104,7 @@ a new group for serialization - yaaaay - but nothing is *in* the new group.
 Here's the magic. Copy the new group name, open `User`, and above the
 `$username` property, replace `cheese_listing:read` with `cheese_listing:item:get`.
 
-[[[ code('e11e5c2054') ]]]
+[[[ code('9aec44a25c') ]]]
 
 That's it! Move back to the documentation and fetch a *single* `CheeseListing`.
 And... *perfect* - it *still* embeds the owner - there's the username. But
