@@ -143,5 +143,9 @@ you *could* always create an event subscriber on the `kernel.request` event -
 now called the `RequestEvent` in Symfony 4.3 - and, if the URL is `/api` *and*
 the request format is HTML, return a 404.
 
+***TIP
+You can see an example here: [https://bit.ly/2YmR6Uh](https://bit.ly/2YmR6Uh)
+***
+
 Ok, let's get into the *real* action: let's start figuring out how we're going to
 let users of our API log in.
