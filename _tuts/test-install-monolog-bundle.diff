@@ -11,7 +11,7 @@ index 4f91947..4b0b62a 100644
          "symfony/yaml": "4.3.*"
      },
 diff --git a/composer.lock b/composer.lock
-index a7d5764..1af7455 100644
+index 0fb3687..e6f9ec1 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@

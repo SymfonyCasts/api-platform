@@ -11,6 +11,11 @@
             "description": null
         },
         {
+            "id": "installation-upgrade-doctrine-annotations",
+            "name": "Installation: upgrade doctrine\/annotations",
+            "description": null
+        },
+        {
             "id": "installation-configure-db",
             "name": "Installation: configure db",
             "description": null
@@ -941,5 +946,5 @@
             "description": null
         }
     ],
-    "sha": "66a78ee9e3f7672fa7a64afa70c8781f566615df"
+    "sha": "8a927c9bb8b8cf6ec0fb78db4aed514aea00f071"
 }
