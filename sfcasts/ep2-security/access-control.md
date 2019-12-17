@@ -58,8 +58,8 @@ that our app gives to *every* user.
 [[[ code('ca94f235ae') ]]]
 
 ***TIP
-`access_control` was replaced by `security` in `api-platform/core` v2.5.0 - use
-it instead:
+`access_control` option was replaced by `security` in `api-platform/core` v2.5.0.
+If you're on a newer version - use it instead:
 ```
 /**
  * ...
