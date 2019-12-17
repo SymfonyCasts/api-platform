@@ -57,6 +57,28 @@ that our app gives to *every* user.
 
 [[[ code('ca94f235ae') ]]]
 
+***TIP
+`access_control` was replaced by `security` in `api-platform/core` v2.5.0 - use
+it instead:
+```
+/**
+ * ...
+ * @ApiResource(
+ *     collectionOperations={
+            "get",
+ *          "post"={"security"="is_granted('ROLE_USER')"}
+ *     },
+ *     ...
+ * )
+ * ...
+ */
+class CheeseListing
+{
+    // ...
+}
+```
+***
+
 Let's try that! The web debug toolbar tells me that I'm *not* logged in right
 now. Let's make a `POST` request... set the owner to `/api/users/6` - that's
 my user id... though the value doesn't matter yet... nor do any of the others fields.
