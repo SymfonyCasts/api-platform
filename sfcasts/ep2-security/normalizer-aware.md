@@ -28,6 +28,12 @@ property.
 The end result is that `$this->normalizer` is *now* the main, normalizer chain.
 We add the group, then pass `User` back through the original process.
 
+***TIP
+Please, make sure you have Xdebug PHP extension installed and enabled, otherwise
+the page may just hang if you try to execute this code and you will need to restart
+your built-in web server or PHP-FPM.
+***
+
 And... some of you *may* already see a problem with this. When we hit Execute to
 try this... it runs for a few seconds, then... error!
 
