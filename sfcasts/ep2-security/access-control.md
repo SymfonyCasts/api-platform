@@ -65,7 +65,7 @@ If you're on a newer version - use it instead:
  * ...
  * @ApiResource(
  *     collectionOperations={
-            "get",
+ *          "get",
  *          "post"={"security"="is_granted('ROLE_USER')"}
  *     },
  *     ...
