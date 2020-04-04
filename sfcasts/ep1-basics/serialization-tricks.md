@@ -100,7 +100,7 @@ Fascinating! The `hydra:description` is *way* more descriptive... actually a bit
 maybe don't want to make public. At least the `trace` won't show up on production.
 
 Showing these details inside `hydra:description` *might* be ok with you... But
-if you want to avoid this, you ned to rely on validation, which is a topic that
+if you want to avoid this, you need to rely on validation, which is a topic that
 we'll talk about in a few minutes. *But*, what you need to know *now* is that
 validation can't happen unless the serializer is able to successfully create
 the `CheeseListing` object. In other words, you need to help the serializer
