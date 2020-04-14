@@ -1,5 +1,5 @@
 diff --git a/.gitignore b/.gitignore
-index 136901b..e9a690c 100644
+index 136901bf..e9a690c7 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -7,3 +7,10 @@
@@ -14,7 +14,7 @@ index 136901b..e9a690c 100644
 +yarn-error.log
 +###< symfony/webpack-encore-bundle ###
 diff --git a/README.md b/README.md
-index c6da257..f14df21 100644
+index c6da257a..f14df210 100644
 --- a/README.md
 +++ b/README.md
 @@ -42,6 +42,21 @@ If you get an error that the database exists, that should
@@ -41,7 +41,7 @@ index c6da257..f14df21 100644
  You can use Nginx or Apache, but Symfony's local web server
 diff --git a/assets/css/app.css b/assets/css/app.css
 new file mode 100644
-index 0000000..cb33b13
+index 00000000..cb33b131
 --- /dev/null
 +++ b/assets/css/app.css
 @@ -0,0 +1,3 @@
@@ -50,7 +50,7 @@ index 0000000..cb33b13
 +}
 diff --git a/assets/js/app.js b/assets/js/app.js
 new file mode 100644
-index 0000000..0648e87
+index 00000000..0648e871
 --- /dev/null
 +++ b/assets/js/app.js
 @@ -0,0 +1,14 @@
@@ -69,7 +69,7 @@ index 0000000..0648e87
 +
 +console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 diff --git a/composer.json b/composer.json
-index de13230..6a52c04 100644
+index de132300..6a52c04e 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -12,6 +12,7 @@
@@ -81,7 +81,7 @@ index de13230..6a52c04 100644
      },
      "config": {
 diff --git a/composer.lock b/composer.lock
-index 11ca23c..963c332 100644
+index 11ca23cc..963c3324 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -157,7 +157,7 @@ index 11ca23c..963c332 100644
              "name": "symfony/yaml",
              "version": "v4.3.2",
 diff --git a/config/bundles.php b/config/bundles.php
-index ba81f95..6c2bb11 100644
+index ba81f95d..6c2bb114 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -11,4 +11,5 @@ return [
@@ -168,7 +168,7 @@ index ba81f95..6c2bb11 100644
  ];
 diff --git a/config/packages/assets.yaml b/config/packages/assets.yaml
 new file mode 100644
-index 0000000..051d36d
+index 00000000..051d36dc
 --- /dev/null
 +++ b/config/packages/assets.yaml
 @@ -0,0 +1,3 @@
@@ -177,7 +177,7 @@ index 0000000..051d36d
 +        json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
 diff --git a/config/packages/prod/webpack_encore.yaml b/config/packages/prod/webpack_encore.yaml
 new file mode 100644
-index 0000000..d0b3ba8
+index 00000000..d0b3ba81
 --- /dev/null
 +++ b/config/packages/prod/webpack_encore.yaml
 @@ -0,0 +1,4 @@
@@ -187,7 +187,7 @@ index 0000000..d0b3ba8
 +    #cache: true
 diff --git a/config/packages/webpack_encore.yaml b/config/packages/webpack_encore.yaml
 new file mode 100644
-index 0000000..1ad206b
+index 00000000..1ad206b7
 --- /dev/null
 +++ b/config/packages/webpack_encore.yaml
 @@ -0,0 +1,14 @@
@@ -207,7 +207,7 @@ index 0000000..1ad206b
 +    #cache: 'false'
 diff --git a/package.json b/package.json
 new file mode 100644
-index 0000000..56f4b19
+index 00000000..56f4b194
 --- /dev/null
 +++ b/package.json
 @@ -0,0 +1,15 @@
@@ -227,7 +227,7 @@ index 0000000..56f4b19
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index e7269c1..a0565a7 100644
+index e7269c12..a0565a71 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -373,6 +373,24 @@
@@ -257,7 +257,7 @@ index e7269c1..a0565a7 100644
      },
 diff --git a/webpack.config.js b/webpack.config.js
 new file mode 100644
-index 0000000..f077608
+index 00000000..f077608a
 --- /dev/null
 +++ b/webpack.config.js
 @@ -0,0 +1,74 @@
@@ -337,7 +337,7 @@ index 0000000..f077608
 +module.exports = Encore.getWebpackConfig();
 diff --git a/yarn.lock b/yarn.lock
 new file mode 100644
-index 0000000..f723838
+index 00000000..f7238383
 --- /dev/null
 +++ b/yarn.lock
 @@ -0,0 +1,6215 @@

@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 0d3c606..0ef1fcd 100644
+index 0d3c6064..0ef1fcdc 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -17,9 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
@@ -23,7 +23,7 @@ index 0d3c606..0ef1fcd 100644
   *          "pagination_items_per_page"=10,
   *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index e3bdf01..18cb6bd 100644
+index e3bdf01f..18cb6bd9 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -28,9 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;

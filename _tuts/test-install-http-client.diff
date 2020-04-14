@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 5ee7a8b..50627de 100644
+index 5ee7a8b4..50627de7 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -12,6 +12,7 @@
@@ -11,7 +11,7 @@ index 5ee7a8b..50627de 100644
          "symfony/yaml": "4.3.*"
      },
 diff --git a/composer.lock b/composer.lock
-index ac9135e..cd9b1a0 100644
+index ac9135e4..cd9b1a00 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -93,7 +93,7 @@ index ac9135e..cd9b1a0 100644
              "name": "symfony/http-foundation",
              "version": "v4.3.2",
 diff --git a/symfony.lock b/symfony.lock
-index 242e031..360ecf2 100644
+index 242e031f..360ecf2a 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -238,6 +238,9 @@

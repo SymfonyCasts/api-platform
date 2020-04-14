@@ -1,5 +1,5 @@
 diff --git a/.env b/.env
-index 6053225..62b8545 100644
+index 6053225b..62b8545a 100644
 --- a/.env
 +++ b/.env
 @@ -19,3 +19,14 @@ APP_SECRET=1c78f3e5e06eb3c88a52819fbccdba6e
@@ -18,7 +18,7 @@ index 6053225..62b8545 100644
 +DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 +###< doctrine/doctrine-bundle ###
 diff --git a/composer.json b/composer.json
-index aba10a1..d8e99d9 100644
+index aba10a11..d8e99d97 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -5,6 +5,7 @@
@@ -30,7 +30,7 @@ index aba10a1..d8e99d9 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 0ce27eb..553e03c 100644
+index 10888c0b..856b99c7 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,34 +4,155 @@
@@ -716,7 +716,7 @@ index 0ce27eb..553e03c 100644
              },
              "notification-url": "https://packagist.org/downloads/",
              "license": [
-@@ -350,69 +527,2355 @@
+@@ -350,69 +527,2306 @@
              ],
              "authors": [
                  {
@@ -2797,55 +2797,6 @@ index 0ce27eb..553e03c 100644
 +            "time": "2019-05-26T20:47:49+00:00"
 +        },
 +        {
-+            "name": "symfony/flex",
-+            "version": "v1.2.6",
-+            "source": {
-+                "type": "git",
-+                "url": "https://github.com/symfony/flex.git",
-+                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009"
-+            },
-+            "dist": {
-+                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/flex/zipball/5ed49091eb73f912dd23dab92bf07c0180cfb009",
-+                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009",
-+                "shasum": ""
-+            },
-+            "require": {
-+                "composer-plugin-api": "^1.0",
-+                "php": "^7.0"
-+            },
-+            "require-dev": {
-+                "composer/composer": "^1.0.2",
-+                "symfony/dotenv": "^3.4|^4.0",
-+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8",
-+                "symfony/process": "^2.7|^3.0|^4.0"
-+            },
-+            "type": "composer-plugin",
-+            "extra": {
-+                "branch-alias": {
-+                    "dev-master": "1.2-dev"
-+                },
-+                "class": "Symfony\\Flex\\Flex"
-+            },
-+            "autoload": {
-+                "psr-4": {
-+                    "Symfony\\Flex\\": "src"
-+                }
-+            },
-+            "notification-url": "https://packagist.org/downloads/",
-+            "license": [
-+                "MIT"
-+            ],
-+            "authors": [
-+                {
-+                    "name": "Fabien Potencier",
-+                    "email": "fabien.potencier@gmail.com"
-+                }
-+            ],
-+            "description": "Composer plugin for Symfony",
-+            "time": "2019-06-05T14:26:30+00:00"
-+        },
-+        {
 +            "name": "symfony/framework-bundle",
 +            "version": "v4.2.9",
 +            "source": {
@@ -3105,7 +3056,7 @@ index 0ce27eb..553e03c 100644
                  ]
              },
              "notification-url": "https://packagist.org/downloads/",
-@@ -421,49 +2884,98 @@
+@@ -421,49 +2835,98 @@
              ],
              "authors": [
                  {
@@ -3224,7 +3175,7 @@ index 0ce27eb..553e03c 100644
              },
              "type": "library",
              "extra": {
-@@ -473,7 +2985,7 @@
+@@ -473,7 +2936,7 @@
              },
              "autoload": {
                  "psr-4": {
@@ -3233,69 +3184,56 @@ index 0ce27eb..553e03c 100644
                  },
                  "exclude-from-classmap": [
                      "/Tests/"
-@@ -493,63 +3005,164 @@
-                     "homepage": "https://symfony.com/contributors"
-                 }
+@@ -485,71 +2948,172 @@
              ],
--            "description": "Symfony Debug Component",
+             "authors": [
+                 {
+-                    "name": "Fabien Potencier",
+-                    "email": "fabien@symfony.com"
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
 +            "description": "A library to manipulate MIME messages",
-             "homepage": "https://symfony.com",
--            "time": "2019-05-30T16:10:05+00:00"
++            "homepage": "https://symfony.com",
 +            "keywords": [
 +                "mime",
 +                "mime-type"
 +            ],
 +            "time": "2019-06-04T09:22:54+00:00"
-         },
-         {
--            "name": "symfony/dependency-injection",
--            "version": "v4.3.1",
++        },
++        {
 +            "name": "symfony/polyfill-intl-idn",
 +            "version": "v1.11.0",
-             "source": {
-                 "type": "git",
--                "url": "https://github.com/symfony/dependency-injection.git",
--                "reference": "fea7f73e278ee0337349a5a68b867fc656bb33f3"
++            "source": {
++                "type": "git",
 +                "url": "https://github.com/symfony/polyfill-intl-idn.git",
 +                "reference": "c766e95bec706cdd89903b1eda8afab7d7a6b7af"
-             },
-             "dist": {
-                 "type": "zip",
--                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/fea7f73e278ee0337349a5a68b867fc656bb33f3",
--                "reference": "fea7f73e278ee0337349a5a68b867fc656bb33f3",
++            },
++            "dist": {
++                "type": "zip",
 +                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/c766e95bec706cdd89903b1eda8afab7d7a6b7af",
 +                "reference": "c766e95bec706cdd89903b1eda8afab7d7a6b7af",
-                 "shasum": ""
-             },
-             "require": {
--                "php": "^7.1.3",
--                "psr/container": "^1.0",
--                "symfony/service-contracts": "^1.1.2"
++                "shasum": ""
++            },
++            "require": {
 +                "php": ">=5.3.3",
 +                "symfony/polyfill-mbstring": "^1.3",
 +                "symfony/polyfill-php72": "^1.9"
-             },
--            "conflict": {
--                "symfony/config": "<4.3",
--                "symfony/finder": "<3.4",
--                "symfony/proxy-manager-bridge": "<3.4",
--                "symfony/yaml": "<3.4"
++            },
 +            "suggest": {
 +                "ext-intl": "For best performance"
-             },
--            "provide": {
--                "psr/container-implementation": "1.0",
--                "symfony/service-implementation": "1.0"
++            },
 +            "type": "library",
 +            "extra": {
 +                "branch-alias": {
 +                    "dev-master": "1.9-dev"
 +                }
-             },
--            "require-dev": {
--                "symfony/config": "^4.3",
--                "symfony/expression-language": "~3.4|~4.0",
--                "symfony/yaml": "~3.4|~4.0"
++            },
 +            "autoload": {
 +                "psr-4": {
 +                    "Symfony\\Polyfill\\Intl\\Idn\\": ""
@@ -3372,14 +3310,16 @@ index 0ce27eb..553e03c 100644
 +                {
 +                    "name": "Nicolas Grekas",
 +                    "email": "p@tchwork.com"
-+                },
-+                {
-+                    "name": "Symfony Community",
-+                    "homepage": "https://symfony.com/contributors"
-+                }
-+            ],
+                 },
+                 {
+                     "name": "Symfony Community",
+                     "homepage": "https://symfony.com/contributors"
+                 }
+             ],
+-            "description": "Symfony Debug Component",
 +            "description": "Symfony polyfill for the Mbstring extension",
-+            "homepage": "https://symfony.com",
+             "homepage": "https://symfony.com",
+-            "time": "2019-05-30T16:10:05+00:00"
 +            "keywords": [
 +                "compatibility",
 +                "mbstring",
@@ -3388,28 +3328,53 @@ index 0ce27eb..553e03c 100644
 +                "shim"
 +            ],
 +            "time": "2019-02-06T07:57:58+00:00"
-+        },
-+        {
+         },
+         {
+-            "name": "symfony/dependency-injection",
+-            "version": "v4.3.1",
 +            "name": "symfony/polyfill-php72",
 +            "version": "v1.11.0",
-+            "source": {
-+                "type": "git",
+             "source": {
+                 "type": "git",
+-                "url": "https://github.com/symfony/dependency-injection.git",
+-                "reference": "fea7f73e278ee0337349a5a68b867fc656bb33f3"
 +                "url": "https://github.com/symfony/polyfill-php72.git",
 +                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c"
-+            },
-+            "dist": {
-+                "type": "zip",
+             },
+             "dist": {
+                 "type": "zip",
+-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/fea7f73e278ee0337349a5a68b867fc656bb33f3",
+-                "reference": "fea7f73e278ee0337349a5a68b867fc656bb33f3",
 +                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/ab50dcf166d5f577978419edd37aa2bb8eabce0c",
 +                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c",
-+                "shasum": ""
+                 "shasum": ""
              },
+             "require": {
+-                "php": "^7.1.3",
+-                "psr/container": "^1.0",
+-                "symfony/service-contracts": "^1.1.2"
+-            },
+-            "conflict": {
+-                "symfony/config": "<4.3",
+-                "symfony/finder": "<3.4",
+-                "symfony/proxy-manager-bridge": "<3.4",
+-                "symfony/yaml": "<3.4"
+-            },
+-            "provide": {
+-                "psr/container-implementation": "1.0",
+-                "symfony/service-implementation": "1.0"
+-            },
+-            "require-dev": {
+-                "symfony/config": "^4.3",
+-                "symfony/expression-language": "~3.4|~4.0",
+-                "symfony/yaml": "~3.4|~4.0"
+-            },
 -            "suggest": {
 -                "symfony/config": "",
 -                "symfony/expression-language": "For using expressions in service container configuration",
 -                "symfony/finder": "For using double-star glob patterns or when GLOB_BRACE portability is required",
 -                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
 -                "symfony/yaml": ""
-+            "require": {
 +                "php": ">=5.3.3"
              },
              "type": "library",
@@ -3431,7 +3396,7 @@ index 0ce27eb..553e03c 100644
                  ]
              },
              "notification-url": "https://packagist.org/downloads/",
-@@ -558,50 +3171,56 @@
+@@ -558,50 +3122,56 @@
              ],
              "authors": [
                  {
@@ -3506,7 +3471,7 @@ index 0ce27eb..553e03c 100644
                  ]
              },
              "notification-url": "https://packagist.org/downloads/",
-@@ -610,70 +3229,57 @@
+@@ -610,70 +3180,57 @@
              ],
              "authors": [
                  {
@@ -3596,7 +3561,7 @@ index 0ce27eb..553e03c 100644
                  },
                  "exclude-from-classmap": [
                      "/Tests/"
-@@ -693,37 +3299,66 @@
+@@ -693,37 +3250,66 @@
                      "homepage": "https://symfony.com/contributors"
                  }
              ],
@@ -3674,7 +3639,7 @@ index 0ce27eb..553e03c 100644
                  },
                  "exclude-from-classmap": [
                      "/Tests/"
-@@ -735,35 +3370,64 @@
+@@ -735,35 +3321,64 @@
              ],
              "authors": [
                  {
@@ -3748,7 +3713,7 @@ index 0ce27eb..553e03c 100644
              "type": "library",
              "extra": {
                  "branch-alias": {
-@@ -772,7 +3436,7 @@
+@@ -772,7 +3387,7 @@
              },
              "autoload": {
                  "psr-4": {
@@ -3757,7 +3722,7 @@ index 0ce27eb..553e03c 100644
                  },
                  "exclude-from-classmap": [
                      "/Tests/"
-@@ -792,146 +3456,70 @@
+@@ -792,9 +3407,15 @@
                      "homepage": "https://symfony.com/contributors"
                  }
              ],
@@ -3765,61 +3730,18 @@ index 0ce27eb..553e03c 100644
 +            "description": "Symfony Routing Component",
              "homepage": "https://symfony.com",
 -            "time": "2019-05-26T20:47:49+00:00"
--        },
--        {
--            "name": "symfony/flex",
--            "version": "v1.2.6",
--            "source": {
--                "type": "git",
--                "url": "https://github.com/symfony/flex.git",
--                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009"
--            },
--            "dist": {
--                "type": "zip",
--                "url": "https://api.github.com/repos/symfony/flex/zipball/5ed49091eb73f912dd23dab92bf07c0180cfb009",
--                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009",
--                "shasum": ""
--            },
--            "require": {
--                "composer-plugin-api": "^1.0",
--                "php": "^7.0"
--            },
--            "require-dev": {
--                "composer/composer": "^1.0.2",
--                "symfony/dotenv": "^3.4|^4.0",
--                "symfony/phpunit-bridge": "^3.4.19|^4.1.8",
--                "symfony/process": "^2.7|^3.0|^4.0"
--            },
--            "type": "composer-plugin",
--            "extra": {
--                "branch-alias": {
--                    "dev-master": "1.2-dev"
--                },
--                "class": "Symfony\\Flex\\Flex"
--            },
--            "autoload": {
--                "psr-4": {
--                    "Symfony\\Flex\\": "src"
--                }
--            },
--            "notification-url": "https://packagist.org/downloads/",
--            "license": [
--                "MIT"
--            ],
--            "authors": [
--                {
--                    "name": "Fabien Potencier",
--                    "email": "fabien.potencier@gmail.com"
--                }
 +            "keywords": [
 +                "router",
 +                "routing",
 +                "uri",
 +                "url"
-             ],
--            "description": "Composer plugin for Symfony",
--            "time": "2019-06-05T14:26:30+00:00"
++            ],
 +            "time": "2019-06-05T09:16:20+00:00"
+         },
+         {
+             "name": "symfony/flex",
+@@ -846,92 +3467,59 @@
+             "time": "2019-06-15T07:15:42+00:00"
          },
          {
 -            "name": "symfony/framework-bundle",
@@ -4950,7 +4872,7 @@ index 0ce27eb..553e03c 100644
      ],
      "packages-dev": [],
 diff --git a/config/bundles.php b/config/bundles.php
-index 49d3fb6..1edaed6 100644
+index 49d3fb6f..1edaed6d 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -2,4 +2,10 @@
@@ -4966,7 +4888,7 @@ index 49d3fb6..1edaed6 100644
  ];
 diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
 new file mode 100644
-index 0000000..e453d1d
+index 00000000..e453d1d3
 --- /dev/null
 +++ b/config/packages/api_platform.yaml
 @@ -0,0 +1,3 @@
@@ -4975,7 +4897,7 @@ index 0000000..e453d1d
 +        paths: ['%kernel.project_dir%/src/Entity']
 diff --git a/config/packages/doctrine.yaml b/config/packages/doctrine.yaml
 new file mode 100644
-index 0000000..9521fad
+index 00000000..9521fad7
 --- /dev/null
 +++ b/config/packages/doctrine.yaml
 @@ -0,0 +1,29 @@
@@ -5010,7 +4932,7 @@ index 0000000..9521fad
 +                alias: App
 diff --git a/config/packages/nelmio_cors.yaml b/config/packages/nelmio_cors.yaml
 new file mode 100644
-index 0000000..6f202c2
+index 00000000..6f202c26
 --- /dev/null
 +++ b/config/packages/nelmio_cors.yaml
 @@ -0,0 +1,10 @@
@@ -5026,7 +4948,7 @@ index 0000000..6f202c2
 +        '^/': ~
 diff --git a/config/packages/prod/doctrine.yaml b/config/packages/prod/doctrine.yaml
 new file mode 100644
-index 0000000..0a7c53b
+index 00000000..0a7c53b4
 --- /dev/null
 +++ b/config/packages/prod/doctrine.yaml
 @@ -0,0 +1,32 @@
@@ -5064,7 +4986,7 @@ index 0000000..0a7c53b
 +                adapter: cache.system
 diff --git a/config/packages/security.yaml b/config/packages/security.yaml
 new file mode 100644
-index 0000000..fb4c593
+index 00000000..fb4c593e
 --- /dev/null
 +++ b/config/packages/security.yaml
 @@ -0,0 +1,24 @@
@@ -5094,7 +5016,7 @@ index 0000000..fb4c593
 +        # - { path: ^/profile, roles: ROLE_USER }
 diff --git a/config/packages/test/validator.yaml b/config/packages/test/validator.yaml
 new file mode 100644
-index 0000000..2febc40
+index 00000000..2febc403
 --- /dev/null
 +++ b/config/packages/test/validator.yaml
 @@ -0,0 +1,4 @@
@@ -5104,7 +5026,7 @@ index 0000000..2febc40
 +        # disable_not_compromised_password: true
 diff --git a/config/packages/twig.yaml b/config/packages/twig.yaml
 new file mode 100644
-index 0000000..d1582a2
+index 00000000..d1582a23
 --- /dev/null
 +++ b/config/packages/twig.yaml
 @@ -0,0 +1,4 @@
@@ -5114,7 +5036,7 @@ index 0000000..d1582a2
 +    strict_variables: '%kernel.debug%'
 diff --git a/config/packages/validator.yaml b/config/packages/validator.yaml
 new file mode 100644
-index 0000000..a695e1a
+index 00000000..a695e1a6
 --- /dev/null
 +++ b/config/packages/validator.yaml
 @@ -0,0 +1,3 @@
@@ -5123,7 +5045,7 @@ index 0000000..a695e1a
 +        email_validation_mode: html5
 diff --git a/config/routes/annotations.yaml b/config/routes/annotations.yaml
 new file mode 100644
-index 0000000..d49a502
+index 00000000..d49a502a
 --- /dev/null
 +++ b/config/routes/annotations.yaml
 @@ -0,0 +1,3 @@
@@ -5132,7 +5054,7 @@ index 0000000..d49a502
 +    type: annotation
 diff --git a/config/routes/api_platform.yaml b/config/routes/api_platform.yaml
 new file mode 100644
-index 0000000..38f11cb
+index 00000000..38f11cba
 --- /dev/null
 +++ b/config/routes/api_platform.yaml
 @@ -0,0 +1,4 @@
@@ -5142,7 +5064,7 @@ index 0000000..38f11cb
 +    prefix: /api
 diff --git a/config/routes/dev/twig.yaml b/config/routes/dev/twig.yaml
 new file mode 100644
-index 0000000..f4ee839
+index 00000000..f4ee8396
 --- /dev/null
 +++ b/config/routes/dev/twig.yaml
 @@ -0,0 +1,3 @@
@@ -5151,12 +5073,12 @@ index 0000000..f4ee839
 +    prefix: /_error
 diff --git a/src/Entity/.gitignore b/src/Entity/.gitignore
 new file mode 100644
-index 0000000..e69de29
+index 00000000..e69de29b
 diff --git a/src/Repository/.gitignore b/src/Repository/.gitignore
 new file mode 100644
-index 0000000..e69de29
+index 00000000..e69de29b
 diff --git a/symfony.lock b/symfony.lock
-index f2d08b7..1b596b4 100644
+index f2d08b74..1b596b4f 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -1,16 +1,129 @@
@@ -5409,7 +5331,7 @@ index f2d08b7..1b596b4 100644
  }
 diff --git a/templates/base.html.twig b/templates/base.html.twig
 new file mode 100644
-index 0000000..043f42d
+index 00000000..043f42d1
 --- /dev/null
 +++ b/templates/base.html.twig
 @@ -0,0 +1,12 @@

@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 57f616b..96b720c 100644
+index 57f616bd..96b720cc 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -6,6 +6,7 @@
@@ -11,7 +11,7 @@ index 57f616b..96b720c 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index e9549d4..2a6a7c7 100644
+index a2766310..5cb3fe2d 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -483,7 +483,7 @@ index e9549d4..2a6a7c7 100644
      ],
      "packages-dev": [
 diff --git a/config/bundles.php b/config/bundles.php
-index b55f43b..1f5fdfc 100644
+index b55f43b2..1f5fdfcc 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -9,4 +9,5 @@ return [
@@ -494,7 +494,7 @@ index b55f43b..1f5fdfc 100644
  ];
 diff --git a/config/packages/doctrine_migrations.yaml b/config/packages/doctrine_migrations.yaml
 new file mode 100644
-index 0000000..3bf0fbc
+index 00000000..3bf0fbca
 --- /dev/null
 +++ b/config/packages/doctrine_migrations.yaml
 @@ -0,0 +1,5 @@
@@ -505,9 +505,9 @@ index 0000000..3bf0fbc
 +    namespace: DoctrineMigrations
 diff --git a/src/Migrations/.gitignore b/src/Migrations/.gitignore
 new file mode 100644
-index 0000000..e69de29
+index 00000000..e69de29b
 diff --git a/symfony.lock b/symfony.lock
-index d5221a1..bd64c78 100644
+index d5221a16..bd64c78d 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,6 +58,19 @@

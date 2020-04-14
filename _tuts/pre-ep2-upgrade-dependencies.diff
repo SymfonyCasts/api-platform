@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 904fce4..de13230 100644
+index 904fce40..de132300 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -8,11 +8,11 @@
@@ -28,7 +28,7 @@ index 904fce4..de13230 100644
      },
      "require-dev": {
 diff --git a/composer.lock b/composer.lock
-index 3c54a17..11ca23c 100644
+index 60b8833b..11ca23cc 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -663,46 +663,60 @@ index 3c54a17..11ca23c 100644
                  "shasum": ""
              },
              "require": {
-@@ -2906,20 +2921,20 @@
+@@ -2906,53 +2921,102 @@
              ],
              "description": "Symfony Finder Component",
              "homepage": "https://symfony.com",
 -            "time": "2019-05-26T20:47:49+00:00"
 +            "time": "2019-06-13T11:03:18+00:00"
-         },
-         {
-             "name": "symfony/flex",
--            "version": "v1.2.6",
++        },
++        {
++            "name": "symfony/flex",
 +            "version": "v1.4.5",
-             "source": {
-                 "type": "git",
-                 "url": "https://github.com/symfony/flex.git",
--                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009"
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/flex.git",
 +                "reference": "4467ab35c82edebac58fe58c22cea166a805eb1f"
-             },
-             "dist": {
-                 "type": "zip",
--                "url": "https://api.github.com/repos/symfony/flex/zipball/5ed49091eb73f912dd23dab92bf07c0180cfb009",
--                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009",
++            },
++            "dist": {
++                "type": "zip",
 +                "url": "https://api.github.com/repos/symfony/flex/zipball/4467ab35c82edebac58fe58c22cea166a805eb1f",
 +                "reference": "4467ab35c82edebac58fe58c22cea166a805eb1f",
-                 "shasum": ""
-             },
-             "require": {
-@@ -2935,7 +2950,7 @@
-             "type": "composer-plugin",
-             "extra": {
-                 "branch-alias": {
--                    "dev-master": "1.2-dev"
++                "shasum": ""
++            },
++            "require": {
++                "composer-plugin-api": "^1.0",
++                "php": "^7.0"
++            },
++            "require-dev": {
++                "composer/composer": "^1.0.2",
++                "symfony/dotenv": "^3.4|^4.0",
++                "symfony/phpunit-bridge": "^3.4.19|^4.1.8",
++                "symfony/process": "^2.7|^3.0|^4.0"
++            },
++            "type": "composer-plugin",
++            "extra": {
++                "branch-alias": {
 +                    "dev-master": "1.4-dev"
-                 },
-                 "class": "Symfony\\Flex\\Flex"
-             },
-@@ -2955,53 +2970,53 @@
-                 }
-             ],
-             "description": "Composer plugin for Symfony",
--            "time": "2019-06-05T14:26:30+00:00"
++                },
++                "class": "Symfony\\Flex\\Flex"
++            },
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Flex\\": "src"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien.potencier@gmail.com"
++                }
++            ],
++            "description": "Composer plugin for Symfony",
 +            "time": "2019-07-19T08:59:18+00:00"
          },
          {
@@ -769,7 +783,7 @@ index 3c54a17..11ca23c 100644
              },
              "require-dev": {
                  "doctrine/annotations": "~1.0",
-@@ -3009,28 +3024,31 @@
+@@ -2960,28 +3024,31 @@
                  "fig/link-util": "^1.0",
                  "phpdocumentor/reflection-docblock": "^3.0|^4.0",
                  "symfony/asset": "~3.4|~4.0",
@@ -812,7 +826,7 @@ index 3c54a17..11ca23c 100644
                  "symfony/yaml": "~3.4|~4.0",
                  "twig/twig": "~1.34|~2.4"
              },
-@@ -3047,7 +3065,7 @@
+@@ -2998,7 +3065,7 @@
              "type": "symfony-bundle",
              "extra": {
                  "branch-alias": {
@@ -821,7 +835,7 @@ index 3c54a17..11ca23c 100644
                  }
              },
              "autoload": {
-@@ -3074,20 +3092,20 @@
+@@ -3025,20 +3092,20 @@
              ],
              "description": "Symfony FrameworkBundle",
              "homepage": "https://symfony.com",
@@ -847,7 +861,7 @@ index 3c54a17..11ca23c 100644
                  "shasum": ""
              },
              "require": {
-@@ -3129,20 +3147,20 @@
+@@ -3080,20 +3147,20 @@
              ],
              "description": "Symfony HttpFoundation Component",
              "homepage": "https://symfony.com",
@@ -873,7 +887,7 @@ index 3c54a17..11ca23c 100644
                  "shasum": ""
              },
              "require": {
-@@ -3221,20 +3239,20 @@
+@@ -3172,20 +3239,20 @@
              ],
              "description": "Symfony HttpKernel Component",
              "homepage": "https://symfony.com",
@@ -899,7 +913,7 @@ index 3c54a17..11ca23c 100644
                  "shasum": ""
              },
              "require": {
-@@ -3244,7 +3262,7 @@
+@@ -3195,7 +3262,7 @@
              "type": "library",
              "extra": {
                  "branch-alias": {
@@ -908,7 +922,7 @@ index 3c54a17..11ca23c 100644
                  }
              },
              "autoload": {
-@@ -3279,11 +3297,11 @@
+@@ -3230,11 +3297,11 @@
                  "symfony",
                  "words"
              ],
@@ -922,7 +936,7 @@ index 3c54a17..11ca23c 100644
              "source": {
                  "type": "git",
                  "url": "https://github.com/symfony/mime.git",
-@@ -3576,16 +3594,16 @@
+@@ -3527,16 +3594,16 @@
          },
          {
              "name": "symfony/property-access",
@@ -943,7 +957,7 @@ index 3c54a17..11ca23c 100644
                  "shasum": ""
              },
              "require": {
-@@ -3601,7 +3619,7 @@
+@@ -3552,7 +3619,7 @@
              "type": "library",
              "extra": {
                  "branch-alias": {
@@ -952,7 +966,7 @@ index 3c54a17..11ca23c 100644
                  }
              },
              "autoload": {
-@@ -3639,20 +3657,20 @@
+@@ -3590,20 +3657,20 @@
                  "property path",
                  "reflection"
              ],
@@ -978,7 +992,7 @@ index 3c54a17..11ca23c 100644
                  "shasum": ""
              },
              "require": {
-@@ -3680,7 +3698,7 @@
+@@ -3631,7 +3698,7 @@
              "type": "library",
              "extra": {
                  "branch-alias": {
@@ -987,7 +1001,7 @@ index 3c54a17..11ca23c 100644
                  }
              },
              "autoload": {
-@@ -3715,20 +3733,20 @@
+@@ -3666,20 +3733,20 @@
                  "type",
                  "validator"
              ],
@@ -1013,11 +1027,60 @@ index 3c54a17..11ca23c 100644
                  "shasum": ""
              },
              "require": {
-@@ -3791,20 +3809,20 @@
+@@ -3742,69 +3809,20 @@
                  "uri",
                  "url"
              ],
 -            "time": "2019-06-05T09:16:20+00:00"
+-        },
+-        {
+-            "name": "symfony/flex",
+-            "version": "v1.2.7",
+-            "source": {
+-                "type": "git",
+-                "url": "https://github.com/symfony/flex.git",
+-                "reference": "8618b243d44bac71e4006062f245d807d84f7a6c"
+-            },
+-            "dist": {
+-                "type": "zip",
+-                "url": "https://api.github.com/repos/symfony/flex/zipball/8618b243d44bac71e4006062f245d807d84f7a6c",
+-                "reference": "8618b243d44bac71e4006062f245d807d84f7a6c",
+-                "shasum": ""
+-            },
+-            "require": {
+-                "composer-plugin-api": "^1.0",
+-                "php": "^7.0"
+-            },
+-            "require-dev": {
+-                "composer/composer": "^1.0.2",
+-                "symfony/dotenv": "^3.4|^4.0",
+-                "symfony/phpunit-bridge": "^3.4.19|^4.1.8",
+-                "symfony/process": "^2.7|^3.0|^4.0"
+-            },
+-            "type": "composer-plugin",
+-            "extra": {
+-                "branch-alias": {
+-                    "dev-master": "1.2-dev"
+-                },
+-                "class": "Symfony\\Flex\\Flex"
+-            },
+-            "autoload": {
+-                "psr-4": {
+-                    "Symfony\\Flex\\": "src"
+-                }
+-            },
+-            "notification-url": "https://packagist.org/downloads/",
+-            "license": [
+-                "MIT"
+-            ],
+-            "authors": [
+-                {
+-                    "name": "Fabien Potencier",
+-                    "email": "fabien.potencier@gmail.com"
+-                }
+-            ],
+-            "description": "Composer plugin for Symfony",
+-            "time": "2019-06-15T07:15:42+00:00"
 +            "time": "2019-06-26T13:54:39+00:00"
          },
          {

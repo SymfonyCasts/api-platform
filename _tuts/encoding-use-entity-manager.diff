@@ -1,5 +1,5 @@
 diff --git a/src/DataPersister/UserDataPersister.php b/src/DataPersister/UserDataPersister.php
-index fb11a3a..4e86345 100644
+index fb11a3ac..4e86345d 100644
 --- a/src/DataPersister/UserDataPersister.php
 +++ b/src/DataPersister/UserDataPersister.php
 @@ -3,21 +3,32 @@

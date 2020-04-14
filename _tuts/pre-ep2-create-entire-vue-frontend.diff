@@ -1,6 +1,6 @@
 diff --git a/assets/css/app.css b/assets/css/app.css
 deleted file mode 100644
-index cb33b13..0000000
+index cb33b131..00000000
 --- a/assets/css/app.css
 +++ /dev/null
 @@ -1,3 +0,0 @@
@@ -8,7 +8,7 @@ index cb33b13..0000000
 -    background-color: lightgray;
 -}
 diff --git a/assets/js/app.js b/assets/js/app.js
-index 0648e87..75dbb0b 100644
+index 0648e871..75dbb0b0 100644
 --- a/assets/js/app.js
 +++ b/assets/js/app.js
 @@ -1,14 +1,9 @@
@@ -35,7 +35,7 @@ index 0648e87..75dbb0b 100644
 +});
 diff --git a/assets/js/components/CheeseWhizApp.vue b/assets/js/components/CheeseWhizApp.vue
 new file mode 100644
-index 0000000..cd21c35
+index 00000000..cd21c35b
 --- /dev/null
 +++ b/assets/js/components/CheeseWhizApp.vue
 @@ -0,0 +1,74 @@
@@ -116,7 +116,7 @@ index 0000000..cd21c35
 \ No newline at end of file
 diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
 new file mode 100644
-index 0000000..ab14df4
+index 00000000..ab14df4e
 --- /dev/null
 +++ b/assets/js/components/LoginForm.vue
 @@ -0,0 +1,66 @@
@@ -187,7 +187,7 @@ index 0000000..ab14df4
 +<style scoped lang="scss">
 +</style>
 diff --git a/package.json b/package.json
-index 56f4b19..9fdf872 100644
+index 56f4b194..9fdf8729 100644
 --- a/package.json
 +++ b/package.json
 @@ -1,7 +1,14 @@
@@ -207,7 +207,7 @@ index 56f4b19..9fdf872 100644
      "license": "UNLICENSED",
 diff --git a/src/Controller/FrontendController.php b/src/Controller/FrontendController.php
 new file mode 100644
-index 0000000..1c966b2
+index 00000000..1c966b22
 --- /dev/null
 +++ b/src/Controller/FrontendController.php
 @@ -0,0 +1,20 @@
@@ -232,7 +232,7 @@ index 0000000..1c966b2
 +    }
 +}
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index 043f42d..a553961 100644
+index 043f42d1..a5539617 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
 @@ -3,10 +3,14 @@
@@ -254,7 +254,7 @@ index 043f42d..a553961 100644
  </html>
 diff --git a/templates/frontend/homepage.html.twig b/templates/frontend/homepage.html.twig
 new file mode 100644
-index 0000000..c5b9de6
+index 00000000..c5b9de69
 --- /dev/null
 +++ b/templates/frontend/homepage.html.twig
 @@ -0,0 +1,9 @@
@@ -268,7 +268,7 @@ index 0000000..c5b9de6
 +    </div>
 +{% endblock %}
 diff --git a/webpack.config.js b/webpack.config.js
-index f077608..2e64d0e 100644
+index f077608a..2e64d0e8 100644
 --- a/webpack.config.js
 +++ b/webpack.config.js
 @@ -54,7 +54,7 @@ Encore
@@ -289,7 +289,7 @@ index f077608..2e64d0e 100644
  ;
  
 diff --git a/yarn.lock b/yarn.lock
-index f723838..e6656d9 100644
+index f7238383..e6656d9b 100644
 --- a/yarn.lock
 +++ b/yarn.lock
 @@ -731,6 +731,21 @@

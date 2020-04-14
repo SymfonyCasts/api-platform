@@ -1,6 +1,6 @@
 diff --git a/src/Doctrine/CheeseListingSetOwnerListener.php b/src/Doctrine/CheeseListingSetOwnerListener.php
 new file mode 100644
-index 0000000..16483a5
+index 00000000..16483a51
 --- /dev/null
 +++ b/src/Doctrine/CheeseListingSetOwnerListener.php
 @@ -0,0 +1,12 @@
@@ -17,7 +17,7 @@ index 0000000..16483a5
 +    }
 +}
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index b561e35..14ad100 100644
+index b561e35a..14ad1003 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -45,6 +45,7 @@ use Symfony\Component\Validator\Constraints as Assert;

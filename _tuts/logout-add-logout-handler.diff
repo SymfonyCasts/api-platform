@@ -1,5 +1,5 @@
 diff --git a/config/packages/security.yaml b/config/packages/security.yaml
-index f8a6e1d..e1a12f3 100644
+index f8a6e1d4..e1a12f3f 100644
 --- a/config/packages/security.yaml
 +++ b/config/packages/security.yaml
 @@ -22,6 +22,9 @@ security:
@@ -13,7 +13,7 @@ index f8a6e1d..e1a12f3 100644
              # https://symfony.com/doc/current/security.html#firewalls-authentication
  
 diff --git a/src/Controller/SecurityController.php b/src/Controller/SecurityController.php
-index 7dee470..4482661 100644
+index 7dee4701..4482661c 100644
 --- a/src/Controller/SecurityController.php
 +++ b/src/Controller/SecurityController.php
 @@ -26,4 +26,12 @@ class SecurityController extends AbstractController

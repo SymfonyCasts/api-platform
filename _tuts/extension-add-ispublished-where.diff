@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
-index 09652dc..335d3f6 100644
+index 09652dc9..335d3f68 100644
 --- a/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 +++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 @@ -4,12 +4,19 @@ namespace App\ApiPlatform;
