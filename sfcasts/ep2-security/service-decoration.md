@@ -59,7 +59,14 @@ That service is what reads our `normalizationContext` annotation config.
 But now, *we* want to hook into that process. But... we don't want to *replace*
 the core functionality. No, we want to *add* to it. We do this via service
 decoration. The *id* of the *core* "context builder" service is
-`api_platform.serializer.context_builder`. So our config says:
+`api_platform.serializer.context_builder`.
+
+***TIP
+GraphQL comes with its own services and you would need to use
+`api_platform.graphql.serializer.context_builder` service instead.
+***
+
+So our config says:
 
 > Please register a new service called `App\Serializer\AdminGroupsContextBuilder`
 > and make it *replace* the core `api_platform.serializer.context_builder` service.
