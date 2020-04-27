@@ -1,6 +1,6 @@
 diff --git a/src/ApiPlatform/Test/ApiTestAssertionsTrait.php b/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
 new file mode 100644
-index 00000000..d0ffc6fb
+index 0000000..d0ffc6f
 --- /dev/null
 +++ b/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
 @@ -0,0 +1,129 @@
@@ -135,7 +135,7 @@ index 00000000..d0ffc6fb
 +}
 diff --git a/src/ApiPlatform/Test/ApiTestCase.php b/src/ApiPlatform/Test/ApiTestCase.php
 new file mode 100644
-index 00000000..a99dce13
+index 0000000..a99dce1
 --- /dev/null
 +++ b/src/ApiPlatform/Test/ApiTestCase.php
 @@ -0,0 +1,66 @@
@@ -207,7 +207,7 @@ index 00000000..a99dce13
 +}
 diff --git a/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php b/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
 new file mode 100644
-index 00000000..9a23676a
+index 0000000..9a23676
 --- /dev/null
 +++ b/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
 @@ -0,0 +1,170 @@
@@ -383,7 +383,7 @@ index 00000000..9a23676a
 +}
 diff --git a/src/ApiPlatform/Test/Client.php b/src/ApiPlatform/Test/Client.php
 new file mode 100644
-index 00000000..70eed34e
+index 0000000..70eed34
 --- /dev/null
 +++ b/src/ApiPlatform/Test/Client.php
 @@ -0,0 +1,215 @@
@@ -604,7 +604,7 @@ index 00000000..70eed34e
 +}
 diff --git a/src/ApiPlatform/Test/Constraint/ArraySubset.php b/src/ApiPlatform/Test/Constraint/ArraySubset.php
 new file mode 100644
-index 00000000..55886a25
+index 0000000..55886a2
 --- /dev/null
 +++ b/src/ApiPlatform/Test/Constraint/ArraySubset.php
 @@ -0,0 +1,129 @@
@@ -739,7 +739,7 @@ index 00000000..55886a25
 +}
 diff --git a/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php b/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
 new file mode 100644
-index 00000000..26585deb
+index 0000000..26585de
 --- /dev/null
 +++ b/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
 @@ -0,0 +1,83 @@
@@ -828,7 +828,7 @@ index 00000000..26585deb
 +}
 diff --git a/src/ApiPlatform/Test/Response.php b/src/ApiPlatform/Test/Response.php
 new file mode 100644
-index 00000000..05a8176f
+index 0000000..05a8176
 --- /dev/null
 +++ b/src/ApiPlatform/Test/Response.php
 @@ -0,0 +1,187 @@

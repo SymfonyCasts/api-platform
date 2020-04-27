@@ -1,6 +1,6 @@
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
 new file mode 100644
-index 00000000..e995998d
+index 0000000..e995998
 --- /dev/null
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -0,0 +1,13 @@

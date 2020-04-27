@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 0dbf8fb6..c8e098c1 100644
+index 0dbf8fb..c8e098c 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -22,7 +22,10 @@ use Symfony\Component\Serializer\Annotation\SerializedName;

@@ -1,5 +1,5 @@
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 4753849a..7e0bc9ca 100644
+index 4753849..7e0bc9c 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -108,7 +108,7 @@ class CheeseListingResourceTest extends CustomApiTestCase

@@ -1,5 +1,5 @@
 diff --git a/config/packages/security.yaml b/config/packages/security.yaml
-index fb6441cf..f8a6e1d4 100644
+index fb6441c..f8a6e1d 100644
 --- a/config/packages/security.yaml
 +++ b/config/packages/security.yaml
 @@ -17,6 +17,11 @@ security:
@@ -16,7 +16,7 @@ index fb6441cf..f8a6e1d4 100644
  
 diff --git a/src/Controller/SecurityController.php b/src/Controller/SecurityController.php
 new file mode 100644
-index 00000000..58ed8319
+index 0000000..58ed831
 --- /dev/null
 +++ b/src/Controller/SecurityController.php
 @@ -0,0 +1,20 @@

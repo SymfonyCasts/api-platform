@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/AdminGroupsContextBuilder.php b/src/Serializer/AdminGroupsContextBuilder.php
-index d0565610..3ccdf265 100644
+index d056561..3ccdf26 100644
 --- a/src/Serializer/AdminGroupsContextBuilder.php
 +++ b/src/Serializer/AdminGroupsContextBuilder.php
 @@ -20,10 +20,11 @@ final class AdminGroupsContextBuilder implements SerializerContextBuilderInterfa
