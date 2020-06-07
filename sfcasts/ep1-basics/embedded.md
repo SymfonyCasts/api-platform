@@ -32,7 +32,7 @@ of an array of strings, it's now an array of *objects*! Well, this user only own
 *one* CheeseListing, but you get the idea. Each item has the standard `@type`
 and `@id` *plus* whatever properties we added to the group: `title` and `price`.
 
-It's beautifully simple: the serializer knows to serialize all fields in the
+It's beautifully simple: the serializer knows it should serialize all fields in the
 `user:read` group. It first looks at `User` and finds `email`, `username` and
 `cheeseListings`. It *then* keeps *going* and, inside of `CheeseListing`, finds
 that group on `title` and `price`.
@@ -52,7 +52,7 @@ it *might* be convenient for the CheeseListing JSON to *at least* contain the
 username of the owner... so we don't need to go fetch the *entire* User just to
 display who owns it.
 
-Inside `CheeseListing`, the normalization process will serializer everything in
+Inside `CheeseListing`, the normalization process will serialize everything in
 the `cheese_listing:read` group. Copy that. The `owner` property, of course, already
 has this group above it, which is why we see it in our API. Inside `User`, find
 `$username`... and add `cheese_listing:read` to that.
