@@ -52,7 +52,7 @@ it *might* be convenient for the CheeseListing JSON to *at least* contain the
 username of the owner... so we don't need to go fetch the *entire* User just to
 display who owns it.
 
-Inside `CheeseListing`, the normalization process will serializer everything in
+Inside `CheeseListing`, the normalization process will serialize everything in
 the `cheese_listing:read` group. Copy that. The `owner` property, of course, already
 has this group above it, which is why we see it in our API. Inside `User`, find
 `$username`... and add `cheese_listing:read` to that.
