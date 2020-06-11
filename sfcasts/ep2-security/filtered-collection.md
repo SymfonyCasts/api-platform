@@ -1,4 +1,4 @@
- # Filtering Related Collections
+# Filtering Related Collections
 
 There are two places where our API returns a collection of cheese listings. The
 first is the `GET` operation for `/api/cheeses`... and our extension class takes
