@@ -12,7 +12,7 @@ index 96b720c..c316c08 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 5baeb09..d28ffc5 100644
+index f4378fc..10e851f 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -24,7 +24,7 @@ index 5baeb09..d28ffc5 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -5113,6 +5113,176 @@
+@@ -5071,6 +5071,176 @@
                  "scaffolding"
              ],
              "time": "2019-04-19T17:26:45+00:00"

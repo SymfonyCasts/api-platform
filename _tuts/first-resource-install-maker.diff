@@ -12,7 +12,7 @@ index d8e99d9..57f616b 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index c81feb7..0314d01 100644
+index 206e791..e092e0b 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -24,7 +24,7 @@ index c81feb7..0314d01 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -4620,7 +4620,125 @@
+@@ -4578,7 +4578,125 @@
              "time": "2017-05-14T17:21:12+00:00"
          }
      ],

@@ -11,7 +11,7 @@ index 5ee7a8b..50627de 100644
          "symfony/yaml": "4.3.*"
      },
 diff --git a/composer.lock b/composer.lock
-index f0a2f58..4d6b658 100644
+index 960678e..d2b9586 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index f0a2f58..4d6b658 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -3168,6 +3168,68 @@
+@@ -3126,6 +3126,68 @@
              "homepage": "https://symfony.com",
              "time": "2019-06-26T06:50:02+00:00"
          },

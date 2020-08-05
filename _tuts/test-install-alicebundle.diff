@@ -11,7 +11,7 @@ index 50627de..4f91947 100644
          "symfony/profiler-pack": "^1.0",
          "symfony/test-pack": "^1.0"
 diff --git a/composer.lock b/composer.lock
-index 4d6b658..773c433 100644
+index d2b9586..401797d 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index 4d6b658..773c433 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -5283,6 +5283,312 @@
+@@ -5241,6 +5241,312 @@
          }
      ],
      "packages-dev": [
@@ -336,7 +336,7 @@ index 4d6b658..773c433 100644
          {
              "name": "nikic/php-parser",
              "version": "v4.2.2",
-@@ -5334,6 +5640,246 @@
+@@ -5292,6 +5598,246 @@
              ],
              "time": "2019-05-25T20:07:01+00:00"
          },
@@ -583,7 +583,7 @@ index 4d6b658..773c433 100644
          {
              "name": "symfony/browser-kit",
              "version": "v4.3.3",
-@@ -5837,6 +6383,85 @@
+@@ -5795,6 +6341,85 @@
              "description": "Symfony WebProfilerBundle",
              "homepage": "https://symfony.com",
              "time": "2019-05-30T16:10:05+00:00"

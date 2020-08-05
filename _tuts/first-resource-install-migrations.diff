@@ -11,7 +11,7 @@ index 57f616b..96b720c 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 0314d01..5baeb09 100644
+index e092e0b..f4378fc 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index 0314d01..5baeb09 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -773,6 +773,71 @@
+@@ -759,6 +759,71 @@
              ],
              "time": "2018-11-09T06:25:35+00:00"
          },
@@ -95,7 +95,7 @@ index 0314d01..5baeb09 100644
          {
              "name": "doctrine/event-manager",
              "version": "1.1.0",
-@@ -1034,6 +1099,88 @@
+@@ -1020,6 +1085,88 @@
              ],
              "time": "2019-10-30T14:39:59+00:00"
          },
@@ -184,7 +184,7 @@ index 0314d01..5baeb09 100644
          {
              "name": "doctrine/orm",
              "version": "v2.7.2",
-@@ -1471,16 +1618,16 @@
+@@ -1429,16 +1576,16 @@
          },
          {
              "name": "ocramius/package-versions",
@@ -205,7 +205,7 @@ index 0314d01..5baeb09 100644
                  "shasum": ""
              },
              "require": {
-@@ -1492,7 +1639,7 @@
+@@ -1450,7 +1597,7 @@
                  "doctrine/coding-standard": "^5.0.1",
                  "ext-zip": "*",
                  "infection/infection": "^0.7.1",
@@ -214,7 +214,7 @@ index 0314d01..5baeb09 100644
              },
              "type": "composer-plugin",
              "extra": {
-@@ -1517,7 +1664,77 @@
+@@ -1475,7 +1622,77 @@
                  }
              ],
              "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
@@ -293,7 +293,7 @@ index 0314d01..5baeb09 100644
          },
          {
              "name": "phpdocumentor/reflection-common",
-@@ -4002,6 +4219,56 @@
+@@ -3960,6 +4177,56 @@
              "homepage": "https://symfony.com",
              "time": "2019-05-20T16:15:26+00:00"
          },
@@ -350,7 +350,7 @@ index 0314d01..5baeb09 100644
          {
              "name": "symfony/twig-bridge",
              "version": "v4.2.9",
-@@ -4618,6 +4885,115 @@
+@@ -4576,6 +4843,115 @@
                  "negotiation"
              ],
              "time": "2017-05-14T17:21:12+00:00"

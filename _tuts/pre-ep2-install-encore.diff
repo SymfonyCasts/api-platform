@@ -81,7 +81,7 @@ index de13230..6a52c04 100644
      },
      "config": {
 diff --git a/composer.lock b/composer.lock
-index 6b9d86d..ac45bae 100644
+index ec6d25c..b32186b 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -93,7 +93,7 @@ index 6b9d86d..ac45bae 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -4825,6 +4825,62 @@
+@@ -4783,6 +4783,62 @@
              ],
              "time": "2019-03-14T07:32:46+00:00"
          },

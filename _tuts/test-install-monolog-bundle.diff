@@ -11,7 +11,7 @@ index 4f91947..4b0b62a 100644
          "symfony/yaml": "4.3.*"
      },
 diff --git a/composer.lock b/composer.lock
-index 773c433..93cd786 100644
+index 401797d..c5f5d9d 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index 773c433..93cd786 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -1563,6 +1563,84 @@
+@@ -1521,6 +1521,84 @@
              ],
              "time": "2014-01-12T16:20:24+00:00"
          },
@@ -108,7 +108,7 @@ index 773c433..93cd786 100644
          {
              "name": "nelmio/cors-bundle",
              "version": "1.5.6",
-@@ -3494,6 +3572,135 @@
+@@ -3452,6 +3530,135 @@
              ],
              "time": "2019-06-04T09:22:54+00:00"
          },
