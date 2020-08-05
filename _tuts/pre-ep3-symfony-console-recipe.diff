@@ -1,0 +1,63 @@
+diff --git a/bin/console b/bin/console
+index 19c2f6c3..8fe9d494 100755
+--- a/bin/console
++++ b/bin/console
+@@ -4,18 +4,19 @@
+ use App\Kernel;
+ use Symfony\Bundle\FrameworkBundle\Console\Application;
+ use Symfony\Component\Console\Input\ArgvInput;
+-use Symfony\Component\Debug\Debug;
++use Symfony\Component\Dotenv\Dotenv;
++use Symfony\Component\ErrorHandler\Debug;
+ 
+-if (false === in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+-    echo 'Warning: The console should be invoked via the CLI version of PHP, not the '.\PHP_SAPI.' SAPI'.\PHP_EOL;
++if (!in_array(PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
++    echo 'Warning: The console should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
+ }
+ 
+ set_time_limit(0);
+ 
+ require dirname(__DIR__).'/vendor/autoload.php';
+ 
+-if (!class_exists(Application::class)) {
+-    throw new RuntimeException('You need to add "symfony/framework-bundle" as a Composer dependency.');
++if (!class_exists(Application::class) || !class_exists(Dotenv::class)) {
++    throw new LogicException('You need to add "symfony/framework-bundle" and "symfony/dotenv" as Composer dependencies.');
+ }
+ 
+ $input = new ArgvInput();
+@@ -27,7 +28,7 @@ if ($input->hasParameterOption('--no-debug', true)) {
+     putenv('APP_DEBUG='.$_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = '0');
+ }
+ 
+-require dirname(__DIR__).'/config/bootstrap.php';
++(new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+ 
+ if ($_SERVER['APP_DEBUG']) {
+     umask(0000);
+diff --git a/symfony.lock b/symfony.lock
+index c947aaaa..daabaa6f 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -213,16 +213,15 @@
+         "version": "v4.2.8"
+     },
+     "symfony/console": {
+-        "version": "3.3",
++        "version": "5.1",
+         "recipe": {
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+-            "version": "3.3",
+-            "ref": "482d233eb8de91ebd042992077bbd5838858890c"
++            "version": "5.1",
++            "ref": "c6d02bdfba9da13c22157520e32a602dbee8a75c"
+         },
+         "files": [
+-            "bin/console",
+-            "config/bootstrap.php"
++            "bin/console"
+         ]
+     },
+     "symfony/css-selector": {

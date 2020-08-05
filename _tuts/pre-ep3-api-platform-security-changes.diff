@@ -1,0 +1,50 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 14ad1003..3b2b4360 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -20,14 +20,14 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     itemOperations={
+  *          "get",
+  *          "put"={
+- *              "access_control"="is_granted('EDIT', previous_object)",
+- *              "access_control_message"="Only the creator can edit a cheese listing"
++ *              "security"="is_granted('EDIT', object)",
++ *              "security_message"="Only the creator can edit a cheese listing"
+  *          },
+- *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
++ *          "delete"={"security"="is_granted('ROLE_ADMIN')"}
+  *     },
+  *     collectionOperations={
+  *          "get",
+- *          "post"={"access_control"="is_granted('ROLE_USER')"}
++ *          "post"={"security"="is_granted('ROLE_USER')"}
+  *     },
+  *     shortName="cheese",
+  *     attributes={
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 47921063..d7ff9449 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -16,18 +16,18 @@ use Symfony\Component\Validator\Constraints as Assert;
+ 
+ /**
+  * @ApiResource(
+- *     accessControl="is_granted('ROLE_USER')",
++ *     security="is_granted('ROLE_USER')",
+  *     collectionOperations={
+  *          "get",
+  *          "post"={
+- *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
++ *              "security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
+  *              "validation_groups"={"Default", "create"}
+  *          },
+  *     },
+  *     itemOperations={
+  *          "get",
+- *          "put"={"access_control"="is_granted('ROLE_USER') and object == user"},
+- *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
++ *          "put"={"security"="is_granted('ROLE_USER') and object == user"},
++ *          "delete"={"security"="is_granted('ROLE_ADMIN')"}
+  *     }
+  * )
+  * @ApiFilter(PropertyFilter::class)

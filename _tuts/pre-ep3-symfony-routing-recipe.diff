@@ -1,0 +1,57 @@
+diff --git a/config/packages/dev/routing.yaml b/config/packages/dev/routing.yaml
+deleted file mode 100644
+index 4116679a..00000000
+--- a/config/packages/dev/routing.yaml
++++ /dev/null
+@@ -1,3 +0,0 @@
+-framework:
+-    router:
+-        strict_requirements: true
+diff --git a/config/packages/prod/routing.yaml b/config/packages/prod/routing.yaml
+new file mode 100644
+index 00000000..b3e6a0af
+--- /dev/null
++++ b/config/packages/prod/routing.yaml
+@@ -0,0 +1,3 @@
++framework:
++    router:
++        strict_requirements: null
+diff --git a/config/packages/routing.yaml b/config/packages/routing.yaml
+index a15c4ec6..b45c1cec 100644
+--- a/config/packages/routing.yaml
++++ b/config/packages/routing.yaml
+@@ -1,4 +1,7 @@
+ framework:
+     router:
+-        strict_requirements: ~
+         utf8: true
++
++        # Configure how to generate URLs in non-HTTP contexts, such as CLI commands.
++        # See https://symfony.com/doc/current/routing.html#generating-urls-in-commands
++        #default_uri: http://localhost
+diff --git a/symfony.lock b/symfony.lock
+index daabaa6f..6384c302 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -367,17 +367,16 @@
+         "version": "v4.2.8"
+     },
+     "symfony/routing": {
+-        "version": "4.2",
++        "version": "5.1",
+         "recipe": {
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+-            "version": "4.2",
+-            "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
++            "version": "5.1",
++            "ref": "b4f3e7c95e38b606eef467e8a42a8408fc460c43"
+         },
+         "files": [
+-            "config/packages/dev/routing.yaml",
++            "config/packages/prod/routing.yaml",
+             "config/packages/routing.yaml",
+-            "config/packages/test/routing.yaml",
+             "config/routes.yaml"
+         ]
+     },

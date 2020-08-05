@@ -1,0 +1,258 @@
+diff --git a/.env b/.env
+index 71c2b757..0ebbe5b6 100644
+--- a/.env
++++ b/.env
+@@ -16,8 +16,8 @@
+ ###> symfony/framework-bundle ###
+ APP_ENV=dev
+ APP_SECRET=1c78f3e5e06eb3c88a52819fbccdba6e
+-#TRUSTED_PROXIES=127.0.0.1,127.0.0.2
+-#TRUSTED_HOSTS='^localhost|example\.com$'
++#TRUSTED_PROXIES=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
++#TRUSTED_HOSTS='^(localhost|example\.com)$'
+ ###< symfony/framework-bundle ###
+ 
+ ###> nelmio/cors-bundle ###
+diff --git a/.gitignore b/.gitignore
+index 428f6fc2..347db2d9 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,6 +2,7 @@
+ /.env.local
+ /.env.local.php
+ /.env.*.local
++/config/secrets/prod/prod.decrypt.private.php
+ /public/bundles/
+ /var/
+ /vendor/
+diff --git a/config/packages/cache.yaml b/config/packages/cache.yaml
+index 93e620ef..6899b720 100644
+--- a/config/packages/cache.yaml
++++ b/config/packages/cache.yaml
+@@ -1,10 +1,10 @@
+ framework:
+     cache:
+-        # Put the unique name of your app here: the prefix seed
+-        # is used to compute stable namespaces for cache keys.
++        # Unique name of your app: used to compute stable namespaces for cache keys.
+         #prefix_seed: your_vendor_name/app_name
+ 
+-        # The app cache caches to the filesystem by default.
++        # The "app" cache stores to the filesystem by default.
++        # The data in this cache should persist between deploys.
+         # Other options include:
+ 
+         # Redis
+@@ -16,4 +16,4 @@ framework:
+ 
+         # Namespaced pools use the above "app" backend by default
+         #pools:
+-            #my.dedicated.cache: ~
++            #my.dedicated.cache: null
+diff --git a/config/packages/framework.yaml b/config/packages/framework.yaml
+index d3f884c4..cad7f780 100644
+--- a/config/packages/framework.yaml
++++ b/config/packages/framework.yaml
+@@ -1,13 +1,13 @@
++# see https://symfony.com/doc/current/reference/configuration/framework.html
+ framework:
+     secret: '%env(APP_SECRET)%'
+-    #default_locale: en
+     #csrf_protection: true
+     #http_method_override: true
+ 
+     # Enables session support. Note that the session will ONLY be started if you read or write from it.
+     # Remove or comment this section to explicitly disable session support.
+     session:
+-        handler_id: ~
++        handler_id: null
+         cookie_secure: auto
+         cookie_samesite: lax
+ 
+diff --git a/config/routes/dev/framework.yaml b/config/routes/dev/framework.yaml
+new file mode 100644
+index 00000000..bcbbf13d
+--- /dev/null
++++ b/config/routes/dev/framework.yaml
+@@ -0,0 +1,3 @@
++_errors:
++    resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
++    prefix: /_error
+diff --git a/config/routes/dev/twig.yaml b/config/routes/dev/twig.yaml
+deleted file mode 100644
+index f4ee8396..00000000
+--- a/config/routes/dev/twig.yaml
++++ /dev/null
+@@ -1,3 +0,0 @@
+-_errors:
+-    resource: '@TwigBundle/Resources/config/routing/errors.xml'
+-    prefix: /_error
+diff --git a/config/services.yaml b/config/services.yaml
+index 95444ae3..1966d260 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -4,7 +4,6 @@
+ # Put parameters here that don't need to change on each machine where the app is deployed
+ # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+ parameters:
+-    locale: 'en'
+ 
+ services:
+     # default configuration for services in *this* file
+@@ -15,13 +14,17 @@ services:
+     # makes classes in src/ available to be used as services
+     # this creates a service per class whose id is the fully-qualified class name
+     App\:
+-        resource: '../src/*'
+-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
++        resource: '../src/'
++        exclude:
++            - '../src/DependencyInjection/'
++            - '../src/Entity/'
++            - '../src/Kernel.php'
++            - '../src/Tests/'
+ 
+     # controllers are imported separately to make sure services can be injected
+     # as action arguments even if you don't extend any base controller class
+     App\Controller\:
+-        resource: '../src/Controller'
++        resource: '../src/Controller/'
+         tags: ['controller.service_arguments']
+ 
+     # add more service definitions when explicit configuration is needed
+diff --git a/public/index.php b/public/index.php
+index e30f90c0..3f8b90e5 100644
+--- a/public/index.php
++++ b/public/index.php
+@@ -1,10 +1,13 @@
+ <?php
+ 
+ use App\Kernel;
+-use Symfony\Component\Debug\Debug;
++use Symfony\Component\Dotenv\Dotenv;
++use Symfony\Component\ErrorHandler\Debug;
+ use Symfony\Component\HttpFoundation\Request;
+ 
+-require dirname(__DIR__).'/config/bootstrap.php';
++require dirname(__DIR__).'/vendor/autoload.php';
++
++(new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+ 
+ if ($_SERVER['APP_DEBUG']) {
+     umask(0000);
+@@ -12,11 +15,11 @@ if ($_SERVER['APP_DEBUG']) {
+     Debug::enable();
+ }
+ 
+-if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? $_ENV['TRUSTED_PROXIES'] ?? false) {
++if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? false) {
+     Request::setTrustedProxies(explode(',', $trustedProxies), Request::HEADER_X_FORWARDED_ALL ^ Request::HEADER_X_FORWARDED_HOST);
+ }
+ 
+-if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false) {
++if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
+     Request::setTrustedHosts([$trustedHosts]);
+ }
+ 
+diff --git a/src/Kernel.php b/src/Kernel.php
+index 785b0bef..b0168617 100644
+--- a/src/Kernel.php
++++ b/src/Kernel.php
+@@ -3,51 +3,36 @@
+ namespace App;
+ 
+ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+-use Symfony\Component\Config\Loader\LoaderInterface;
+-use Symfony\Component\Config\Resource\FileResource;
+-use Symfony\Component\DependencyInjection\ContainerBuilder;
++use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+-use Symfony\Component\Routing\RouteCollectionBuilder;
++use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+ 
+ class Kernel extends BaseKernel
+ {
+     use MicroKernelTrait;
+ 
+-    private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+-
+-    public function registerBundles(): iterable
++    protected function configureContainer(ContainerConfigurator $container): void
+     {
+-        $contents = require $this->getProjectDir().'/config/bundles.php';
+-        foreach ($contents as $class => $envs) {
+-            if ($envs[$this->environment] ?? $envs['all'] ?? false) {
+-                yield new $class();
+-            }
++        $container->import('../config/{packages}/*.yaml');
++        $container->import('../config/{packages}/'.$this->environment.'/*.yaml');
++
++        if (is_file(\dirname(__DIR__).'/config/services.yaml')) {
++            $container->import('../config/{services}.yaml');
++            $container->import('../config/{services}_'.$this->environment.'.yaml');
++        } elseif (is_file($path = \dirname(__DIR__).'/config/services.php')) {
++            (require $path)($container->withPath($path), $this);
+         }
+     }
+ 
+-    public function getProjectDir(): string
++    protected function configureRoutes(RoutingConfigurator $routes): void
+     {
+-        return \dirname(__DIR__);
+-    }
++        $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
++        $routes->import('../config/{routes}/*.yaml');
+ 
+-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
+-    {
+-        $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
+-        $container->setParameter('container.dumper.inline_class_loader', true);
+-        $confDir = $this->getProjectDir().'/config';
+-
+-        $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
+-        $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+-        $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+-        $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+-    }
+-
+-    protected function configureRoutes(RouteCollectionBuilder $routes): void
+-    {
+-        $confDir = $this->getProjectDir().'/config';
+-
+-        $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
+-        $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
+-        $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
++        if (is_file(\dirname(__DIR__).'/config/routes.yaml')) {
++            $routes->import('../config/{routes}.yaml');
++        } elseif (is_file($path = \dirname(__DIR__).'/config/routes.php')) {
++            (require $path)($routes->withPath($path), $this);
++        }
+     }
+ }
+diff --git a/symfony.lock b/symfony.lock
+index 2177cb44..c947aaaa 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -274,18 +274,18 @@
+         ]
+     },
+     "symfony/framework-bundle": {
+-        "version": "4.2",
++        "version": "5.1",
+         "recipe": {
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+-            "version": "4.2",
+-            "ref": "f64037a414de7d861f68e9b5b5c0e4f7425e2002"
++            "version": "5.1",
++            "ref": "e1b2770f2404d8307450a49cabfc3b2ff3184792"
+         },
+         "files": [
+-            "config/bootstrap.php",
+             "config/packages/cache.yaml",
+             "config/packages/framework.yaml",
+             "config/packages/test/framework.yaml",
++            "config/routes/dev/framework.yaml",
+             "config/services.yaml",
+             "public/index.php",
+             "src/Controller/.gitignore",

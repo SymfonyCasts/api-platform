@@ -1,0 +1,78 @@
+diff --git a/.env.test b/.env.test
+index cd8a3269..f58508ca 100644
+--- a/.env.test
++++ b/.env.test
+@@ -3,3 +3,4 @@ KERNEL_CLASS='App\Kernel'
+ APP_SECRET='$ecretf0rt3st'
+ SYMFONY_DEPRECATIONS_HELPER=999999
+ DATABASE_URL=mysql://root:@127.0.0.1:3306/cheese_whiz_test
++PANTHER_APP_ENV=panther
+diff --git a/bin/phpunit b/bin/phpunit
+old mode 100644
+new mode 100755
+diff --git a/phpunit.xml.dist b/phpunit.xml.dist
+index d45120bb..ae0173d5 100644
+--- a/phpunit.xml.dist
++++ b/phpunit.xml.dist
+@@ -2,10 +2,10 @@
+ 
+ <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
+ <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
++         xsi:noNamespaceSchemaLocation="bin/.phpunit/phpunit.xsd"
+          backupGlobals="false"
+          colors="true"
+-         bootstrap="config/bootstrap.php"
++         bootstrap="tests/bootstrap.php"
+ >
+     <php>
+         <ini name="error_reporting" value="-1" />
+@@ -22,8 +22,8 @@
+     </testsuites>
+ 
+     <filter>
+-        <whitelist>
+-            <directory>src</directory>
++        <whitelist processUncoveredFilesFromWhitelist="true">
++            <directory suffix=".php">src</directory>
+         </whitelist>
+     </filter>
+ 
+diff --git a/symfony.lock b/symfony.lock
+index 0edca31c..854aeb73 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -336,14 +336,13 @@
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+             "version": "4.3",
+-            "ref": "b0582341f1df39aaf3a9a866cdbe49937da35984"
++            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+         },
+         "files": [
+             ".env.test",
+             "bin/phpunit",
+-            "config/bootstrap.php",
+             "phpunit.xml.dist",
+-            "tests/.gitignore"
++            "tests/bootstrap.php"
+         ]
+     },
+     "symfony/polyfill-ctype": {
+diff --git a/tests/bootstrap.php b/tests/bootstrap.php
+new file mode 100644
+index 00000000..469dccee
+--- /dev/null
++++ b/tests/bootstrap.php
+@@ -0,0 +1,11 @@
++<?php
++
++use Symfony\Component\Dotenv\Dotenv;
++
++require dirname(__DIR__).'/vendor/autoload.php';
++
++if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
++    require dirname(__DIR__).'/config/bootstrap.php';
++} elseif (method_exists(Dotenv::class, 'bootEnv')) {
++    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
++}

@@ -1,0 +1,43 @@
+diff --git a/config/packages/test/validator.yaml b/config/packages/test/validator.yaml
+index 2febc403..1e5ab788 100644
+--- a/config/packages/test/validator.yaml
++++ b/config/packages/test/validator.yaml
+@@ -1,4 +1,3 @@
+ framework:
+     validation:
+-        # As of Symfony 4.3 you can disable the NotCompromisedPassword Validator
+-        # disable_not_compromised_password: true
++        not_compromised_password: false
+diff --git a/config/packages/validator.yaml b/config/packages/validator.yaml
+index a695e1a6..350786a1 100644
+--- a/config/packages/validator.yaml
++++ b/config/packages/validator.yaml
+@@ -1,3 +1,8 @@
+ framework:
+     validation:
+         email_validation_mode: html5
++
++        # Enables validator auto-mapping support.
++        # For instance, basic validation constraints will be inferred from Doctrine's metadata.
++        #auto_mapping:
++        #    App\Entity\: []
+diff --git a/symfony.lock b/symfony.lock
+index c004e7a3..9312f44c 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -450,12 +450,12 @@
+         ]
+     },
+     "symfony/validator": {
+-        "version": "4.1",
++        "version": "4.3",
+         "recipe": {
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+-            "version": "4.1",
+-            "ref": "9a285e4ff3915c7cd086e9945f30591a926baf83"
++            "version": "4.3",
++            "ref": "d902da3e4952f18d3bf05aab29512eb61cabd869"
+         },
+         "files": [
+             "config/packages/test/validator.yaml",

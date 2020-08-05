@@ -1,0 +1,105 @@
+diff --git a/assets/js/app.js b/assets/js/app.js
+index 75dbb0b0..1f9238da 100644
+--- a/assets/js/app.js
++++ b/assets/js/app.js
+@@ -2,8 +2,8 @@ import Vue from 'vue';
+ import CheeseWhizApp from './components/CheeseWhizApp';
+ import 'bootstrap/dist/css/bootstrap.css';
+ 
+-Vue.component('cheese-whiz-app', CheeseWhizApp);
+-
+-const app = new Vue({
+-    el: '#cheese-app'
+-});
++new Vue({
++    render(h) {
++        return h(CheeseWhizApp);
++    },
++}).$mount('#cheese-app');
+diff --git a/assets/js/components/CheeseWhizApp.vue b/assets/js/components/CheeseWhizApp.vue
+index 45ad7e34..db18cf6b 100644
+--- a/assets/js/components/CheeseWhizApp.vue
++++ b/assets/js/components/CheeseWhizApp.vue
+@@ -30,9 +30,9 @@
+                     ></loginForm>
+                 </div>
+             </div>
+-            <footer class="footer">
++            <footer :class="$style.footer">
+ 
+-                    <p class="text-muted my-5 text-center">Made with ❤️ by the <a style="text-decoration: underline; color: #6c757d; font-weight: bold;" href="http://www.symfonycasts.com">SymfonyCasts</a> Team</p>
++                    <p class="text-muted my-5 text-center">Made with ❤️ by the <a style="text-decoration: underline; color: #6c757d; font-weight: bold;" href="https://www.symfonycasts.com">SymfonyCasts</a> Team</p>
+ 
+             </footer>
+         </div>
+@@ -47,7 +47,6 @@
+         components: {
+             loginForm
+         },
+-        props: ['entrypoint'],
+         methods: {
+             onUserAuthenticated(userUri) {
+                 axios
+@@ -60,6 +59,11 @@
+                 user: null
+             }
+         },
++        computed: {
++            entrypoint() {
++                return window.entrypoint;
++            }
++        },
+         mounted() {
+             if (window.user) {
+                 this.user = window.user;
+@@ -68,7 +72,7 @@
+     }
+ </script>
+ 
+-<style scoped lang="scss">
++<style module lang="scss">
+     .footer {
+         position: absolute;
+         bottom: 0;
+@@ -76,4 +80,4 @@
+         min-height: 60px;
+         background-color: #f5f5f5;
+     }
+-</style>
+\ No newline at end of file
++</style>
+diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
+index f298d858..f3a4685b 100644
+--- a/assets/js/components/LoginForm.vue
++++ b/assets/js/components/LoginForm.vue
+@@ -61,6 +61,3 @@
+         },
+     }
+ </script>
+-
+-<style scoped lang="scss">
+-</style>
+diff --git a/templates/frontend/homepage.html.twig b/templates/frontend/homepage.html.twig
+index 3eb908cd..b02b446c 100644
+--- a/templates/frontend/homepage.html.twig
++++ b/templates/frontend/homepage.html.twig
+@@ -1,13 +1,14 @@
+ {% extends 'base.html.twig' %}
+ 
+ {% block body %}
++    <div id="cheese-app"></div>
++{% endblock %}
++
++{% block javascripts %}
+     <script>
+         window.user = {{ user|raw }};
++        window.entrypoint = '{{ path('api_entrypoint') }}';
+     </script>
+ 
+-    <div id="cheese-app">
+-        <cheese-whiz-app
+-            entrypoint="{{ path('api_entrypoint') }}"
+-        ></cheese-whiz-app>
+-    </div>
++    {{ parent() }}
+ {% endblock %}

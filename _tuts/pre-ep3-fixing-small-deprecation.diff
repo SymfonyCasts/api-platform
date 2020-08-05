@@ -1,0 +1,13 @@
+diff --git a/config/bootstrap.php b/config/bootstrap.php
+index c66626c3..e8866107 100644
+--- a/config/bootstrap.php
++++ b/config/bootstrap.php
+@@ -14,7 +14,7 @@ if (is_array($env = @include dirname(__DIR__).'/.env.local.php')) {
+     throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
+ } else {
+     // load all the .env files
+-    (new Dotenv(false))->loadEnv(dirname(__DIR__).'/.env');
++    (new Dotenv())->loadEnv(dirname(__DIR__).'/.env');
+ }
+ 
+ $_SERVER += $_ENV;

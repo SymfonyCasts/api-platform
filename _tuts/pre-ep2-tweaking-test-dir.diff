@@ -1,5 +1,5 @@
 diff --git a/tutorial/Test/ApiTestAssertionsTrait.php b/tutorial/Test/ApiTestAssertionsTrait.php
-index fbdf7f7..b1d3999 100644
+index fbdf7f71..b1d3999d 100644
 --- a/tutorial/Test/ApiTestAssertionsTrait.php
 +++ b/tutorial/Test/ApiTestAssertionsTrait.php
 @@ -11,11 +11,11 @@
@@ -18,7 +18,7 @@ index fbdf7f7..b1d3999 100644
  use ApiPlatform\Core\JsonSchema\SchemaFactoryInterface;
  use PHPUnit\Framework\ExpectationFailedException;
 diff --git a/tutorial/Test/ApiTestCase.php b/tutorial/Test/ApiTestCase.php
-index 5bfced6..3534178 100644
+index 5bfced69..35341785 100644
 --- a/tutorial/Test/ApiTestCase.php
 +++ b/tutorial/Test/ApiTestCase.php
 @@ -11,7 +11,7 @@
@@ -31,7 +31,7 @@ index 5bfced6..3534178 100644
  use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  use Symfony\Component\BrowserKit\AbstractBrowser;
 diff --git a/tutorial/Test/BrowserKitAssertionsTrait.php b/tutorial/Test/BrowserKitAssertionsTrait.php
-index 2aec96f..3fecdaf 100644
+index 2aec96ff..3fecdaf9 100644
 --- a/tutorial/Test/BrowserKitAssertionsTrait.php
 +++ b/tutorial/Test/BrowserKitAssertionsTrait.php
 @@ -20,7 +20,7 @@ declare(strict_types=1);
@@ -44,7 +44,7 @@ index 2aec96f..3fecdaf 100644
  use PHPUnit\Framework\Constraint\LogicalAnd;
  use PHPUnit\Framework\Constraint\LogicalNot;
 diff --git a/tutorial/Test/Client.php b/tutorial/Test/Client.php
-index aba32d2..aa9438e 100644
+index aba32d2e..aa9438e6 100644
 --- a/tutorial/Test/Client.php
 +++ b/tutorial/Test/Client.php
 @@ -11,7 +11,7 @@
@@ -57,7 +57,7 @@ index aba32d2..aa9438e 100644
  use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  use Symfony\Component\DependencyInjection\ContainerInterface;
 diff --git a/tutorial/Test/Constraint/ArraySubset.php b/tutorial/Test/Constraint/ArraySubset.php
-index 9c68e44..980427a 100644
+index 9c68e442..980427ac 100644
 --- a/tutorial/Test/Constraint/ArraySubset.php
 +++ b/tutorial/Test/Constraint/ArraySubset.php
 @@ -11,7 +11,7 @@
@@ -70,7 +70,7 @@ index 9c68e44..980427a 100644
  use PHPUnit\Framework\Constraint\Constraint;
  use PHPUnit\Framework\ExpectationFailedException;
 diff --git a/tutorial/Test/Constraint/MatchesJsonSchema.php b/tutorial/Test/Constraint/MatchesJsonSchema.php
-index 19f012d..3d98f69 100644
+index 19f012d9..3d98f690 100644
 --- a/tutorial/Test/Constraint/MatchesJsonSchema.php
 +++ b/tutorial/Test/Constraint/MatchesJsonSchema.php
 @@ -11,7 +11,7 @@
@@ -83,7 +83,7 @@ index 19f012d..3d98f69 100644
  use JsonSchema\Validator;
  use PHPUnit\Framework\Constraint\Constraint;
 diff --git a/tutorial/Test/Response.php b/tutorial/Test/Response.php
-index e78bbbe..f2dee2d 100644
+index e78bbbe1..f2dee2d0 100644
 --- a/tutorial/Test/Response.php
 +++ b/tutorial/Test/Response.php
 @@ -11,7 +11,7 @@

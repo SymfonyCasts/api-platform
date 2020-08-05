@@ -1,0 +1,145 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index 1966d260..6c54be59 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -34,13 +34,5 @@ services:
+         decorates: 'api_platform.serializer.context_builder'
+         arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]
+ 
+-    App\ApiPlatform\AutoGroupResourceMetadataFactory:
+-        decorates: 'api_platform.metadata.resource.metadata_factory'
+-        # causes this to decorate around the cached factory so that
+-        # our service is never cached (which, of course, can have performance
+-        # implications!
+-        decoration_priority: -20
+-        arguments: ['@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner']
+-
+     App\Doctrine\CheeseListingSetOwnerListener:
+-        tags: [doctrine.orm.entity_listener]
+\ No newline at end of file
++        tags: [doctrine.orm.entity_listener]
+diff --git a/src/ApiPlatform/AutoGroupResourceMetadataFactory.php b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
+deleted file mode 100644
+index d0ebc44e..00000000
+--- a/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
++++ /dev/null
+@@ -1,76 +0,0 @@
+-<?php
+-
+-namespace App\ApiPlatform;
+-
+-use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
+-use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
+-
+-class AutoGroupResourceMetadataFactory implements ResourceMetadataFactoryInterface
+-{
+-    private $decorated;
+-
+-    public function __construct(ResourceMetadataFactoryInterface $decorated)
+-    {
+-        $this->decorated = $decorated;
+-    }
+-
+-    public function create(string $resourceClass): ResourceMetadata
+-    {
+-        $resourceMetadata = $this->decorated->create($resourceClass);
+-
+-        $itemOperations = $resourceMetadata->getItemOperations();
+-        $resourceMetadata = $resourceMetadata->withItemOperations(
+-            $this->updateContextOnOperations($itemOperations, $resourceMetadata->getShortName(), true)
+-        );
+-
+-        $collectionOperations = $resourceMetadata->getCollectionOperations();
+-        $resourceMetadata = $resourceMetadata->withCollectionOperations(
+-            $this->updateContextOnOperations($collectionOperations, $resourceMetadata->getShortName(), false)
+-        );
+-
+-        return $resourceMetadata;
+-    }
+-
+-    private function updateContextOnOperations(array $operations, string $shortName, bool $isItem)
+-    {
+-        foreach ($operations as $operationName => $operationOptions) {
+-            $operationOptions['normalization_context'] = $operationOptions['normalization_context'] ?? [];
+-            $operationOptions['normalization_context']['groups'] = $operationOptions['normalization_context']['groups'] ?? [];
+-            $operationOptions['normalization_context']['groups'] = array_unique(array_merge(
+-                $operationOptions['normalization_context']['groups'],
+-                $this->getDefaultGroups($shortName, true, $isItem, $operationName)
+-            ));
+-
+-            $operationOptions['denormalization_context'] = $operationOptions['denormalization_context'] ?? [];
+-            $operationOptions['denormalization_context']['groups'] = $operationOptions['denormalization_context']['groups'] ?? [];
+-            $operationOptions['denormalization_context']['groups'] = array_unique(array_merge(
+-                $operationOptions['denormalization_context']['groups'],
+-                $this->getDefaultGroups($shortName, false, $isItem, $operationName)
+-            ));
+-
+-
+-            $operations[$operationName] = $operationOptions;
+-        }
+-
+-        return $operations;
+-    }
+-
+-    private function getDefaultGroups(string $shortName, bool $normalization, bool $isItem, string $operationName)
+-    {
+-        $shortName = strtolower($shortName);
+-        $readOrWrite = $normalization ? 'read' : 'write';
+-        $itemOrCollection = $isItem ? 'item' : 'collection';
+-
+-        return [
+-            // {shortName}:{read/write}
+-            // e.g. user:read
+-            sprintf('%s:%s', $shortName, $readOrWrite),
+-            // {shortName}:{item/collection}:{read/write}
+-            // e.g. user:collection:read
+-            sprintf('%s:%s:%s', $shortName, $itemOrCollection, $readOrWrite),
+-            // {shortName}:{item/collection}:{operationName}
+-            // e.g. user:collection:get
+-            sprintf('%s:%s:%s', $shortName, $itemOrCollection, $operationName),
+-        ];
+-    }
+-}
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 3b2b4360..e73f1694 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -17,8 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
+ 
+ /**
+  * @ApiResource(
++ *     normalizationContext={"groups"={"cheese:read"}},
++ *     denormalizationContext={"groups"={"cheese:write"}},
+  *     itemOperations={
+- *          "get",
++ *          "get"={
++ *              "denormalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
++ *          },
+  *          "put"={
+  *              "security"="is_granted('EDIT', object)",
+  *              "security_message"="Only the creator can edit a cheese listing"
+@@ -27,7 +31,10 @@ use Symfony\Component\Validator\Constraints as Assert;
+  *     },
+  *     collectionOperations={
+  *          "get",
+- *          "post"={"security"="is_granted('ROLE_USER')"}
++ *          "post"={
++ *              "security"="is_granted('ROLE_USER')",
++ *              "denormalization_context"={"groups"={"cheese:write", "cheese:collection:post"}},
++ *          }
+  *     },
+  *     shortName="cheese",
+  *     attributes={
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index d7ff9449..52ef828d 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
+ /**
+  * @ApiResource(
+  *     security="is_granted('ROLE_USER')",
++ *     normalizationContext={"groups"={"user:read"}},
++ *     denormalizationContext={"groups"={"user:write"}},
+  *     collectionOperations={
+  *          "get",
+  *          "post"={

@@ -1,5 +1,5 @@
 diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
-index bf2e01a..4edf7b3 100644
+index bf2e01a1..4edf7b33 100644
 --- a/src/Test/CustomApiTestCase.php
 +++ b/src/Test/CustomApiTestCase.php
 @@ -28,7 +28,6 @@ class CustomApiTestCase extends ApiTestCase
@@ -11,7 +11,7 @@ index bf2e01a..4edf7b3 100644
                  'email' => $email,
                  'password' => $password
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 59c8448..756faa0 100644
+index 59c8448f..756faa01 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -14,7 +14,6 @@ class CheeseListingResourceTest extends CustomApiTestCase

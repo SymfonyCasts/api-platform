@@ -1,0 +1,81 @@
+diff --git a/composer.json b/composer.json
+index 8a01a9dd..5e7b3646 100644
+--- a/composer.json
++++ b/composer.json
+@@ -5,15 +5,25 @@
+         "php": "^7.2.5",
+         "ext-ctype": "*",
+         "ext-iconv": "*",
+-        "api-platform/api-pack": "^1.2",
++        "api-platform/core": "^2.1",
++        "doctrine/annotations": "^1.0",
++        "doctrine/doctrine-bundle": "^1.6",
+         "doctrine/doctrine-migrations-bundle": "^2.0",
++        "doctrine/orm": "^2.4.5",
++        "nelmio/cors-bundle": "^1.5",
+         "nesbot/carbon": "^2.17",
++        "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
++        "symfony/asset": "4.3.*",
+         "symfony/console": "4.3.*",
+         "symfony/dotenv": "4.3.*",
++        "symfony/expression-language": "4.3.*",
+         "symfony/flex": "^1.1",
+         "symfony/framework-bundle": "4.3.*",
+         "symfony/http-client": "4.3.*",
+         "symfony/monolog-bundle": "^3.4",
++        "symfony/security-bundle": "4.3.*",
++        "symfony/twig-bundle": "4.3.*",
++        "symfony/validator": "4.3.*",
+         "symfony/webpack-encore-bundle": "^1.6",
+         "symfony/yaml": "4.3.*"
+     },
+diff --git a/composer.lock b/composer.lock
+index 93cd7864..275ff7b0 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,44 +4,8 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "72216e2df33bc39a51e5352a1560fdd5",
++    "content-hash": "65c9cee0717a23ec6c460888278fafed",
+     "packages": [
+-        {
+-            "name": "api-platform/api-pack",
+-            "version": "v1.2.0",
+-            "source": {
+-                "type": "git",
+-                "url": "https://github.com/api-platform/api-pack.git",
+-                "reference": "9e3e7421415c747e676778f211434674324dcfa9"
+-            },
+-            "dist": {
+-                "type": "zip",
+-                "url": "https://api.github.com/repos/api-platform/api-pack/zipball/9e3e7421415c747e676778f211434674324dcfa9",
+-                "reference": "9e3e7421415c747e676778f211434674324dcfa9",
+-                "shasum": ""
+-            },
+-            "require": {
+-                "api-platform/core": "^2.1",
+-                "doctrine/annotations": "^1.0",
+-                "doctrine/doctrine-bundle": "^1.6",
+-                "doctrine/orm": "^2.4.5",
+-                "nelmio/cors-bundle": "^1.5",
+-                "php": "^7.0",
+-                "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
+-                "symfony/asset": "*",
+-                "symfony/expression-language": "*",
+-                "symfony/security-bundle": "*",
+-                "symfony/twig-bundle": "*",
+-                "symfony/validator": "*"
+-            },
+-            "type": "symfony-pack",
+-            "notification-url": "https://packagist.org/downloads/",
+-            "license": [
+-                "MIT"
+-            ],
+-            "description": "A pack for API Platform",
+-            "time": "2019-01-12T11:48:48+00:00"
+-        },
+         {
+             "name": "api-platform/core",
+             "version": "v2.4.5",

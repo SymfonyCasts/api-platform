@@ -1,0 +1,33 @@
+diff --git a/.env b/.env
+index 7df7e82d..71c2b757 100644
+--- a/.env
++++ b/.env
+@@ -1,5 +1,5 @@
+ # In all environments, the following files are loaded if they exist,
+-# the later taking precedence over the former:
++# the latter taking precedence over the former:
+ #
+ #  * .env                contains default values for the environment variables needed by the app
+ #  * .env.local          uncommitted file with local overrides
+@@ -11,7 +11,7 @@
+ # DO NOT DEFINE PRODUCTION SECRETS IN THIS FILE NOR IN ANY OTHER COMMITTED FILES.
+ #
+ # Run "composer dump-env prod" to compile .env files for production use (requires symfony/flex >=1.2).
+-# https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
++# https://symfony.com/doc/current/best_practices.html#use-environment-variables-for-infrastructure-configuration
+ 
+ ###> symfony/framework-bundle ###
+ APP_ENV=dev
+diff --git a/symfony.lock b/symfony.lock
+index b8dce0de..2177cb44 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -267,7 +267,7 @@
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+             "version": "1.0",
+-            "ref": "dc3fc2e0334a4137c47cfd5a3ececc601fa61a0b"
++            "ref": "c0eeb50665f0f77226616b6038a9b06c03752d8e"
+         },
+         "files": [
+             ".env"

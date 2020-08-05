@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
-index e2ba9f7..a56f46d 100644
+index e2ba9f78..a56f46dd 100644
 --- a/src/Serializer/Normalizer/UserNormalizer.php
 +++ b/src/Serializer/Normalizer/UserNormalizer.php
 @@ -3,6 +3,7 @@

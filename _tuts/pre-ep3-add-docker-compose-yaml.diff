@@ -1,0 +1,151 @@
+diff --git a/README.md b/README.md
+index f14df210..d3718532 100644
+--- a/README.md
++++ b/README.md
+@@ -9,7 +9,7 @@ If you've just downloaded the code, congratulations!!
+ 
+ To get it working, follow these steps:
+ 
+-**Download Composer dependencies**
++**1) Download Composer dependencies**
+ 
+ Make sure you have [Composer installed](https://getcomposer.org/download/)
+ and then run:
+@@ -21,63 +21,84 @@ composer install
+ You may alternatively need to run `php composer.phar install`, depending
+ on how you installed Composer.
+ 
+-**Configure the .env (or .env.local) File**
++**2) Start the symfony web server**
+ 
+-Open the `.env` file and make any adjustments you need - specifically
+-`DATABASE_URL`. Or, if you want, you can create a `.env.local` file
+-and *override* any configuration you need there (instead of changing
+-`.env` directly).
++You can use Nginx or Apache, but Symfony's local web server
++works even better - especially if you're using Docker for
++the database.
+ 
+-**Setup the Database**
++To install the Symfony local web server, follow
++"Downloading the Symfony client" instructions found
++here: https://symfony.com/download - you only need to do this
++once on your system.
+ 
+-Again, make sure `.env` is setup for your computer. Then, create
+-the database & tables!
++Then, to start the web server, open a terminal, move into the
++project, and run:
+ 
+ ```
+-php bin/console doctrine:database:create
+-php bin/console doctrine:migrations:migrate
++symfony serve -d
+ ```
+ 
+-If you get an error that the database exists, that should
+-be ok. But if you have problems, completely drop the
+-database (`doctrine:database:drop --force`) and try again.
++(If this is your first time using this command, you may see an
++error that you need to run `symfony server:ca:install` first).
+ 
+-**Compiling Webpack Encore Assets**
++Now check out the site at `https://localhost:8000`. You'll see
++an error now - finish the setup instructions to get things working!
+ 
+-This tutorial uses [Webpack Encore](https://symfonycasts.com/encore),
+-which isn't important to understand what's going on, but *is* important
+-to get our app running. We'll also do a little bit of JavaScript coding
+-to talk to our API.
++** 3) Database Setup (with Docker)**
+ 
+-Make sure to install Node and also [yarn](https://yarnpkg.com).
+-Then run:
++The easiest way to set up the database is to use the `docker-compose.yaml`
++file that's included in this project. First, make sure Docker is downloaded
++and running on your machine. Then, from inside the project, run:
+ 
+ ```
+-yarn install
+-yarn encore dev --watch
++docker-composer up -d
+ ```
+ 
+-**Start the built-in web server**
++Congrats! You now have a database running! And as long as you use the
++"symfony binary" web server (described below), the `DATABASE_URL`
++environment variable will automatically be exposed to your web server:
++no need to configure `.env`.
+ 
+-You can use Nginx or Apache, but Symfony's local web server
+-works even better.
++** 3 Alternative) Database Setup (without Docker)**
+ 
+-To install the Symfony local web server, follow
+-"Downloading the Symfony client" instructions found
+-here: https://symfony.com/download - you only need to do this
+-once on your system.
++If you do not want to use Docker, you can also just install and run
++MySQL manually. When you're done, open the `.env` file and make any
++adjustments you need - specifically `DATABASE_URL`. Or, better,
++you can create a `.env.local` file and *override* any configuration
++you need there (instead of changing `.env` directly).
+ 
+-Then, to start the web server, open a terminal, move into the
+-project, and run:
++** 4) Database Schema**
++
++To actually *create* the database and get some tables, run:
+ 
+ ```
+-symfony serve
++symfony console doctrine:database:create
++symfony console doctrine:migrations:migrate
+ ```
+ 
+-(If this is your first time using this command, you may see an
+-error that you need to run `symfony server:ca:install` first).
++This uses the `symfony` binary, but `symfony console` is identical
++to `php bin/console`, except that this allows the `DATABASE_URL`
++environment variable to be injected if you're using Docker.
++
++If you get an error that the database exists, that should
++be ok. But if you have problems, completely drop the
++database (`doctrine:database:drop --force`) and try again.
+ 
+-Now check out the site at `https://localhost:8000`
++** 5) Optional: Compiling Webpack Encore Assets**
++
++This tutorial uses [Webpack Encore](https://symfonycasts.com/encore),
++which isn't important to understand what's going on. The compiled
++assets are already included in the download, so unless you want to
++play around with the JavaScript, you can skip this step.
++
++Make sure to install Node and also [yarn](https://yarnpkg.com).
++Then run:
++
++```
++yarn install
++yarn encore dev --watch
++```
+ 
+ Have fun!
+ 
+diff --git a/docker-compose.yaml b/docker-compose.yaml
+new file mode 100644
+index 00000000..b776c615
+--- /dev/null
++++ b/docker-compose.yaml
+@@ -0,0 +1,12 @@
++version: '3.7'
++services:
++    database:
++        image: 'mysql:5.7'
++        environment:
++            MYSQL_ROOT_PASSWORD: password
++        ports:
++            # To allow the host machine to access the ports below, modify the lines below.
++            # For example, to allow the host to connect to port 3306 on the container, you would change
++            # "3306" to "3306:3306". Where the first port is exposed to the host and the second is the container port.
++            # See https://docs.docker.com/compose/compose-file/#ports for more information.
++            - '3306'

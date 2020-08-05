@@ -1,0 +1,73 @@
+diff --git a/config/packages/prod/deprecations.yaml b/config/packages/prod/deprecations.yaml
+new file mode 100644
+index 00000000..920a0619
+--- /dev/null
++++ b/config/packages/prod/deprecations.yaml
+@@ -0,0 +1,8 @@
++# As of Symfony 5.1, deprecations are logged in the dedicated "deprecation" channel when it exists
++#monolog:
++#    channels: [deprecation]
++#    handlers:
++#        deprecation:
++#            type: stream
++#            channels: [deprecation]
++#            path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+diff --git a/config/packages/prod/monolog.yaml b/config/packages/prod/monolog.yaml
+index 5bcdf06e..bfe69c01 100644
+--- a/config/packages/prod/monolog.yaml
++++ b/config/packages/prod/monolog.yaml
+@@ -5,6 +5,7 @@ monolog:
+             action_level: error
+             handler: nested
+             excluded_http_codes: [404, 405]
++            buffer_size: 50 # How many messages should be saved? Prevent memory leaks
+         nested:
+             type: stream
+             path: "%kernel.logs_dir%/%kernel.environment%.log"
+@@ -13,11 +14,3 @@ monolog:
+             type: console
+             process_psr_3_messages: false
+             channels: ["!event", "!doctrine"]
+-        deprecation:
+-            type: stream
+-            path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+-        deprecation_filter:
+-            type: filter
+-            handler: deprecation
+-            max_level: info
+-            channels: ["php"]
+diff --git a/config/packages/test/monolog.yaml b/config/packages/test/monolog.yaml
+index 2762653c..fc40641d 100644
+--- a/config/packages/test/monolog.yaml
++++ b/config/packages/test/monolog.yaml
+@@ -1,7 +1,12 @@
+ monolog:
+     handlers:
+         main:
++            type: fingers_crossed
++            action_level: error
++            handler: nested
++            excluded_http_codes: [404, 405]
++            channels: ["!event"]
++        nested:
+             type: stream
+             path: "%kernel.logs_dir%/%kernel.environment%.log"
+             level: debug
+-            channels: ["!event"]
+diff --git a/symfony.lock b/symfony.lock
+index 6384c302..0edca31c 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -321,10 +321,11 @@
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+             "version": "3.3",
+-            "ref": "6240c6d43e8237a32452f057f81816820fd56ab6"
++            "ref": "d7249f7d560f6736115eee1851d02a65826f0a56"
+         },
+         "files": [
+             "config/packages/dev/monolog.yaml",
++            "config/packages/prod/deprecations.yaml",
+             "config/packages/prod/monolog.yaml",
+             "config/packages/test/monolog.yaml"
+         ]

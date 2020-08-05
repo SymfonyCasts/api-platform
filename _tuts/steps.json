@@ -944,7 +944,157 @@
             "id": "relation-fix-update-published-test",
             "name": "Relation: fix update published test",
             "description": null
+        },
+        {
+            "id": "pre-ep3-bumping-php-version-and-re-org-deps",
+            "name": "PRE_EP3: bumping php version and re-org deps",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-unpacking-apip-pack",
+            "name": "PRE_EP3: unpacking APIP pack",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-unpacking-profiler-test-packs",
+            "name": "PRE_EP3: unpacking profiler+test packs",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-updating-deps-to-sf5",
+            "name": "PRE_EP3: updating deps to Sf5",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-updating-to-migrations-3",
+            "name": "PRE_EP3: updating to Migrations 3",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-updating-repositories",
+            "name": "PRE_EP3: updating repositories",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-api-platform-recipe",
+            "name": "PRE_EP3: api-platform recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-annotations-recipe",
+            "name": "PRE_EP3: annotations recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-doctrinebundle-recipe",
+            "name": "PRE_EP3: DoctrineBundle recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-nelmio-cors-recipe",
+            "name": "PRE_EP3: nelmio\/cors recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-flex-recipe",
+            "name": "PRE_EP3: flex recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-frameworkbundle-recipe",
+            "name": "PRE_EP3: frameworkbundle recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-symfony-console-recipe",
+            "name": "PRE_EP3: symfony\/console recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-symfony-routing-recipe",
+            "name": "PRE_EP3: symfony\/routing recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-monolog-recipe",
+            "name": "PRE_EP3: monolog recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-phpunit-bridge-recipe",
+            "name": "PRE_EP3: phpunit-bridge recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-security-recipe",
+            "name": "PRE_EP3: security recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-translation-recipe",
+            "name": "PRE_EP3: translation recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-twig-recipe",
+            "name": "PRE_EP3: twig recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-validator-recipe",
+            "name": "PRE_EP3: validator recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-encore-recipe",
+            "name": "PRE_EP3: encore recipe",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-upgrade-yarn-deps",
+            "name": "PRE_EP3: upgrade yarn deps",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-modernizing-vue-app",
+            "name": "PRE_EP3: modernizing Vue app",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-api-platform-security-changes",
+            "name": "PRE_EP3: api platform security changes",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-emptying-tutorial",
+            "name": "PRE_EP3: emptying tutorial\/",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-using-core-test-classes",
+            "name": "PRE_EP3: using core test classes",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-fixing-small-deprecation",
+            "name": "PRE_EP3: fixing small deprecation",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-removing-auto-group-factory",
+            "name": "PRE_EP3: removing auto group factory",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-add-docker-compose-yaml",
+            "name": "PRE_EP3: add docker-compose.yaml",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-commit-webpack-assets",
+            "name": "PRE_EP3: commit webpack assets",
+            "description": null
         }
     ],
-    "sha": "d31b918aa1c5f735d73a73822de0184aea118c3b"
+    "sha": "6e1098c272018e53d5a9042a4c1f417e124d71d4"
 }

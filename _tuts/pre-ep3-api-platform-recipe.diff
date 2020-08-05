@@ -1,0 +1,34 @@
+diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
+index ae73e691..63c11352 100644
+--- a/config/packages/api_platform.yaml
++++ b/config/packages/api_platform.yaml
+@@ -1,6 +1,10 @@
+ api_platform:
+     mapping:
+         paths: ['%kernel.project_dir%/src/Entity']
++    patch_formats:
++        json: ['application/merge-patch+json']
++    swagger:
++        versions: [3]
+     formats:
+         jsonld:
+             mime_types:
+diff --git a/symfony.lock b/symfony.lock
+index 99595cbf..59bee1af 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -1,11 +1,11 @@
+ {
+     "api-platform/core": {
+-        "version": "2.1",
++        "version": "2.5",
+         "recipe": {
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+-            "version": "2.1",
+-            "ref": "18727d8f229306860b46955f438e1897421da689"
++            "version": "2.5",
++            "ref": "a93061567140e386f107be75340ac2aee3f86cbf"
+         },
+         "files": [
+             "config/packages/api_platform.yaml",

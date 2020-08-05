@@ -1,0 +1,25 @@
+diff --git a/config/routes/annotations.yaml b/config/routes/annotations.yaml
+index d49a502a..e92efc59 100644
+--- a/config/routes/annotations.yaml
++++ b/config/routes/annotations.yaml
+@@ -1,3 +1,7 @@
+ controllers:
+     resource: ../../src/Controller/
+     type: annotation
++
++kernel:
++    resource: ../../src/Kernel.php
++    type: annotation
+diff --git a/symfony.lock b/symfony.lock
+index 59bee1af..9b31ab64 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -19,7 +19,7 @@
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+             "version": "1.0",
+-            "ref": "cb4152ebcadbe620ea2261da1a1c5a9b8cea7672"
++            "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
+         },
+         "files": [
+             "config/routes/annotations.yaml"

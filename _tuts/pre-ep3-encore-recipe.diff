@@ -1,0 +1,110 @@
+diff --git a/config/packages/test/webpack_encore.yaml b/config/packages/test/webpack_encore.yaml
+new file mode 100644
+index 00000000..02a76515
+--- /dev/null
++++ b/config/packages/test/webpack_encore.yaml
+@@ -0,0 +1,2 @@
++#webpack_encore:
++#    strict_mode: false
+diff --git a/config/packages/webpack_encore.yaml b/config/packages/webpack_encore.yaml
+index 1ad206b7..9191f4f4 100644
+--- a/config/packages/webpack_encore.yaml
++++ b/config/packages/webpack_encore.yaml
+@@ -1,14 +1,25 @@
+ webpack_encore:
+-    # The path where Encore is building the assets.
+-    # This should match Encore.setOutputPath() in webpack.config.js.
++    # The path where Encore is building the assets - i.e. Encore.setOutputPath()
+     output_path: '%kernel.project_dir%/public/build'
+     # If multiple builds are defined (as shown below), you can disable the default build:
+     # output_path: false
+ 
+-    # if using Encore.enableIntegrityHashes() specify the crossorigin attribute value (default: false, or use 'anonymous' or 'use-credentials')
++    # if using Encore.enableIntegrityHashes() and need the crossorigin attribute (default: false, or use 'anonymous' or 'use-credentials')
+     # crossorigin: 'anonymous'
+-    
+-    # Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes).
+-    # To enable caching for the production environment, creating a webpack_encore.yaml in the config/packages/prod directory with this value set to true
+-    # Available in version 1.2
+-    #cache: 'false'
++
++    # preload all rendered script and link tags automatically via the http2 Link header
++    # preload: true
++
++    # Throw an exception if the entrypoints.json file is missing or an entry is missing from the data
++    # strict_mode: false
++
++    # if you have multiple builds:
++    # builds:
++        # pass "frontend" as the 3rg arg to the Twig functions
++        # {{ encore_entry_script_tags('entry1', null, 'frontend') }}
++
++        # frontend: '%kernel.project_dir%/public/frontend/build'
++
++    # Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes)
++    # Put in config/packages/prod/webpack_encore.yaml
++    # cache: true
+diff --git a/package.json b/package.json
+index 9fdf8729..68193199 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+     "devDependencies": {
+-        "@symfony/webpack-encore": "^0.27.0",
++        "@symfony/webpack-encore": "^0.30.0",
+         "axios": "^0.19.0",
+         "bootstrap": "^4.3.1",
+         "core-js": "^3.0.0",
+@@ -9,6 +9,7 @@
+         "vue": "^2.6.10",
+         "vue-loader": "^15.0.11",
+         "vue-template-compiler": "^2.6.10",
++        "regenerator-runtime": "^0.13.2",
+         "webpack-notifier": "^1.6.0"
+     },
+     "license": "UNLICENSED",
+diff --git a/symfony.lock b/symfony.lock
+index 9312f44c..69e99b59 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -486,18 +486,19 @@
+         ]
+     },
+     "symfony/webpack-encore-bundle": {
+-        "version": "1.0",
++        "version": "1.6",
+         "recipe": {
+             "repo": "github.com/symfony/recipes",
+             "branch": "master",
+-            "version": "1.0",
+-            "ref": "15d61b2277cedff81e57cad9e66d2f28959e6058"
++            "version": "1.6",
++            "ref": "69e1d805ad95964088bd510c05995e87dc391564"
+         },
+         "files": [
+             "assets/css/app.css",
+             "assets/js/app.js",
+             "config/packages/assets.yaml",
+             "config/packages/prod/webpack_encore.yaml",
++            "config/packages/test/webpack_encore.yaml",
+             "config/packages/webpack_encore.yaml",
+             "package.json",
+             "webpack.config.js"
+diff --git a/webpack.config.js b/webpack.config.js
+index 2e64d0e8..9b2b2a9c 100644
+--- a/webpack.config.js
++++ b/webpack.config.js
+@@ -48,9 +48,9 @@ Encore
+     .enableVersioning(Encore.isProduction())
+ 
+     // enables @babel/preset-env polyfills
+-    .configureBabel(() => {}, {
+-        useBuiltIns: 'usage',
+-        corejs: 3
++    .configureBabelPresetEnv((config) => {
++        config.useBuiltIns = 'usage';
++        config.corejs = 3;
+     })
+ 
+     // enables Sass/SCSS support
