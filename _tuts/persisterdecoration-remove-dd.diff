@@ -1,0 +1,12 @@
+diff --git a/src/DataPersister/UserDataPersister.php b/src/DataPersister/UserDataPersister.php
+index 92fcdd75..c1ae771d 100644
+--- a/src/DataPersister/UserDataPersister.php
++++ b/src/DataPersister/UserDataPersister.php
+@@ -28,7 +28,6 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
+      */
+     public function persist($data, array $context = [])
+     {
+-        dd($context);
+         if ($data->getPlainPassword()) {
+             $data->setPassword(
+                 $this->userPasswordEncoder->encodePassword($data, $data->getPlainPassword())

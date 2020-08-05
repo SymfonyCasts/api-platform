@@ -1,3 +1,6 @@
+diff --git a/fixtures/.gitignore b/fixtures/.gitignore
+deleted file mode 100644
+index e69de29b..00000000
 diff --git a/tutorial/Test/ApiTestAssertionsTrait.php b/tutorial/Test/ApiTestAssertionsTrait.php
 deleted file mode 100644
 index b1d3999d..00000000

@@ -1094,7 +1094,47 @@
             "id": "pre-ep3-commit-webpack-assets",
             "name": "PRE_EP3: commit webpack assets",
             "description": null
+        },
+        {
+            "id": "pre-ep3-disabling-deprecations-in-tests",
+            "name": "PRE_EP3: disabling deprecations in tests",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-comment-out-persist",
+            "name": "PersisterDecoration: comment out persist",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-re-add",
+            "name": "PersisterDecoration: re-add",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-use-other-interface",
+            "name": "PersisterDecoration: use other interface",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-inject-decorated",
+            "name": "PersisterDecoration: inject decorated",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-add-service-config",
+            "name": "PersisterDecoration: add service config",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-dd-context",
+            "name": "PersisterDecoration: dd($context)",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-remove-dd",
+            "name": "PersisterDecoration: remove dd",
+            "description": null
         }
     ],
-    "sha": "c1beb8aefaa0d180422a0e26d922e24794a5cf49"
+    "sha": "e49a5062c2c6245c7bd235b8c0161384a89a53cc"
 }
