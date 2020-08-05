@@ -11,7 +11,7 @@ index c316c088..904fce40 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index d28ffc59..47692064 100644
+index e43531d0..2bdc12b7 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
