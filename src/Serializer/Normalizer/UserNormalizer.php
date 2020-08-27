@@ -25,7 +25,7 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
     /**
      * @param User $object
      */
-    public function normalize($object, $format = null, array $context = array()): array
+    public function normalize($object, $format = null, array $context = array())
     {
         $isOwner = $this->userIsOwner($object);
         if ($isOwner) {
@@ -35,6 +35,11 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
         $context[self::ALREADY_CALLED] = true;
 
         $data = $this->normalizer->normalize($object, $format, $context);
+
+        // allow when User is an IRI string
+        if (!is_array($data)) {
+            return $data;
+        }
 
         $data['isMe'] = $isOwner;
 
