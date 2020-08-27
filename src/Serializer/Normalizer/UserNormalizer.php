@@ -49,6 +49,6 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
 
     public function hasCacheableSupportsMethod(): bool
     {
-        return true;
+        return false;
     }
 }
