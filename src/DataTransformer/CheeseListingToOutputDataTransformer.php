@@ -8,9 +8,15 @@ use App\Entity\CheeseListing;
 
 class CheeseListingToOutputDataTransformer implements DataTransformerInterface
 {
-    public function transform($object, string $to, array $context = [])
+    /**
+     * @param CheeseListing $cheeseListing
+     */
+    public function transform($cheeseListing, string $to, array $context = [])
     {
-        dd($object, $to);
+        $output = new CheeseListingOutput();
+        $output->title = $cheeseListing->getTitle();
+
+        return $output;
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool
