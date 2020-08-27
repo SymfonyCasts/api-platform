@@ -9,5 +9,5 @@ class CheeseListingOutput
     /**
      * @Groups({"cheese:read"})
      */
-    public $title;
+    public string $title;
 }
