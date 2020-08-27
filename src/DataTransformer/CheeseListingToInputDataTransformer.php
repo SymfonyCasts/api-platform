@@ -13,6 +13,8 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
      */
     public function transform($input, string $to, array $context = [])
     {
+        dump($input, $to, $context);
+
         $cheeseListing = new CheeseListing($input->title);
         $cheeseListing->setDescription($input->description);
         $cheeseListing->setPrice($input->price);
