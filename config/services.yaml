@@ -34,13 +34,5 @@ services:
         decorates: 'api_platform.serializer.context_builder'
         arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]
 
-    App\ApiPlatform\AutoGroupResourceMetadataFactory:
-        decorates: 'api_platform.metadata.resource.metadata_factory'
-        # causes this to decorate around the cached factory so that
-        # our service is never cached (which, of course, can have performance
-        # implications!
-        decoration_priority: -20
-        arguments: ['@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner']
-
     App\Doctrine\CheeseListingSetOwnerListener:
         tags: [doctrine.orm.entity_listener]

@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     security="is_granted('ROLE_USER')",
+ *     normalizationContext={"groups"={"user:read"}},
+ *     denormalizationContext={"groups"={"user:write"}},
  *     collectionOperations={
  *          "get",
  *          "post"={
