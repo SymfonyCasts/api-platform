@@ -13,4 +13,16 @@ class CheeseListingOutput
      * @var string
      */
     public $title;
+
+    /**
+     * @var string
+     * @Groups({"cheese:read"})
+     */
+    public $description;
+
+    /**
+     * @var integer
+     * @Groups({"cheese:read"})
+     */
+    public $price;
 }
