@@ -26,6 +26,13 @@ class CheeseListingInput
 
     private $description;
 
+    public function __construct($title, User $owner)
+    {
+        $this->title = $title;
+        $this->owner = $owner;
+    }
+
+
     /**
      * The description of the cheese as raw text.
      *
