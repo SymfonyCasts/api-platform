@@ -47,7 +47,7 @@ class CheeseListingInput
      * @Groups({"cheese:write", "user:write"})
      * @SerializedName("description")
      */
-    public function setTextDescription(string $description): self
+    public function setTextDescription($description): self
     {
         $this->description = nl2br($description);
 
