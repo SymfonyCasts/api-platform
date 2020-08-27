@@ -1,0 +1,14 @@
+diff --git a/src/Dto/CheeseListingOutput.php b/src/Dto/CheeseListingOutput.php
+new file mode 100644
+index 00000000..b2ad5418
+--- /dev/null
++++ b/src/Dto/CheeseListingOutput.php
+@@ -0,0 +1,8 @@
++<?php
++
++namespace App\Dto;
++
++class CheeseListingOutput
++{
++    public $title;
++}
