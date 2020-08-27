@@ -30,9 +30,9 @@
                     ></loginForm>
                 </div>
             </div>
-            <footer class="footer">
+            <footer :class="$style.footer">
 
-                    <p class="text-muted my-5 text-center">Made with ❤️ by the <a style="text-decoration: underline; color: #6c757d; font-weight: bold;" href="http://www.symfonycasts.com">SymfonyCasts</a> Team</p>
+                    <p class="text-muted my-5 text-center">Made with ❤️ by the <a style="text-decoration: underline; color: #6c757d; font-weight: bold;" href="https://www.symfonycasts.com">SymfonyCasts</a> Team</p>
 
             </footer>
         </div>
@@ -47,7 +47,6 @@
         components: {
             loginForm
         },
-        props: ['entrypoint'],
         methods: {
             onUserAuthenticated(userUri) {
                 axios
@@ -60,6 +59,11 @@
                 user: null
             }
         },
+        computed: {
+            entrypoint() {
+                return window.entrypoint;
+            }
+        },
         mounted() {
             if (window.user) {
                 this.user = window.user;
@@ -68,7 +72,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style module lang="scss">
     .footer {
         position: absolute;
         bottom: 0;
