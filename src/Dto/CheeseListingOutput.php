@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+use Carbon\Carbon;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 class CheeseListingOutput
@@ -36,5 +37,15 @@ class CheeseListingOutput
         }
 
         return substr($this->description, 0, 40).'...';
+    }
+
+    /**
+     * How long ago in text that this cheese listing was added.
+     *
+     * @Groups("cheese:read")
+     */
+    public function getCreatedAtAgo(): string
+    {
+        return Carbon::instance($this->getCreatedAt())->diffForHumans();
     }
 }
