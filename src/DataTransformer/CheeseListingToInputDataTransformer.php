@@ -10,7 +10,7 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
 {
     public function transform($object, string $to, array $context = [])
     {
-        dump($object);
+        dump($object, $to, $context);
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool
