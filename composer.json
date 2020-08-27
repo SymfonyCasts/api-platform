@@ -13,6 +13,7 @@
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.3.*",
         "symfony/http-client": "4.3.*",
+        "symfony/monolog-bundle": "^3.4",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "4.3.*"
     },
