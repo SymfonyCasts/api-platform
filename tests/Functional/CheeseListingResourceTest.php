@@ -31,7 +31,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $client->request('POST', '/api/cheeses', [
             'json' => $cheesyData,
         ]);
-        $this->assertResponseStatusCodeSame(400, 'missing owner');
+        $this->assertResponseStatusCodeSame(201);
 
         $client->request('POST', '/api/cheeses', [
             'json' => $cheesyData + ['owner' => '/api/users/'.$otherUser->getId()],
