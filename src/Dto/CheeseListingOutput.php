@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+use App\Entity\User;
 use Carbon\Carbon;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -28,6 +29,12 @@ class CheeseListingOutput
     public $price;
 
     public $createdAt;
+
+    /**
+     * @var User
+     * @Groups({"cheese:read"})
+     */
+    public $owner;
 
     /**
      * @Groups("cheese:read")
