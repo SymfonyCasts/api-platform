@@ -1,0 +1,11 @@
+diff --git a/src/Dto/CheeseListingOutput.php b/src/Dto/CheeseListingOutput.php
+index 316dd26c..82cb6a58 100644
+--- a/src/Dto/CheeseListingOutput.php
++++ b/src/Dto/CheeseListingOutput.php
+@@ -9,5 +9,5 @@ class CheeseListingOutput
+     /**
+      * @Groups({"cheese:read"})
+      */
+-    public $title;
++    public string $title;
+ }
