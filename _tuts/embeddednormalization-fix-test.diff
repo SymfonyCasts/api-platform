@@ -1,0 +1,12 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 9797bab8..6959c61e 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -106,7 +106,6 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $this->assertJsonContains(['hydra:member' => [
+             0 => [
+                 '@id' => '/api/cheeses/' . $cheeseListing2->getId(),
+-                '@type' => 'cheese',
+                 'title' => 'cheese2',
+                 'description' => 'cheese',
+                 'price' => 1000,
