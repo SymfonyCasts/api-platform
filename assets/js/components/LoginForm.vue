@@ -43,10 +43,6 @@
                     .post('/login', {
                         email: this.email,
                         password: this.password
-                    }, {
-                        headers: {
-                            'content-type': 'application/x-www-form-urlencoded'
-                        }
                     })
                     .then(response => {
                         console.log(response.data);
