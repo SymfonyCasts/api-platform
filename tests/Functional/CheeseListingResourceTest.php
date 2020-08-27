@@ -101,8 +101,20 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $em->persist($cheeseListing3);
         $em->flush();
 
-        $client->request('GET', '/api/cheeses');
+        $response = $client->request('GET', '/api/cheeses');
         $this->assertJsonContains(['hydra:totalItems' => 2]);
+        $this->assertJsonContains(['hydra:member' => [
+            0 => [
+                '@id' => '/api/cheeses/' . $cheeseListing2->getId(),
+                '@type' => 'cheese',
+                'title' => 'cheese2',
+                'description' => 'cheese',
+                'price' => 1000,
+                'owner' => '/api/users/' . $user->getId(),
+                'shortDescription' => 'cheese',
+                'createdAtAgo' => '1 second ago',
+            ]
+        ]]);
     }
 
     public function testGetCheeseListingItem()
