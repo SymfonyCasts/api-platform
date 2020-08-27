@@ -4,17 +4,13 @@ namespace App\Serializer\Normalizer;
 
 use App\Entity\User;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
+class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface, NormalizerAwareInterface
 {
-    private $normalizer;
-
-    public function __construct(ObjectNormalizer $normalizer)
-    {
-        $this->normalizer = $normalizer;
-    }
+    use NormalizerAwareTrait;
 
     /**
      * @param User $object
