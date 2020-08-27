@@ -12,7 +12,6 @@ class CheeseListingInput
      * @Groups({"cheese:write", "user:write"})
      */
     public $title;
-    public $title;
 
     /**
      * @Groups({"cheese:write", "user:write"})
