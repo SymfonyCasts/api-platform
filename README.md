@@ -75,6 +75,7 @@ To actually *create* the database and get some tables, run:
 ```
 symfony console doctrine:database:create
 symfony console doctrine:migrations:migrate
+symfony console doctrine:fixtures:load
 ```
 
 This uses the `symfony` binary, but `symfony console` is identical
