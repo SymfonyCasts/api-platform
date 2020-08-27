@@ -3,7 +3,6 @@
 namespace App\Tests\Functional;
 
 use App\Entity\CheeseListing;
-use App\Entity\User;
 use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
@@ -124,8 +123,8 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
         $this->assertResponseStatusCodeSame(404);
 
-        $client->request('GET', '/api/users/'.$user->getId());
-        $data = $client->getResponse()->toArray();
+        $response = $client->request('GET', '/api/users/'.$user->getId());
+        $data = $response->toArray();
         $this->assertEmpty($data['cheeseListings']);
     }
 }

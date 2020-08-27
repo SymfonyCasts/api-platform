@@ -1,7 +1,0 @@
-services:
-    # added so we can use the new API Platform test tools before
-    # they are released. In API Platform 2.5, this won't be needed.
-    test.api_platform.client:
-        class: App\ApiPlatform\Test\Client
-        arguments: ['@test.client']
-        public: true

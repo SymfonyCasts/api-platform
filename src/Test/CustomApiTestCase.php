@@ -2,8 +2,8 @@
 
 namespace App\Test;
 
-use App\ApiPlatform\Test\ApiTestCase;
-use App\ApiPlatform\Test\Client;
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
