@@ -86,6 +86,13 @@ class CheeseListing
         return $this->description;
     }
 
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     /**
      * The description of the cheese as raw text.
      *
