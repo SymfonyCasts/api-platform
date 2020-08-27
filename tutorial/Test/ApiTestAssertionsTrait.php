@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace ApiPlatform\Core\Bridge\Symfony\Bundle\Test;
+namespace App\ApiPlatform\Test;
 
 use ApiPlatform\Core\Api\OperationType;
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Constraint\ArraySubset;
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Constraint\MatchesJsonSchema;
+use App\ApiPlatform\Test\Constraint\ArraySubset;
+use App\ApiPlatform\Test\Constraint\MatchesJsonSchema;
 use ApiPlatform\Core\JsonSchema\Schema;
 use ApiPlatform\Core\JsonSchema\SchemaFactoryInterface;
 use PHPUnit\Framework\ExpectationFailedException;

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace ApiPlatform\Core\Bridge\Symfony\Bundle\Test;
+namespace App\ApiPlatform\Test;
 
 use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpClient\Exception\ClientException;

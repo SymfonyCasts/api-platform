@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Constraint;
+namespace App\ApiPlatform\Test\Constraint;
 
 use JsonSchema\Validator;
 use PHPUnit\Framework\Constraint\Constraint;

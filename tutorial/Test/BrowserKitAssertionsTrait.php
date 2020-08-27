@@ -20,7 +20,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace ApiPlatform\Core\Bridge\Symfony\Bundle\Test;
+namespace App\ApiPlatform\Test;
 
 use PHPUnit\Framework\Constraint\LogicalAnd;
 use PHPUnit\Framework\Constraint\LogicalNot;
