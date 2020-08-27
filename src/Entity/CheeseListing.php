@@ -15,8 +15,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"
  *     },
  *     shortName="cheeses",
- *     normalizationContext={"groups"={"cheese_listing:read"}},
- *     denormalizationContext={"groups"={"cheese_listing:write"}}
+ *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
+ *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  */
