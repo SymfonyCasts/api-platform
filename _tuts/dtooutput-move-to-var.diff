@@ -1,0 +1,16 @@
+diff --git a/src/Dto/CheeseListingOutput.php b/src/Dto/CheeseListingOutput.php
+index 82cb6a58..11856688 100644
+--- a/src/Dto/CheeseListingOutput.php
++++ b/src/Dto/CheeseListingOutput.php
+@@ -7,7 +7,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
+ class CheeseListingOutput
+ {
+     /**
++     * The title of this listing
++     *
+      * @Groups({"cheese:read"})
++     * @var string
+      */
+-    public string $title;
++    public $title;
+ }
