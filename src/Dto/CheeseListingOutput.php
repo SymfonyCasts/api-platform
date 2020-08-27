@@ -27,6 +27,8 @@ class CheeseListingOutput
      */
     public $price;
 
+    public $createdAt;
+
     /**
      * @Groups("cheese:read")
      */
@@ -46,6 +48,6 @@ class CheeseListingOutput
      */
     public function getCreatedAtAgo(): string
     {
-        return Carbon::instance($this->getCreatedAt())->diffForHumans();
+        return Carbon::instance($this->createdAt)->diffForHumans();
     }
 }
