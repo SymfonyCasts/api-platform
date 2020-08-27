@@ -75,7 +75,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"}, orphanRemoval=true)
-     * @Groups({"user:write", "user:read"})
+     * @Groups({"user:write"})
      * @Assert\Valid()
      */
     private $cheeseListings;
@@ -193,7 +193,7 @@ class User implements UserInterface
 
     /**
      * @Groups({"user:read"})
-     * @SerializedName("publishedCheeseListings")
+     * @SerializedName("cheeseListings")
      * @return Collection<CheeseListing>
      */
     public function getPublishedCheeseListings(): Collection
