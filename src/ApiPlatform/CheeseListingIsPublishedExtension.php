@@ -25,6 +25,11 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
 
     public function applyToItem(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, array $identifiers, string $operationName = null, array $context = [])
     {
+        // only apply to the "get" item operation
+        if (!$operationName !== 'get') {
+            return;
+        }
+
         $this->addWhere($queryBuilder, $resourceClass);
     }
 
