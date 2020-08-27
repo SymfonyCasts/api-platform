@@ -20,14 +20,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     itemOperations={
  *          "get",
  *          "put"={
- *              "access_control"="is_granted('EDIT', previous_object)",
- *              "access_control_message"="Only the creator can edit a cheese listing"
+ *              "security"="is_granted('EDIT', object)",
+ *              "security_message"="Only the creator can edit a cheese listing"
  *          },
- *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *          "delete"={"security"="is_granted('ROLE_ADMIN')"}
  *     },
  *     collectionOperations={
  *          "get",
- *          "post"={"access_control"="is_granted('ROLE_USER')"}
+ *          "post"={"security"="is_granted('ROLE_USER')"}
  *     },
  *     shortName="cheese",
  *     attributes={
