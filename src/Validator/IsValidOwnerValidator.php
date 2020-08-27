@@ -32,6 +32,11 @@ class IsValidOwnerValidator extends ConstraintValidator
             return;
         }
 
+        // allow admin users to change owners
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            return;
+        }
+
         if (!$value instanceof User) {
             throw new \InvalidArgumentException('@IsValidOwner constraint must be put on a property containing a User object');
         }
