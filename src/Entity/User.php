@@ -57,7 +57,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner")
+     * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"})
      * @Groups({"user:read", "user:write"})
      */
     private $cheeseListings;
