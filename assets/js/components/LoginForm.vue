@@ -51,7 +51,11 @@
                         //this.email = '';
                         //this.password = '';
                     }).catch(error => {
-                        console.log(error.response.data);
+                        if (error.response.data.error) {
+                            this.error = error.response.data.error;
+                        } else {
+                            this.error = 'Unknown error';
+                        }
                     }).finally(() => {
                         this.isLoading = false;
                     })
