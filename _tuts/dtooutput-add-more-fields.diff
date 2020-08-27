@@ -1,0 +1,34 @@
+diff --git a/src/DataTransformer/CheeseListingToOutputDataTransformer.php b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
+index d1c28b46..850f34ed 100644
+--- a/src/DataTransformer/CheeseListingToOutputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
+@@ -15,6 +15,8 @@ class CheeseListingToOutputDataTransformer implements DataTransformerInterface
+     {
+         $output = new CheeseListingOutput();
+         $output->title = $cheeseListing->getTitle();
++        $output->description = $cheeseListing->getDescription();
++        $output->price = $cheeseListing->getPrice();
+ 
+         return $output;
+     }
+diff --git a/src/Dto/CheeseListingOutput.php b/src/Dto/CheeseListingOutput.php
+index 11856688..40e12296 100644
+--- a/src/Dto/CheeseListingOutput.php
++++ b/src/Dto/CheeseListingOutput.php
+@@ -13,4 +13,16 @@ class CheeseListingOutput
+      * @var string
+      */
+     public $title;
++
++    /**
++     * @var string
++     * @Groups({"cheese:read"})
++     */
++    public $description;
++
++    /**
++     * @var integer
++     * @Groups({"cheese:read"})
++     */
++    public $price;
+ }
