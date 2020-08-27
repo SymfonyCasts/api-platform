@@ -1271,16 +1271,6 @@
             "description": null
         },
         {
-            "id": "delete-me1",
-            "name": "delete me1",
-            "description": null
-        },
-        {
-            "id": "delete-me-2",
-            "name": "delete me 2",
-            "description": null
-        },
-        {
             "id": "embeddednormalization-add-user-read-groups",
             "name": "EmbeddedNormalization: add user:read groups",
             "description": null
@@ -1288,11 +1278,6 @@
         {
             "id": "dtooutput-remove-extra-groups",
             "name": "DTOOutput: remove extra @Groups",
-            "description": null
-        },
-        {
-            "id": "delete-me-3",
-            "name": "delete me 3",
             "description": null
         }
     ],
