@@ -114,12 +114,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $cheeseListing1->setOwner($user);
         $cheeseListing1->setPrice(1000);
         $cheeseListing1->setDescription('cheese');
+        $cheeseListing1->setIsPublished(false);
 
         $em = $this->getEntityManager();
         $em->persist($cheeseListing1);
         $em->flush();
 
         $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
-        $this->assertResponseStatusCodeSame(200);
+        $this->assertResponseStatusCodeSame(404);
     }
 }
