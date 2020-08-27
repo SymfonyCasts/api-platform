@@ -32,7 +32,7 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
 
         $cheeseListing->setDescription($input->description);
         $cheeseListing->setPrice($input->price);
-        if (null === $input->owner) {
+        if ($input->owner !== null) {
             $cheeseListing->setOwner($input->owner);
         }
 
