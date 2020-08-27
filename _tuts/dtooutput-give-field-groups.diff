@@ -1,0 +1,17 @@
+diff --git a/src/Dto/CheeseListingOutput.php b/src/Dto/CheeseListingOutput.php
+index b2ad5418..316dd26c 100644
+--- a/src/Dto/CheeseListingOutput.php
++++ b/src/Dto/CheeseListingOutput.php
+@@ -2,7 +2,12 @@
+ 
+ namespace App\Dto;
+ 
++use Symfony\Component\Serializer\Annotation\Groups;
++
+ class CheeseListingOutput
+ {
++    /**
++     * @Groups({"cheese:read"})
++     */
+     public $title;
+ }
