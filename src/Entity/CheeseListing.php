@@ -110,6 +110,9 @@ class CheeseListing
         return $this->createdAt;
     }
 
+    /**
+     * @Groups("cheese_listing:read")
+     */
     public function getCreatedAtAgo(): string
     {
         return Carbon::instance($this->getCreatedAt())->diffForHumans();
