@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CheeseListingInput
 {
     /**
+     * @var string
      * @Groups({"cheese:write", "user:write"})
      * @Assert\NotBlank()
      * @Assert\Length(
@@ -22,6 +23,7 @@ class CheeseListingInput
     public $title;
 
     /**
+     * @var int
      * @Groups({"cheese:write", "user:write"})
      * @Assert\NotBlank()
      */
