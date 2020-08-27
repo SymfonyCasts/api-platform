@@ -1101,6 +1101,31 @@
             "description": null
         },
         {
+            "id": "pre-ep3-install-doctrine-fixtures",
+            "name": "PRE_EP3: install doctrine fixtures",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-add-fixtures",
+            "name": "PRE_EP3: add fixtures",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-auto-fill-login",
+            "name": "PRE_EP3: auto-fill login",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-remove-using-owner-read",
+            "name": "PRE_EP3: remove using owner:read",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-improce-cheeselisting-test",
+            "name": "PRE_EP3: improce CheeseListing test",
+            "description": null
+        },
+        {
             "id": "persisterdecoration-comment-out-persist",
             "name": "PersisterDecoration: comment out persist",
             "description": null
@@ -1134,7 +1159,127 @@
             "id": "persisterdecoration-remove-dd",
             "name": "PersisterDecoration: remove dd",
             "description": null
+        },
+        {
+            "id": "embeddednormalization-rename-to-publishedcheeselistings",
+            "name": "EmbeddedNormalization: rename to publishedCheeseListings",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-also-expose-cheeselistings",
+            "name": "EmbeddedNormalization: also expose cheeseListings",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-remove-embedded-fields",
+            "name": "EmbeddedNormalization: remove embedded fields",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-add-special-collection-return",
+            "name": "EmbeddedNormalization: add special Collection return",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-undo-changes",
+            "name": "EmbeddedNormalization: undo changes",
+            "description": null
+        },
+        {
+            "id": "dtooutput-create-basic-cheeselistingoutput",
+            "name": "DTOOutput: Create basic CheeseListingOutput",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-output",
+            "name": "DTOOutput: add output=",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-empty-transformer",
+            "name": "DTOOutput: add empty transformer",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-supports",
+            "name": "DTOOutput: add supports()",
+            "description": null
+        },
+        {
+            "id": "dtooutput-basic-transform",
+            "name": "DTOOutput: basic transform()",
+            "description": null
+        },
+        {
+            "id": "dtooutput-give-field-groups",
+            "name": "DTOOutput: give field @Groups",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-string-field-type",
+            "name": "DTOOutput: add string field type",
+            "description": null
+        },
+        {
+            "id": "dtooutput-move-to-var",
+            "name": "DTOOutput: move to @var",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-more-fields",
+            "name": "DTOOutput: add more fields",
+            "description": null
+        },
+        {
+            "id": "dtooutput-copy-exposed-getter",
+            "name": "DTOOutput: copy exposed getter",
+            "description": null
+        },
+        {
+            "id": "dtooutput-copy-other-method",
+            "name": "DTOOutput: copy other method",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-createdat-field",
+            "name": "DTOOutput: add createdAt field",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-add-owner",
+            "name": "EmbeddedNormalization: add owner",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-fix-usernormalizer",
+            "name": "EmbeddedNormalization: fix UserNormalizer",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-fix-test",
+            "name": "EmbeddedNormalization: fix test",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-show-embedded",
+            "name": "EmbeddedNormalization: show embedded",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-remove-embedded-cheese-read-group",
+            "name": "EmbeddedNormalization: remove embedded cheese:read group",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-add-user-read-groups",
+            "name": "EmbeddedNormalization: add user:read groups",
+            "description": null
+        },
+        {
+            "id": "dtooutput-remove-extra-groups",
+            "name": "DTOOutput: remove extra @Groups",
+            "description": null
         }
     ],
-    "sha": "e49a5062c2c6245c7bd235b8c0161384a89a53cc"
+    "sha": "05015aa9770c9af32a5d7086b02a272d0d441187"
 }
