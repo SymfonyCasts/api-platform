@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+use App\Entity\User;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
@@ -18,6 +19,7 @@ class CheeseListingInput
     public $price;
 
     /**
+     * @var User
      * @Groups({"cheese:collection:post"})
      */
     public $owner;
