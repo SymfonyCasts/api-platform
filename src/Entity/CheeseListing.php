@@ -20,7 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "get"={
  *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
  *          },
- *          "put"
+ *          "put"={"access_control"="is_granted('ROLE_USER')"},
+ *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
  *     },
  *     collectionOperations={
  *          "get",
