@@ -1,0 +1,33 @@
+diff --git a/src/DataTransformer/CheeseListingToOutputDataTransformer.php b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
+index 850f34ed..bcafd232 100644
+--- a/src/DataTransformer/CheeseListingToOutputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
+@@ -17,6 +17,7 @@ class CheeseListingToOutputDataTransformer implements DataTransformerInterface
+         $output->title = $cheeseListing->getTitle();
+         $output->description = $cheeseListing->getDescription();
+         $output->price = $cheeseListing->getPrice();
++        $output->createdAt = $cheeseListing->getCreatedAt();
+ 
+         return $output;
+     }
+diff --git a/src/Dto/CheeseListingOutput.php b/src/Dto/CheeseListingOutput.php
+index b282b0cb..0ec20355 100644
+--- a/src/Dto/CheeseListingOutput.php
++++ b/src/Dto/CheeseListingOutput.php
+@@ -27,6 +27,8 @@ class CheeseListingOutput
+      */
+     public $price;
+ 
++    public $createdAt;
++
+     /**
+      * @Groups("cheese:read")
+      */
+@@ -46,6 +48,6 @@ class CheeseListingOutput
+      */
+     public function getCreatedAtAgo(): string
+     {
+-        return Carbon::instance($this->getCreatedAt())->diffForHumans();
++        return Carbon::instance($this->createdAt)->diffForHumans();
+     }
+ }
