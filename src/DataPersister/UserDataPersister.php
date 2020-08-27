@@ -3,18 +3,18 @@
 namespace App\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Common\DataPersister;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserDataPersister implements ContextAwareDataPersisterInterface
 {
-    private $entityManager;
+    private $doctrineDataPersister;
     private $userPasswordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function __construct(DataPersister $doctrineDataPersister, UserPasswordEncoderInterface $userPasswordEncoder)
     {
-        $this->entityManager = $entityManager;
+        $this->doctrineDataPersister = $doctrineDataPersister;
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
@@ -35,13 +35,11 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
             $data->eraseCredentials();
         }
 
-        $this->entityManager->persist($data);
-        $this->entityManager->flush();
+        return $this->doctrineDataPersister->persist($data, $context);
     }
 
     public function remove($data, array $context = [])
     {
-        $this->entityManager->remove($data);
-        $this->entityManager->flush();
+        $this->doctrineDataPersister->remove($data, $context);
     }
 }
