@@ -8,9 +8,12 @@ use App\Entity\CheeseListing;
 
 class CheeseListingToInputDataTransformer implements DataTransformerInterface
 {
-    public function transform($object, string $to, array $context = [])
+    /**
+     * @param CheeseListingInput $input
+     */
+    public function transform($input, string $to, array $context = [])
     {
-        dump($object);
+        dump($input, $to);
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool
