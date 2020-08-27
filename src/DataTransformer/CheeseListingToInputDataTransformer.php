@@ -13,9 +13,12 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
      */
     public function transform($input, string $to, array $context = [])
     {
-        dump($input, $to, $context);
+        if (isset($context['object_to_populate'])) {
+            $cheeseListing = $context['object_to_populate'];
+        } else {
+            $cheeseListing = new CheeseListing($input->title);
+        }
 
-        $cheeseListing = new CheeseListing($input->title);
         $cheeseListing->setDescription($input->description);
         $cheeseListing->setPrice($input->price);
         $cheeseListing->setOwner($input->owner);
