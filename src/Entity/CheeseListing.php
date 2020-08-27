@@ -9,11 +9,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use App\Dto\CheeseListingOutput;
+use App\Dto\CheeseListingInput;
 use App\Validator\IsValidOwner;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -67,7 +66,6 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"cheese:write", "user:write"})
      * @Assert\NotBlank()
      * @Assert\Length(
      *     min=2,
@@ -87,7 +85,6 @@ class CheeseListing
      * The price of this delicious cheese, in cents
      *
      * @ORM\Column(type="integer")
-     * @Groups({"cheese:write", "user:write"})
      * @Assert\NotBlank()
      */
     private $price;
@@ -105,7 +102,6 @@ class CheeseListing
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"cheese:collection:post"})
      * @IsValidOwner()
      */
     private $owner;
@@ -134,19 +130,6 @@ class CheeseListing
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * The description of the cheese as raw text.
-     *
-     * @Groups({"cheese:write", "user:write"})
-     * @SerializedName("description")
-     */
-    public function setTextDescription(string $description): self
-    {
-        $this->description = nl2br($description);
 
         return $this;
     }
