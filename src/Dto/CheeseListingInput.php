@@ -11,20 +11,20 @@ class CheeseListingInput
     /**
      * @Groups({"cheese:write", "user:write"})
      */
-    private $title;
+    public $title;
 
     /**
      * @Groups({"cheese:write", "user:write"})
      */
-    private $price;
+    public $price;
 
     /**
      * @var User
      * @Groups({"cheese:write"})
      */
-    private $owner;
+    public $owner;
 
-    private $description;
+    public $description;
 
     public function __construct($title, User $owner)
     {
