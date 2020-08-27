@@ -3,16 +3,27 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Dto\CheeseListingInput;
 use App\Entity\CheeseListing;
 
 class CheeseListingToInputDataTransformer implements DataTransformerInterface
 {
+    private $validator;
+
+    public function __construct(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
+    }
+
+
     /**
      * @param CheeseListingInput $input
      */
     public function transform($input, string $to, array $context = [])
     {
+        $this->validator->validate($input);
+
         if (isset($context['object_to_populate'])) {
             $cheeseListing = $context['object_to_populate'];
         } else {
