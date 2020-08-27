@@ -55,6 +55,18 @@
             "src/Repository/.gitignore"
         ]
     },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "e5b542d4ef47d8a003c91beb35650c76907f7e53"
+        },
+        "files": [
+            "src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "doctrine/doctrine-migrations-bundle": {
         "version": "2.2",
         "recipe": {
@@ -157,6 +169,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.2"
+    },
+    "php": {
+        "version": "7.2.5"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
