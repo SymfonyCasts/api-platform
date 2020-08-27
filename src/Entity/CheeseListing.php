@@ -17,9 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
- *          },
+ *          "get",
  *          "put"={
  *              "access_control"="is_granted('EDIT', previous_object)",
  *              "access_control_message"="Only the creator can edit a cheese listing"
@@ -31,8 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "post"={"access_control"="is_granted('ROLE_USER')"}
  *     },
  *     shortName="cheeses",
- *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
- *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"},
  *     attributes={
  *          "pagination_items_per_page"=10,
  *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
