@@ -11,20 +11,21 @@ class CheeseListingInput
     /**
      * @Groups({"cheese:write", "user:write"})
      */
-    private $title;
+    public $title;
+    public $title;
 
     /**
      * @Groups({"cheese:write", "user:write"})
      */
-    private $price;
+    public $price;
 
     /**
      * @var User
      * @Groups({"cheese:collection:post"})
      */
-    private $owner;
+    public $owner;
 
-    private $description;
+    public $description;
 
     /**
      * The description of the cheese as raw text.
