@@ -1,0 +1,13 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index ac30e62a..9fb8a5d3 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -48,7 +48,7 @@ class User implements UserInterface
+ 
+     /**
+      * @ORM\Column(type="string", length=180, unique=true)
+-     * @Groups({"user:read", "user:write", "cheese:read"})
++     * @Groups({"user:read", "user:write"})
+      * @Assert\NotBlank()
+      * @Assert\Email()
+      */
