@@ -20,5 +20,11 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $this->assertResponseStatusCodeSame(401);
 
         $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
+
+        $client->request('POST', '/api/cheeses', [
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => [],
+        ]);
+        $this->assertResponseStatusCodeSame(400);
     }
 }
