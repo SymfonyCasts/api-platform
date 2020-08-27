@@ -13,7 +13,10 @@ class CustomApiTestCase extends ApiTestCase
         $user = new User();
         $user->setEmail($email);
         $user->setUsername(substr($email, 0, strpos($email, '@')));
-        $user->setPassword($password);
+
+        $encoded = self::$container->get('security.password_encoder')
+            ->encodePassword($user, $password);
+        $user->setPassword($encoded);
 
         $em = self::$container->get('doctrine')->getManager();
         $em->persist($user);
