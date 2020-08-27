@@ -20,18 +20,11 @@ class CheeseListingInput
 
     /**
      * @var User
-     * @Groups({"cheese:write"})
+     * @Groups({"cheese:collection:post"})
      */
     public $owner;
 
     public $description;
-
-    public function __construct($title, User $owner)
-    {
-        $this->title = $title;
-        $this->owner = $owner;
-    }
-
 
     /**
      * The description of the cheese as raw text.
