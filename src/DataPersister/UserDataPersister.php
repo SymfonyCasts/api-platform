@@ -35,7 +35,7 @@ class UserDataPersister implements DataPersisterInterface
             $data->eraseCredentials();
         }
 
-        //$this->entityManager->persist($data);
+        $this->entityManager->persist($data);
         $this->entityManager->flush();
     }
 
