@@ -1,0 +1,30 @@
+diff --git a/src/DataTransformer/CheeseListingToInputDataTransformer.php b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+index b8450512..e07e3da7 100644
+--- a/src/DataTransformer/CheeseListingToInputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+@@ -3,17 +3,23 @@
+ namespace App\DataTransformer;
+ 
+ use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
++use App\Dto\CheeseListingInput;
++use App\Entity\CheeseListing;
+ 
+ class CheeseListingToInputDataTransformer implements DataTransformerInterface
+ {
+     public function transform($object, string $to, array $context = [])
+     {
++        dump($object, $to, $context);
+     }
+ 
+     public function supportsTransformation($data, string $to, array $context = []): bool
+     {
+-        dump($data, $to, $context);
++        if ($data instanceof CheeseListing) {
++            // already transformed
++            return false;
++        }
+ 
+-        return false;
++        return $to === CheeseListing::class && ($context['input']['class'] ?? null) === CheeseListingInput::class;
+     }
+ }
