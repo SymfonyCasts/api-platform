@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+use App\Entity\CheeseListing;
 use App\Entity\User;
 use App\Validator\IsValidOwner;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -40,6 +41,19 @@ class CheeseListingInput
      * @Assert\NotBlank()
      */
     public $description;
+
+    public function createOrUpdateEntity(?CheeseListing $cheeseListing): CheeseListing
+    {
+        if (!$cheeseListing) {
+            $cheeseListing = new CheeseListing($this->title);
+        }
+
+        $cheeseListing->setDescription($this->description);
+        $cheeseListing->setPrice($this->price);
+        $cheeseListing->setOwner($this->owner);
+
+        return $cheeseListing;
+    }
 
     /**
      * The description of the cheese as raw text.
