@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     denormalizationContext={"groups"={"cheese:write"}},
  *     itemOperations={
  *          "get"={
- *              "denormalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
+ *              "normalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
  *          },
  *          "put"={
  *              "security"="is_granted('EDIT', object)",

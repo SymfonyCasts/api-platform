@@ -8,7 +8,7 @@ use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Dto\CheeseListingInput;
 use App\Entity\CheeseListing;
 
-class CheeseListingToInputDataTransformer implements DataTransformerInterface
+class CheeseListingInputDataTransformer implements DataTransformerInterface
 {
     private $validator;
 
@@ -24,19 +24,9 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
     {
         $this->validator->validate($input);
 
-        if (isset($context[AbstractItemNormalizer::OBJECT_TO_POPULATE])) {
-            $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE];
-        } else {
-            $cheeseListing = new CheeseListing($input->title);
-        }
+        $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
 
-        $cheeseListing->setDescription($input->description);
-        $cheeseListing->setPrice($input->price);
-        if ($input->owner !== null) {
-            $cheeseListing->setOwner($input->owner);
-        }
-
-        return $cheeseListing;
+        return $input->createOrUpdateEntity($cheeseListing);
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool

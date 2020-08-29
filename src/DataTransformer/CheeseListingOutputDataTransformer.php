@@ -6,21 +6,14 @@ use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use App\Dto\CheeseListingOutput;
 use App\Entity\CheeseListing;
 
-class CheeseListingToOutputDataTransformer implements DataTransformerInterface
+class CheeseListingOutputDataTransformer implements DataTransformerInterface
 {
     /**
      * @param CheeseListing $cheeseListing
      */
     public function transform($cheeseListing, string $to, array $context = [])
     {
-        $output = new CheeseListingOutput();
-        $output->title = $cheeseListing->getTitle();
-        $output->description = $cheeseListing->getDescription();
-        $output->price = $cheeseListing->getPrice();
-        $output->owner = $cheeseListing->getOwner();
-        $output->createdAt = $cheeseListing->getCreatedAt();
-
-        return $output;
+        return CheeseListingOutput::createFromEntity($cheeseListing);
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool
