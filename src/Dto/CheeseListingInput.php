@@ -35,8 +35,8 @@ class CheeseListingInput
             $cheeseListing = new CheeseListing($this->title);
         }
 
-        $cheeseListing->setDescription((string) $this->description);
-        $cheeseListing->setPrice((int) $this->price);
+        $cheeseListing->setDescription($this->description);
+        $cheeseListing->setPrice($this->price);
         $cheeseListing->setOwner($this->owner);
 
         return $cheeseListing;
