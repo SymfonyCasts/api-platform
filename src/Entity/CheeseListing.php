@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     output=CheeseListingOutput::CLASS,
- *     input=CheeseListingInput::CLASS,
  *     normalizationContext={"groups"={"cheese:read"}},
  *     denormalizationContext={"groups"={"cheese:write"}},
  *     itemOperations={
