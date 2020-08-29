@@ -84,6 +84,27 @@ it `addWhere`.
 Cool! That gives us a new `private function addWhere()`... and `applyToCollection()`
 is already calling it. Do the same thing in `applyToItem()`.
 
+***TIP
+This method is also used for the PUT (update) and DELETE operations.
+To allow unpublished items to be updated or deleted by the owner,
+you should update the query to return listings owned by the current user:
+
+```php
+// CheeseListingIsPublishedExtension::addWhere()
+if (!$this->security->getUser()) {
+    // existing code to check for isPublished=true
+} else {
+    $queryBuilder->andWhere(sprintf('
+            %s.isPublished = :isPublished
+            OR %s.owner = :owner',
+        $rootAlias, $rootAlias
+    ))
+        ->setParameter('isPublished', true)
+        ->setParameter('owner', $this->security->getUser());
+}
+```
+***
+
 [[[ code('d077a4ee0d') ]]]
 
 Let's try this! Run the test again and...
