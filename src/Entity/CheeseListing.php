@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     denormalizationContext={"groups"={"cheese:write"}},
  *     itemOperations={
  *          "get"={
- *              "denormalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
+ *              "normalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
  *          },
  *          "put"={
  *              "security"="is_granted('EDIT', object)",
