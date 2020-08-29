@@ -6,7 +6,7 @@ use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use App\Dto\CheeseListingInput;
 use App\Entity\CheeseListing;
 
-class CheeseListingToInputDataTransformer implements DataTransformerInterface
+class CheeseListingInputDataTransformer implements DataTransformerInterface
 {
     /**
      * @param CheeseListingInput $input
@@ -14,6 +14,8 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
     public function transform($input, string $to, array $context = [])
     {
         dump($input, $to, $context);
+
+        return new CheeseListing();
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool
