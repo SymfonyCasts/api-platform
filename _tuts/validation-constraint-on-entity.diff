@@ -1,0 +1,20 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 31a7d85a..d172e186 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -12,6 +12,7 @@ use App\Dto\CheeseListingOutput;
+ use App\Dto\CheeseListingInput;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
++use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+ 
+ /**
+  * @ApiResource(
+@@ -53,6 +54,7 @@ use Doctrine\ORM\Mapping as ORM;
+  * @ApiFilter(PropertyFilter::class)
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  * @ORM\EntityListeners({"App\Doctrine\CheeseListingSetOwnerListener"})
++ * @UniqueEntity(fields={"title"})
+  */
+ class CheeseListing
+ {
