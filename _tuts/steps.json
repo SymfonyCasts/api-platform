@@ -1121,8 +1121,13 @@
             "description": null
         },
         {
-            "id": "pre-ep3-improce-cheeselisting-test",
-            "name": "PRE_EP3: improce CheeseListing test",
+            "id": "pre-ep3-improve-cheeselisting-test",
+            "name": "PRE_EP3: improve CheeseListing test",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-fix-item-query-extension",
+            "name": "PRE_EP3: fix item query extension",
             "description": null
         },
         {
@@ -1279,7 +1284,127 @@
             "id": "dtooutput-remove-extra-groups",
             "name": "DTOOutput: remove extra @Groups",
             "description": null
+        },
+        {
+            "id": "dtoinput-create-class-with-props",
+            "name": "DTOInput: create class with props",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-input",
+            "name": "DTOInput: add input=",
+            "description": null
+        },
+        {
+            "id": "dtoinput-empty-transformer",
+            "name": "DTOInput: empty transformer",
+            "description": null
+        },
+        {
+            "id": "dtoinput-dump-arguments",
+            "name": "DTOInput: dump arguments",
+            "description": null
+        },
+        {
+            "id": "dtoinput-install-debug",
+            "name": "DTOInput: install debug",
+            "description": null
+        },
+        {
+            "id": "dtoinput-fill-in-supports",
+            "name": "DTOInput: fill in supports()",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-phpdoc",
+            "name": "DTOInput: add phpdoc",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-var-user",
+            "name": "DTOInput: add @var User",
+            "description": null
+        },
+        {
+            "id": "dtoinput-complete-transform",
+            "name": "DTOInput: complete transform()",
+            "description": null
+        },
+        {
+            "id": "dtoinput-make-it-work-for-updates",
+            "name": "DTOInput: make it work for updates",
+            "description": null
+        },
+        {
+            "id": "dtoinput-conditionally-set-owner",
+            "name": "DTOInput: conditionally set owner",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-var",
+            "name": "DTOInput: add @var",
+            "description": null
+        },
+        {
+            "id": "delete-me-1",
+            "name": "delete me 1",
+            "description": null
+        },
+        {
+            "id": "validation-move-constraints-to-input",
+            "name": "Validation: move constraints to Input",
+            "description": null
+        },
+        {
+            "id": "validation-inject-validate",
+            "name": "Validation: inject & validate",
+            "description": null
+        },
+        {
+            "id": "validation-remove-type-on-setter",
+            "name": "Validation: remove type on setter",
+            "description": null
+        },
+        {
+            "id": "validation-add-validation-groups",
+            "name": "Validation: add validation groups",
+            "description": null
+        },
+        {
+            "id": "validation-refactor-isupdate-logic",
+            "name": "Validation: refactor $isUpdate logic",
+            "description": null
+        },
+        {
+            "id": "validation-validate-with-groups",
+            "name": "Validation: validate with groups",
+            "description": null
+        },
+        {
+            "id": "validation-conditionally-update-fields",
+            "name": "Validation: conditionally update fields",
+            "description": null
+        },
+        {
+            "id": "validation-constraint-on-entity",
+            "name": "Validation: constraint on entity",
+            "description": null
+        },
+        {
+            "id": "validation-remove-extra-constraint",
+            "name": "Validation: remove extra constraint",
+            "description": null
+        },
+        {
+            "id": "delete-me-2",
+            "name": "delete me 2",
+            "description": null
+        },
+        {
+            "id": "delete-me-3",
+            "name": "delete me 3",
+            "description": null
         }
     ],
-    "sha": "05015aa9770c9af32a5d7086b02a272d0d441187"
+    "sha": "cea68f4d6b42e407be922f154be0014d5c81e0ca"
 }
