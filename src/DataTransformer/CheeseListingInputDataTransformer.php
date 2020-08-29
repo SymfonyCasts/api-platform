@@ -7,7 +7,7 @@ use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
 use App\Dto\CheeseListingInput;
 use App\Entity\CheeseListing;
 
-class CheeseListingToInputDataTransformer implements DataTransformerInterface
+class CheeseListingInputDataTransformer implements DataTransformerInterface
 {
     /**
      * @param CheeseListingInput $input
