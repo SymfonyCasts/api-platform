@@ -3,6 +3,7 @@
 namespace App\Serializer\Normalizer;
 
 use App\Dto\CheeseListingInput;
+use App\Entity\CheeseListing;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -35,5 +36,27 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable
     public function hasCacheableSupportsMethod(): bool
     {
         return true;
+    }
+
+    private function createDto(array $context): ?CheeseListingInput
+    {
+        $entity = $context['object_to_populate'] ?? false;
+
+        // not an edit, so just return an empty DTO
+        if (!$entity) {
+
+        }
+
+        if (!$entity instanceof CheeseListing) {
+            throw new \Exception(sprintf('Unexpected resource class "%s"', get_class($entity)));
+        }
+
+        $dto = new CheeseListingInput();
+        $dto->title = $entity->getTitle();
+        $dto->price = $entity->getPrice();
+        $dto->description = $entity->getDescription();
+        $dto->owner = $entity->getOwner();
+
+        return $dto;
     }
 }
