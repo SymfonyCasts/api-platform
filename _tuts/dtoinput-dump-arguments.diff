@@ -1,0 +1,13 @@
+diff --git a/src/DataTransformer/CheeseListingToInputDataTransformer.php b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+index c708380c..b8450512 100644
+--- a/src/DataTransformer/CheeseListingToInputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+@@ -12,5 +12,8 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
+ 
+     public function supportsTransformation($data, string $to, array $context = []): bool
+     {
++        dump($data, $to, $context);
++
++        return false;
+     }
+ }
