@@ -13,7 +13,10 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable
 {
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
-        dump($context);
+        $dto = new CheeseListingInput();
+        $dto->title = 'I am set in the denormalizer!';
+
+        $context[AbstractNormalizer::OBJECT_TO_POPULATE] = $dto;
     }
 
     public function supportsDenormalization($data, string $type, string $format = null)
