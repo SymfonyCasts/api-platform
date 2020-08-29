@@ -9,11 +9,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class CheeseListingInput
 {
     /**
+     * @var string
      * @Groups({"cheese:write", "user:write"})
      */
     public $title;
 
     /**
+     * @var int
      * @Groups({"cheese:write", "user:write"})
      */
     public $price;
