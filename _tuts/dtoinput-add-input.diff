@@ -1,0 +1,12 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index c9128d9c..272d262b 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+ /**
+  * @ApiResource(
+  *     output=CheeseListingOutput::CLASS,
++ *     input=CheeseListingInput::CLASS,
+  *     normalizationContext={"groups"={"cheese:read"}},
+  *     denormalizationContext={"groups"={"cheese:write"}},
+  *     itemOperations={
