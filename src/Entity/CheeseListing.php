@@ -9,6 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use App\Dto\CheeseListingOutput;
+use App\Dto\CheeseListingInput;
 use App\Validator\IsValidOwner;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
