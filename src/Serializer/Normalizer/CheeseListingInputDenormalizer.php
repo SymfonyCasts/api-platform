@@ -17,9 +17,11 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable
 
     public function supportsDenormalization($data, string $type, string $format = null)
     {
+        return $type === CheeseListingInput::class;
     }
 
     public function hasCacheableSupportsMethod(): bool
     {
+        return true;
     }
 }
