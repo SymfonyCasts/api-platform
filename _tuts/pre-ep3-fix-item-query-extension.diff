@@ -1,0 +1,54 @@
+diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+index ea612c39..6a1c9023 100644
+--- a/src/ApiPlatform/CheeseListingIsPublishedExtension.php
++++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
+@@ -39,7 +39,18 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
+         }
+ 
+         $rootAlias = $queryBuilder->getRootAliases()[0];
+-        $queryBuilder->andWhere(sprintf('%s.isPublished = :isPublished', $rootAlias))
+-            ->setParameter('isPublished', true);
++
++        if (!$this->security->getUser()) {
++            $queryBuilder->andWhere(sprintf('%s.isPublished = :isPublished', $rootAlias))
++                ->setParameter('isPublished', true);
++        } else {
++            $queryBuilder->andWhere(sprintf('
++                    %s.isPublished = :isPublished
++                    OR %s.owner = :owner',
++                $rootAlias, $rootAlias
++            ))
++                ->setParameter('isPublished', true)
++                ->setParameter('owner', $this->security->getUser());
++        }
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 9797bab8..8922a21c 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -120,10 +120,11 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     public function testGetCheeseListingItem()
+     {
+         $client = self::createClient();
+-        $user = $this->createUserAndLogIn($client, 'cheeseplese@example.com', 'foo');
++        $this->createUserAndLogIn($client, 'cheeseplese@example.com', 'foo');
++        $otherUser = $this->createUser('other@example.com', 'foo');
+ 
+         $cheeseListing1 = new CheeseListing('cheese1');
+-        $cheeseListing1->setOwner($user);
++        $cheeseListing1->setOwner($otherUser);
+         $cheeseListing1->setPrice(1000);
+         $cheeseListing1->setDescription('cheese');
+         $cheeseListing1->setIsPublished(false);
+@@ -135,7 +136,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
+         $this->assertResponseStatusCodeSame(404);
+ 
+-        $response = $client->request('GET', '/api/users/'.$user->getId());
++        $response = $client->request('GET', '/api/users/'.$otherUser->getId());
+         $data = $response->toArray();
+         $this->assertEmpty($data['cheeseListings']);
+     }
