@@ -113,15 +113,6 @@ class CheeseListing
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function updateFromInputDto(CheeseListingInput $input): self
-    {
-        $this->setDescription($input->description);
-        $this->setPrice($input->price);
-        $this->setOwner($input->owner);
-
-        return $this;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
