@@ -58,6 +58,7 @@ class CheeseListingInput
     /**
      * The description of the cheese as raw text.
      *
+     * @param string $description
      * @Groups({"cheese:write", "user:write"})
      * @SerializedName("description")
      */
