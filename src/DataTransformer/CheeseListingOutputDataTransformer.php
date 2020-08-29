@@ -6,7 +6,7 @@ use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use App\Dto\CheeseListingOutput;
 use App\Entity\CheeseListing;
 
-class CheeseListingToOutputDataTransformer implements DataTransformerInterface
+class CheeseListingOutputDataTransformer implements DataTransformerInterface
 {
     /**
      * @param CheeseListing $cheeseListing
