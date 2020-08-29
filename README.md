@@ -4,13 +4,14 @@
 
 ```
 git clone git@github.com:SymfonyCasts/api-platform.git
-git checkout -b export-cache-bug
+cd api-platform
+git checkout -b export-cache-bug origin/export-cache-bug
 composer install
 symfony serve -d
 
 # docker env vars will automatically be exposed to symfony server
 # so no need to configure DATABASE_URL
-docker-composer up -d
+docker-compose up -d
 
 symfony console doctrine:database:create
 symfony console doctrine:migrations:migrate
@@ -38,7 +39,7 @@ D) Trigger a cache refresh by making the following change in
 ```diff
     /**
 -      * @Groups({"cheese:read"})
-+      * @Groups({"cheese:foo"})
++      * @Groups({"cheese:read", "foo"})
      */
     public string $title;
 ```
