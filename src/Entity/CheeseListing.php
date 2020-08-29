@@ -67,7 +67,7 @@ class CheeseListing
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"cheese:read", "cheese:write", "user:read", "user:write"})
+     * @Groups({"cheese:read", "cheese:write", "user:write"})
      * @Assert\NotBlank()
      * @Assert\Length(
      *     min=2,
@@ -88,7 +88,7 @@ class CheeseListing
      * The price of this delicious cheese, in cents
      *
      * @ORM\Column(type="integer")
-     * @Groups({"cheese:read", "cheese:write", "user:read", "user:write"})
+     * @Groups({"cheese:read", "cheese:write", "user:write"})
      * @Assert\NotBlank()
      */
     private $price;
