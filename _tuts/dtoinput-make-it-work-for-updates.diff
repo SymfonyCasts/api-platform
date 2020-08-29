@@ -1,0 +1,27 @@
+diff --git a/src/DataTransformer/CheeseListingToInputDataTransformer.php b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+index 033be8ab..a618c995 100644
+--- a/src/DataTransformer/CheeseListingToInputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+@@ -3,6 +3,7 @@
+ namespace App\DataTransformer;
+ 
+ use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
++use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
+ use App\Dto\CheeseListingInput;
+ use App\Entity\CheeseListing;
+ 
+@@ -13,9 +14,12 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
+      */
+     public function transform($input, string $to, array $context = [])
+     {
+-        dump($input, $to, $context);
++        if (isset($context[AbstractItemNormalizer::OBJECT_TO_POPULATE])) {
++            $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE];
++        } else {
++            $cheeseListing = new CheeseListing($input->title);
++        }
+ 
+-        $cheeseListing = new CheeseListing($input->title);
+         $cheeseListing->setDescription($input->description);
+         $cheeseListing->setPrice($input->price);
+         $cheeseListing->setOwner($input->owner);
