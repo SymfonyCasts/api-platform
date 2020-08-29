@@ -2,6 +2,7 @@
 
 namespace App\Serializer\Normalizer;
 
+use App\Dto\CheeseListingInput;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
