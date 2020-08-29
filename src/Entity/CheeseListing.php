@@ -113,6 +113,13 @@ class CheeseListing
         $this->createdAt = new \DateTimeImmutable();
     }
 
+    public static function createFromInputDto(CheeseListingInput $input): self
+    {
+        $listing = new self($input->title);
+
+        return $listing->updateFromInputDto($input);
+    }
+
     public function updateFromInputDto(CheeseListingInput $input): self
     {
         $this->setDescription($input->description);
