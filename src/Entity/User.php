@@ -16,20 +16,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     security="is_granted('ROLE_USER')",
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}},
  *     collectionOperations={
  *          "get",
  *          "post"={
- *              "security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
  *              "validation_groups"={"Default", "create"}
  *          },
  *     },
  *     itemOperations={
  *          "get",
- *          "put"={"security"="is_granted('ROLE_USER') and object == user"},
- *          "delete"={"security"="is_granted('ROLE_ADMIN')"}
+ *          "put"={},
+ *          "delete"={}
  *     }
  * )
  * @ApiFilter(PropertyFilter::class)
