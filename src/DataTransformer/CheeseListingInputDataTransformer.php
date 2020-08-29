@@ -16,7 +16,7 @@ class CheeseListingInputDataTransformer implements DataTransformerInterface
     {
         $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
 
-        return $input->updateOrCreateEntity($cheeseListing);
+        return $input->createOrUpdateEntity($cheeseListing);
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool

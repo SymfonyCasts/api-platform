@@ -29,7 +29,7 @@ class CheeseListingInput
 
     public $description;
 
-    public function updateOrCreateEntity(?CheeseListing $cheeseListing): CheeseListing
+    public function createOrUpdateEntity(?CheeseListing $cheeseListing): CheeseListing
     {
         if (!$cheeseListing) {
             $cheeseListing = new CheeseListing($this->title);
