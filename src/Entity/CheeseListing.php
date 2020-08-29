@@ -12,6 +12,7 @@ use App\Dto\CheeseListingOutput;
 use App\Dto\CheeseListingInput;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
@@ -77,6 +78,7 @@ class CheeseListing
      * The price of this delicious cheese, in cents
      *
      * @ORM\Column(type="integer")
+     * @Groups({"cheese:write", "user:write"})
      */
     private $price;
 
