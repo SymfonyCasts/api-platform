@@ -3,11 +3,8 @@
 namespace App\Serializer\Normalizer;
 
 use App\Dto\CheeseListingInput;
-use App\Entity\CheeseListing;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class CheeseListingInputDenormalizer implements DenormalizerInterface, CacheableSupportsMethodInterface
 {
