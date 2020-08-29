@@ -1,0 +1,18 @@
+diff --git a/src/DataTransformer/CheeseListingToInputDataTransformer.php b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+index 0accda29..033be8ab 100644
+--- a/src/DataTransformer/CheeseListingToInputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+@@ -14,6 +14,13 @@ class CheeseListingToInputDataTransformer implements DataTransformerInterface
+     public function transform($input, string $to, array $context = [])
+     {
+         dump($input, $to, $context);
++
++        $cheeseListing = new CheeseListing($input->title);
++        $cheeseListing->setDescription($input->description);
++        $cheeseListing->setPrice($input->price);
++        $cheeseListing->setOwner($input->owner);
++
++        return $cheeseListing;
+     }
+ 
+     public function supportsTransformation($data, string $to, array $context = []): bool
