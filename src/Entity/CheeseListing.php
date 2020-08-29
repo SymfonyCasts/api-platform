@@ -25,7 +25,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "normalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
  *          },
  *          "put"={
- *              "security"="is_granted('EDIT', object)",
  *              "security_message"="Only the creator can edit a cheese listing"
  *          },
  *          "delete"={"security"="is_granted('ROLE_ADMIN')"}
@@ -33,7 +32,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     collectionOperations={
  *          "get",
  *          "post"={
- *              "security"="is_granted('ROLE_USER')",
  *              "denormalization_context"={"groups"={"cheese:write", "cheese:collection:post"}},
  *          }
  *     },
