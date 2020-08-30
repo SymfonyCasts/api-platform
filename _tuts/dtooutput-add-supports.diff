@@ -1,8 +1,8 @@
-diff --git a/src/DataTransformer/CheeseListingToOutputDataTransformer.php b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-index 927222a7..a12606b6 100644
---- a/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-+++ b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-@@ -10,11 +10,11 @@ class CheeseListingToOutputDataTransformer implements DataTransformerInterface
+diff --git a/src/DataTransformer/CheeseListingOutputDataTransformer.php b/src/DataTransformer/CheeseListingOutputDataTransformer.php
+index 51635ce7..0b4b9f3b 100644
+--- a/src/DataTransformer/CheeseListingOutputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingOutputDataTransformer.php
+@@ -10,11 +10,11 @@ class CheeseListingOutputDataTransformer implements DataTransformerInterface
  {
      public function transform($object, string $to, array $context = [])
      {

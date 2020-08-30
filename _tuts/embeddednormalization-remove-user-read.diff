@@ -1,8 +1,8 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 50aed65d..48997745 100644
+index 47971d83..34c7fdca 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -65,7 +65,7 @@ class CheeseListing
+@@ -67,7 +67,7 @@ class CheeseListing
  
      /**
       * @ORM\Column(type="string", length=255)
@@ -11,7 +11,7 @@ index 50aed65d..48997745 100644
       * @Assert\NotBlank()
       * @Assert\Length(
       *     min=2,
-@@ -86,7 +86,7 @@ class CheeseListing
+@@ -88,7 +88,7 @@ class CheeseListing
       * The price of this delicious cheese, in cents
       *
       * @ORM\Column(type="integer")

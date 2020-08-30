@@ -101,7 +101,7 @@ index d0ebc44e..00000000
 -    }
 -}
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 3b2b4360..e73f1694 100644
+index 3b2b4360..50aed65d 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -17,8 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
@@ -113,7 +113,7 @@ index 3b2b4360..e73f1694 100644
   *     itemOperations={
 - *          "get",
 + *          "get"={
-+ *              "denormalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
++ *              "normalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
 + *          },
   *          "put"={
   *              "security"="is_granted('EDIT', object)",

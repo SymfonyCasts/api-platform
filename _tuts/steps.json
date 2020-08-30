@@ -1266,13 +1266,18 @@
             "description": null
         },
         {
-            "id": "embeddednormalization-show-embedded",
-            "name": "EmbeddedNormalization: show embedded",
+            "id": "embeddednormalization-readablelink-false",
+            "name": "EmbeddedNormalization: readableLink=false",
             "description": null
         },
         {
-            "id": "embeddednormalization-remove-embedded-cheese-read-group",
-            "name": "EmbeddedNormalization: remove embedded cheese:read group",
+            "id": "embeddednormalization-remove-readablelink",
+            "name": "EmbeddedNormalization: remove readableLink",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-remove-user-read",
+            "name": "EmbeddedNormalization: remove user:read",
             "description": null
         },
         {
@@ -1281,8 +1286,13 @@
             "description": null
         },
         {
-            "id": "dtooutput-remove-extra-groups",
-            "name": "DTOOutput: remove extra @Groups",
+            "id": "embeddednormalization-add-readablelink-true",
+            "name": "EmbeddedNormalization: add readableLink=true",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-remove-extra-groups",
+            "name": "EmbeddedNormalization: remove extra @Groups",
             "description": null
         },
         {
@@ -1291,13 +1301,18 @@
             "description": null
         },
         {
-            "id": "dtoinput-add-input",
-            "name": "DTOInput: add input=",
+            "id": "dtoinput-add-class",
+            "name": "DTOInput: add class=",
             "description": null
         },
         {
             "id": "dtoinput-empty-transformer",
             "name": "DTOInput: empty transformer",
+            "description": null
+        },
+        {
+            "id": "delete-me-6",
+            "name": "delete me 6",
             "description": null
         },
         {
@@ -1326,6 +1341,11 @@
             "description": null
         },
         {
+            "id": "dtoinput-add-var-for-other-props",
+            "name": "DTOInput: add @var for other props",
+            "description": null
+        },
+        {
             "id": "dtoinput-complete-transform",
             "name": "DTOInput: complete transform()",
             "description": null
@@ -1336,18 +1356,58 @@
             "description": null
         },
         {
-            "id": "dtoinput-conditionally-set-owner",
-            "name": "DTOInput: conditionally set owner",
+            "id": "dtoupdate-empty-denormalizer",
+            "name": "DTOUpdate: empty denormalizer",
             "description": null
         },
         {
-            "id": "dtoinput-add-var",
-            "name": "DTOInput: add @var",
+            "id": "dtoupdate-fill-in-supports",
+            "name": "DTOUpdate: fill in supports()",
             "description": null
         },
         {
-            "id": "delete-me-1",
-            "name": "delete me 1",
+            "id": "dtoupdate-add-basic-dto-object-to-context",
+            "name": "DTOUpdate: add basic DTO object to context",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-inject-objectnormalizer",
+            "name": "DTOUpdate: inject ObjectNormalizer",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-remove-dump",
+            "name": "DTOUpdate: remove dump",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-paste-in-private-function",
+            "name": "DTOUpdate: paste in private function",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-use-private-method",
+            "name": "DTOUpdate: use private method",
+            "description": null
+        },
+        {
+            "id": "dtoorg-add-input-createorupdateentity",
+            "name": "DTOOrg: Add Input::createOrUpdateEntity()",
+            "description": null
+        },
+        {
+            "id": "dtoorg-add-createfrominputdto",
+            "name": "DTOOrg: Add createFromInputDto",
+            "description": null
+        },
+        {
+            "id": "validation-cast-to-avoid-errors",
+            "name": "Validation: cast to avoid errors",
+            "description": null
+        },
+        {
+            "id": "validation-undo-casting",
+            "name": "Validation: undo casting",
             "description": null
         },
         {
@@ -1361,38 +1421,43 @@
             "description": null
         },
         {
-            "id": "validation-remove-type-on-setter",
-            "name": "Validation: remove type on setter",
+            "id": "delete-me-7",
+            "name": "delete me 7",
             "description": null
         },
         {
-            "id": "validation-add-validation-groups",
-            "name": "Validation: add validation groups",
+            "id": "delete-me-8",
+            "name": "delete me 8",
             "description": null
         },
         {
-            "id": "validation-refactor-isupdate-logic",
-            "name": "Validation: refactor $isUpdate logic",
+            "id": "delete-me-9",
+            "name": "delete me 9",
             "description": null
         },
         {
-            "id": "validation-validate-with-groups",
-            "name": "Validation: validate with groups",
+            "id": "delete-me-10",
+            "name": "delete me 10",
             "description": null
         },
         {
-            "id": "validation-conditionally-update-fields",
-            "name": "Validation: conditionally update fields",
+            "id": "delete-me-11",
+            "name": "delete me 11",
             "description": null
         },
         {
-            "id": "validation-constraint-on-entity",
-            "name": "Validation: constraint on entity",
+            "id": "delete-me-12",
+            "name": "delete me 12",
             "description": null
         },
         {
-            "id": "validation-remove-extra-constraint",
-            "name": "Validation: remove extra constraint",
+            "id": "delete-me-13",
+            "name": "delete me 13",
+            "description": null
+        },
+        {
+            "id": "delete-me-14",
+            "name": "delete me 14",
             "description": null
         },
         {
@@ -1406,5 +1471,5 @@
             "description": null
         }
     ],
-    "sha": "cea68f4d6b42e407be922f154be0014d5c81e0ca"
+    "sha": "53bc3d5983f972ef5d8ee0f76ba15a47a2b33e8b"
 }

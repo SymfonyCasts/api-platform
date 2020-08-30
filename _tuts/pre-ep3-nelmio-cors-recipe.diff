@@ -22,7 +22,7 @@ index 6f202c26..c7665081 100644
 -        '^/': ~
 +        '^/': null
 diff --git a/symfony.lock b/symfony.lock
-index 953b75e2..b8dce0de 100644
+index 58bbb145..31b8ee47 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -140,7 +140,7 @@

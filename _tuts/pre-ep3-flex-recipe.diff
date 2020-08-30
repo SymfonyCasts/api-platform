@@ -19,10 +19,10 @@ index 7df7e82d..71c2b757 100644
  ###> symfony/framework-bundle ###
  APP_ENV=dev
 diff --git a/symfony.lock b/symfony.lock
-index b8dce0de..2177cb44 100644
+index 31b8ee47..f29bdc3c 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -267,7 +267,7 @@
+@@ -270,7 +270,7 @@
              "repo": "github.com/symfony/recipes",
              "branch": "master",
              "version": "1.0",

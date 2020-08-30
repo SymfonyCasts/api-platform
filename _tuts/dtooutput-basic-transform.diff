@@ -1,10 +1,10 @@
-diff --git a/src/DataTransformer/CheeseListingToOutputDataTransformer.php b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-index a12606b6..d1c28b46 100644
---- a/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-+++ b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
+diff --git a/src/DataTransformer/CheeseListingOutputDataTransformer.php b/src/DataTransformer/CheeseListingOutputDataTransformer.php
+index 0b4b9f3b..92d4a016 100644
+--- a/src/DataTransformer/CheeseListingOutputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingOutputDataTransformer.php
 @@ -8,9 +8,15 @@ use App\Entity\CheeseListing;
  
- class CheeseListingToOutputDataTransformer implements DataTransformerInterface
+ class CheeseListingOutputDataTransformer implements DataTransformerInterface
  {
 -    public function transform($object, string $to, array $context = [])
 +    /**

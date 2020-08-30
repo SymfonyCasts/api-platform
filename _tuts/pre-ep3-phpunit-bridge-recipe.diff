@@ -39,10 +39,10 @@ index d45120bb..ae0173d5 100644
      </filter>
  
 diff --git a/symfony.lock b/symfony.lock
-index 0edca31c..854aeb73 100644
+index 8a45b911..b6fa6555 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -336,14 +336,13 @@
+@@ -339,14 +339,13 @@
              "repo": "github.com/symfony/recipes",
              "branch": "master",
              "version": "4.3",

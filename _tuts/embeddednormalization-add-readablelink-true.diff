@@ -1,0 +1,20 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 9fb8a5d3..3ffc1c30 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -3,6 +3,7 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiFilter;
++use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+ use Doctrine\Common\Collections\ArrayCollection;
+@@ -194,6 +195,7 @@ class User implements UserInterface
+     /**
+      * @Groups({"user:read"})
+      * @SerializedName("cheeseListings")
++     * @ApiProperty(readableLink=true)
+      * @return Collection<CheeseListing>
+      */
+     public function getPublishedCheeseListings(): Collection

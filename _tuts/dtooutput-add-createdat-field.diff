@@ -1,8 +1,8 @@
-diff --git a/src/DataTransformer/CheeseListingToOutputDataTransformer.php b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-index 850f34ed..bcafd232 100644
---- a/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-+++ b/src/DataTransformer/CheeseListingToOutputDataTransformer.php
-@@ -17,6 +17,7 @@ class CheeseListingToOutputDataTransformer implements DataTransformerInterface
+diff --git a/src/DataTransformer/CheeseListingOutputDataTransformer.php b/src/DataTransformer/CheeseListingOutputDataTransformer.php
+index 80d93f56..3bdb356b 100644
+--- a/src/DataTransformer/CheeseListingOutputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingOutputDataTransformer.php
+@@ -17,6 +17,7 @@ class CheeseListingOutputDataTransformer implements DataTransformerInterface
          $output->title = $cheeseListing->getTitle();
          $output->description = $cheeseListing->getDescription();
          $output->price = $cheeseListing->getPrice();

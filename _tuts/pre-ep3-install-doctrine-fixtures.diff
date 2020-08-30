@@ -11,7 +11,7 @@ index 10af8be7..e6cd687a 100644
          "doctrine/orm": "^2.4.5",
          "nelmio/cors-bundle": "^2.1",
 diff --git a/composer.lock b/composer.lock
-index 8c9a2325..694b10b1 100644
+index ead0d4f5..68f133fd 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index 8c9a2325..694b10b1 100644
      "packages": [
          {
              "name": "api-platform/core",
-@@ -484,6 +484,84 @@
+@@ -483,6 +483,84 @@
              ],
              "time": "2020-06-05T16:46:05+00:00"
          },
@@ -108,9 +108,9 @@ index 8c9a2325..694b10b1 100644
          {
              "name": "doctrine/dbal",
              "version": "2.10.2",
-@@ -698,6 +776,88 @@
+@@ -697,6 +775,88 @@
              ],
-             "time": "2020-05-25T19:56:00+00:00"
+             "time": "2020-08-25T10:57:15+00:00"
          },
 +        {
 +            "name": "doctrine/doctrine-fixtures-bundle",
@@ -197,7 +197,7 @@ index 8c9a2325..694b10b1 100644
          {
              "name": "doctrine/doctrine-migrations-bundle",
              "version": "3.0.1",
-@@ -6841,84 +7001,6 @@
+@@ -6840,84 +7000,6 @@
          }
      ],
      "packages-dev": [
@@ -316,7 +316,7 @@ index 00000000..6c20526f
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index 69e99b59..362efca4 100644
+index b61d3207..362efca4 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -55,6 +55,18 @@
@@ -338,13 +338,3 @@ index 69e99b59..362efca4 100644
      "doctrine/doctrine-migrations-bundle": {
          "version": "2.2",
          "recipe": {
-@@ -158,6 +170,9 @@
-     "ocramius/proxy-manager": {
-         "version": "2.2.2"
-     },
-+    "php": {
-+        "version": "7.2.5"
-+    },
-     "phpdocumentor/reflection-common": {
-         "version": "1.0.1"
-     },

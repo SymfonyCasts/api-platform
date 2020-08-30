@@ -1,7 +1,7 @@
-diff --git a/src/DataTransformer/CheeseListingToInputDataTransformer.php b/src/DataTransformer/CheeseListingToInputDataTransformer.php
-index 03612c94..03e065eb 100644
---- a/src/DataTransformer/CheeseListingToInputDataTransformer.php
-+++ b/src/DataTransformer/CheeseListingToInputDataTransformer.php
+diff --git a/src/DataTransformer/CheeseListingInputDataTransformer.php b/src/DataTransformer/CheeseListingInputDataTransformer.php
+index 7d8f19f4..11346688 100644
+--- a/src/DataTransformer/CheeseListingInputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingInputDataTransformer.php
 @@ -4,16 +4,26 @@ namespace App\DataTransformer;
  
  use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
@@ -10,7 +10,7 @@ index 03612c94..03e065eb 100644
  use App\Dto\CheeseListingInput;
  use App\Entity\CheeseListing;
  
- class CheeseListingToInputDataTransformer implements DataTransformerInterface
+ class CheeseListingInputDataTransformer implements DataTransformerInterface
  {
 +    private $validator;
 +
@@ -26,6 +26,6 @@ index 03612c94..03e065eb 100644
      {
 +        $this->validator->validate($input);
 +
-         if (isset($context[AbstractItemNormalizer::OBJECT_TO_POPULATE])) {
-             $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE];
-         } else {
+         $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
+ 
+         return $input->createOrUpdateEntity($cheeseListing);

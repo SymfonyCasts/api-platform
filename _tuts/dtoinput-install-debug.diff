@@ -11,7 +11,7 @@ index e6cd687a..15e1b35a 100644
          "symfony/phpunit-bridge": "5.1.*",
          "symfony/stopwatch": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index 694b10b1..a188a7e6 100644
+index 68f133fd..8da9cdcb 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index 694b10b1..a188a7e6 100644
      "packages": [
          {
              "name": "api-platform/core",
-@@ -7691,6 +7691,86 @@
+@@ -7690,6 +7690,86 @@
              ],
              "time": "2020-05-20T17:43:50+00:00"
          },

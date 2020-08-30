@@ -65,10 +65,10 @@ index 9fdf8729..68193199 100644
      },
      "license": "UNLICENSED",
 diff --git a/symfony.lock b/symfony.lock
-index 9312f44c..69e99b59 100644
+index b0d6aee3..b61d3207 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -486,18 +486,19 @@
+@@ -489,18 +489,19 @@
          ]
      },
      "symfony/webpack-encore-bundle": {

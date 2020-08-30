@@ -1,20 +1,20 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 50aed65d..47971d83 100644
+index 7b5e2276..7b1dde62 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
-@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
- use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+@@ -9,6 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
  use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
-+use App\Dto\CheeseListingOutput;
+ use App\Dto\CheeseListingOutput;
++use App\Dto\CheeseListingInput;
  use App\Validator\IsValidOwner;
  use Carbon\Carbon;
  use Doctrine\ORM\Mapping as ORM;
 @@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
- 
  /**
   * @ApiResource(
-+ *     output=CheeseListingOutput::CLASS,
+  *     output=CheeseListingOutput::CLASS,
++ *     input=CheeseListingInput::CLASS,
   *     normalizationContext={"groups"={"cheese:read"}},
   *     denormalizationContext={"groups"={"cheese:write"}},
   *     itemOperations={

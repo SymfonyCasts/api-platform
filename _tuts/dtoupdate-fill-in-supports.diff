@@ -1,0 +1,29 @@
+diff --git a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
+index 13b1cede..0c35a4bd 100644
+--- a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
++++ b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Serializer\Normalizer;
+ 
++use App\Dto\CheeseListingInput;
+ use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
+ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+ 
+@@ -9,13 +10,16 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable
+ {
+     public function denormalize($data, string $type, string $format = null, array $context = [])
+     {
++        dump($context);
+     }
+ 
+     public function supportsDenormalization($data, string $type, string $format = null)
+     {
++        return $type === CheeseListingInput::class;
+     }
+ 
+     public function hasCacheableSupportsMethod(): bool
+     {
++        return true;
+     }
+ }
