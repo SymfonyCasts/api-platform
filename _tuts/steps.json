@@ -1311,11 +1311,6 @@
             "description": null
         },
         {
-            "id": "delete-me-6",
-            "name": "delete me 6",
-            "description": null
-        },
-        {
             "id": "dtoinput-dump-arguments",
             "name": "DTOInput: dump arguments",
             "description": null
@@ -1418,56 +1413,6 @@
         {
             "id": "validation-inject-validate",
             "name": "Validation: inject & validate",
-            "description": null
-        },
-        {
-            "id": "delete-me-7",
-            "name": "delete me 7",
-            "description": null
-        },
-        {
-            "id": "delete-me-8",
-            "name": "delete me 8",
-            "description": null
-        },
-        {
-            "id": "delete-me-9",
-            "name": "delete me 9",
-            "description": null
-        },
-        {
-            "id": "delete-me-10",
-            "name": "delete me 10",
-            "description": null
-        },
-        {
-            "id": "delete-me-11",
-            "name": "delete me 11",
-            "description": null
-        },
-        {
-            "id": "delete-me-12",
-            "name": "delete me 12",
-            "description": null
-        },
-        {
-            "id": "delete-me-13",
-            "name": "delete me 13",
-            "description": null
-        },
-        {
-            "id": "delete-me-14",
-            "name": "delete me 14",
-            "description": null
-        },
-        {
-            "id": "delete-me-2",
-            "name": "delete me 2",
-            "description": null
-        },
-        {
-            "id": "delete-me-3",
-            "name": "delete me 3",
             "description": null
         }
     ],
