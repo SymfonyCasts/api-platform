@@ -1,0 +1,26 @@
+diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
+new file mode 100644
+index 00000000..926aacf6
+--- /dev/null
++++ b/src/DataPersister/CheeseListingDataPersister.php
+@@ -0,0 +1,20 @@
++<?php
++
++namespace App\DataPersister;
++
++use ApiPlatform\Core\DataPersister\DataPersisterInterface;
++
++class CheeseListingDataPersister implements DataPersisterInterface
++{
++    public function supports($data): bool
++    {
++    }
++
++    public function persist($data)
++    {
++    }
++
++    public function remove($data)
++    {
++    }
++}

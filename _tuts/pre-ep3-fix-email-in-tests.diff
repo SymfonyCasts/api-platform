@@ -1,0 +1,22 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 8922a21c..79382802 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -76,7 +76,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     public function testGetCheeseListingCollection()
+     {
+         $client = self::createClient();
+-        $user = $this->createUser('cheeseplese@example.com', 'foo');
++        $user = $this->createUser('cheeseplease@example.com', 'foo');
+ 
+         $cheeseListing1 = new CheeseListing('cheese1');
+         $cheeseListing1->setOwner($user);
+@@ -120,7 +120,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     public function testGetCheeseListingItem()
+     {
+         $client = self::createClient();
+-        $this->createUserAndLogIn($client, 'cheeseplese@example.com', 'foo');
++        $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
+         $otherUser = $this->createUser('other@example.com', 'foo');
+ 
+         $cheeseListing1 = new CheeseListing('cheese1');

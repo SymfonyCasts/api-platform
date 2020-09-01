@@ -1,0 +1,20 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index c52df434..bb12155d 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -9,6 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+ use App\Validator\IsValidOwner;
++use App\Validator\ValidIsPublished;
+ use Carbon\Carbon;
+ use Doctrine\ORM\Mapping as ORM;
+ use Symfony\Component\Serializer\Annotation\Groups;
+@@ -53,6 +54,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * @ApiFilter(PropertyFilter::class)
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  * @ORM\EntityListeners({"App\Doctrine\CheeseListingSetOwnerListener"})
++ * @ValidIsPublished()
+  */
+ class CheeseListing
+ {

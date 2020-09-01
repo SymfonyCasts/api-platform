@@ -1,0 +1,30 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index 832bbaf3..c13863c4 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -40,3 +40,7 @@ services:
+     App\DataPersister\UserDataPersister:
+         bind:
+             $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'
++
++    App\DataPersister\CheeseListingDataPersister:
++        bind:
++            $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'
+diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
+index 926aacf6..7362e7ce 100644
+--- a/src/DataPersister/CheeseListingDataPersister.php
++++ b/src/DataPersister/CheeseListingDataPersister.php
+@@ -6,6 +6,13 @@ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
+ 
+ class CheeseListingDataPersister implements DataPersisterInterface
+ {
++    private $decoratedDataPersister;
++
++    public function __construct(DataPersisterInterface $decoratedDataPersister)
++    {
++        $this->decoratedDataPersister = $decoratedDataPersister;
++    }
++
+     public function supports($data): bool
+     {
+     }

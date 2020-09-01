@@ -1,5 +1,16 @@
+diff --git a/.env.test b/.env.test
+index f58508ca..c9bd8dd7 100644
+--- a/.env.test
++++ b/.env.test
+@@ -2,5 +2,5 @@
+ KERNEL_CLASS='App\Kernel'
+ APP_SECRET='$ecretf0rt3st'
+ SYMFONY_DEPRECATIONS_HELPER=999999
+-DATABASE_URL=mysql://root:@127.0.0.1:3306/cheese_whiz_test
++DATABASE_TEST_URL=$DATABASE_URL
+ PANTHER_APP_ENV=panther
 diff --git a/README.md b/README.md
-index f14df210..d3718532 100644
+index f14df210..8779387c 100644
 --- a/README.md
 +++ b/README.md
 @@ -9,7 +9,7 @@ If you've just downloaded the code, congratulations!!
@@ -11,7 +22,7 @@ index f14df210..d3718532 100644
  
  Make sure you have [Composer installed](https://getcomposer.org/download/)
  and then run:
-@@ -21,63 +21,84 @@ composer install
+@@ -21,63 +21,94 @@ composer install
  You may alternatively need to run `php composer.phar install`, depending
  on how you installed Composer.
  
@@ -112,8 +123,18 @@ index f14df210..d3718532 100644
 +If you get an error that the database exists, that should
 +be ok. But if you have problems, completely drop the
 +database (`doctrine:database:drop --force`) and try again.
++
++** 4b) Database Schema for Tests**
  
 -Now check out the site at `https://localhost:8000`
++To execute the tests, you may (if you're using the Docker integration)
++need to also initialize the database inside the test database container:
++
++```
++symfony console doctrine:database:create --env=test
++symfony console doctrine:migrations:migrate --env=test
++```
++
 +** 5) Optional: Compiling Webpack Encore Assets**
 +
 +This tutorial uses [Webpack Encore](https://symfonycasts.com/encore),
@@ -131,12 +152,22 @@ index f14df210..d3718532 100644
  
  Have fun!
  
+diff --git a/config/packages/test/doctrine.yaml b/config/packages/test/doctrine.yaml
+new file mode 100644
+index 00000000..53f98461
+--- /dev/null
++++ b/config/packages/test/doctrine.yaml
+@@ -0,0 +1,4 @@
++# config/packages/test/doctrine.yaml
++doctrine:
++    dbal:
++        url: '%env(resolve:DATABASE_TEST_URL)%'
 diff --git a/docker-compose.yaml b/docker-compose.yaml
 new file mode 100644
-index 00000000..b776c615
+index 00000000..678579d9
 --- /dev/null
 +++ b/docker-compose.yaml
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,19 @@
 +version: '3.7'
 +services:
 +    database:
@@ -148,4 +179,11 @@ index 00000000..b776c615
 +            # For example, to allow the host to connect to port 3306 on the container, you would change
 +            # "3306" to "3306:3306". Where the first port is exposed to the host and the second is the container port.
 +            # See https://docs.docker.com/compose/compose-file/#ports for more information.
++            - '3306'
++
++    database_test:
++        image: 'mysql:5.7'
++        environment:
++            MYSQL_ROOT_PASSWORD: password
++        ports:
 +            - '3306'

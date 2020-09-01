@@ -1,0 +1,49 @@
+diff --git a/src/Factory/CheeseListingFactory.php b/src/Factory/CheeseListingFactory.php
+index ddd64f58..26e90710 100644
+--- a/src/Factory/CheeseListingFactory.php
++++ b/src/Factory/CheeseListingFactory.php
+@@ -19,10 +19,26 @@ use Zenstruck\Foundry\Proxy;
+  */
+ final class CheeseListingFactory extends ModelFactory
+ {
++    public function published(): self
++    {
++        return $this->addState(['isPublished' => true]);
++    }
++
++    public function withLongDescription(): self
++    {
++        return $this->addState([
++            'description' => self::faker()->paragraphs(3, true)
++        ]);
++    }
++
+     protected function getDefaults(): array
+     {
+         return [
+-            // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
++            'title' => 'Block of cheddar',
++            'description' => 'What can I say? A raw cube of cheese power',
++            'price' => 1500,
++            // allow this factory to create an owner
++            'owner' => UserFactory::new(),
+         ];
+     }
+ 
+diff --git a/src/Factory/UserFactory.php b/src/Factory/UserFactory.php
+index 0ac76395..0e83359a 100644
+--- a/src/Factory/UserFactory.php
++++ b/src/Factory/UserFactory.php
+@@ -22,7 +22,11 @@ final class UserFactory extends ModelFactory
+     protected function getDefaults(): array
+     {
+         return [
+-            // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
++            'email' => 'cheeseplease@example.com',
++            'username' => 'cheeseplease',
++            // hashed version of "test"
++            // php bin/console security:encode-password --env=test
++            'password' => '$argon2id$v=19$m=10,t=3,p=1$eyXPWiQFWUO901E78Bb3UQ$hyu9dFDz7fo2opQyCSoX/NfJDvEpzER/a+WbiAagqqw',
+         ];
+     }
+ 

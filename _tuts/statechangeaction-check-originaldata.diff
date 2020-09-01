@@ -1,0 +1,15 @@
+diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
+index bf8c2014..311a7c7f 100644
+--- a/src/DataPersister/CheeseListingDataPersister.php
++++ b/src/DataPersister/CheeseListingDataPersister.php
+@@ -29,8 +29,8 @@ class CheeseListingDataPersister implements DataPersisterInterface
+     public function persist($data)
+     {
+         $originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($data);
+-        dump($originalData);
+-        if ($data->getIsPublished()) {
++        $wasAlreadyPublished = ($originalData['isPublished'] ?? false);
++        if ($data->getIsPublished() &&  !$wasAlreadyPublished) {
+             $notification = new CheeseNotification($data, 'Cheese listing was created!');
+             $this->entityManager->persist($notification);
+             $this->entityManager->flush();

@@ -1,5 +1,5 @@
 diff --git a/config/services.yaml b/config/services.yaml
-index 6c54be59..fcaf4593 100644
+index 6c54be59..832bbaf3 100644
 --- a/config/services.yaml
 +++ b/config/services.yaml
 @@ -36,3 +36,7 @@ services:
@@ -9,4 +9,4 @@ index 6c54be59..fcaf4593 100644
 +
 +    App\DataPersister\UserDataPersister:
 +        bind:
-+            $doctrineDataPersister: '@api_platform.doctrine.orm.data_persister'
++            $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'

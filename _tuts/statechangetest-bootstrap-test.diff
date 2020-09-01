@@ -1,0 +1,29 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index b8ef0c7b..6623e42c 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -70,6 +70,24 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $this->assertResponseStatusCodeSame(200);
+     }
+ 
++    public function testPublishCheeseListing()
++    {
++        $client = self::createClient();
++        $user = UserFactory::new()->create();
++
++        $cheeseListing = CheeseListingFactory::new()->create([
++            'owner' => $user,
++        ]);
++
++        $this->logIn($client, $user);
++        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
++            'json' => ['isPublished' => true]
++        ]);
++        $this->assertResponseStatusCodeSame(200);
++        $cheeseListing->refresh();
++        $this->assertTrue($cheeseListing->getIsPublished());
++    }
++
+     public function testGetCheeseListingCollection()
+     {
+         $client = self::createClient();

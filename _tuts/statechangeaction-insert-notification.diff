@@ -1,0 +1,23 @@
+diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
+index 3cebaf12..bf8c2014 100644
+--- a/src/DataPersister/CheeseListingDataPersister.php
++++ b/src/DataPersister/CheeseListingDataPersister.php
+@@ -4,6 +4,7 @@ namespace App\DataPersister;
+ 
+ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
+ use App\Entity\CheeseListing;
++use App\Entity\CheeseNotification;
+ use Doctrine\ORM\EntityManagerInterface;
+ 
+ class CheeseListingDataPersister implements DataPersisterInterface
+@@ -30,7 +31,9 @@ class CheeseListingDataPersister implements DataPersisterInterface
+         $originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($data);
+         dump($originalData);
+         if ($data->getIsPublished()) {
+-            // hmm, not enough to know that it was JUST published
++            $notification = new CheeseNotification($data, 'Cheese listing was created!');
++            $this->entityManager->persist($notification);
++            $this->entityManager->flush();
+         }
+ 
+         return $this->decoratedDataPersister->persist($data);

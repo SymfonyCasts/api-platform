@@ -1,0 +1,29 @@
+diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
+index e2b76042..d405ab81 100644
+--- a/src/Validator/ValidIsPublishedValidator.php
++++ b/src/Validator/ValidIsPublishedValidator.php
+@@ -27,15 +27,16 @@ class ValidIsPublishedValidator extends ConstraintValidator
+         $originalData = $this->entityManager
+             ->getUnitOfWork()
+             ->getOriginalEntityData($value);
+-        dd($originalData);
++        $wasAlreadyPublished = ($originalData['isPublished'] ?? false);
+ 
+-        if (null === $value || '' === $value) {
+-            return;
+-        }
++        if ($value->getIsPublished() && !$wasAlreadyPublished) {
++            // we are publishing!
+ 
+-        // TODO: implement the validation here
+-        $this->context->buildViolation($constraint->message)
+-            ->setParameter('{{ value }}', $value)
+-            ->addViolation();
++            if (strlen($value->getDescription()) < 100) {
++                $this->context->buildViolation('Cannot publish: description is too short!')
++                    ->atPath('description')
++                    ->addViolation();
++            }
++        }
+     }
+ }

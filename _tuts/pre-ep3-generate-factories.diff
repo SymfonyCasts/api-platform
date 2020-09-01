@@ -1,0 +1,94 @@
+diff --git a/src/Factory/CheeseListingFactory.php b/src/Factory/CheeseListingFactory.php
+new file mode 100644
+index 00000000..ddd64f58
+--- /dev/null
++++ b/src/Factory/CheeseListingFactory.php
+@@ -0,0 +1,41 @@
++<?php
++
++namespace App\Factory;
++
++use App\Entity\CheeseListing;
++use App\Repository\CheeseListingRepository;
++use Zenstruck\Foundry\RepositoryProxy;
++use Zenstruck\Foundry\ModelFactory;
++use Zenstruck\Foundry\Proxy;
++
++/**
++ * @method static CheeseListing|Proxy findOrCreate(array $attributes)
++ * @method static CheeseListing|Proxy random()
++ * @method static CheeseListing[]|Proxy[] randomSet(int $number)
++ * @method static CheeseListing[]|Proxy[] randomRange(int $min, int $max)
++ * @method static CheeseListingRepository|RepositoryProxy repository()
++ * @method CheeseListing|Proxy create($attributes = [])
++ * @method CheeseListing[]|Proxy[] createMany(int $number, $attributes = [])
++ */
++final class CheeseListingFactory extends ModelFactory
++{
++    protected function getDefaults(): array
++    {
++        return [
++            // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
++        ];
++    }
++
++    protected function initialize(): self
++    {
++        // see https://github.com/zenstruck/foundry#initialization
++        return $this
++            // ->beforeInstantiate(function(CheeseListing $cheeseListing) {})
++        ;
++    }
++
++    protected static function getClass(): string
++    {
++        return CheeseListing::class;
++    }
++}
+diff --git a/src/Factory/UserFactory.php b/src/Factory/UserFactory.php
+new file mode 100644
+index 00000000..0ac76395
+--- /dev/null
++++ b/src/Factory/UserFactory.php
+@@ -0,0 +1,41 @@
++<?php
++
++namespace App\Factory;
++
++use App\Entity\User;
++use App\Repository\UserRepository;
++use Zenstruck\Foundry\RepositoryProxy;
++use Zenstruck\Foundry\ModelFactory;
++use Zenstruck\Foundry\Proxy;
++
++/**
++ * @method static User|Proxy findOrCreate(array $attributes)
++ * @method static User|Proxy random()
++ * @method static User[]|Proxy[] randomSet(int $number)
++ * @method static User[]|Proxy[] randomRange(int $min, int $max)
++ * @method static UserRepository|RepositoryProxy repository()
++ * @method User|Proxy create($attributes = [])
++ * @method User[]|Proxy[] createMany(int $number, $attributes = [])
++ */
++final class UserFactory extends ModelFactory
++{
++    protected function getDefaults(): array
++    {
++        return [
++            // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
++        ];
++    }
++
++    protected function initialize(): self
++    {
++        // see https://github.com/zenstruck/foundry#initialization
++        return $this
++            // ->beforeInstantiate(function(User $user) {})
++        ;
++    }
++
++    protected static function getClass(): string
++    {
++        return User::class;
++    }
++}

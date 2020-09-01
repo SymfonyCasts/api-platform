@@ -1,0 +1,17 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index cce6efc1..d388f054 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -76,9 +76,9 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $client = self::createClient();
+         $user = UserFactory::new()->create();
+ 
+-        $cheeseListing = CheeseListingFactory::new()->create([
+-            'owner' => $user,
+-        ]);
++        $cheeseListing = CheeseListingFactory::new()
++            ->withLongDescription()
++            ->create(['owner' => $user]);
+ 
+         $this->logIn($client, $user);
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [

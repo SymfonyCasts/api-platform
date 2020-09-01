@@ -1,0 +1,25 @@
+diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
+index b54db6cc..f5802354 100644
+--- a/src/Validator/ValidIsPublishedValidator.php
++++ b/src/Validator/ValidIsPublishedValidator.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Validator;
+ 
++use App\Entity\CheeseListing;
+ use Symfony\Component\Validator\Constraint;
+ use Symfony\Component\Validator\ConstraintValidator;
+ 
+@@ -11,6 +12,12 @@ class ValidIsPublishedValidator extends ConstraintValidator
+     {
+         /* @var $constraint \App\Validator\ValidIsPublished */
+ 
++        if (!$value instanceof CheeseListing) {
++            throw new \LogicException('Only CheeseListing is supported');
++        }
++
++        dd($value);
++
+         if (null === $value || '' === $value) {
+             return;
+         }

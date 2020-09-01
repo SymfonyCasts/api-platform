@@ -1,0 +1,278 @@
+diff --git a/src/Factory/UserFactory.php b/src/Factory/UserFactory.php
+index 0e83359a..5aabf960 100644
+--- a/src/Factory/UserFactory.php
++++ b/src/Factory/UserFactory.php
+@@ -19,11 +19,13 @@ use Zenstruck\Foundry\Proxy;
+  */
+ final class UserFactory extends ModelFactory
+ {
++    const DEFAULT_PASSWORD = 'test';
++
+     protected function getDefaults(): array
+     {
+         return [
+-            'email' => 'cheeseplease@example.com',
+-            'username' => 'cheeseplease',
++            'email' => self::faker()->email,
++            'username' => self::faker()->userName,
+             // hashed version of "test"
+             // php bin/console security:encode-password --env=test
+             'password' => '$argon2id$v=19$m=10,t=3,p=1$eyXPWiQFWUO901E78Bb3UQ$hyu9dFDz7fo2opQyCSoX/NfJDvEpzER/a+WbiAagqqw',
+diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
+index c427dd2f..9860f176 100644
+--- a/src/Test/CustomApiTestCase.php
++++ b/src/Test/CustomApiTestCase.php
+@@ -5,7 +5,9 @@ namespace App\Test;
+ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
+ use App\Entity\User;
++use App\Factory\UserFactory;
+ use Doctrine\ORM\EntityManagerInterface;
++use Zenstruck\Foundry\Proxy;
+ 
+ class CustomApiTestCase extends ApiTestCase
+ {
+@@ -26,8 +28,20 @@ class CustomApiTestCase extends ApiTestCase
+         return $user;
+     }
+ 
+-    protected function logIn(Client $client, string $email, string $password)
++    protected function logIn(Client $client, $userOrEmail, string $password = UserFactory::DEFAULT_PASSWORD)
+     {
++        if ($userOrEmail instanceof User || $userOrEmail instanceof Proxy) {
++            $email = $userOrEmail->getEmail();
++        } elseif (is_string($userOrEmail)) {
++            $email = $userOrEmail;
++        } else {
++            throw new \InvalidArgumentException(sprintf(
++                'Argument 2 to "%s" should be a User, Foundry Proxy or string email, "%s" given',
++                __METHOD__,
++                is_object($userOrEmail) ? get_class($userOrEmail) : gettype($userOrEmail)
++            ));
++        }
++
+         $client->request('POST', '/login', [
+             'json' => [
+                 'email' => $email,
+@@ -37,15 +51,6 @@ class CustomApiTestCase extends ApiTestCase
+         $this->assertResponseStatusCodeSame(204);
+     }
+ 
+-    protected function createUserAndLogIn(Client $client, string $email, string $password): User
+-    {
+-        $user = $this->createUser($email, $password);
+-
+-        $this->logIn($client, $email, $password);
+-
+-        return $user;
+-    }
+-
+     protected function getEntityManager(): EntityManagerInterface
+     {
+         return self::$container->get('doctrine')->getManager();
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 79382802..b8ef0c7b 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -3,6 +3,8 @@
+ namespace App\Tests\Functional;
+ 
+ use App\Entity\CheeseListing;
++use App\Factory\CheeseListingFactory;
++use App\Factory\UserFactory;
+ use App\Test\CustomApiTestCase;
+ use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+ 
+@@ -18,8 +20,9 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         ]);
+         $this->assertResponseStatusCodeSame(401);
+ 
+-        $authenticatedUser = $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
+-        $otherUser = $this->createUser('otheruser@example.com', 'foo');
++        $authenticatedUser = UserFactory::new()->create();
++        $otherUser = UserFactory::new()->create();
++        $this->logIn($client, $authenticatedUser);
+ 
+         $cheesyData = [
+             'title' => 'Mystery cheese... kinda green',
+@@ -46,27 +49,21 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     public function testUpdateCheeseListing()
+     {
+         $client = self::createClient();
+-        $user1 = $this->createUser('user1@example.com', 'foo');
+-        $user2 = $this->createUser('user2@example.com', 'foo');
++        $user1 = UserFactory::new()->create();
++        $user2 = UserFactory::new()->create();
+ 
+-        $cheeseListing = new CheeseListing('Block of cheddar');
+-        $cheeseListing->setOwner($user1);
+-        $cheeseListing->setPrice(1000);
+-        $cheeseListing->setDescription('mmmm');
+-        $cheeseListing->setIsPublished(true);
+-
+-        $em = $this->getEntityManager();
+-        $em->persist($cheeseListing);
+-        $em->flush();
++        $cheeseListing = CheeseListingFactory::new()->published()->create([
++            'owner' => $user1,
++        ]);
+ 
+-        $this->logIn($client, 'user2@example.com', 'foo');
++        $this->logIn($client, $user2);
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+             // try to trick security by reassigning to this user
+             'json' => ['title' => 'updated', 'owner' => '/api/users/'.$user2->getId()]
+         ]);
+         $this->assertResponseStatusCodeSame(403, 'only author can updated');
+ 
+-        $this->logIn($client, 'user1@example.com', 'foo');
++        $this->logIn($client, $user1);
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+             'json' => ['title' => 'updated']
+         ]);
+@@ -76,32 +73,23 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     public function testGetCheeseListingCollection()
+     {
+         $client = self::createClient();
+-        $user = $this->createUser('cheeseplease@example.com', 'foo');
+-
+-        $cheeseListing1 = new CheeseListing('cheese1');
+-        $cheeseListing1->setOwner($user);
+-        $cheeseListing1->setPrice(1000);
+-        $cheeseListing1->setDescription('cheese');
+-
+-        $cheeseListing2 = new CheeseListing('cheese2');
+-        $cheeseListing2->setOwner($user);
+-        $cheeseListing2->setPrice(1000);
+-        $cheeseListing2->setDescription('cheese');
+-        $cheeseListing2->setIsPublished(true);
+-
+-        $cheeseListing3 = new CheeseListing('cheese3');
+-        $cheeseListing3->setOwner($user);
+-        $cheeseListing3->setPrice(1000);
+-        $cheeseListing3->setDescription('cheese');
+-        $cheeseListing3->setIsPublished(true);
+-
+-        $em = $this->getEntityManager();
+-        $em->persist($cheeseListing1);
+-        $em->persist($cheeseListing2);
+-        $em->persist($cheeseListing3);
+-        $em->flush();
+-
+-        $response = $client->request('GET', '/api/cheeses');
++        $user = UserFactory::new()->create();
++
++        $factory = CheeseListingFactory::new(['owner' => $user]);
++        // CL 1: unpublished
++        $factory->create();
++
++        // CL 2: published
++        $cheeseListing2 = $factory->published()->create([
++            'title' => 'cheese2',
++            'description' => 'cheese',
++            'price' => 1000,
++        ]);
++
++        // CL 3: published
++        $factory->published()->create();
++
++        $client->request('GET', '/api/cheeses');
+         $this->assertJsonContains(['hydra:totalItems' => 2]);
+         $this->assertJsonContains(['hydra:member' => [
+             0 => [
+@@ -120,18 +108,11 @@ class CheeseListingResourceTest extends CustomApiTestCase
+     public function testGetCheeseListingItem()
+     {
+         $client = self::createClient();
+-        $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
+-        $otherUser = $this->createUser('other@example.com', 'foo');
+-
+-        $cheeseListing1 = new CheeseListing('cheese1');
+-        $cheeseListing1->setOwner($otherUser);
+-        $cheeseListing1->setPrice(1000);
+-        $cheeseListing1->setDescription('cheese');
+-        $cheeseListing1->setIsPublished(false);
+-
+-        $em = $this->getEntityManager();
+-        $em->persist($cheeseListing1);
+-        $em->flush();
++        $user = UserFactory::new()->create();
++        $this->logIn($client, $user);
++        $otherUser = UserFactory::new()->create();
++
++        $cheeseListing1 = CheeseListingFactory::new()->create(['owner' => $otherUser]);
+ 
+         $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
+         $this->assertResponseStatusCodeSame(404);
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+index a802fc41..2094ec51 100644
+--- a/tests/Functional/UserResourceTest.php
++++ b/tests/Functional/UserResourceTest.php
+@@ -3,6 +3,7 @@
+ namespace App\Tests\Functional;
+ 
+ use App\Entity\User;
++use App\Factory\UserFactory;
+ use App\Test\CustomApiTestCase;
+ use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+ 
+@@ -29,7 +30,8 @@ class UserResourceTest extends CustomApiTestCase
+     public function testUpdateUser()
+     {
+         $client = self::createClient();
+-        $user = $this->createUserAndLogIn($client, 'cheeseplease@example.com', 'foo');
++        $user = UserFactory::new()->create();
++        $this->logIn($client, $user);
+ 
+         $client->request('PUT', '/api/users/'.$user->getId(), [
+             'json' => [
+@@ -42,39 +44,34 @@ class UserResourceTest extends CustomApiTestCase
+             'username' => 'newusername'
+         ]);
+ 
+-        $em = $this->getEntityManager();
+-        /** @var User $user */
+-        $user = $em->getRepository(User::class)->find($user->getId());
++        $user->refresh();
+         $this->assertEquals(['ROLE_USER'], $user->getRoles());
+     }
+ 
+     public function testGetUser()
+     {
+         $client = self::createClient();
+-        $user = $this->createUser('cheeseplease@example.com', 'foo');
+-        $this->createUserAndLogIn($client, 'authenticated@example.com', 'foo');
+-
+-        $user->setPhoneNumber('555.123.4567');
+-        $em = $this->getEntityManager();
+-        $em->flush();
++        $user = UserFactory::new()->create(['phoneNumber' => '555.123.4567']);
++        $authenticatedUser = UserFactory::new()->create();
++        $this->logIn($client, $authenticatedUser);
+ 
+         $client->request('GET', '/api/users/'.$user->getId());
+         $this->assertJsonContains([
+-            'username' => 'cheeseplease'
++            'username' => $user->getUsername(),
+         ]);
+ 
+         $data = $client->getResponse()->toArray();
+         $this->assertArrayNotHasKey('phoneNumber', $data);
+ 
+         // refresh the user & elevate
+-        $user = $em->getRepository(User::class)->find($user->getId());
++        $user->refresh();
+         $user->setRoles(['ROLE_ADMIN']);
+-        $em->flush();
+-        $this->logIn($client, 'cheeseplease@example.com', 'foo');
++        $user->save();
++        $this->logIn($client, $user);
+ 
+         $client->request('GET', '/api/users/'.$user->getId());
+         $this->assertJsonContains([
+             'phoneNumber' => '555.123.4567'
+         ]);
+     }
+-}
+\ No newline at end of file
++}

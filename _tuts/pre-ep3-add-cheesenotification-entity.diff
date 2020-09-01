@@ -1,0 +1,159 @@
+diff --git a/migrations/Version20200901180523.php b/migrations/Version20200901180523.php
+new file mode 100644
+index 00000000..da38cbfc
+--- /dev/null
++++ b/migrations/Version20200901180523.php
+@@ -0,0 +1,32 @@
++<?php
++
++declare(strict_types=1);
++
++namespace DoctrineMigrations;
++
++use Doctrine\DBAL\Schema\Schema;
++use Doctrine\Migrations\AbstractMigration;
++
++/**
++ * Auto-generated Migration: Please modify to your needs!
++ */
++final class Version20200901180523 extends AbstractMigration
++{
++    public function getDescription() : string
++    {
++        return '';
++    }
++
++    public function up(Schema $schema) : void
++    {
++        // this up() migration is auto-generated, please modify it to your needs
++        $this->addSql('CREATE TABLE cheese_notification (id INT AUTO_INCREMENT NOT NULL, cheese_listing_id INT NOT NULL, notification_text VARCHAR(255) NOT NULL, INDEX IDX_D33F5BC5B167220F (cheese_listing_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
++        $this->addSql('ALTER TABLE cheese_notification ADD CONSTRAINT FK_D33F5BC5B167220F FOREIGN KEY (cheese_listing_id) REFERENCES cheese_listing (id)');
++    }
++
++    public function down(Schema $schema) : void
++    {
++        // this down() migration is auto-generated, please modify it to your needs
++        $this->addSql('DROP TABLE cheese_notification');
++    }
++}
+diff --git a/src/Entity/CheeseNotification.php b/src/Entity/CheeseNotification.php
+new file mode 100644
+index 00000000..2c309f0e
+--- /dev/null
++++ b/src/Entity/CheeseNotification.php
+@@ -0,0 +1,59 @@
++<?php
++
++namespace App\Entity;
++
++use App\Repository\CheeseNotificationRepository;
++use Doctrine\ORM\Mapping as ORM;
++
++/**
++ * @ORM\Entity(repositoryClass=CheeseNotificationRepository::class)
++ */
++class CheeseNotification
++{
++    /**
++     * @ORM\Id
++     * @ORM\GeneratedValue
++     * @ORM\Column(type="integer")
++     */
++    private $id;
++
++    /**
++     * @ORM\ManyToOne(targetEntity=CheeseListing::class)
++     * @ORM\JoinColumn(nullable=false)
++     */
++    private $cheeseListing;
++
++    /**
++     * @ORM\Column(type="string", length=255)
++     */
++    private $notificationText;
++
++    public function getId(): ?int
++    {
++        return $this->id;
++    }
++
++    public function getCheeseListing(): ?CheeseListing
++    {
++        return $this->cheeseListing;
++    }
++
++    public function setCheeseListing(?CheeseListing $cheeseListing): self
++    {
++        $this->cheeseListing = $cheeseListing;
++
++        return $this;
++    }
++
++    public function getNotificationText(): ?string
++    {
++        return $this->notificationText;
++    }
++
++    public function setNotificationText(string $notificationText): self
++    {
++        $this->notificationText = $notificationText;
++
++        return $this;
++    }
++}
+diff --git a/src/Repository/CheeseNotificationRepository.php b/src/Repository/CheeseNotificationRepository.php
+new file mode 100644
+index 00000000..278a3581
+--- /dev/null
++++ b/src/Repository/CheeseNotificationRepository.php
+@@ -0,0 +1,50 @@
++<?php
++
++namespace App\Repository;
++
++use App\Entity\CheeseNotification;
++use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
++use Doctrine\Persistence\ManagerRegistry;
++
++/**
++ * @method CheeseNotification|null find($id, $lockMode = null, $lockVersion = null)
++ * @method CheeseNotification|null findOneBy(array $criteria, array $orderBy = null)
++ * @method CheeseNotification[]    findAll()
++ * @method CheeseNotification[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
++ */
++class CheeseNotificationRepository extends ServiceEntityRepository
++{
++    public function __construct(ManagerRegistry $registry)
++    {
++        parent::__construct($registry, CheeseNotification::class);
++    }
++
++    // /**
++    //  * @return CheeseNotification[] Returns an array of CheeseNotification objects
++    //  */
++    /*
++    public function findByExampleField($value)
++    {
++        return $this->createQueryBuilder('c')
++            ->andWhere('c.exampleField = :val')
++            ->setParameter('val', $value)
++            ->orderBy('c.id', 'ASC')
++            ->setMaxResults(10)
++            ->getQuery()
++            ->getResult()
++        ;
++    }
++    */
++
++    /*
++    public function findOneBySomeField($value): ?CheeseNotification
++    {
++        return $this->createQueryBuilder('c')
++            ->andWhere('c.exampleField = :val')
++            ->setParameter('val', $value)
++            ->getQuery()
++            ->getOneOrNullResult()
++        ;
++    }
++    */
++}

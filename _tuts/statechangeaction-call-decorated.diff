@@ -1,0 +1,29 @@
+diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
+index 7362e7ce..6c04f1b0 100644
+--- a/src/DataPersister/CheeseListingDataPersister.php
++++ b/src/DataPersister/CheeseListingDataPersister.php
+@@ -3,6 +3,7 @@
+ namespace App\DataPersister;
+ 
+ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
++use App\Entity\CheeseListing;
+ 
+ class CheeseListingDataPersister implements DataPersisterInterface
+ {
+@@ -15,13 +16,16 @@ class CheeseListingDataPersister implements DataPersisterInterface
+ 
+     public function supports($data): bool
+     {
++        return $data instanceof CheeseListing;
+     }
+ 
+     public function persist($data)
+     {
++        return $this->decoratedDataPersister->persist($data);
+     }
+ 
+     public function remove($data)
+     {
++        return $this->decoratedDataPersister->remove($data);
+     }
+ }

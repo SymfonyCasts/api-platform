@@ -1,0 +1,15 @@
+diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
+index c5f7e383..ae2cde94 100644
+--- a/src/DataPersister/CheeseListingDataPersister.php
++++ b/src/DataPersister/CheeseListingDataPersister.php
+@@ -24,6 +24,10 @@ class CheeseListingDataPersister implements DataPersisterInterface
+      */
+     public function persist($data)
+     {
++        if ($data->getIsPublished()) {
++            // hmm, not enough to know that it was JUST published
++        }
++
+         return $this->decoratedDataPersister->persist($data);
+     }
+ 

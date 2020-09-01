@@ -1,0 +1,12 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 50aed65d..c52df434 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -98,6 +98,7 @@ class CheeseListing
+ 
+     /**
+      * @ORM\Column(type="boolean")
++     * @Groups({"cheese:write"})
+      */
+     private $isPublished = false;
+ 

@@ -1,0 +1,35 @@
+diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
+index d405ab81..8d95eac7 100644
+--- a/src/Validator/ValidIsPublishedValidator.php
++++ b/src/Validator/ValidIsPublishedValidator.php
+@@ -4,16 +4,19 @@ namespace App\Validator;
+ 
+ use App\Entity\CheeseListing;
+ use Doctrine\ORM\EntityManagerInterface;
++use Symfony\Component\Security\Core\Security;
+ use Symfony\Component\Validator\Constraint;
+ use Symfony\Component\Validator\ConstraintValidator;
+ 
+ class ValidIsPublishedValidator extends ConstraintValidator
+ {
+     private $entityManager;
++    private $security;
+ 
+-    public function __construct(EntityManagerInterface $entityManager)
++    public function __construct(EntityManagerInterface $entityManager, Security $security)
+     {
+         $this->entityManager = $entityManager;
++        $this->security = $security;
+     }
+ 
+     public function validate($value, Constraint $constraint)
+@@ -32,7 +35,8 @@ class ValidIsPublishedValidator extends ConstraintValidator
+         if ($value->getIsPublished() && !$wasAlreadyPublished) {
+             // we are publishing!
+ 
+-            if (strlen($value->getDescription()) < 100) {
++            // don't allow short descriptions, unless you are an admin
++            if (strlen($value->getDescription()) < 100 && !$this->security->isGranted('ROLE_ADMIN')) {
+                 $this->context->buildViolation('Cannot publish: description is too short!')
+                     ->atPath('description')
+                     ->addViolation();

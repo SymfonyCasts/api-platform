@@ -1,0 +1,94 @@
+diff --git a/src/Entity/CheeseNotification.php b/src/Entity/CheeseNotification.php
+index 2c309f0e..cb9c1229 100644
+--- a/src/Entity/CheeseNotification.php
++++ b/src/Entity/CheeseNotification.php
+@@ -28,32 +28,25 @@ class CheeseNotification
+      */
+     private $notificationText;
+ 
+-    public function getId(): ?int
++    public function __construct(CheeseListing $cheeseListing, string $notificationText)
+     {
+-        return $this->id;
++        $this->cheeseListing = $cheeseListing;
++        $this->notificationText = $notificationText;
+     }
+ 
+-    public function getCheeseListing(): ?CheeseListing
+-    {
+-        return $this->cheeseListing;
+-    }
+ 
+-    public function setCheeseListing(?CheeseListing $cheeseListing): self
++    public function getId(): ?int
+     {
+-        $this->cheeseListing = $cheeseListing;
+-
+-        return $this;
++        return $this->id;
+     }
+ 
+-    public function getNotificationText(): ?string
++    public function getCheeseListing(): CheeseListing
+     {
+-        return $this->notificationText;
++        return $this->cheeseListing;
+     }
+ 
+-    public function setNotificationText(string $notificationText): self
++    public function getNotificationText(): string
+     {
+-        $this->notificationText = $notificationText;
+-
+-        return $this;
++        return $this->notificationText;
+     }
+ }
+diff --git a/src/Factory/CheeseNotificationFactory.php b/src/Factory/CheeseNotificationFactory.php
+new file mode 100644
+index 00000000..51584ae9
+--- /dev/null
++++ b/src/Factory/CheeseNotificationFactory.php
+@@ -0,0 +1,42 @@
++<?php
++
++namespace App\Factory;
++
++use App\Entity\CheeseNotification;
++use App\Repository\CheeseNotificationRepository;
++use Zenstruck\Foundry\RepositoryProxy;
++use Zenstruck\Foundry\ModelFactory;
++use Zenstruck\Foundry\Proxy;
++
++/**
++ * @method static CheeseNotification|Proxy findOrCreate(array $attributes)
++ * @method static CheeseNotification|Proxy random()
++ * @method static CheeseNotification[]|Proxy[] randomSet(int $number)
++ * @method static CheeseNotification[]|Proxy[] randomRange(int $min, int $max)
++ * @method static CheeseNotificationRepository|RepositoryProxy repository()
++ * @method CheeseNotification|Proxy create($attributes = [])
++ * @method CheeseNotification[]|Proxy[] createMany(int $number, $attributes = [])
++ */
++final class CheeseNotificationFactory extends ModelFactory
++{
++    protected function getDefaults(): array
++    {
++        return [
++            'cheeseListing' => CheeseListingFactory::new(),
++            'notificationText' => self::faker()->realText(50),
++        ];
++    }
++
++    protected function initialize(): self
++    {
++        // see https://github.com/zenstruck/foundry#initialization
++        return $this
++            // ->beforeInstantiate(function(CheeseNotification $cheeseNotification) {})
++        ;
++    }
++
++    protected static function getClass(): string
++    {
++        return CheeseNotification::class;
++    }
++}

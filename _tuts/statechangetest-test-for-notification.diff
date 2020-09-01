@@ -1,0 +1,26 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 6623e42c..cce6efc1 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -4,6 +4,7 @@ namespace App\Tests\Functional;
+ 
+ use App\Entity\CheeseListing;
+ use App\Factory\CheeseListingFactory;
++use App\Factory\CheeseNotificationFactory;
+ use App\Factory\UserFactory;
+ use App\Test\CustomApiTestCase;
+ use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+@@ -86,6 +87,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $this->assertResponseStatusCodeSame(200);
+         $cheeseListing->refresh();
+         $this->assertTrue($cheeseListing->getIsPublished());
++        CheeseNotificationFactory::repository()->assertCount(1, 'There should be one notification about being published');
++
++        // publishing again should not create a second notification
++        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
++            'json' => ['isPublished' => true]
++        ]);
++        CheeseNotificationFactory::repository()->assertCount(1);
+     }
+ 
+     public function testGetCheeseListingCollection()

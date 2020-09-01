@@ -1,0 +1,23 @@
+diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
+index f9174fea..2c6f22a4 100644
+--- a/src/Validator/ValidIsPublishedValidator.php
++++ b/src/Validator/ValidIsPublishedValidator.php
+@@ -4,6 +4,7 @@ namespace App\Validator;
+ 
+ use App\Entity\CheeseListing;
+ use Doctrine\ORM\EntityManagerInterface;
++use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+ use Symfony\Component\Security\Core\Security;
+ use Symfony\Component\Validator\Constraint;
+ use Symfony\Component\Validator\ConstraintValidator;
+@@ -45,6 +46,10 @@ class ValidIsPublishedValidator extends ConstraintValidator
+             // we are UNpublishing
+ 
+             if (!$this->security->isGranted('ROLE_ADMIN')) {
++                // you can return a 403
++                throw new AccessDeniedException('Only admin users can unpublish');
++
++                // or a normal validation error
+                 $this->context->buildViolation('Only admin users can unpublish')
+                     ->atPath('description')
+                     ->addViolation();

@@ -1,0 +1,204 @@
+diff --git a/composer.json b/composer.json
+index e6cd687a..504fb418 100644
+--- a/composer.json
++++ b/composer.json
+@@ -26,7 +26,8 @@
+         "symfony/twig-bundle": "5.1.*",
+         "symfony/validator": "5.1.*",
+         "symfony/webpack-encore-bundle": "^1.6",
+-        "symfony/yaml": "5.1.*"
++        "symfony/yaml": "5.1.*",
++        "zenstruck/foundry": "^1.1"
+     },
+     "require-dev": {
+         "hautelook/alice-bundle": "^2.5",
+diff --git a/composer.lock b/composer.lock
+index 68f133fd..757cf856 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "5e5c3cd44460ead8d766488422183775",
++    "content-hash": "4813b28bbc6428cccb24e4299a4b0c46",
+     "packages": [
+         {
+             "name": "api-platform/core",
+@@ -1756,6 +1756,56 @@
+             ],
+             "time": "2020-04-27T06:40:36+00:00"
+         },
++        {
++            "name": "fzaninotto/faker",
++            "version": "v1.9.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/fzaninotto/Faker.git",
++                "reference": "fc10d778e4b84d5bd315dad194661e091d307c6f"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/fc10d778e4b84d5bd315dad194661e091d307c6f",
++                "reference": "fc10d778e4b84d5bd315dad194661e091d307c6f",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^5.3.3 || ^7.0"
++            },
++            "require-dev": {
++                "ext-intl": "*",
++                "phpunit/phpunit": "^4.8.35 || ^5.7",
++                "squizlabs/php_codesniffer": "^2.9.2"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "1.9-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Faker\\": "src/Faker/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "François Zaninotto"
++                }
++            ],
++            "description": "Faker is a PHP library that generates fake data for you.",
++            "keywords": [
++                "data",
++                "faker",
++                "fixtures"
++            ],
++            "time": "2019-12-12T13:22:17+00:00"
++        },
+         {
+             "name": "monolog/monolog",
+             "version": "2.1.1",
+@@ -6997,41 +7047,49 @@
+             ],
+             "abandoned": "laminas/laminas-eventmanager",
+             "time": "2018-04-25T15:33:34+00:00"
+-        }
+-    ],
+-    "packages-dev": [
++        },
+         {
+-            "name": "fzaninotto/faker",
+-            "version": "v1.9.1",
++            "name": "zenstruck/foundry",
++            "version": "v1.1.1",
+             "source": {
+                 "type": "git",
+-                "url": "https://github.com/fzaninotto/Faker.git",
+-                "reference": "fc10d778e4b84d5bd315dad194661e091d307c6f"
++                "url": "https://github.com/zenstruck/foundry.git",
++                "reference": "a6d9716995794d80d568364f3d829991d117284c"
+             },
+             "dist": {
+                 "type": "zip",
+-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/fc10d778e4b84d5bd315dad194661e091d307c6f",
+-                "reference": "fc10d778e4b84d5bd315dad194661e091d307c6f",
++                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/a6d9716995794d80d568364f3d829991d117284c",
++                "reference": "a6d9716995794d80d568364f3d829991d117284c",
+                 "shasum": ""
+             },
+             "require": {
+-                "php": "^5.3.3 || ^7.0"
++                "doctrine/persistence": "^1.3.3",
++                "fzaninotto/faker": "^1.5",
++                "php": ">=7.2.5",
++                "symfony/property-access": "^3.4|^4.4|^5.0"
+             },
+             "require-dev": {
+-                "ext-intl": "*",
+-                "phpunit/phpunit": "^4.8.35 || ^5.7",
+-                "squizlabs/php_codesniffer": "^2.9.2"
++                "dama/doctrine-test-bundle": "^6.0",
++                "doctrine/doctrine-bundle": "^2.0",
++                "doctrine/orm": "^2.7",
++                "matthiasnoback/symfony-dependency-injection-test": "^4.1",
++                "phpunit/phpunit": "^8.5",
++                "symfony/framework-bundle": "^4.4|^5.0",
++                "symfony/maker-bundle": "^1.5"
+             },
+             "type": "library",
+             "extra": {
+                 "branch-alias": {
+-                    "dev-master": "1.9-dev"
++                    "dev-master": "1.x-dev"
+                 }
+             },
+             "autoload": {
+                 "psr-4": {
+-                    "Faker\\": "src/Faker/"
+-                }
++                    "Zenstruck\\Foundry\\": "src/"
++                },
++                "files": [
++                    "src/functions.php"
++                ]
+             },
+             "notification-url": "https://packagist.org/downloads/",
+             "license": [
+@@ -7039,17 +7097,24 @@
+             ],
+             "authors": [
+                 {
+-                    "name": "François Zaninotto"
++                    "name": "Kevin Bond",
++                    "email": "kevinbond@gmail.com"
+                 }
+             ],
+-            "description": "Faker is a PHP library that generates fake data for you.",
++            "description": "A model factory library for creating expressive, auto-completable, on-demand dev/test fixtures with Symfony and Doctrine.",
++            "homepage": "https://github.com/zenstruck/foundry",
+             "keywords": [
+-                "data",
++                "Fixture",
++                "doctrine",
++                "factory",
+                 "faker",
+-                "fixtures"
++                "symfony",
++                "test"
+             ],
+-            "time": "2019-12-12T13:22:17+00:00"
+-        },
++            "time": "2020-07-24T20:14:07+00:00"
++        }
++    ],
++    "packages-dev": [
+         {
+             "name": "hautelook/alice-bundle",
+             "version": "2.7.2",
+diff --git a/config/bundles.php b/config/bundles.php
+index 1cbd4d83..d271f9f6 100644
+--- a/config/bundles.php
++++ b/config/bundles.php
+@@ -16,4 +16,5 @@ return [
+     Hautelook\AliceBundle\HautelookAliceBundle::class => ['dev' => true, 'test' => true],
+     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
+     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
++    Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['all' => true],
+ ];
+diff --git a/symfony.lock b/symfony.lock
+index 362efca4..8e4ef28a 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -545,5 +545,8 @@
+     },
+     "zendframework/zend-eventmanager": {
+         "version": "3.2.1"
++    },
++    "zenstruck/foundry": {
++        "version": "v1.1.1"
+     }
+ }

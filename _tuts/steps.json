@@ -1131,6 +1131,46 @@
             "description": null
         },
         {
+            "id": "pre-ep3-fix-email-in-tests",
+            "name": "PRE_EP3: fix email in tests",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-install-foundry",
+            "name": "PRE_EP3: install Foundry",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-generate-factories",
+            "name": "PRE_EP3: generate factories",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-make-test-encoding-faster",
+            "name": "PRE_EP3: make test encoding faster",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-fill-in-factories",
+            "name": "PRE_EP3: fill in factories",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-use-foundry-in-tests",
+            "name": "PRE_EP3: use Foundry in tests",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-add-cheesenotification-entity",
+            "name": "PRE_EP3: add CheeseNotification entity",
+            "description": null
+        },
+        {
+            "id": "pre-ep3-factory-for-cheesenotification",
+            "name": "PRE_EP3: factory for CheeseNotification",
+            "description": null
+        },
+        {
             "id": "persisterdecoration-comment-out-persist",
             "name": "PersisterDecoration: comment out persist",
             "description": null
@@ -1141,8 +1181,8 @@
             "description": null
         },
         {
-            "id": "persisterdecoration-use-other-interface",
-            "name": "PersisterDecoration: use other interface",
+            "id": "delete-me-1",
+            "name": "delete me 1",
             "description": null
         },
         {
@@ -1156,6 +1196,16 @@
             "description": null
         },
         {
+            "id": "persisterdecoration-log-on-user-create",
+            "name": "PersisterDecoration: log on user create",
+            "description": null
+        },
+        {
+            "id": "persisterdecoration-add-context-interface",
+            "name": "PersisterDecoration: add context interface",
+            "description": null
+        },
+        {
             "id": "persisterdecoration-dd-context",
             "name": "PersisterDecoration: dd($context)",
             "description": null
@@ -1164,7 +1214,122 @@
             "id": "persisterdecoration-remove-dd",
             "name": "PersisterDecoration: remove dd",
             "description": null
+        },
+        {
+            "id": "statechangetest-bootstrap-test",
+            "name": "StateChangeTest: bootstrap test",
+            "description": null
+        },
+        {
+            "id": "statechangetest-expose-ispublished-for-write",
+            "name": "StateChangeTest: expose isPublished for write",
+            "description": null
+        },
+        {
+            "id": "statechangetest-test-for-notification",
+            "name": "StateChangeTest: test for notification",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-create-empty-persister",
+            "name": "StateChangeAction: create empty persister",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-inject-decorated",
+            "name": "StateChangeAction: inject decorated",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-call-decorated",
+            "name": "StateChangeAction: call decorated",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-add-phpdoc",
+            "name": "StateChangeAction: add phpdoc",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-check-if-ispublished",
+            "name": "StateChangeAction: check if isPublished",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-get-original-data",
+            "name": "StateChangeAction: get original data",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-insert-notification",
+            "name": "StateChangeAction: insert notification",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-check-originaldata",
+            "name": "StateChangeAction: check originalData",
+            "description": null
+        },
+        {
+            "id": "statechangeaction-log-something",
+            "name": "StateChangeAction: log something",
+            "description": null
+        },
+        {
+            "id": "statevalidation-add-long-text",
+            "name": "StateValidation: add long text",
+            "description": null
+        },
+        {
+            "id": "statevalidation-add-test",
+            "name": "StateValidation: add test",
+            "description": null
+        },
+        {
+            "id": "statevalidation-generate-validator",
+            "name": "StateValidation: generate validator",
+            "description": null
+        },
+        {
+            "id": "statevalidation-add-constraint",
+            "name": "StateValidation: add constraint",
+            "description": null
+        },
+        {
+            "id": "statevalidation-allow-on-class",
+            "name": "StateValidation: allow on class",
+            "description": null
+        },
+        {
+            "id": "statevalidation-dump-in-validator",
+            "name": "StateValidation: dump in validator",
+            "description": null
+        },
+        {
+            "id": "statevalidation-dump-original-data",
+            "name": "StateValidation: dump original data",
+            "description": null
+        },
+        {
+            "id": "statevalidation-do-not-allow-short-description",
+            "name": "StateValidation: do not allow short description",
+            "description": null
+        },
+        {
+            "id": "statevalidation-allow-admins-to-publish",
+            "name": "StateValidation: allow admins to publish",
+            "description": null
+        },
+        {
+            "id": "statevalidation-add-unpublish-logic",
+            "name": "StateValidation: add unpublish logic",
+            "description": null
+        },
+        {
+            "id": "statevalidation-show-accessdeniedexception",
+            "name": "StateValidation: show AccessDeniedException",
+            "description": null
         }
     ],
-    "sha": "53bc3d5983f972ef5d8ee0f76ba15a47a2b33e8b"
+    "sha": "7ad456e4627886d6381d91d8f0531e70347a1313"
 }

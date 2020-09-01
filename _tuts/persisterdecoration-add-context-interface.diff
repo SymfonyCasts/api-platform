@@ -1,24 +1,24 @@
 diff --git a/src/DataPersister/UserDataPersister.php b/src/DataPersister/UserDataPersister.php
-index 953e68a2..4cca1172 100644
+index a940cc64..ae93043a 100644
 --- a/src/DataPersister/UserDataPersister.php
 +++ b/src/DataPersister/UserDataPersister.php
-@@ -2,12 +2,12 @@
+@@ -2,12 +2,13 @@
  
  namespace App\DataPersister;
  
--use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 +use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
  use App\Entity\User;
- use Doctrine\ORM\EntityManagerInterface;
+ use Psr\Log\LoggerInterface;
  use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  
 -class UserDataPersister implements DataPersisterInterface
 +class UserDataPersister implements ContextAwareDataPersisterInterface
  {
-     private $entityManager;
+     private $decoratedDataPersister;
      private $userPasswordEncoder;
-@@ -18,7 +18,7 @@ class UserDataPersister implements DataPersisterInterface
-         $this->userPasswordEncoder = $userPasswordEncoder;
+@@ -20,7 +21,7 @@ class UserDataPersister implements DataPersisterInterface
+         $this->logger = $logger;
      }
  
 -    public function supports($data): bool
@@ -26,21 +26,21 @@ index 953e68a2..4cca1172 100644
      {
          return $data instanceof User;
      }
-@@ -26,7 +26,7 @@ class UserDataPersister implements DataPersisterInterface
+@@ -28,7 +29,7 @@ class UserDataPersister implements DataPersisterInterface
      /**
       * @param User $data
       */
 -    public function persist($data)
 +    public function persist($data, array $context = [])
      {
-         if ($data->getPlainPassword()) {
-             $data->setPassword(
-@@ -39,7 +39,7 @@ class UserDataPersister implements DataPersisterInterface
-         $this->entityManager->flush();
+         if (!$data->getId()) {
+             // take any actions needed for a new user
+@@ -47,7 +48,7 @@ class UserDataPersister implements DataPersisterInterface
+         return $this->decoratedDataPersister->persist($data);
      }
  
 -    public function remove($data)
 +    public function remove($data, array $context = [])
      {
-         $this->entityManager->remove($data);
-         $this->entityManager->flush();
+         $this->decoratedDataPersister->remove($data);
+     }

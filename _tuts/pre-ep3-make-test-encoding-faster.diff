@@ -1,0 +1,14 @@
+diff --git a/config/packages/test/security.yaml b/config/packages/test/security.yaml
+new file mode 100644
+index 00000000..5f68df4d
+--- /dev/null
++++ b/config/packages/test/security.yaml
+@@ -0,0 +1,8 @@
++security:
++    encoders:
++        App\Entity\User:
++            algorithm: auto
++            # settings to make hashing very fast on the test environment
++            cost: 4
++            time_cost: 3
++            memory_cost: 10

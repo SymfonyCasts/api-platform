@@ -1,0 +1,27 @@
+diff --git a/src/Validator/ValidIsPublished.php b/src/Validator/ValidIsPublished.php
+index 6dcfcd6b..9b81101e 100644
+--- a/src/Validator/ValidIsPublished.php
++++ b/src/Validator/ValidIsPublished.php
+@@ -2,10 +2,12 @@
+ 
+ namespace App\Validator;
+ 
++use Doctrine\Common\Annotations\Annotation\Target;
+ use Symfony\Component\Validator\Constraint;
+ 
+ /**
+  * @Annotation
++ * @Target({"CLASS"})
+  */
+ class ValidIsPublished extends Constraint
+ {
+@@ -14,4 +16,9 @@ class ValidIsPublished extends Constraint
+      * Then, use these in your validator class.
+      */
+     public $message = 'The value "{{ value }}" is not valid.';
++
++    public function getTargets()
++    {
++        return self::CLASS_CONSTRAINT;
++    }
+ }

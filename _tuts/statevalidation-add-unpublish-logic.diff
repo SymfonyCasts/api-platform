@@ -1,0 +1,19 @@
+diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
+index 8d95eac7..f9174fea 100644
+--- a/src/Validator/ValidIsPublishedValidator.php
++++ b/src/Validator/ValidIsPublishedValidator.php
+@@ -41,6 +41,14 @@ class ValidIsPublishedValidator extends ConstraintValidator
+                     ->atPath('description')
+                     ->addViolation();
+             }
++        } elseif (!$value->getIsPublished() && $wasAlreadyPublished) {
++            // we are UNpublishing
++
++            if (!$this->security->isGranted('ROLE_ADMIN')) {
++                $this->context->buildViolation('Only admin users can unpublish')
++                    ->atPath('description')
++                    ->addViolation();
++            }
+         }
+     }
+ }

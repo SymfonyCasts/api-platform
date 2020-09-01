@@ -1,0 +1,52 @@
+diff --git a/src/Validator/ValidIsPublished.php b/src/Validator/ValidIsPublished.php
+new file mode 100644
+index 00000000..6dcfcd6b
+--- /dev/null
++++ b/src/Validator/ValidIsPublished.php
+@@ -0,0 +1,17 @@
++<?php
++
++namespace App\Validator;
++
++use Symfony\Component\Validator\Constraint;
++
++/**
++ * @Annotation
++ */
++class ValidIsPublished extends Constraint
++{
++    /*
++     * Any public properties become valid options for the annotation.
++     * Then, use these in your validator class.
++     */
++    public $message = 'The value "{{ value }}" is not valid.';
++}
+diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
+new file mode 100644
+index 00000000..b54db6cc
+--- /dev/null
++++ b/src/Validator/ValidIsPublishedValidator.php
+@@ -0,0 +1,23 @@
++<?php
++
++namespace App\Validator;
++
++use Symfony\Component\Validator\Constraint;
++use Symfony\Component\Validator\ConstraintValidator;
++
++class ValidIsPublishedValidator extends ConstraintValidator
++{
++    public function validate($value, Constraint $constraint)
++    {
++        /* @var $constraint \App\Validator\ValidIsPublished */
++
++        if (null === $value || '' === $value) {
++            return;
++        }
++
++        // TODO: implement the validation here
++        $this->context->buildViolation($constraint->message)
++            ->setParameter('{{ value }}', $value)
++            ->addViolation();
++    }
++}
