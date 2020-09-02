@@ -1,0 +1,24 @@
+diff --git a/src/DataProvider/UserApiResourceDataProvider.php b/src/DataProvider/UserApiResourceDataProvider.php
+new file mode 100644
+index 00000000..ffda13db
+--- /dev/null
++++ b/src/DataProvider/UserApiResourceDataProvider.php
+@@ -0,0 +1,18 @@
++<?php
++
++namespace App\DataProvider;
++
++use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
++use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
++use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
++
++class UserApiResourceDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
++{
++    public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
++    {
++    }
++
++    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
++    {
++    }
++}

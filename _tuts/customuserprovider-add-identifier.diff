@@ -1,0 +1,40 @@
+diff --git a/src/ApiResource/UserApiResource.php b/src/ApiResource/UserApiResource.php
+index b6f9c6a3..b61200e0 100644
+--- a/src/ApiResource/UserApiResource.php
++++ b/src/ApiResource/UserApiResource.php
+@@ -3,6 +3,7 @@
+ namespace App\ApiResource;
+ 
+ use ApiPlatform\Core\Annotation\ApiFilter;
++use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+ use Symfony\Component\Serializer\Annotation\Groups;
+@@ -31,6 +32,11 @@ use Symfony\Component\Validator\Constraints as Assert;
+  */
+ class UserApiResource
+ {
++    /**
++     * @ApiProperty(identifier=true)
++     */
++    public $id;
++
+     /**
+      * @var string
+      * @Assert\NotBlank()
+diff --git a/src/DataProvider/UserApiResourceDataProvider.php b/src/DataProvider/UserApiResourceDataProvider.php
+index 36312d83..a23f3ae0 100644
+--- a/src/DataProvider/UserApiResourceDataProvider.php
++++ b/src/DataProvider/UserApiResourceDataProvider.php
+@@ -13,9 +13,11 @@ class UserApiResourceDataProvider implements ContextAwareCollectionDataProviderI
+     {
+         $user1 = new UserApiResource();
+         $user1->email = 'user@example.com';
++        $user1->id = 1;
+ 
+         $user2 = new UserApiResource();
+         $user2->email = 'user@example.com';
++        $user2->id = 2;
+ 
+         return [
+             $user1,

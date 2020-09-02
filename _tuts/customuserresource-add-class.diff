@@ -1,0 +1,19 @@
+diff --git a/src/ApiResource/UserApiResource.php b/src/ApiResource/UserApiResource.php
+new file mode 100644
+index 00000000..f06c2ad7
+--- /dev/null
++++ b/src/ApiResource/UserApiResource.php
+@@ -0,0 +1,13 @@
++<?php
++
++namespace App\ApiResource;
++
++use ApiPlatform\Core\Annotation\ApiResource;
++
++/**
++ * @ApiResource()
++ */
++class UserApiResource
++{
++
++}

@@ -1,0 +1,63 @@
+diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
+index 4c7175c4..d27aea3a 100644
+--- a/src/DataFixtures/AppFixtures.php
++++ b/src/DataFixtures/AppFixtures.php
+@@ -4,6 +4,8 @@ namespace App\DataFixtures;
+ 
+ use App\Entity\CheeseListing;
+ use App\Entity\User;
++use App\Factory\CheeseListingFactory;
++use App\Factory\UserFactory;
+ use Doctrine\Bundle\FixturesBundle\Fixture;
+ use Doctrine\Persistence\ObjectManager;
+ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+@@ -19,26 +21,28 @@ class AppFixtures extends Fixture
+ 
+     public function load(ObjectManager $manager)
+     {
+-        $user = new User();
+-        $user->setEmail('cheesefan@example.com');
+-        $user->setUsername('cheesefan');
+-        $user->setPassword($this->passwordEncoder->encodePassword($user, 'cheese'));
+-        $manager->persist($user);
+-
+-        $listing1 = new CheeseListing('Mysterious munster');
+-        $listing1->setDescription('Origin date: unknown. Actual origin... also unknown.');
+-        $listing1->setPrice(1500);
+-        $listing1->setOwner($user);
+-        $listing1->setIsPublished(true);
+-        $manager->persist($listing1);
+-
+-        $listing2 = new CheeseListing('Block of cheddar the size of your face!');
+-        $listing2->setDescription('When I drive it to your house, it will sit in the passenger seat of my car.');
+-        $listing2->setPrice(5000);
+-        $listing2->setOwner($user);
+-        $listing2->setIsPublished(true);
+-        $manager->persist($listing2);
+-
+-        $manager->flush();
++        $user = UserFactory::new()->create([
++            'email' => 'cheesefan@example.com',
++            'username' => 'cheesefan',
++            'password' => $this->passwordEncoder->encodePassword(new User(), 'cheese'),
++        ]);
++        UserFactory::new()->createMany(50);
++
++        $listingFactory = CheeseListingFactory::new([
++            'owner' => $user,
++        ])
++            ->published();
++
++        $listingFactory->create([
++            'title' => 'Mysterious munster',
++            'description' => 'Origin date: unknown. Actual origin... also unknown.',
++            'price' => 1500,
++        ]);
++
++        $listingFactory->create([
++            'title' => 'Block of cheddar the size of your face!',
++            'description' => 'When I drive it to your house, it will sit in the passenger seat of my car.',
++            'price' => 5000,
++        ]);
+     }
+ }

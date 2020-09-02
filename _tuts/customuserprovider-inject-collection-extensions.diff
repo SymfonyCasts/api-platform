@@ -1,0 +1,41 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index c13863c4..71bac8d9 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -44,3 +44,7 @@ services:
+     App\DataPersister\CheeseListingDataPersister:
+         bind:
+             $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'
++
++    App\DataProvider\UserApiResourceDataProvider:
++        bind:
++            $collectionExtensions: !tagged api_platform.doctrine.orm.query_extension.collection
+diff --git a/src/DataProvider/UserApiResourceDataProvider.php b/src/DataProvider/UserApiResourceDataProvider.php
+index e2ed0381..5fff2b30 100644
+--- a/src/DataProvider/UserApiResourceDataProvider.php
++++ b/src/DataProvider/UserApiResourceDataProvider.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\DataProvider;
+ 
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryResultCollectionExtensionInterface;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGenerator;
+ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
+@@ -13,10 +14,15 @@ use App\Repository\UserRepository;
+ class UserApiResourceDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
+ {
+     private $userRepository;
++    /**
++     * @var iterable<QueryCollectionExtensionInterface>
++     */
++    private $collectionExtensions;
+ 
+-    public function __construct(UserRepository $userRepository)
++    public function __construct(UserRepository $userRepository, iterable $collectionExtensions)
+     {
+         $this->userRepository = $userRepository;
++        $this->collectionExtensions = $collectionExtensions;
+     }
+ 
+     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])

@@ -1,0 +1,12 @@
+diff --git a/src/ApiResource/UserApiResource.php b/src/ApiResource/UserApiResource.php
+index b880f9e6..a4f4b497 100644
+--- a/src/ApiResource/UserApiResource.php
++++ b/src/ApiResource/UserApiResource.php
+@@ -31,6 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+ class UserApiResource
+ {
+     /**
++     * @var string
+      * @Groups({"user:read", "user:write"})
+      */
+     public $email;

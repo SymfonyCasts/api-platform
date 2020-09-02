@@ -1,0 +1,31 @@
+diff --git a/src/DataProvider/UserApiResourceDataProvider.php b/src/DataProvider/UserApiResourceDataProvider.php
+index ffda13db..36312d83 100644
+--- a/src/DataProvider/UserApiResourceDataProvider.php
++++ b/src/DataProvider/UserApiResourceDataProvider.php
+@@ -5,14 +5,26 @@ namespace App\DataProvider;
+ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
++use App\ApiResource\UserApiResource;
+ 
+ class UserApiResourceDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
+ {
+     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
+     {
++        $user1 = new UserApiResource();
++        $user1->email = 'user@example.com';
++
++        $user2 = new UserApiResource();
++        $user2->email = 'user@example.com';
++
++        return [
++            $user1,
++            $user2,
++        ];
+     }
+ 
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+     {
++        return $resourceClass === UserApiResource::class;
+     }
+ }

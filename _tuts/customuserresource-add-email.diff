@@ -1,0 +1,12 @@
+diff --git a/src/ApiResource/UserApiResource.php b/src/ApiResource/UserApiResource.php
+index 82c4132f..b6f9c6a3 100644
+--- a/src/ApiResource/UserApiResource.php
++++ b/src/ApiResource/UserApiResource.php
+@@ -34,6 +34,7 @@ class UserApiResource
+     /**
+      * @var string
+      * @Assert\NotBlank()
++     * @Assert\Email()
+      * @Groups({"user:read", "user:write"})
+      */
+     public $email;
