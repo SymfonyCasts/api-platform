@@ -1,0 +1,25 @@
+diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
+index 3a49c5c9..048f6af6 100644
+--- a/src/DataProvider/UserDataProvider.php
++++ b/src/DataProvider/UserDataProvider.php
+@@ -5,11 +5,20 @@ namespace App\DataProvider;
+ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use App\Entity\User;
++use App\Repository\UserRepository;
+ 
+ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
+ {
++    private $userRepository;
++
++    public function __construct(UserRepository $userRepository)
++    {
++        $this->userRepository = $userRepository;
++    }
++
+     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
+     {
++        return $this->userRepository->findAll();
+     }
+ 
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool

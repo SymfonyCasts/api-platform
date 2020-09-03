@@ -1,0 +1,13 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index b404c28b..889ea9aa 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -271,7 +271,7 @@ class User implements UserInterface
+         $this->isMe = $isMe;
+     }
+ 
+-    public function isMvp(): bool
++    public function getIsMvp(): bool
+     {
+         return $this->isMvp;
+     }

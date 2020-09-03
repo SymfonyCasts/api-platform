@@ -1334,7 +1334,137 @@
             "id": "statevalidation-show-accessdeniedexception",
             "name": "StateValidation: show AccessDeniedException",
             "description": null
+        },
+        {
+            "id": "userisme-add-test-for-isme",
+            "name": "UserIsMe: add test for isMe",
+            "description": null
+        },
+        {
+            "id": "userisme-remove-in-normalizer",
+            "name": "UserIsMe: remove in normalizer",
+            "description": null
+        },
+        {
+            "id": "userisme-empty-data-provider",
+            "name": "UserIsMe: empty data provider",
+            "description": null
+        },
+        {
+            "id": "userisme-fill-in-supports",
+            "name": "UserIsMe: fill in supports()",
+            "description": null
+        },
+        {
+            "id": "userisme-return-all-users",
+            "name": "UserIsMe: return all Users",
+            "description": null
+        },
+        {
+            "id": "userisme-decorate-collection-provider",
+            "name": "UserIsMe: decorate collection provider",
+            "description": null
+        },
+        {
+            "id": "userisme-inject-specific-provider",
+            "name": "UserIsMe: inject specific provider",
+            "description": null
+        },
+        {
+            "id": "userisme-add-isme-field",
+            "name": "UserIsMe: add isMe field",
+            "description": null
+        },
+        {
+            "id": "userisme-add-phpdoc",
+            "name": "UserIsMe: add phpdoc",
+            "description": null
+        },
+        {
+            "id": "userisme-check-for-null",
+            "name": "UserIsMe: check for null",
+            "description": null
+        },
+        {
+            "id": "userisme-dump-users",
+            "name": "UserIsMe: dump $users",
+            "description": null
+        },
+        {
+            "id": "userisme-populate-the-field",
+            "name": "UserIsMe: populate the field",
+            "description": null
+        },
+        {
+            "id": "userisme-populate-correctly",
+            "name": "UserIsMe: populate correctly",
+            "description": null
+        },
+        {
+            "id": "userisme-add-item-provider-interface",
+            "name": "UserIsMe: add item provider interface",
+            "description": null
+        },
+        {
+            "id": "userisme-decorate-core-provider",
+            "name": "UserIsMe: decorate core provider",
+            "description": null
+        },
+        {
+            "id": "userisme-populate-isme-in-item",
+            "name": "UserIsMe: populate isMe in item",
+            "description": null
+        },
+        {
+            "id": "userisme-populate-isme-in-data-persister",
+            "name": "UserIsMe: populate isMe in data persister",
+            "description": null
+        },
+        {
+            "id": "ismelistener-comment-out-other-code",
+            "name": "IsMeListener: comment-out other code",
+            "description": null
+        },
+        {
+            "id": "ismelistener-add-event-subscriber",
+            "name": "IsMeListener: Add Event Subscriber",
+            "description": null
+        },
+        {
+            "id": "ismelistener-add-logic",
+            "name": "IsMeListener: add logic",
+            "description": null
+        },
+        {
+            "id": "ismelistener-default-isme-to-false",
+            "name": "IsMeListener: default isMe to false",
+            "description": null
+        },
+        {
+            "id": "ismvplistener-add-field",
+            "name": "IsMvpListener: add field",
+            "description": null
+        },
+        {
+            "id": "ismvplistener-rename-method",
+            "name": "IsMvpListener: rename method",
+            "description": null
+        },
+        {
+            "id": "ismvplistener-update-test",
+            "name": "IsMvpListener: update test",
+            "description": null
+        },
+        {
+            "id": "ismvplistener-add-listener",
+            "name": "IsMvpListener: add listener",
+            "description": null
+        },
+        {
+            "id": "ismelistener-configure-lsitener",
+            "name": "IsMeListener: configure lsitener",
+            "description": null
         }
     ],
-    "sha": "7774a726448fa3a30e39347eb5a7246dc9a4f907"
+    "sha": "f91e02daa6d0bfbf9078d130e8acc39a10a9fea7"
 }

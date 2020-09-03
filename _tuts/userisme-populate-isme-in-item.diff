@@ -1,0 +1,22 @@
+diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
+index 94f740af..d4a42597 100644
+--- a/src/DataProvider/UserDataProvider.php
++++ b/src/DataProvider/UserDataProvider.php
+@@ -38,7 +38,16 @@ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, D
+ 
+     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
+     {
+-        return $this->itemDataProvider->getItem($resourceClass, $id, $operationName, $context);
++        /** @var User|null $item */
++        $item = $this->itemDataProvider->getItem($resourceClass, $id, $operationName, $context);
++
++        if (!$item) {
++            return null;
++        }
++
++        $item->setIsMe($this->security->getUser() === $item);
++
++        return $item;
+     }
+ 
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool

@@ -1,0 +1,12 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index c13863c4..b35af7db 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -44,3 +44,7 @@ services:
+     App\DataPersister\CheeseListingDataPersister:
+         bind:
+             $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'
++
++    App\DataProvider\UserDataProvider:
++        bind:
++            $collectionDataProvider: '@api_platform.doctrine.orm.default.collection_data_provider'

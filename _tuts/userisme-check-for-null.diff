@@ -1,0 +1,15 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index b9e46898..861fa8a1 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -257,6 +257,10 @@ class User implements UserInterface
+ 
+     public function getIsMe(): bool
+     {
++        if ($this->isMe === null) {
++            throw new \LogicException('The isMe field has not been initialized');
++        }
++
+         return $this->isMe;
+     }
+ 

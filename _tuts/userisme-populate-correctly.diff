@@ -1,0 +1,34 @@
+diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
+index 8e9180aa..dc4e2c0a 100644
+--- a/src/DataProvider/UserDataProvider.php
++++ b/src/DataProvider/UserDataProvider.php
+@@ -6,14 +6,17 @@ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use App\Entity\User;
++use Symfony\Component\Security\Core\Security;
+ 
+ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
+ {
+     private $collectionDataProvider;
++    private $security;
+ 
+-    public function __construct(CollectionDataProviderInterface $collectionDataProvider)
++    public function __construct(CollectionDataProviderInterface $collectionDataProvider, Security $security)
+     {
+         $this->collectionDataProvider = $collectionDataProvider;
++        $this->security = $security;
+     }
+ 
+     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
+@@ -21,8 +24,9 @@ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, R
+         /** @var User[] $users */
+         $users = $this->collectionDataProvider->getCollection($resourceClass, $operationName, $context);
+ 
++        $currentUser = $this->security->getUser();
+         foreach ($users as $user) {
+-            $user->setIsMe(true);
++            $user->setIsMe($currentUser === $user);
+         }
+ 
+         return $users;

@@ -1,0 +1,32 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 538b2311..b404c28b 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -99,6 +99,12 @@ class User implements UserInterface
+      */
+     private $isMe = false;
+ 
++    /**
++     * @var bool Returns true if this user is an MVP
++     * @Groups({"user:read"})
++     */
++    private $isMvp = false;
++
+     public function __construct()
+     {
+         $this->cheeseListings = new ArrayCollection();
+@@ -264,4 +270,14 @@ class User implements UserInterface
+     {
+         $this->isMe = $isMe;
+     }
++
++    public function isMvp(): bool
++    {
++        return $this->isMvp;
++    }
++
++    public function setIsMvp(bool $isMvp)
++    {
++        $this->isMvp = $isMvp;
++    }
+ }

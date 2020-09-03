@@ -1,0 +1,23 @@
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+index 047a1cb5..0b0b98d4 100644
+--- a/tests/Functional/UserResourceTest.php
++++ b/tests/Functional/UserResourceTest.php
+@@ -51,13 +51,17 @@ class UserResourceTest extends CustomApiTestCase
+     public function testGetUser()
+     {
+         $client = self::createClient();
+-        $user = UserFactory::new()->create(['phoneNumber' => '555.123.4567']);
++        $user = UserFactory::new()->create([
++            'phoneNumber' => '555.123.4567',
++            'username' => 'cheesehead',
++        ]);
+         $authenticatedUser = UserFactory::new()->create();
+         $this->logIn($client, $authenticatedUser);
+ 
+         $client->request('GET', '/api/users/'.$user->getId());
+         $this->assertJsonContains([
+             'username' => $user->getUsername(),
++            'isMvp' => true,
+         ]);
+ 
+         $data = $client->getResponse()->toArray();

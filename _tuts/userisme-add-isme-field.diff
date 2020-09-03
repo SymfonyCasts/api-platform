@@ -1,0 +1,31 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 52ef828d..5386af01 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -93,6 +93,11 @@ class User implements UserInterface
+      */
+     private $phoneNumber;
+ 
++    /**
++     * @Groups({"user:read"})
++     */
++    private $isMe;
++
+     public function __construct()
+     {
+         $this->cheeseListings = new ArrayCollection();
+@@ -248,4 +253,14 @@ class User implements UserInterface
+ 
+         return $this;
+     }
++
++    public function getIsMe(): bool
++    {
++        return $this->isMe;
++    }
++
++    public function setIsMe(bool $isMe)
++    {
++        $this->isMe = $isMe;
++    }
+ }

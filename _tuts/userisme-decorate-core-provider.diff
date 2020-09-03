@@ -1,0 +1,44 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index b35af7db..c9c5851a 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -48,3 +48,4 @@ services:
+     App\DataProvider\UserDataProvider:
+         bind:
+             $collectionDataProvider: '@api_platform.doctrine.orm.default.collection_data_provider'
++            $itemDataProvider: '@api_platform.doctrine.orm.default.item_data_provider'
+diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
+index 1716afc7..94f740af 100644
+--- a/src/DataProvider/UserDataProvider.php
++++ b/src/DataProvider/UserDataProvider.php
+@@ -5,6 +5,7 @@ namespace App\DataProvider;
+ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\DenormalizedIdentifiersAwareItemDataProviderInterface;
++use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use App\Entity\User;
+ use Symfony\Component\Security\Core\Security;
+@@ -12,11 +13,13 @@ use Symfony\Component\Security\Core\Security;
+ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, DenormalizedIdentifiersAwareItemDataProviderInterface, RestrictedDataProviderInterface
+ {
+     private $collectionDataProvider;
++    private $itemDataProvider;
+     private $security;
+ 
+-    public function __construct(CollectionDataProviderInterface $collectionDataProvider, Security $security)
++    public function __construct(CollectionDataProviderInterface $collectionDataProvider, ItemDataProviderInterface $itemDataProvider, Security $security)
+     {
+         $this->collectionDataProvider = $collectionDataProvider;
++        $this->itemDataProvider = $itemDataProvider;
+         $this->security = $security;
+     }
+ 
+@@ -35,6 +38,7 @@ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, D
+ 
+     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
+     {
++        return $this->itemDataProvider->getItem($resourceClass, $id, $operationName, $context);
+     }
+ 
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool

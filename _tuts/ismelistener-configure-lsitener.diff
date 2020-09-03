@@ -1,0 +1,26 @@
+diff --git a/config/services.yaml b/config/services.yaml
+index c9c5851a..3bee7a40 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -37,6 +37,9 @@ services:
+     App\Doctrine\CheeseListingSetOwnerListener:
+         tags: [doctrine.orm.entity_listener]
+ 
++    App\Doctrine\UserSetIsMvpListener:
++        tags: [doctrine.orm.entity_listener]
++
+     App\DataPersister\UserDataPersister:
+         bind:
+             $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 889ea9aa..b28d7c4b 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -35,6 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * @ApiFilter(PropertyFilter::class)
+  * @UniqueEntity(fields={"username"})
+  * @UniqueEntity(fields={"email"})
++ * @ORM\EntityListeners({"App\Doctrine\UserSetIsMvpListener"})
+  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+  */
+ class User implements UserInterface

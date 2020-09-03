@@ -1,0 +1,36 @@
+diff --git a/src/DataPersister/UserDataPersister.php b/src/DataPersister/UserDataPersister.php
+index f010e52d..8295a969 100644
+--- a/src/DataPersister/UserDataPersister.php
++++ b/src/DataPersister/UserDataPersister.php
+@@ -7,18 +7,21 @@ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
+ use App\Entity\User;
+ use Psr\Log\LoggerInterface;
+ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
++use Symfony\Component\Security\Core\Security;
+ 
+ class UserDataPersister implements ContextAwareDataPersisterInterface
+ {
+     private $decoratedDataPersister;
+     private $userPasswordEncoder;
+     private $logger;
++    private $security;
+ 
+-    public function __construct(DataPersisterInterface $decoratedDataPersister, UserPasswordEncoderInterface $userPasswordEncoder, LoggerInterface $logger)
++    public function __construct(DataPersisterInterface $decoratedDataPersister, UserPasswordEncoderInterface $userPasswordEncoder, LoggerInterface $logger, Security $security)
+     {
+         $this->decoratedDataPersister = $decoratedDataPersister;
+         $this->userPasswordEncoder = $userPasswordEncoder;
+         $this->logger = $logger;
++        $this->security = $security;
+     }
+ 
+     public function supports($data, array $context = []): bool
+@@ -49,6 +52,8 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
+             $data->eraseCredentials();
+         }
+ 
++        $data->setIsMe($this->security->getUser() === $data);
++
+         return $this->decoratedDataPersister->persist($data);
+     }
+ 

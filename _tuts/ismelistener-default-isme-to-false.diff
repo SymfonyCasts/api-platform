@@ -1,0 +1,24 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 861fa8a1..538b2311 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -97,7 +97,7 @@ class User implements UserInterface
+      * @var bool Returns true if this is the currently-authenticated user
+      * @Groups({"user:read"})
+      */
+-    private $isMe;
++    private $isMe = false;
+ 
+     public function __construct()
+     {
+@@ -257,10 +257,6 @@ class User implements UserInterface
+ 
+     public function getIsMe(): bool
+     {
+-        if ($this->isMe === null) {
+-            throw new \LogicException('The isMe field has not been initialized');
+-        }
+-
+         return $this->isMe;
+     }
+ 

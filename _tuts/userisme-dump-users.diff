@@ -1,0 +1,14 @@
+diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
+index 8ed7b9b0..3f5e1329 100644
+--- a/src/DataProvider/UserDataProvider.php
++++ b/src/DataProvider/UserDataProvider.php
+@@ -18,7 +18,8 @@ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, R
+ 
+     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
+     {
+-        return $this->collectionDataProvider->getCollection($resourceClass, $operationName, $context);
++        $users = $this->collectionDataProvider->getCollection($resourceClass, $operationName, $context);
++        dd($users);
+     }
+ 
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
