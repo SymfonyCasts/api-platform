@@ -1,0 +1,23 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+new file mode 100644
+index 00000000..e37edc1f
+--- /dev/null
++++ b/src/Entity/DailyStats.php
+@@ -0,0 +1,17 @@
++<?php
++
++namespace App\Entity;
++
++use ApiPlatform\Core\Annotation\ApiResource;
++
++/**
++ * @ApiResource()
++ */
++class DailyStats
++{
++    public $date;
++
++    public $totalVisitors;
++
++    public $mostPopularListings;
++}

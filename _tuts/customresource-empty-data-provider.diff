@@ -1,0 +1,23 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+new file mode 100644
+index 00000000..442cbbaf
+--- /dev/null
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -0,0 +1,17 @@
++<?php
++
++namespace App\DataProvider;
++
++use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
++use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
++
++class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
++{
++    public function getCollection(string $resourceClass, string $operationName = null)
++    {
++    }
++
++    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
++    {
++    }
++}

@@ -1,0 +1,36 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 0574982d..7d6e5107 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -5,9 +5,11 @@ namespace App\Entity;
+ use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Action\NotFoundAction;
++use Symfony\Component\Serializer\Annotation\Groups;
+ 
+ /**
+  * @ApiResource(
++ *     normalizationContext={"groups"={"daily-stats:read"}},
+  *     itemOperations={
+  *         "get"={
+  *             "method"="GET",
+@@ -21,10 +23,19 @@ use ApiPlatform\Core\Action\NotFoundAction;
+  */
+ class DailyStats
+ {
++    /**
++     * @Groups({"daily-stats:read"})
++     */
+     public $date;
+ 
++    /**
++     * @Groups({"daily-stats:read"})
++     */
+     public $totalVisitors;
+ 
++    /**
++     * @Groups({"daily-stats:read"})
++     */
+     public $mostPopularListings;
+ 
+     /**

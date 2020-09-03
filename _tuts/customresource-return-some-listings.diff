@@ -1,0 +1,63 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 03c20faa..8e9182fd 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -5,21 +5,32 @@ namespace App\DataProvider;
+ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use App\Entity\DailyStats;
++use App\Repository\CheeseListingRepository;
+ 
+ class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
+ {
++    private $cheeseListingRepository;
++
++    public function __construct(CheeseListingRepository $cheeseListingRepository)
++    {
++        $this->cheeseListingRepository = $cheeseListingRepository;
++    }
++
+     public function getCollection(string $resourceClass, string $operationName = null)
+     {
++        $listings = $this->cheeseListingRepository
++            ->findBy([], [], 10);
++
+         $stats = new DailyStats(
+             new \DateTime(),
+             1000,
+-            []
++            $this->getRandomItems($listings, 5)
+         );
+ 
+         $stats2 = new DailyStats(
+             new \DateTime('-1 day'),
+             2000,
+-            []
++            $this->getRandomItems($listings, 5)
+         );
+ 
+         return [$stats, $stats2];
+@@ -29,4 +40,23 @@ class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedD
+     {
+         return $resourceClass === DailyStats::class;
+     }
++
++    private function getRandomItems(array $items, int $max)
++    {
++        if ($max > count($items)) {
++            shuffle($items);
++
++            return $items;
++        }
++
++        $finalItems = [];
++        while (count($finalItems) < $max) {
++            $item = $items[array_rand($items)];
++            if (!in_array($item, $finalItems)) {
++                $finalItems[] = $item;
++            }
++        }
++
++        return $finalItems;
++    }
+ }

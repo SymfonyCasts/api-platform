@@ -1,0 +1,13 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index eca132f1..714f4e12 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -36,7 +36,7 @@ class DailyStats
+     /**
+      * The 5 most popular cheese listings from this date!
+      *
+-     * @var array<CheeseListing>
++     * @var array<CheeseListing>|CheeseListing[]
+      * @Groups({"daily-stats:read"})
+      */
+     public $mostPopularListings;

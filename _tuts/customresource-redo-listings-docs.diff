@@ -1,0 +1,19 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 3b5b2a32..eca132f1 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -36,13 +36,11 @@ class DailyStats
+     /**
+      * The 5 most popular cheese listings from this date!
+      *
++     * @var array<CheeseListing>
+      * @Groups({"daily-stats:read"})
+      */
+     public $mostPopularListings;
+ 
+-    /**
+-     * @param array|CheeseListing[] $mostPopularListings
+-     */
+     public function __construct(\DateTimeInterface $date, int $totalVisitors, array $mostPopularListings)
+     {
+         $this->date = $date;

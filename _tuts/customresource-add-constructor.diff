@@ -1,0 +1,49 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 0e4ea1a3..03c20faa 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -10,11 +10,19 @@ class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedD
+ {
+     public function getCollection(string $resourceClass, string $operationName = null)
+     {
+-        $stats = new DailyStats();
+-        $stats->date = new \DateTime();
+-        $stats->totalVisitors = 1000;
++        $stats = new DailyStats(
++            new \DateTime(),
++            1000,
++            []
++        );
+ 
+-        return [$stats];
++        $stats2 = new DailyStats(
++            new \DateTime('-1 day'),
++            2000,
++            []
++        );
++
++        return [$stats, $stats2];
+     }
+ 
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 7d6e5107..bae10211 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -38,6 +38,16 @@ class DailyStats
+      */
+     public $mostPopularListings;
+ 
++    /**
++     * @param array|CheeseListing[] $mostPopularListings
++     */
++    public function __construct(\DateTimeInterface $date, int $totalVisitors, array $mostPopularListings)
++    {
++        $this->date = $date;
++        $this->totalVisitors = $totalVisitors;
++        $this->mostPopularListings = $mostPopularListings;
++    }
++
+     /**
+      * @ApiProperty(identifier=true)
+      */

@@ -1,0 +1,25 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 47662ce4..0574982d 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -21,12 +21,17 @@ use ApiPlatform\Core\Action\NotFoundAction;
+  */
+ class DailyStats
+ {
+-    /**
+-     * @ApiProperty(identifier=true)
+-     */
+     public $date;
+ 
+     public $totalVisitors;
+ 
+     public $mostPopularListings;
++
++    /**
++     * @ApiProperty(identifier=true)
++     */
++    public function getDateString(): string
++    {
++        return $this->date->format('Y-m-d');
++    }
+ }

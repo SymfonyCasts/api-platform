@@ -1464,7 +1464,82 @@
             "id": "ismelistener-configure-lsitener",
             "name": "IsMeListener: configure lsitener",
             "description": null
+        },
+        {
+            "id": "customresource-create-dailystats",
+            "name": "CustomResource: Create DailyStats",
+            "description": null
+        },
+        {
+            "id": "customresource-customize-shortname",
+            "name": "CustomResource: customize shortName",
+            "description": null
+        },
+        {
+            "id": "customresource-customize-namer-instead",
+            "name": "CustomResource: customize namer instead",
+            "description": null
+        },
+        {
+            "id": "customresource-only-get-collection-op",
+            "name": "CustomResource: only get collection op",
+            "description": null
+        },
+        {
+            "id": "customresource-empty-data-provider",
+            "name": "CustomResource: empty data provider",
+            "description": null
+        },
+        {
+            "id": "customresource-return-dummy-dailystats",
+            "name": "CustomResource: return dummy DailyStats",
+            "description": null
+        },
+        {
+            "id": "customresource-add-item-with-404",
+            "name": "CustomResource: add item with 404",
+            "description": null
+        },
+        {
+            "id": "customresource-set-identifier-to-date",
+            "name": "CustomResource: set identifier to date",
+            "description": null
+        },
+        {
+            "id": "customresource-add-getter-for-identifier",
+            "name": "CustomResource: add getter for identifier",
+            "description": null
+        },
+        {
+            "id": "customresource-add-normalization-groups",
+            "name": "CustomResource: add normalization groups",
+            "description": null
+        },
+        {
+            "id": "customresource-add-constructor",
+            "name": "CustomResource: add constructor",
+            "description": null
+        },
+        {
+            "id": "customresource-description-on-prop",
+            "name": "CustomResource: Description on prop",
+            "description": null
+        },
+        {
+            "id": "customresource-return-some-listings",
+            "name": "CustomResource: return some listings",
+            "description": null
+        },
+        {
+            "id": "customresource-redo-listings-docs",
+            "name": "CustomResource: redo listings docs",
+            "description": null
+        },
+        {
+            "id": "customresource-help-my-editor",
+            "name": "CustomResource: help my editor",
+            "description": null
         }
     ],
-    "sha": "f91e02daa6d0bfbf9078d130e8acc39a10a9fea7"
+    "sha": "458a2216fd30da8c9b6839bd71db493d074062ab"
 }

@@ -1,0 +1,24 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index cb762ea4..b67f1184 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -3,10 +3,18 @@
+ namespace App\Entity;
+ 
+ use ApiPlatform\Core\Annotation\ApiResource;
++use ApiPlatform\Core\Action\NotFoundAction;
+ 
+ /**
+  * @ApiResource(
+- *      itemOperations={},
++ *     itemOperations={
++ *         "get"={
++ *             "method"="GET",
++ *             "controller"=NotFoundAction::class,
++ *             "read"=false,
++ *             "output"=false,
++ *         },
++ *     },
+  *      collectionOperations={"get"}
+  * )
+  */

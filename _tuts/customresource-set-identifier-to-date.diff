@@ -1,0 +1,22 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index b67f1184..47662ce4 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Entity;
+ 
++use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Action\NotFoundAction;
+ 
+@@ -20,6 +21,9 @@ use ApiPlatform\Core\Action\NotFoundAction;
+  */
+ class DailyStats
+ {
++    /**
++     * @ApiProperty(identifier=true)
++     */
+     public $date;
+ 
+     public $totalVisitors;
