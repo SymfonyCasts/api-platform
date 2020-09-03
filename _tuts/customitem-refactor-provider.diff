@@ -1,0 +1,273 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 6b4a0b98..b4fce518 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -8,34 +8,20 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
+ use App\Entity\DailyStats;
+ use App\Repository\CheeseListingRepository;
++use App\Service\StatsHelper;
+ 
+ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataProviderInterface, RestrictedDataProviderInterface
+ {
+-    private $cheeseListingRepository;
++    private $statsHelper;
+ 
+-    public function __construct(CheeseListingRepository $cheeseListingRepository)
++    public function __construct(StatsHelper $statsHelper)
+     {
+-        $this->cheeseListingRepository = $cheeseListingRepository;
++        $this->statsHelper = $statsHelper;
+     }
+ 
+     public function getCollection(string $resourceClass, string $operationName = null)
+     {
+-        $listings = $this->cheeseListingRepository
+-            ->findBy([], [], 5);
+-
+-        $stats = new DailyStats(
+-            new \DateTime(),
+-            1000,
+-            $listings
+-        );
+-
+-        $stats2 = new DailyStats(
+-            new \DateTime('-1 day'),
+-            2000,
+-            $listings
+-        );
+-
+-        return [$stats, $stats2];
++        return $this->statsHelper->fetchMany();
+     }
+ 
+     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
+diff --git a/src/Service/StatsHelper.php b/src/Service/StatsHelper.php
+new file mode 100644
+index 00000000..a1a4a2ef
+--- /dev/null
++++ b/src/Service/StatsHelper.php
+@@ -0,0 +1,93 @@
++<?php
++
++namespace App\Service;
++
++use App\Entity\DailyStats;
++use App\Repository\CheeseListingRepository;
++
++class StatsHelper
++{
++    private $cheeseListingRepository;
++
++    public function __construct(CheeseListingRepository $cheeseListingRepository)
++    {
++        $this->cheeseListingRepository = $cheeseListingRepository;
++    }
++
++    /**
++     * @return array|DailyStats[]
++     */
++    public function fetchMany(int $limit = null, int $offset = null)
++    {
++        $i = 0;
++        $stats = [];
++        foreach ($this->fetchStatsData() as $statData) {
++            $i++;
++            if ($offset >= $i) {
++
++                continue;
++            }
++
++            $dateString = $statData['date'];
++            $stats[$dateString] = $this->createStatsObject($statData);
++
++            if (count($stats) >= $limit) {
++                break;
++            }
++        }
++
++        return $stats;
++    }
++
++    public function fetchOne(string $date): ?DailyStats
++    {
++        foreach ($this->fetchStatsData() as $statData) {
++            if ($statData['date'] === $date) {
++                return $this->createStatsObject($statData);
++            }
++        }
++    }
++
++    public function count(): int
++    {
++        return count($this->fetchStatsData());
++    }
++
++    private function fetchStatsData(): array
++    {
++        $statsData = json_decode(file_get_contents(__DIR__.'/fake_stats.json'), true);
++
++        return $statsData['stats'];
++    }
++
++    private function getRandomItems(array $items, int $max)
++    {
++        if ($max > count($items)) {
++            shuffle($items);
++
++            return $items;
++        }
++
++        $finalItems = [];
++        while (count($finalItems) < $max) {
++            $item = $items[array_rand($items)];
++            if (!in_array($item, $finalItems)) {
++                $finalItems[] = $item;
++            }
++        }
++
++        return $finalItems;
++    }
++
++    private function createStatsObject(array $statData): DailyStats
++    {
++        $listings = $this->cheeseListingRepository
++            ->findBy([], [], 10);
++
++        return new DailyStats(
++            new \DateTimeImmutable($statData['date']),
++            $statData['visitors'],
++            $this->getRandomItems($listings, 5)
++        );
++    }
++}
+diff --git a/src/Service/fake_stats.json b/src/Service/fake_stats.json
+new file mode 100644
+index 00000000..f55d8aa2
+--- /dev/null
++++ b/src/Service/fake_stats.json
+@@ -0,0 +1,124 @@
++{
++    "stats": [
++        {
++            "date": "2020-09-03",
++            "visitors": 1500
++        },
++        {
++            "date": "2020-09-02",
++            "visitors": 2435
++        },
++        {
++            "date": "2020-09-01",
++            "visitors": 4853
++        },
++        {
++            "date": "2020-08-31",
++            "visitors": 1942
++        },
++        {
++            "date": "2020-08-30",
++            "visitors": 4323
++        },
++        {
++            "date": "2020-08-29",
++            "visitors": 2969
++        },
++        {
++            "date": "2020-08-28",
++            "visitors": 4929
++        },
++        {
++            "date": "2020-08-27",
++            "visitors": 1949
++        },
++        {
++            "date": "2020-08-26",
++            "visitors": 2834
++        },
++        {
++            "date": "2020-08-25",
++            "visitors": 3949
++        },
++        {
++            "date": "2020-08-24",
++            "visitors": 2632
++        },
++        {
++            "date": "2020-08-23",
++            "visitors": 2213
++        },
++        {
++            "date": "2020-08-22",
++            "visitors": 2250
++        },
++        {
++            "date": "2020-08-21",
++            "visitors": 3567
++        },
++        {
++            "date": "2020-08-20",
++            "visitors": 3710
++        },
++        {
++            "date": "2020-08-19",
++            "visitors": 3310
++        },
++        {
++            "date": "2020-08-18",
++            "visitors": 4034
++        },
++        {
++            "date": "2020-08-17",
++            "visitors": 3453
++        },
++        {
++            "date": "2020-08-16",
++            "visitors": 2346
++        },
++        {
++            "date": "2020-08-15",
++            "visitors": 3567
++        },
++        {
++            "date": "2020-08-14",
++            "visitors": 2020
++        },
++        {
++            "date": "2020-08-13",
++            "visitors": 3923
++        },
++        {
++            "date": "2020-08-12",
++            "visitors": 3944
++        },
++        {
++            "date": "2020-08-11",
++            "visitors": 3244
++        },
++        {
++            "date": "2020-08-10",
++            "visitors": 4566
++        },
++        {
++            "date": "2020-08-09",
++            "visitors": 5321
++        },
++        {
++            "date": "2020-08-08",
++            "visitors": 5499
++        },
++        {
++            "date": "2020-08-07",
++            "visitors": 5422
++        },
++        {
++            "date": "2020-08-06",
++            "visitors": 5683
++        },
++        {
++            "date": "2020-08-05",
++            "visitors": 5662
++        }
++    ]
++}

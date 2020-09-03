@@ -1,0 +1,38 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+index 623a255e..dfa391db 100644
+--- a/src/DataProvider/DailyStatsPaginator.php
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -7,12 +7,16 @@ use App\Service\StatsHelper;
+ 
+ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+ {
+-    private $statsHelper;
+     private $dailyStatsIterator;
++    private $statsHelper;
++    private $currentPage;
++    private $maxResults;
+ 
+-    public function __construct(StatsHelper $statsHelper)
++    public function __construct(StatsHelper $statsHelper, int $currentPage, int $maxResults)
+     {
+         $this->statsHelper = $statsHelper;
++        $this->currentPage = $currentPage;
++        $this->maxResults = $maxResults;
+     }
+ 
+     public function getLastPage(): float
+@@ -27,12 +31,12 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+ 
+     public function getCurrentPage(): float
+     {
+-        return 1;
++        return $this->currentPage;
+     }
+ 
+     public function getItemsPerPage(): float
+     {
+-        return 10;
++        return $this->maxResults;
+     }
+ 
+     public function count()

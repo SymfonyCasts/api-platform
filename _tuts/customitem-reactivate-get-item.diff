@@ -1,0 +1,18 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 714f4e12..5ccea78f 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -11,12 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  * @ApiResource(
+  *     normalizationContext={"groups"={"daily-stats:read"}},
+  *     itemOperations={
+- *         "get"={
+- *             "method"="GET",
+- *             "controller"=NotFoundAction::class,
+- *             "read"=false,
+- *             "output"=false,
+- *         },
++ *         "get",
+  *     },
+  *      collectionOperations={"get"}
+  * )

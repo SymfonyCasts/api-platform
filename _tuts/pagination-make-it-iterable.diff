@@ -1,0 +1,31 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+index 99cbaec2..90b255e5 100644
+--- a/src/DataProvider/DailyStatsPaginator.php
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -4,8 +4,10 @@ namespace App\DataProvider;
+ 
+ use ApiPlatform\Core\DataProvider\PaginatorInterface;
+ 
+-class DailyStatsPaginator implements PaginatorInterface
++class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+ {
++    private $dailyStatsIterator;
++
+     public function getLastPage(): float
+     {
+         return 2;
+@@ -30,4 +32,14 @@ class DailyStatsPaginator implements PaginatorInterface
+     {
+         return $this->getTotalItems();
+     }
++
++    public function getIterator()
++    {
++        if ($this->dailyStatsIterator === null) {
++            // todo - actually go "load" the stats
++            $this->dailyStatsIterator = new \ArrayIterator([]);
++        }
++
++        return $this->dailyStatsIterator;
++    }
+ }

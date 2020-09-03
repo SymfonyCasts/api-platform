@@ -1,0 +1,48 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+index 90b255e5..623a255e 100644
+--- a/src/DataProvider/DailyStatsPaginator.php
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -3,11 +3,18 @@
+ namespace App\DataProvider;
+ 
+ use ApiPlatform\Core\DataProvider\PaginatorInterface;
++use App\Service\StatsHelper;
+ 
+ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+ {
++    private $statsHelper;
+     private $dailyStatsIterator;
+ 
++    public function __construct(StatsHelper $statsHelper)
++    {
++        $this->statsHelper = $statsHelper;
++    }
++
+     public function getLastPage(): float
+     {
+         return 2;
+@@ -36,8 +43,9 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+     public function getIterator()
+     {
+         if ($this->dailyStatsIterator === null) {
+-            // todo - actually go "load" the stats
+-            $this->dailyStatsIterator = new \ArrayIterator([]);
++            $this->dailyStatsIterator = new \ArrayIterator(
++                $this->statsHelper->fetchMany()
++            );
+         }
+ 
+         return $this->dailyStatsIterator;
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 62b9990a..7c0c6582 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -21,7 +21,7 @@ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataPro
+ 
+     public function getCollection(string $resourceClass, string $operationName = null)
+     {
+-        return new DailyStatsPaginator();
++        return new DailyStatsPaginator($this->statsHelper);
+     }
+ 
+     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])

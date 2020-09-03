@@ -1,0 +1,12 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 5ccea78f..ab037bc5 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+ /**
+  * @ApiResource(
+  *     normalizationContext={"groups"={"daily-stats:read"}},
++ *     paginationItemsPerPage=7,
+  *     itemOperations={
+  *         "get",
+  *     },

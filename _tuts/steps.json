@@ -1176,6 +1176,11 @@
             "description": null
         },
         {
+            "id": "pre-ep3-adding-tutorial-fake-stats",
+            "name": "PRE_EP3: adding tutorial fake stats",
+            "description": null
+        },
+        {
             "id": "persisterdecoration-comment-out-persist",
             "name": "PersisterDecoration: comment out persist",
             "description": null
@@ -1539,7 +1544,82 @@
             "id": "customresource-help-my-editor",
             "name": "CustomResource: help my editor",
             "description": null
+        },
+        {
+            "id": "customitem-reactivate-get-item",
+            "name": "CustomItem: reactivate get item",
+            "description": null
+        },
+        {
+            "id": "customitem-add-item-provider-interface",
+            "name": "CustomItem: add item provider interface",
+            "description": null
+        },
+        {
+            "id": "customitem-refactor-provider",
+            "name": "CustomItem: refactor provider",
+            "description": null
+        },
+        {
+            "id": "customitem-dump-id",
+            "name": "CustomItem: dump id",
+            "description": null
+        },
+        {
+            "id": "customitem-finish-getitem",
+            "name": "CustomItem: finish getItem()",
+            "description": null
+        },
+        {
+            "id": "pagination-create-dailystatspaginator",
+            "name": "Pagination: create DailyStatsPaginator",
+            "description": null
+        },
+        {
+            "id": "pagination-fill-in-dummy-values",
+            "name": "Pagination: fill in dummy values",
+            "description": null
+        },
+        {
+            "id": "pagination-return-paginator-object",
+            "name": "Pagination: return paginator object",
+            "description": null
+        },
+        {
+            "id": "pagination-make-it-iterable",
+            "name": "Pagination: make it iterable",
+            "description": null
+        },
+        {
+            "id": "pagination-move-stats-loading-logic",
+            "name": "Pagination: move stats loading logic",
+            "description": null
+        },
+        {
+            "id": "pagination-pass-current-max-per-page",
+            "name": "Pagination: pass current & max per page",
+            "description": null
+        },
+        {
+            "id": "pagination-use-limit-offset-in-results",
+            "name": "Pagination: use limit\/offset in results",
+            "description": null
+        },
+        {
+            "id": "pagination-pass-in-arguments",
+            "name": "Pagination: pass in arguments",
+            "description": null
+        },
+        {
+            "id": "pagination-inject-pagination-object",
+            "name": "Pagination: Inject Pagination object",
+            "description": null
+        },
+        {
+            "id": "pagination-limit-to-7-per-page",
+            "name": "Pagination: limit to 7 per page",
+            "description": null
         }
     ],
-    "sha": "458a2216fd30da8c9b6839bd71db493d074062ab"
+    "sha": "a09abb63bd717d44892c44011fb2794bb13e1a1b"
 }

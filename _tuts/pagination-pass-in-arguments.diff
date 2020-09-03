@@ -1,0 +1,17 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 7c0c6582..94a407e6 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -21,7 +21,11 @@ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataPro
+ 
+     public function getCollection(string $resourceClass, string $operationName = null)
+     {
+-        return new DailyStatsPaginator($this->statsHelper);
++        return new DailyStatsPaginator(
++            $this->statsHelper,
++            1,
++            3
++        );
+     }
+ 
+     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])

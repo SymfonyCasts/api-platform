@@ -1,0 +1,34 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+new file mode 100644
+index 00000000..c7f7107c
+--- /dev/null
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -0,0 +1,28 @@
++<?php
++
++namespace App\DataProvider;
++
++use ApiPlatform\Core\DataProvider\PaginatorInterface;
++
++class DailyStatsPaginator implements PaginatorInterface
++{
++    public function getLastPage(): float
++    {
++    }
++
++    public function getTotalItems(): float
++    {
++    }
++
++    public function getCurrentPage(): float
++    {
++    }
++
++    public function getItemsPerPage(): float
++    {
++    }
++
++    public function count()
++    {
++    }
++}

@@ -1,0 +1,31 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+index c7f7107c..99cbaec2 100644
+--- a/src/DataProvider/DailyStatsPaginator.php
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -8,21 +8,26 @@ class DailyStatsPaginator implements PaginatorInterface
+ {
+     public function getLastPage(): float
+     {
++        return 2;
+     }
+ 
+     public function getTotalItems(): float
+     {
++        return 25;
+     }
+ 
+     public function getCurrentPage(): float
+     {
++        return 1;
+     }
+ 
+     public function getItemsPerPage(): float
+     {
++        return 10;
+     }
+ 
+     public function count()
+     {
++        return $this->getTotalItems();
+     }
+ }

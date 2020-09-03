@@ -1,0 +1,31 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 24df4d66..6b4a0b98 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -3,11 +3,13 @@
+ namespace App\DataProvider;
+ 
+ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
++use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
++use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
+ use App\Entity\DailyStats;
+ use App\Repository\CheeseListingRepository;
+ 
+-class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
++class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataProviderInterface, RestrictedDataProviderInterface
+ {
+     private $cheeseListingRepository;
+ 
+@@ -36,6 +38,11 @@ class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedD
+         return [$stats, $stats2];
+     }
+ 
++    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
++    {
++
++    }
++
+     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+     {
+         return $resourceClass === DailyStats::class;

@@ -1,0 +1,34 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+index dfa391db..8492a69a 100644
+--- a/src/DataProvider/DailyStatsPaginator.php
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -21,12 +21,12 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+ 
+     public function getLastPage(): float
+     {
+-        return 2;
++        return ceil($this->getTotalItems() / $this->getItemsPerPage()) ?: 1.;
+     }
+ 
+     public function getTotalItems(): float
+     {
+-        return 25;
++        return $this->statsHelper->count();
+     }
+ 
+     public function getCurrentPage(): float
+@@ -47,8 +47,13 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+     public function getIterator()
+     {
+         if ($this->dailyStatsIterator === null) {
++            $offset = (($this->getCurrentPage() - 1) * $this->getItemsPerPage());
++
+             $this->dailyStatsIterator = new \ArrayIterator(
+-                $this->statsHelper->fetchMany()
++                $this->statsHelper->fetchMany(
++                    $this->getItemsPerPage(),
++                    $offset
++                )
+             );
+         }
+ 
