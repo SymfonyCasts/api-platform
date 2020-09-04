@@ -1,0 +1,26 @@
+diff --git a/src/DataTransformer/CheeseListingOutputDataTransformer.php b/src/DataTransformer/CheeseListingOutputDataTransformer.php
+new file mode 100644
+index 00000000..51635ce7
+--- /dev/null
++++ b/src/DataTransformer/CheeseListingOutputDataTransformer.php
+@@ -0,0 +1,20 @@
++<?php
++
++namespace App\DataTransformer;
++
++use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
++use App\Dto\CheeseListingOutput;
++use App\Entity\CheeseListing;
++
++class CheeseListingOutputDataTransformer implements DataTransformerInterface
++{
++    public function transform($object, string $to, array $context = [])
++    {
++
++    }
++
++    public function supportsTransformation($data, string $to, array $context = []): bool
++    {
++
++    }
++}

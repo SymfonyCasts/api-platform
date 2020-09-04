@@ -1,0 +1,56 @@
+diff --git a/src/DataTransformer/CheeseListingInputDataTransformer.php b/src/DataTransformer/CheeseListingInputDataTransformer.php
+index f1a4961e..7d8f19f4 100644
+--- a/src/DataTransformer/CheeseListingInputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingInputDataTransformer.php
+@@ -14,17 +14,9 @@ class CheeseListingInputDataTransformer implements DataTransformerInterface
+      */
+     public function transform($input, string $to, array $context = [])
+     {
+-        if (isset($context[AbstractItemNormalizer::OBJECT_TO_POPULATE])) {
+-            $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE];
+-        } else {
+-            $cheeseListing = new CheeseListing($input->title);
+-        }
+-
+-        $cheeseListing->setDescription($input->description);
+-        $cheeseListing->setPrice($input->price);
+-        $cheeseListing->setOwner($input->owner);
++        $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
+ 
+-        return $cheeseListing;
++        return $input->createOrUpdateEntity($cheeseListing);
+     }
+ 
+     public function supportsTransformation($data, string $to, array $context = []): bool
+diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
+index 9c2a307e..398e0734 100644
+--- a/src/Dto/CheeseListingInput.php
++++ b/src/Dto/CheeseListingInput.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Dto;
+ 
++use App\Entity\CheeseListing;
+ use App\Entity\User;
+ use Symfony\Component\Serializer\Annotation\Groups;
+ use Symfony\Component\Serializer\Annotation\SerializedName;
+@@ -28,6 +29,19 @@ class CheeseListingInput
+ 
+     public $description;
+ 
++    public function createOrUpdateEntity(?CheeseListing $cheeseListing): CheeseListing
++    {
++        if (!$cheeseListing) {
++            $cheeseListing = new CheeseListing($this->title);
++        }
++
++        $cheeseListing->setDescription($this->description);
++        $cheeseListing->setPrice($this->price);
++        $cheeseListing->setOwner($this->owner);
++
++        return $cheeseListing;
++    }
++
+     /**
+      * The description of the cheese as raw text.
+      *

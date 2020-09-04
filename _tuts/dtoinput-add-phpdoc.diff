@@ -1,0 +1,19 @@
+diff --git a/src/DataTransformer/CheeseListingInputDataTransformer.php b/src/DataTransformer/CheeseListingInputDataTransformer.php
+index 43d8e51c..3015b7a0 100644
+--- a/src/DataTransformer/CheeseListingInputDataTransformer.php
++++ b/src/DataTransformer/CheeseListingInputDataTransformer.php
+@@ -8,9 +8,12 @@ use App\Entity\CheeseListing;
+ 
+ class CheeseListingInputDataTransformer implements DataTransformerInterface
+ {
+-    public function transform($object, string $to, array $context = [])
++    /**
++     * @param CheeseListingInput $input
++     */
++    public function transform($input, string $to, array $context = [])
+     {
+-        dump($object, $to, $context);
++        dump($input, $to, $context);
+ 
+         return new CheeseListing();
+     }

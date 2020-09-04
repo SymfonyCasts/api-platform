@@ -19,20 +19,26 @@ index 0e83359a..5aabf960 100644
              // php bin/console security:encode-password --env=test
              'password' => '$argon2id$v=19$m=10,t=3,p=1$eyXPWiQFWUO901E78Bb3UQ$hyu9dFDz7fo2opQyCSoX/NfJDvEpzER/a+WbiAagqqw',
 diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
-index c427dd2f..9860f176 100644
+index c427dd2f..c361d431 100644
 --- a/src/Test/CustomApiTestCase.php
 +++ b/src/Test/CustomApiTestCase.php
-@@ -5,7 +5,9 @@ namespace App\Test;
+@@ -5,10 +5,15 @@ namespace App\Test;
  use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
  use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
  use App\Entity\User;
 +use App\Factory\UserFactory;
  use Doctrine\ORM\EntityManagerInterface;
 +use Zenstruck\Foundry\Proxy;
++use Zenstruck\Foundry\Test\Factories;
  
  class CustomApiTestCase extends ApiTestCase
  {
-@@ -26,8 +28,20 @@ class CustomApiTestCase extends ApiTestCase
++    use Factories;
++
+     protected function createUser(string $email, string $password): User
+     {
+         $user = new User();
+@@ -26,8 +31,20 @@ class CustomApiTestCase extends ApiTestCase
          return $user;
      }
  
@@ -54,7 +60,7 @@ index c427dd2f..9860f176 100644
          $client->request('POST', '/login', [
              'json' => [
                  'email' => $email,
-@@ -37,15 +51,6 @@ class CustomApiTestCase extends ApiTestCase
+@@ -37,15 +54,6 @@ class CustomApiTestCase extends ApiTestCase
          $this->assertResponseStatusCodeSame(204);
      }
  

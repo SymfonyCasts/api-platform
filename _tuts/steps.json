@@ -1341,6 +1341,11 @@
             "description": null
         },
         {
+            "id": "statevalidation-comment-out-access-denied",
+            "name": "StateValidation: comment out access denied",
+            "description": null
+        },
+        {
             "id": "userisme-add-test-for-isme",
             "name": "UserIsMe: add test for isMe",
             "description": null
@@ -1804,7 +1809,222 @@
             "id": "entityfilteroption-add-uselike",
             "name": "EntityFilterOption: add useLike",
             "description": null
+        },
+        {
+            "id": "dtooutput-create-basic-cheeselistingoutput",
+            "name": "DTOOutput: Create basic CheeseListingOutput",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-output",
+            "name": "DTOOutput: add output=",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-empty-transformer",
+            "name": "DTOOutput: add empty transformer",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-supports",
+            "name": "DTOOutput: add supports()",
+            "description": null
+        },
+        {
+            "id": "dtooutput-basic-transform",
+            "name": "DTOOutput: basic transform()",
+            "description": null
+        },
+        {
+            "id": "dtooutput-give-field-groups",
+            "name": "DTOOutput: give field @Groups",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-string-field-type",
+            "name": "DTOOutput: add string field type",
+            "description": null
+        },
+        {
+            "id": "dtooutput-move-to-var",
+            "name": "DTOOutput: move to @var",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-more-fields",
+            "name": "DTOOutput: add more fields",
+            "description": null
+        },
+        {
+            "id": "dtooutput-copy-exposed-getter",
+            "name": "DTOOutput: copy exposed getter",
+            "description": null
+        },
+        {
+            "id": "dtooutput-copy-other-method",
+            "name": "DTOOutput: copy other method",
+            "description": null
+        },
+        {
+            "id": "dtooutput-add-createdat-field",
+            "name": "DTOOutput: add createdAt field",
+            "description": null
+        },
+        {
+            "id": "dtoownerprop-add-owner",
+            "name": "DTOOwnerProp: add owner",
+            "description": null
+        },
+        {
+            "id": "dtoownerprop-fix-usernormalizer",
+            "name": "DTOOwnerProp: fix UserNormalizer",
+            "description": null
+        },
+        {
+            "id": "dtoownerprop-fix-test",
+            "name": "DTOOwnerProp: fix test",
+            "description": null
+        },
+        {
+            "id": "dtonormalizeissue-add-readablelink",
+            "name": "DTONormalizeIssue: add readableLink",
+            "description": null
+        },
+        {
+            "id": "dtonormalizeissue-remove-readablelink",
+            "name": "DTONormalizeIssue: remove readableLink",
+            "description": null
+        },
+        {
+            "id": "dtonormalizeissue-add-user-read-groups",
+            "name": "DTONormalizeIssue: add user:read groups",
+            "description": null
+        },
+        {
+            "id": "dtonormalizeissue-remove-extra-groups",
+            "name": "DTONormalizeIssue: remove extra groups",
+            "description": null
+        },
+        {
+            "id": "dtoinput-create-class-with-props",
+            "name": "DTOInput: create class with props",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-class",
+            "name": "DTOInput: add class=",
+            "description": null
+        },
+        {
+            "id": "dtoinput-empty-transformer",
+            "name": "DTOInput: empty transformer",
+            "description": null
+        },
+        {
+            "id": "dtoinput-dump-arguments",
+            "name": "DTOInput: dump arguments",
+            "description": null
+        },
+        {
+            "id": "dtoinput-install-debug",
+            "name": "DTOInput: install debug",
+            "description": null
+        },
+        {
+            "id": "dtoinput-fill-in-supports",
+            "name": "DTOInput: fill in supports()",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-phpdoc",
+            "name": "DTOInput: add phpdoc",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-var-user",
+            "name": "DTOInput: add @var User",
+            "description": null
+        },
+        {
+            "id": "dtoinput-add-var-for-other-props",
+            "name": "DTOInput: add @var for other props",
+            "description": null
+        },
+        {
+            "id": "dtoinput-complete-transform",
+            "name": "DTOInput: complete transform()",
+            "description": null
+        },
+        {
+            "id": "dtoinput-make-it-work-for-updates",
+            "name": "DTOInput: make it work for updates",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-empty-denormalizer",
+            "name": "DTOUpdate: empty denormalizer",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-fill-in-supports",
+            "name": "DTOUpdate: fill in supports()",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-add-basic-dto-object-to-context",
+            "name": "DTOUpdate: add basic DTO object to context",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-inject-objectnormalizer",
+            "name": "DTOUpdate: inject ObjectNormalizer",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-remove-dump",
+            "name": "DTOUpdate: remove dump",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-paste-in-private-function",
+            "name": "DTOUpdate: paste in private function",
+            "description": null
+        },
+        {
+            "id": "dtoupdate-use-private-method",
+            "name": "DTOUpdate: use private method",
+            "description": null
+        },
+        {
+            "id": "dtoorg-add-input-createorupdateentity",
+            "name": "DTOOrg: Add Input::createOrUpdateEntity()",
+            "description": null
+        },
+        {
+            "id": "dtoorg-add-createfrominputdto",
+            "name": "DTOOrg: Add createFromInputDto",
+            "description": null
+        },
+        {
+            "id": "validation-cast-to-avoid-errors",
+            "name": "Validation: cast to avoid errors",
+            "description": null
+        },
+        {
+            "id": "validation-undo-casting",
+            "name": "Validation: undo casting",
+            "description": null
+        },
+        {
+            "id": "validation-move-constraints-to-input",
+            "name": "Validation: move constraints to Input",
+            "description": null
+        },
+        {
+            "id": "validation-inject-validate",
+            "name": "Validation: inject & validate",
+            "description": null
         }
     ],
-    "sha": "098428a65f4c5f420e90a0d207e60488919aa152"
+    "sha": "f54105bc209826f9fd05d86e312a1361d5e63ca3"
 }
