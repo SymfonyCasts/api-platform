@@ -1,0 +1,26 @@
+diff --git a/src/DataPersister/DailyStatsPersister.php b/src/DataPersister/DailyStatsPersister.php
+new file mode 100644
+index 00000000..d5706cb1
+--- /dev/null
++++ b/src/DataPersister/DailyStatsPersister.php
+@@ -0,0 +1,20 @@
++<?php
++
++namespace App\DataPersister;
++
++use ApiPlatform\Core\DataPersister\DataPersisterInterface;
++
++class DailyStatsPersister implements DataPersisterInterface
++{
++    public function supports($data): bool
++    {
++    }
++
++    public function persist($data)
++    {
++    }
++
++    public function remove($data)
++    {
++    }
++}

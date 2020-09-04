@@ -1,0 +1,34 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index ae005e7e..17e5175d 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -9,6 +9,7 @@ use ApiPlatform\Core\DataProvider\Pagination;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
+ use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
++use App\ApiPlatform\DailyStatsDateFilter;
+ use App\Entity\DailyStats;
+ use App\Repository\CheeseListingRepository;
+ use App\Service\StatsHelper;
+@@ -46,12 +47,18 @@ class DailyStatsProvider implements ContextAwareCollectionDataProviderInterface,
+             $resourceFilters = $resourceMetadata->getCollectionOperationAttribute($operationName, 'filters', [], true);
+             foreach ($resourceFilters as $resourceFilter) {
+                 $filterService = $this->filterLocator->get($resourceFilter);
+-                dump($filterService);
++                // add more "allowed" filters to this list as needed
++                // or create a common interface for your filters
++                if (!$filterService instanceof DailyStatsDateFilter) {
++                    throw new \Exception(sprintf('Invalid filter "%s"', $filterService));
++                }
++
++                foreach ($requestFilters as $property => $value) {
++                    $filterService->apply($property, $value, $paginator);
++                }
+             }
+         }
+ 
+-        $paginator->setFromDate(new \DateTime('2020-08-30'));
+-
+         return $paginator;
+     }
+ 

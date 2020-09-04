@@ -1,0 +1,25 @@
+diff --git a/src/DataPersister/DailyStatsPersister.php b/src/DataPersister/DailyStatsPersister.php
+index d5706cb1..7072d5a4 100644
+--- a/src/DataPersister/DailyStatsPersister.php
++++ b/src/DataPersister/DailyStatsPersister.php
+@@ -3,11 +3,13 @@
+ namespace App\DataPersister;
+ 
+ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
++use App\Entity\DailyStats;
+ 
+ class DailyStatsPersister implements DataPersisterInterface
+ {
+     public function supports($data): bool
+     {
++        return $data instanceof DailyStats;
+     }
+ 
+     public function persist($data)
+@@ -16,5 +18,6 @@ class DailyStatsPersister implements DataPersisterInterface
+ 
+     public function remove($data)
+     {
++        throw new \Exception('not supported!');
+     }
+ }

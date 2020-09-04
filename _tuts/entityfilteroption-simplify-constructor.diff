@@ -1,0 +1,16 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index adf2152e..f6a5da64 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -12,9 +12,9 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+ 
+ class CheeseSearchFilter extends AbstractFilter
+ {
+-    public function __construct(ManagerRegistry $managerRegistry, ?RequestStack $requestStack = null, LoggerInterface $logger = null, array $properties = null, NameConverterInterface $nameConverter = null)
++    public function __construct(ManagerRegistry $managerRegistry, NameConverterInterface $nameConverter = null)
+     {
+-        parent::__construct($managerRegistry, $requestStack, $logger, $properties, $nameConverter);
++        parent::__construct($managerRegistry, null, null, [], $nameConverter);
+     }
+ 
+     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)

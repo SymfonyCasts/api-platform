@@ -1,0 +1,19 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index 404cf6d1..c22069a8 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -10,7 +10,13 @@ class CheeseSearchFilter extends AbstractFilter
+ {
+     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
+     {
+-        dd($property, $value);
++        if ($property !== 'search') {
++            return;
++        }
++
++        $alias = $queryBuilder->getRootAliases()[0];
++        $queryBuilder->andWhere(sprintf('%s.title LIKE :search OR %s.description LIKE :search', $alias, $alias))
++            ->setParameter('search', '%'.$value.'%');
+     }
+ 
+     public function getDescription(string $resourceClass): array

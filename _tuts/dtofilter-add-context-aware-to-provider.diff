@@ -1,0 +1,32 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 38266040..bf28da6e 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -3,6 +3,7 @@
+ namespace App\DataProvider;
+ 
+ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
++use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\Pagination;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+@@ -13,7 +14,7 @@ use App\Repository\CheeseListingRepository;
+ use App\Service\StatsHelper;
+ use Psr\Container\ContainerInterface;
+ 
+-class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataProviderInterface, RestrictedDataProviderInterface
++class DailyStatsProvider implements ContextAwareCollectionDataProviderInterface, ItemDataProviderInterface, RestrictedDataProviderInterface
+ {
+     private $statsHelper;
+     private $pagination;
+@@ -28,8 +29,9 @@ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataPro
+         $this->filterLocator = $filterLocator;
+     }
+ 
+-    public function getCollection(string $resourceClass, string $operationName = null)
++    public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
+     {
++        dd($context);
+         list($page, $offset, $limit) = $this->pagination->getPagination($resourceClass, $operationName);
+ 
+         $paginator = new DailyStatsPaginator(

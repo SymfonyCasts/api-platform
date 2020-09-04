@@ -1,0 +1,42 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+new file mode 100644
+index 00000000..690a51f0
+--- /dev/null
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -0,0 +1,12 @@
++<?php
++
++namespace App\ApiPlatform;
++
++use ApiPlatform\Core\Api\FilterInterface;
++
++class DailyStatsDateFilter implements FilterInterface
++{
++    public function getDescription(string $resourceClass): array
++    {
++    }
++}
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 533ee8dd..7786c2f6 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -2,9 +2,11 @@
+ 
+ namespace App\Entity;
+ 
++use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiProperty;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Action\NotFoundAction;
++use App\ApiPlatform\DailyStatsDateFilter;
+ use Symfony\Component\Serializer\Annotation\Groups;
+ 
+ /**
+@@ -18,6 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  *     },
+  *     collectionOperations={"get"}
+  * )
++ * @ApiFilter(DailyStatsDateFilter::class)
+  */
+ class DailyStats
+ {

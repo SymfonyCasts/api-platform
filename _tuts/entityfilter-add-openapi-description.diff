@@ -1,0 +1,14 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index 0dd3753f..eb30db13 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -19,6 +19,9 @@ class CheeseSearchFilter extends AbstractFilter
+                 'property' => null,
+                 'type' => 'string',
+                 'required' => false,
++                'openapi' => [
++                    'description' => 'Search across multiple fields',
++                ],
+             ]
+         ];
+     }

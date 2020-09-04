@@ -1,5 +1,5 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index 5fd4bf36..cb762ea4 100644
+index 5fd4bf36..accd546d 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -6,7 +6,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
@@ -7,8 +7,8 @@ index 5fd4bf36..cb762ea4 100644
  /**
   * @ApiResource(
 - *
-+ *      itemOperations={},
-+ *      collectionOperations={"get"}
++ *     itemOperations={},
++ *     collectionOperations={"get"}
   * )
   */
  class DailyStats

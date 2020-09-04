@@ -1,0 +1,14 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index edbe5b60..5d003ef1 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -36,7 +36,8 @@ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataPro
+         );
+ 
+         $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
+-        dd($resourceMetadata);
++        $resourceFilters = $resourceMetadata->getCollectionOperationAttribute($operationName, 'filters', [], true);
++        dd($resourceFilters);
+         $paginator->setFromDate(new \DateTime('2020-08-30'));
+ 
+         return $paginator;

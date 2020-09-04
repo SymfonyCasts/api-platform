@@ -1,0 +1,17 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index c22069a8..dc99994b 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -15,8 +15,10 @@ class CheeseSearchFilter extends AbstractFilter
+         }
+ 
+         $alias = $queryBuilder->getRootAliases()[0];
+-        $queryBuilder->andWhere(sprintf('%s.title LIKE :search OR %s.description LIKE :search', $alias, $alias))
+-            ->setParameter('search', '%'.$value.'%');
++        // a param name that is guaranteed unique in this query
++        $valueParameter = $queryNameGenerator->generateParameterName('search');
++        $queryBuilder->andWhere(sprintf('%s.title LIKE :%s OR %s.description LIKE :%s', $alias, $valueParameter, $alias, $valueParameter))
++            ->setParameter($valueParameter, '%'.$value.'%');
+     }
+ 
+     public function getDescription(string $resourceClass): array

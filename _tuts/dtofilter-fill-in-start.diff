@@ -1,0 +1,20 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+index 690a51f0..a479eb09 100644
+--- a/src/ApiPlatform/DailyStatsDateFilter.php
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -8,5 +8,15 @@ class DailyStatsDateFilter implements FilterInterface
+ {
+     public function getDescription(string $resourceClass): array
+     {
++        return [
++            'from' => [
++                'property' => null,
++                'type' => 'string',
++                'required' => false,
++                'openapi' => [
++                    'description' => 'From date e.g. 2020-09-01',
++                ],
++            ]
++        ];
+     }
+ }

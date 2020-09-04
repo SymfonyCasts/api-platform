@@ -1,0 +1,26 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+index 725ede53..cbd3f5fd 100644
+--- a/src/ApiPlatform/DailyStatsDateFilter.php
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -8,13 +8,20 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+ 
+ class DailyStatsDateFilter implements FilterInterface
+ {
++    private $throwOnInvalid;
++
++    public function __construct(bool $throwOnInvalid = false)
++    {
++        $this->throwOnInvalid = $throwOnInvalid;
++    }
++
+     public function apply(string $propertyName, $value, DailyStatsPaginator $dailyStatsPaginator)
+     {
+         if ($propertyName === 'from') {
+             $fromDate = \DateTimeImmutable::createFromFormat('Y-m-d', $value);
+ 
+             // you could optionally return a 400 error
+-            if (!$fromDate) {
++            if (!$fromDate && $this->throwOnInvalid) {
+                 throw new BadRequestHttpException('Invalid "from" date format');
+             }
+ 

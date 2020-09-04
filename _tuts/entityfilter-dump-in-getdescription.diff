@@ -1,0 +1,31 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index 72103fa2..b0a4c42d 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -14,5 +14,6 @@ class CheeseSearchFilter extends AbstractFilter
+ 
+     public function getDescription(string $resourceClass): array
+     {
++        dd($this->properties);
+     }
+ }
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index bb12155d..d7ccc68c 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
++use App\ApiPlatform\CheeseSearchFilter;
+ use App\Validator\IsValidOwner;
+ use App\Validator\ValidIsPublished;
+ use Carbon\Carbon;
+@@ -52,6 +53,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * })
+  * @ApiFilter(RangeFilter::class, properties={"price"})
+  * @ApiFilter(PropertyFilter::class)
++ * @ApiFilter(CheeseSearchFilter::class)
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  * @ORM\EntityListeners({"App\Doctrine\CheeseListingSetOwnerListener"})
+  * @ValidIsPublished()

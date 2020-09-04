@@ -1,0 +1,24 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+new file mode 100644
+index 00000000..72103fa2
+--- /dev/null
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -0,0 +1,18 @@
++<?php
++
++namespace App\ApiPlatform;
++
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractFilter;
++use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
++use Doctrine\ORM\QueryBuilder;
++
++class CheeseSearchFilter extends AbstractFilter
++{
++    protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
++    {
++    }
++
++    public function getDescription(string $resourceClass): array
++    {
++    }
++}

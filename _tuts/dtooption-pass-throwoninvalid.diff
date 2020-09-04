@@ -1,0 +1,13 @@
+diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
+index 7786c2f6..2bb8731f 100644
+--- a/src/Entity/DailyStats.php
++++ b/src/Entity/DailyStats.php
+@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
+  *     },
+  *     collectionOperations={"get"}
+  * )
+- * @ApiFilter(DailyStatsDateFilter::class)
++ * @ApiFilter(DailyStatsDateFilter::class, arguments={"throwOnInvalid"=true})
+  */
+ class DailyStats
+ {

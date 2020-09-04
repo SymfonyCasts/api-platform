@@ -1,0 +1,33 @@
+diff --git a/src/DataPersister/DailyStatsPersister.php b/src/DataPersister/DailyStatsPersister.php
+index 7072d5a4..2892e9a7 100644
+--- a/src/DataPersister/DailyStatsPersister.php
++++ b/src/DataPersister/DailyStatsPersister.php
+@@ -4,16 +4,28 @@ namespace App\DataPersister;
+ 
+ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
+ use App\Entity\DailyStats;
++use Psr\Log\LoggerInterface;
+ 
+ class DailyStatsPersister implements DataPersisterInterface
+ {
++    private $logger;
++
++    public function __construct(LoggerInterface $logger)
++    {
++        $this->logger = $logger;
++    }
++
+     public function supports($data): bool
+     {
+         return $data instanceof DailyStats;
+     }
+ 
++    /**
++     * @param DailyStats $data
++     */
+     public function persist($data)
+     {
++        $this->logger->info(sprintf('Update the visitors to "%d"', $data->totalVisitors));
+     }
+ 
+     public function remove($data)

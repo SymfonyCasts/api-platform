@@ -1,5 +1,5 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index cb762ea4..b67f1184 100644
+index accd546d..e94dc8e1 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -3,10 +3,18 @@
@@ -10,7 +10,7 @@ index cb762ea4..b67f1184 100644
  
  /**
   * @ApiResource(
-- *      itemOperations={},
+- *     itemOperations={},
 + *     itemOperations={
 + *         "get"={
 + *             "method"="GET",
@@ -19,6 +19,6 @@ index cb762ea4..b67f1184 100644
 + *             "output"=false,
 + *         },
 + *     },
-  *      collectionOperations={"get"}
+  *     collectionOperations={"get"}
   * )
   */

@@ -1,0 +1,24 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+index a479eb09..48ce49b9 100644
+--- a/src/ApiPlatform/DailyStatsDateFilter.php
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -3,9 +3,19 @@
+ namespace App\ApiPlatform;
+ 
+ use ApiPlatform\Core\Api\FilterInterface;
++use App\DataProvider\DailyStatsPaginator;
+ 
+ class DailyStatsDateFilter implements FilterInterface
+ {
++    public function apply(string $propertyName, $value, DailyStatsPaginator $dailyStatsPaginator)
++    {
++        if ($propertyName === 'from') {
++            $fromDate = new \DateTimeImmutable($value);
++
++            $dailyStatsPaginator->setFromDate($fromDate);
++        }
++    }
++
+     public function getDescription(string $resourceClass): array
+     {
+         return [

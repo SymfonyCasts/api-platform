@@ -1,0 +1,13 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index d7ccc68c..95932918 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -53,7 +53,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+  * })
+  * @ApiFilter(RangeFilter::class, properties={"price"})
+  * @ApiFilter(PropertyFilter::class)
+- * @ApiFilter(CheeseSearchFilter::class)
++ * @ApiFilter(CheeseSearchFilter::class, properties={"price"})
+  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+  * @ORM\EntityListeners({"App\Doctrine\CheeseListingSetOwnerListener"})
+  * @ValidIsPublished()

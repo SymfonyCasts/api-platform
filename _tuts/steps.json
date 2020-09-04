@@ -1619,7 +1619,172 @@
             "id": "pagination-limit-to-7-per-page",
             "name": "Pagination: limit to 7 per page",
             "description": null
+        },
+        {
+            "id": "customput-add-put-operation",
+            "name": "CustomPut: add put operation",
+            "description": null
+        },
+        {
+            "id": "customput-add-empty-data-persister",
+            "name": "CustomPut: add empty data persister",
+            "description": null
+        },
+        {
+            "id": "customput-fill-in-supports",
+            "name": "CustomPut: fill in supports()",
+            "description": null
+        },
+        {
+            "id": "customput-log-in-persist",
+            "name": "CustomPut: log in persist",
+            "description": null
+        },
+        {
+            "id": "entityfilter-add-cheesesearchfilter",
+            "name": "EntityFilter: Add CheeseSearchFilter",
+            "description": null
+        },
+        {
+            "id": "entityfilter-dump-in-getdescription",
+            "name": "EntityFilter: dump in getDescription()",
+            "description": null
+        },
+        {
+            "id": "entityfilter-add-properties-option",
+            "name": "EntityFilter: add properties option",
+            "description": null
+        },
+        {
+            "id": "entityfilter-remove-or",
+            "name": "EntityFilter: remove or",
+            "description": null
+        },
+        {
+            "id": "entityfilter-add-documentation",
+            "name": "EntityFilter: add documentation",
+            "description": null
+        },
+        {
+            "id": "entityfilter-add-openapi-description",
+            "name": "EntityFilter: add openapi description",
+            "description": null
+        },
+        {
+            "id": "entityfilter-dump-property-and-value",
+            "name": "EntityFilter: dump property and value",
+            "description": null
+        },
+        {
+            "id": "entityfilter-add-like-query",
+            "name": "EntityFilter: add LIKE query",
+            "description": null
+        },
+        {
+            "id": "entityfilter-use-query-name-generator",
+            "name": "EntityFilter: use query name generator",
+            "description": null
+        },
+        {
+            "id": "dtofilter-add-filter-class",
+            "name": "DTOFilter: add filter class",
+            "description": null
+        },
+        {
+            "id": "dtofilter-fill-in-start",
+            "name": "DTOFilter: fill in start",
+            "description": null
+        },
+        {
+            "id": "dtofilter-add-from-support-to-paginator",
+            "name": "DTOFilter: add from support to paginator",
+            "description": null
+        },
+        {
+            "id": "dtofilter-pass-in-hardcoded-from",
+            "name": "DTOFilter: pass in hardcoded from",
+            "description": null
+        },
+        {
+            "id": "dtofilter-inject-resource-metadata-factory",
+            "name": "DTOFilter: inject resource metadata factory",
+            "description": null
+        },
+        {
+            "id": "dtofilter-get-filter-list",
+            "name": "DTOFilter: get filter list",
+            "description": null
+        },
+        {
+            "id": "dtofilter-inject-filter-locator",
+            "name": "DTOFilter: inject filter locator",
+            "description": null
+        },
+        {
+            "id": "dtofilter-add-context-aware-to-provider",
+            "name": "DTOFilter: add context aware to provider",
+            "description": null
+        },
+        {
+            "id": "dtofilter-check-if-filters-exist",
+            "name": "DTOFilter: check if filters exist",
+            "description": null
+        },
+        {
+            "id": "dtofilter-add-apply-method",
+            "name": "DTOFilter: add apply method",
+            "description": null
+        },
+        {
+            "id": "dtofilter-loop-over-request-filters",
+            "name": "DTOFilter: loop over request filters",
+            "description": null
+        },
+        {
+            "id": "dtofilter-use-createfromformat",
+            "name": "DTOFilter: use createFromFormat",
+            "description": null
+        },
+        {
+            "id": "dtofilter-apply-date-only-when-valid",
+            "name": "DTOFilter: apply date only when valid",
+            "description": null
+        },
+        {
+            "id": "dtofilter-return-400-error",
+            "name": "DTOFilter: return 400 error",
+            "description": null
+        },
+        {
+            "id": "dtooption-pass-throwoninvalid",
+            "name": "DTOOption: pass throwOnInvalid",
+            "description": null
+        },
+        {
+            "id": "dtooption-add-throwoninvalid",
+            "name": "DTOOption: add $throwOnInvalid",
+            "description": null
+        },
+        {
+            "id": "entityfilteroption-add-uselike-argument",
+            "name": "EntityFilterOption: add useLike argument",
+            "description": null
+        },
+        {
+            "id": "entityfilteroption-override-constructor",
+            "name": "EntityFilterOption: override constructor",
+            "description": null
+        },
+        {
+            "id": "entityfilteroption-simplify-constructor",
+            "name": "EntityFilterOption: simplify constructor",
+            "description": null
+        },
+        {
+            "id": "entityfilteroption-add-uselike",
+            "name": "EntityFilterOption: add useLike",
+            "description": null
         }
     ],
-    "sha": "a09abb63bd717d44892c44011fb2794bb13e1a1b"
+    "sha": "943f33750337996585a6970d1b84c67b5a44b7bc"
 }

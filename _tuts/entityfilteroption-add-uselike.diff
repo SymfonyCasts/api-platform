@@ -1,0 +1,19 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index f6a5da64..982e9198 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -12,8 +12,13 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+ 
+ class CheeseSearchFilter extends AbstractFilter
+ {
+-    public function __construct(ManagerRegistry $managerRegistry, NameConverterInterface $nameConverter = null)
++    private $useLike;
++
++    public function __construct(ManagerRegistry $managerRegistry, bool $useLike = false, NameConverterInterface $nameConverter = null)
+     {
++        // todo - actually use this
++        $this->useLike = $useLike;
++
+         parent::__construct($managerRegistry, null, null, [], $nameConverter);
+     }
+ 

@@ -1,0 +1,41 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+index 8492a69a..fe1dc4ef 100644
+--- a/src/DataProvider/DailyStatsPaginator.php
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -11,6 +11,10 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+     private $statsHelper;
+     private $currentPage;
+     private $maxResults;
++    /**
++     * @var \DateTimeInterface|null
++     */
++    private $fromDate;
+ 
+     public function __construct(StatsHelper $statsHelper, int $currentPage, int $maxResults)
+     {
+@@ -49,14 +53,24 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+         if ($this->dailyStatsIterator === null) {
+             $offset = (($this->getCurrentPage() - 1) * $this->getItemsPerPage());
+ 
++            $criteria = [];
++            if ($this->fromDate) {
++                $criteria['from'] = $this->fromDate;
++            }
+             $this->dailyStatsIterator = new \ArrayIterator(
+                 $this->statsHelper->fetchMany(
+                     $this->getItemsPerPage(),
+-                    $offset
++                    $offset,
++                    $criteria
+                 )
+             );
+         }
+ 
+         return $this->dailyStatsIterator;
+     }
++
++    public function setFromDate(\DateTimeInterface $fromDate)
++    {
++        $this->fromDate = $fromDate;
++    }
+ }

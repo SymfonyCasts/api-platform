@@ -44,10 +44,10 @@ index 6b4a0b98..b4fce518 100644
      public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
 diff --git a/src/Service/StatsHelper.php b/src/Service/StatsHelper.php
 new file mode 100644
-index 00000000..a1a4a2ef
+index 00000000..46188f69
 --- /dev/null
 +++ b/src/Service/StatsHelper.php
-@@ -0,0 +1,93 @@
+@@ -0,0 +1,112 @@
 +<?php
 +
 +namespace App\Service;
@@ -65,10 +65,17 @@ index 00000000..a1a4a2ef
 +    }
 +
 +    /**
++     * @param array An array of criteria to limit the results
++     *              Supported keys are:
++     *                  * from DateTimeInterface
++     *                  * to   DateTimeInterface
 +     * @return array|DailyStats[]
 +     */
-+    public function fetchMany(int $limit = null, int $offset = null)
++    public function fetchMany(int $limit = null, int $offset = null, array $criteria = [])
 +    {
++        $fromDate = $criteria['from'] ?? null;
++        $toDate = $criteria['to'] ?? null;
++
 +        $i = 0;
 +        $stats = [];
 +        foreach ($this->fetchStatsData() as $statData) {
@@ -79,6 +86,16 @@ index 00000000..a1a4a2ef
 +            }
 +
 +            $dateString = $statData['date'];
++            $date = new \DateTimeImmutable($dateString);
++
++            if ($fromDate && $date < $fromDate) {
++                continue;
++            }
++
++            if ($toDate && $date > $toDate) {
++                continue;
++            }
++
 +            $stats[$dateString] = $this->createStatsObject($statData);
 +
 +            if (count($stats) >= $limit) {
@@ -96,6 +113,8 @@ index 00000000..a1a4a2ef
 +                return $this->createStatsObject($statData);
 +            }
 +        }
++
++        return null;
 +    }
 +
 +    public function count(): int

@@ -1,0 +1,37 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 900814d9..edbe5b60 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -7,6 +7,7 @@ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\Pagination;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
++use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
+ use App\Entity\DailyStats;
+ use App\Repository\CheeseListingRepository;
+ use App\Service\StatsHelper;
+@@ -15,11 +16,13 @@ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataPro
+ {
+     private $statsHelper;
+     private $pagination;
++    private $resourceMetadataFactory;
+ 
+-    public function __construct(StatsHelper $statsHelper, Pagination $pagination)
++    public function __construct(StatsHelper $statsHelper, Pagination $pagination, ResourceMetadataFactoryInterface $resourceMetadataFactory)
+     {
+         $this->statsHelper = $statsHelper;
+         $this->pagination = $pagination;
++        $this->resourceMetadataFactory = $resourceMetadataFactory;
+     }
+ 
+     public function getCollection(string $resourceClass, string $operationName = null)
+@@ -31,6 +34,9 @@ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataPro
+             $page,
+             $limit
+         );
++
++        $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
++        dd($resourceMetadata);
+         $paginator->setFromDate(new \DateTime('2020-08-30'));
+ 
+         return $paginator;

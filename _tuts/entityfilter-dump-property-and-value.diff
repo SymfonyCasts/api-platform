@@ -1,0 +1,12 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index eb30db13..404cf6d1 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -10,6 +10,7 @@ class CheeseSearchFilter extends AbstractFilter
+ {
+     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
+     {
++        dd($property, $value);
+     }
+ 
+     public function getDescription(string $resourceClass): array

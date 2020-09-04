@@ -1,0 +1,18 @@
+diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
+index b0a4c42d..0dd3753f 100644
+--- a/src/ApiPlatform/CheeseSearchFilter.php
++++ b/src/ApiPlatform/CheeseSearchFilter.php
+@@ -14,6 +14,12 @@ class CheeseSearchFilter extends AbstractFilter
+ 
+     public function getDescription(string $resourceClass): array
+     {
+-        dd($this->properties);
++        return [
++            'search' => [
++                'property' => null,
++                'type' => 'string',
++                'required' => false,
++            ]
++        ];
+     }
+ }

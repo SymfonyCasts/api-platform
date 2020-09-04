@@ -1,5 +1,5 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index bae10211..3b5b2a32 100644
+index 3e52f500..6f28f686 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -34,6 +34,8 @@ class DailyStats

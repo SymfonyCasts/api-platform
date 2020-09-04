@@ -27,7 +27,7 @@ index 0e4ea1a3..03c20faa 100644
  
      public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index 7d6e5107..bae10211 100644
+index 2e0c1586..3e52f500 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -38,6 +38,16 @@ class DailyStats

@@ -1,0 +1,15 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+index e5c165ec..eb4e2a1a 100644
+--- a/src/ApiPlatform/DailyStatsDateFilter.php
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -12,7 +12,9 @@ class DailyStatsDateFilter implements FilterInterface
+         if ($propertyName === 'from') {
+             $fromDate = \DateTimeImmutable::createFromFormat('Y-m-d', $value);
+ 
+-            $dailyStatsPaginator->setFromDate($fromDate);
++            if ($fromDate) {
++                $dailyStatsPaginator->setFromDate($fromDate);
++            }
+         }
+     }
+ 
