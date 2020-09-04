@@ -1,0 +1,45 @@
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index a7873d6b..bb12155d 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -67,7 +67,7 @@ class CheeseListing
+ 
+     /**
+      * @ORM\Column(type="string", length=255)
+-     * @Groups({"cheese:read", "cheese:write", "user:write"})
++     * @Groups({"cheese:read", "cheese:write", "user:read", "user:write"})
+      * @Assert\NotBlank()
+      * @Assert\Length(
+      *     min=2,
+@@ -88,7 +88,7 @@ class CheeseListing
+      * The price of this delicious cheese, in cents
+      *
+      * @ORM\Column(type="integer")
+-     * @Groups({"cheese:read", "cheese:write", "user:write"})
++     * @Groups({"cheese:read", "cheese:write", "user:read", "user:write"})
+      * @Assert\NotBlank()
+      */
+     private $price;
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 0e0fe858..790f17c1 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -77,7 +77,6 @@ class User implements UserInterface
+ 
+     /**
+      * @ORM\OneToMany(targetEntity="App\Entity\CheeseListing", mappedBy="owner", cascade={"persist"}, orphanRemoval=true)
+-     * @Groups({"user:write", "user:read"})
+      * @Assert\Valid()
+      */
+     private $cheeseListings;
+@@ -206,9 +205,8 @@ class User implements UserInterface
+     }
+ 
+     /**
+-     * @ApiProperty(readableLink=true)
+      * @Groups({"user:read"})
+-     * SerializedName("cheeseListings")
++     * @SerializedName("cheeseListings")
+      * @return Collection<CheeseListing>
+      */
+     public function getPublishedCheeseListings(): Collection

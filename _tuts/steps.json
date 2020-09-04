@@ -1531,18 +1531,38 @@
             "description": null
         },
         {
-            "id": "customresource-return-some-listings",
-            "name": "CustomResource: return some listings",
+            "id": "embeddednormalization-return-some-listings",
+            "name": "EmbeddedNormalization: return some listings",
             "description": null
         },
         {
-            "id": "customresource-redo-listings-docs",
-            "name": "CustomResource: redo listings docs",
+            "id": "embeddednormalization-redo-listing-docs",
+            "name": "EmbeddedNormalization: redo listing docs",
             "description": null
         },
         {
-            "id": "customresource-help-my-editor",
-            "name": "CustomResource: help my editor",
+            "id": "embeddednormalization-help-my-editor",
+            "name": "EmbeddedNormalization: help my editor",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-output-2x-cl-fields-on-user",
+            "name": "EmbeddedNormalization: output 2x CL fields on User",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-advertise-return-type",
+            "name": "EmbeddedNormalization: advertise return type",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-with-readablelink",
+            "name": "EmbeddedNormalization: with readableLink",
+            "description": null
+        },
+        {
+            "id": "embeddednormalization-undo-everything",
+            "name": "EmbeddedNormalization: undo everything",
             "description": null
         },
         {
@@ -1786,5 +1806,5 @@
             "description": null
         }
     ],
-    "sha": "943f33750337996585a6970d1b84c67b5a44b7bc"
+    "sha": "098428a65f4c5f420e90a0d207e60488919aa152"
 }
