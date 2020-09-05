@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 504fb418..f988a90a 100644
+index 5b1b158c..e127f7cd 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -16,6 +16,7 @@
@@ -11,21 +11,21 @@ index 504fb418..f988a90a 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 757cf856..0378f029 100644
+index 5d4598aa..02e0c6af 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "4813b28bbc6428cccb24e4299a4b0c46",
-+    "content-hash": "3106deaa8fc80f1ab9da8cc381d0b789",
+-    "content-hash": "fdbec18e7f7f2f622f9dfa75091bcc7f",
++    "content-hash": "eca6f361ab900c004ccd5c835f25384b",
      "packages": [
          {
              "name": "api-platform/core",
 @@ -2960,6 +2960,86 @@
              ],
-             "time": "2020-07-06T13:23:11+00:00"
+             "time": "2020-09-02T07:07:40+00:00"
          },
 +        {
 +            "name": "symfony/debug-bundle",
@@ -109,12 +109,12 @@ index 757cf856..0378f029 100644
 +        },
          {
              "name": "symfony/dependency-injection",
-             "version": "v5.1.3",
+             "version": "v5.1.5",
 diff --git a/config/bundles.php b/config/bundles.php
-index d271f9f6..f3aa9605 100644
+index ba1203af..a279eab9 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
-@@ -17,4 +17,5 @@ return [
+@@ -14,4 +14,5 @@ return [
      Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
      Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
      Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['all' => true],
@@ -131,10 +131,10 @@ index 00000000..26d4e53d
 +    # See the "server:dump" command to start a new server.
 +    dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
 diff --git a/symfony.lock b/symfony.lock
-index 8e4ef28a..33cddc7a 100644
+index 25de2072..ac39e851 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -242,6 +242,18 @@
+@@ -200,6 +200,18 @@
      "symfony/css-selector": {
          "version": "v4.3.3"
      },

@@ -1,8 +1,8 @@
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index cce6efc1..d388f054 100644
+index ab24e578..5977a324 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
-@@ -76,9 +76,9 @@ class CheeseListingResourceTest extends CustomApiTestCase
+@@ -73,9 +73,9 @@ class CheeseListingResourceTest extends CustomApiTestCase
          $client = self::createClient();
          $user = UserFactory::new()->create();
  

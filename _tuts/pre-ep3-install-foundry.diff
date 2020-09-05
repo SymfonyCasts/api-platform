@@ -13,7 +13,7 @@ index e6cd687a..504fb418 100644
      "require-dev": {
          "hautelook/alice-bundle": "^2.5",
 diff --git a/composer.lock b/composer.lock
-index 68f133fd..757cf856 100644
+index 4b409c61..02a171e6 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -82,7 +82,7 @@ index 68f133fd..757cf856 100644
          {
              "name": "monolog/monolog",
              "version": "2.1.1",
-@@ -6997,41 +7047,49 @@
+@@ -6999,41 +7049,49 @@
              ],
              "abandoned": "laminas/laminas-eventmanager",
              "time": "2018-04-25T15:33:34+00:00"
@@ -148,7 +148,7 @@ index 68f133fd..757cf856 100644
              },
              "notification-url": "https://packagist.org/downloads/",
              "license": [
-@@ -7039,17 +7097,24 @@
+@@ -7041,17 +7099,24 @@
              ],
              "authors": [
                  {

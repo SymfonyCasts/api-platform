@@ -1,5 +1,5 @@
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 6623e42c..cce6efc1 100644
+index b2e91687..ab24e578 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -4,6 +4,7 @@ namespace App\Tests\Functional;
@@ -9,8 +9,8 @@ index 6623e42c..cce6efc1 100644
 +use App\Factory\CheeseNotificationFactory;
  use App\Factory\UserFactory;
  use App\Test\CustomApiTestCase;
- use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
-@@ -86,6 +87,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
+ 
+@@ -83,6 +84,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
          $this->assertResponseStatusCodeSame(200);
          $cheeseListing->refresh();
          $this->assertTrue($cheeseListing->getIsPublished());

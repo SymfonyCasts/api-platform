@@ -1166,6 +1166,11 @@
             "description": null
         },
         {
+            "id": "pre-ep3-replace-alice-with-foundry",
+            "name": "PRE_EP3: replace alice with Foundry",
+            "description": null
+        },
+        {
             "id": "pre-ep3-add-cheesenotification-entity",
             "name": "PRE_EP3: add CheeseNotification entity",
             "description": null
@@ -2026,5 +2031,5 @@
             "description": null
         }
     ],
-    "sha": "f54105bc209826f9fd05d86e312a1361d5e63ca3"
+    "sha": "ec357a2993ae91851e57cf799791e717b0134152"
 }

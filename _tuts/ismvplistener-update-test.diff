@@ -1,8 +1,8 @@
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index 047a1cb5..0b0b98d4 100644
+index 5557d868..05172df4 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
-@@ -51,13 +51,17 @@ class UserResourceTest extends CustomApiTestCase
+@@ -48,13 +48,17 @@ class UserResourceTest extends CustomApiTestCase
      public function testGetUser()
      {
          $client = self::createClient();

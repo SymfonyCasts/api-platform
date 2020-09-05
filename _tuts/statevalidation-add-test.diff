@@ -1,8 +1,8 @@
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index d388f054..5883a9b8 100644
+index 5977a324..e8cc1f6c 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
-@@ -96,6 +96,57 @@ class CheeseListingResourceTest extends CustomApiTestCase
+@@ -93,6 +93,57 @@ class CheeseListingResourceTest extends CustomApiTestCase
          CheeseNotificationFactory::repository()->assertCount(1);
      }
  

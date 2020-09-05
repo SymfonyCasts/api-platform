@@ -1,8 +1,8 @@
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index b8ef0c7b..6623e42c 100644
+index a834a677..b2e91687 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
-@@ -70,6 +70,24 @@ class CheeseListingResourceTest extends CustomApiTestCase
+@@ -67,6 +67,24 @@ class CheeseListingResourceTest extends CustomApiTestCase
          $this->assertResponseStatusCodeSame(200);
      }
  
