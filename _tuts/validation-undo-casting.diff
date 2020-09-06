@@ -1,8 +1,8 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 19f61014..398e0734 100644
+index 551f6e71..3c939016 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
-@@ -35,8 +35,8 @@ class CheeseListingInput
+@@ -58,8 +58,8 @@ class CheeseListingInput
              $cheeseListing = new CheeseListing($this->title);
          }
  
@@ -11,5 +11,5 @@ index 19f61014..398e0734 100644
 +        $cheeseListing->setDescription($this->description);
 +        $cheeseListing->setPrice($this->price);
          $cheeseListing->setOwner($this->owner);
+         $cheeseListing->setIsPublished($this->isPublished);
  
-         return $cheeseListing;

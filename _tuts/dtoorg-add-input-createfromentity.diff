@@ -1,0 +1,59 @@
+diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
+index b6b3f165..3c939016 100644
+--- a/src/Dto/CheeseListingInput.php
++++ b/src/Dto/CheeseListingInput.php
+@@ -34,6 +34,24 @@ class CheeseListingInput
+ 
+     public $description;
+ 
++    public static function createFromEntity(?CheeseListing $cheeseListing): self
++    {
++        $dto = new CheeseListingInput();
++
++        // not an edit, so just return an empty DTO
++        if (!$cheeseListing) {
++            return $dto;
++        }
++
++        $dto->title = $cheeseListing->getTitle();
++        $dto->price = $cheeseListing->getPrice();
++        $dto->description = $cheeseListing->getDescription();
++        $dto->owner = $cheeseListing->getOwner();
++        $dto->isPublished = $cheeseListing->getIsPublished();
++
++        return $dto;
++    }
++
+     public function createOrUpdateEntity(?CheeseListing $cheeseListing): CheeseListing
+     {
+         if (!$cheeseListing) {
+diff --git a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
+index fca2ea2e..8b37e22f 100644
+--- a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
++++ b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
+@@ -39,23 +39,10 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable
+     {
+         $entity = $context['object_to_populate'] ?? null;
+ 
+-        $dto = new CheeseListingInput();
+-
+-        // not an edit, so just return an empty DTO
+-        if (!$entity) {
+-            return $dto;
+-        }
+-
+-        if (!$entity instanceof CheeseListing) {
++        if ($entity && !$entity instanceof CheeseListing) {
+             throw new \Exception(sprintf('Unexpected resource class "%s"', get_class($entity)));
+         }
+ 
+-        $dto->title = $entity->getTitle();
+-        $dto->price = $entity->getPrice();
+-        $dto->description = $entity->getDescription();
+-        $dto->owner = $entity->getOwner();
+-        $dto->isPublished = $entity->getIsPublished();
+-
+-        return $dto;
++        return CheeseListingInput::createFromEntity($entity);
+     }
+ }

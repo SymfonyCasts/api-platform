@@ -1,8 +1,8 @@
 diff --git a/src/DataTransformer/CheeseListingInputDataTransformer.php b/src/DataTransformer/CheeseListingInputDataTransformer.php
-index f1a4961e..7d8f19f4 100644
+index 5f1d0d32..7d8f19f4 100644
 --- a/src/DataTransformer/CheeseListingInputDataTransformer.php
 +++ b/src/DataTransformer/CheeseListingInputDataTransformer.php
-@@ -14,17 +14,9 @@ class CheeseListingInputDataTransformer implements DataTransformerInterface
+@@ -14,18 +14,9 @@ class CheeseListingInputDataTransformer implements DataTransformerInterface
       */
      public function transform($input, string $to, array $context = [])
      {
@@ -15,6 +15,7 @@ index f1a4961e..7d8f19f4 100644
 -        $cheeseListing->setDescription($input->description);
 -        $cheeseListing->setPrice($input->price);
 -        $cheeseListing->setOwner($input->owner);
+-        $cheeseListing->setIsPublished($input->isPublished);
 +        $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
  
 -        return $cheeseListing;
@@ -23,7 +24,7 @@ index f1a4961e..7d8f19f4 100644
  
      public function supportsTransformation($data, string $to, array $context = []): bool
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 9c2a307e..398e0734 100644
+index 9ae4f661..b6b3f165 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -2,6 +2,7 @@
@@ -34,7 +35,7 @@ index 9c2a307e..398e0734 100644
  use App\Entity\User;
  use Symfony\Component\Serializer\Annotation\Groups;
  use Symfony\Component\Serializer\Annotation\SerializedName;
-@@ -28,6 +29,19 @@ class CheeseListingInput
+@@ -33,6 +34,20 @@ class CheeseListingInput
  
      public $description;
  
@@ -47,6 +48,7 @@ index 9c2a307e..398e0734 100644
 +        $cheeseListing->setDescription($this->description);
 +        $cheeseListing->setPrice($this->price);
 +        $cheeseListing->setOwner($this->owner);
++        $cheeseListing->setIsPublished($this->isPublished);
 +
 +        return $cheeseListing;
 +    }

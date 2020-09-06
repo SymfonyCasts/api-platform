@@ -2006,6 +2006,11 @@
             "description": null
         },
         {
+            "id": "dtoorg-add-input-createfromentity",
+            "name": "DTOOrg: Add Input::createFromEntity()",
+            "description": null
+        },
+        {
             "id": "dtoorg-add-createfrominputdto",
             "name": "DTOOrg: Add createFromInputDto",
             "description": null
@@ -2031,5 +2036,5 @@
             "description": null
         }
     ],
-    "sha": "ec357a2993ae91851e57cf799791e717b0134152"
+    "sha": "3c39f22042bd2bd6f5f3a4e047154523adf48bed"
 }

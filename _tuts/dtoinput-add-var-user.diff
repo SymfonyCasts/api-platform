@@ -1,5 +1,5 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index fa11c87e..d770bb89 100644
+index 30035aa2..de80fad4 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -2,6 +2,7 @@

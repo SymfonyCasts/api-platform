@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
-index 2137b8bd..06b31210 100644
+index 2137b8bd..61cbda34 100644
 --- a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 +++ b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 @@ -3,6 +3,7 @@
@@ -10,14 +10,14 @@ index 2137b8bd..06b31210 100644
  use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
  use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
  use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-@@ -36,4 +37,27 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable
+@@ -36,4 +37,28 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable
      {
          return true;
      }
 +
 +    private function createDto(array $context): CheeseListingInput
 +    {
-+        $entity = $context['object_to_populate'] ?? false;
++        $entity = $context['object_to_populate'] ?? null;
 +
 +        $dto = new CheeseListingInput();
 +
@@ -34,6 +34,7 @@ index 2137b8bd..06b31210 100644
 +        $dto->price = $entity->getPrice();
 +        $dto->description = $entity->getDescription();
 +        $dto->owner = $entity->getOwner();
++        $dto->isPublished = $entity->getIsPublished();
 +
 +        return $dto;
 +    }

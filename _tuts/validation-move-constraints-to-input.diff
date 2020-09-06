@@ -1,8 +1,8 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 398e0734..be0f63a3 100644
+index 3c939016..a54ac30f 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
-@@ -4,29 +4,42 @@ namespace App\Dto;
+@@ -4,26 +4,36 @@ namespace App\Dto;
  
  use App\Entity\CheeseListing;
  use App\Entity\User;
@@ -39,12 +39,16 @@ index 398e0734..be0f63a3 100644
       */
      public $owner;
  
+@@ -32,6 +42,9 @@ class CheeseListingInput
+      */
+     public $isPublished = false;
+ 
 +    /**
 +     * @Assert\NotBlank()
 +     */
      public $description;
  
-     public function createOrUpdateEntity(?CheeseListing $cheeseListing): CheeseListing
+     public static function createFromEntity(?CheeseListing $cheeseListing): self
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
 index ff2d4e80..57d33f46 100644
 --- a/src/Entity/CheeseListing.php
