@@ -10,7 +10,7 @@ index f58508ca..c9bd8dd7 100644
 +DATABASE_TEST_URL=$DATABASE_URL
  PANTHER_APP_ENV=panther
 diff --git a/README.md b/README.md
-index f14df210..8779387c 100644
+index f14df210..e1221fa7 100644
 --- a/README.md
 +++ b/README.md
 @@ -9,7 +9,7 @@ If you've just downloaded the code, congratulations!!
@@ -79,7 +79,7 @@ index f14df210..8779387c 100644
  ```
 -yarn install
 -yarn encore dev --watch
-+docker-composer up -d
++docker-compose up -d
  ```
  
 -**Start the built-in web server**

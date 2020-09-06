@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 8779387c..f9b8fde9 100644
+index e1221fa7..10db3963 100644
 --- a/README.md
 +++ b/README.md
 @@ -75,6 +75,7 @@ To actually *create* the database and get some tables, run:
