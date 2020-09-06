@@ -10,7 +10,7 @@ index f58508ca..c9bd8dd7 100644
 +DATABASE_TEST_URL=$DATABASE_URL
  PANTHER_APP_ENV=panther
 diff --git a/README.md b/README.md
-index f14df210..e1221fa7 100644
+index f14df210..f95cc0bd 100644
 --- a/README.md
 +++ b/README.md
 @@ -9,7 +9,7 @@ If you've just downloaded the code, congratulations!!
@@ -22,7 +22,7 @@ index f14df210..e1221fa7 100644
  
  Make sure you have [Composer installed](https://getcomposer.org/download/)
  and then run:
-@@ -21,63 +21,94 @@ composer install
+@@ -21,63 +21,96 @@ composer install
  You may alternatively need to run `php composer.phar install`, depending
  on how you installed Composer.
  
@@ -90,20 +90,22 @@ index f14df210..e1221fa7 100644
  
 -You can use Nginx or Apache, but Symfony's local web server
 -works even better.
-+** 3 Alternative) Database Setup (without Docker)**
++For more information about this approach, see https://symfonycasts.com/screencast/symfony5-doctrine
  
 -To install the Symfony local web server, follow
 -"Downloading the Symfony client" instructions found
 -here: https://symfony.com/download - you only need to do this
 -once on your system.
++** 3 Alternative) Database Setup (without Docker)**
+ 
+-Then, to start the web server, open a terminal, move into the
+-project, and run:
 +If you do not want to use Docker, you can also just install and run
 +MySQL manually. When you're done, open the `.env` file and make any
 +adjustments you need - specifically `DATABASE_URL`. Or, better,
 +you can create a `.env.local` file and *override* any configuration
 +you need there (instead of changing `.env` directly).
- 
--Then, to start the web server, open a terminal, move into the
--project, and run:
++
 +** 4) Database Schema**
 +
 +To actually *create* the database and get some tables, run:

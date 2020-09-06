@@ -1,8 +1,8 @@
 diff --git a/README.md b/README.md
-index e1221fa7..10db3963 100644
+index f95cc0bd..d7837e5e 100644
 --- a/README.md
 +++ b/README.md
-@@ -75,6 +75,7 @@ To actually *create* the database and get some tables, run:
+@@ -77,6 +77,7 @@ To actually *create* the database and get some tables, run:
  ```
  symfony console doctrine:database:create
  symfony console doctrine:migrations:migrate
