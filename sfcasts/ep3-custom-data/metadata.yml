@@ -1,3 +1,4 @@
 chapters:
     - setup
     - persister-decoration
+    - decoration-deep-dive
