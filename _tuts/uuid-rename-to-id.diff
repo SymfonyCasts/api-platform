@@ -1,0 +1,25 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 9ca71ffb..1efdd243 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -54,6 +54,7 @@ class User implements UserInterface
+     /**
+      * @ORM\Column(type="uuid", unique=true)
+      * @ApiProperty(identifier=true)
++     * @SerializedName("id")
+      * @Groups({"user:write"})
+      */
+     private $uuid;
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+index e3969b6d..6ea29e1d 100644
+--- a/tests/Functional/UserResourceTest.php
++++ b/tests/Functional/UserResourceTest.php
+@@ -38,7 +38,7 @@ class UserResourceTest extends CustomApiTestCase
+         $uuid = Uuid::uuid4();
+         $client->request('POST', '/api/users', [
+             'json' => [
+-                'uuid' => $uuid,
++                'id' => $uuid,
+                 'email' => 'cheeseplease@example.com',
+                 'username' => 'cheeseplease',
+                 'password' => 'brie'

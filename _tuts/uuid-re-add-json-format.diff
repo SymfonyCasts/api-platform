@@ -1,0 +1,30 @@
+diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
+index 0c64b88e..03c2cf58 100644
+--- a/config/packages/api_platform.yaml
++++ b/config/packages/api_platform.yaml
+@@ -10,10 +10,9 @@ api_platform:
+         jsonld:
+             mime_types:
+                 - application/ld+json
++        json:
++            mime_types:
+                 - application/json
+-#        json:
+-#            mime_types:
+-#                - application/json
+         html:
+             mime_types:
+                 - text/html
+diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
+index 8be4212b..57d33f46 100644
+--- a/src/Entity/CheeseListing.php
++++ b/src/Entity/CheeseListing.php
+@@ -42,7 +42,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
+  *     shortName="cheese",
+  *     attributes={
+  *          "pagination_items_per_page"=10,
+- *          "formats"={"jsonld", "html", "jsonhal", "csv"={"text/csv"}}
++ *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
+  *     }
+  * )
+  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})

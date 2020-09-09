@@ -1,0 +1,342 @@
+diff --git a/composer.json b/composer.json
+index e127f7cd..638779e0 100644
+--- a/composer.json
++++ b/composer.json
+@@ -14,6 +14,7 @@
+         "nelmio/cors-bundle": "^2.1",
+         "nesbot/carbon": "^2.17",
+         "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
++        "ramsey/uuid-doctrine": "^1.6",
+         "symfony/asset": "5.1.*",
+         "symfony/console": "5.1.*",
+         "symfony/debug-bundle": "5.1.*",
+diff --git a/composer.lock b/composer.lock
+index 02e0c6af..0826aa6b 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "eca6f361ab900c004ccd5c835f25384b",
++    "content-hash": "3637e316aebd7205facc6c93402dd12e",
+     "packages": [
+         {
+             "name": "api-platform/core",
+@@ -155,6 +155,58 @@
+             ],
+             "time": "2020-08-28T16:23:13+00:00"
+         },
++        {
++            "name": "brick/math",
++            "version": "0.9.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/brick/math.git",
++                "reference": "283a40c901101e66de7061bd359252c013dcc43c"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/brick/math/zipball/283a40c901101e66de7061bd359252c013dcc43c",
++                "reference": "283a40c901101e66de7061bd359252c013dcc43c",
++                "shasum": ""
++            },
++            "require": {
++                "ext-json": "*",
++                "php": "^7.1|^8.0"
++            },
++            "require-dev": {
++                "php-coveralls/php-coveralls": "^2.2",
++                "phpunit/phpunit": "^7.5.15|^8.5",
++                "vimeo/psalm": "^3.5"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Brick\\Math\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "description": "Arbitrary-precision arithmetic library",
++            "keywords": [
++                "Arbitrary-precision",
++                "BigInteger",
++                "BigRational",
++                "arithmetic",
++                "bigdecimal",
++                "bignum",
++                "brick",
++                "math"
++            ],
++            "funding": [
++                {
++                    "url": "https://tidelift.com/funding/github/packagist/brick/math",
++                    "type": "tidelift"
++                }
++            ],
++            "time": "2020-08-18T23:57:15+00:00"
++        },
+         {
+             "name": "doctrine/annotations",
+             "version": "1.10.4",
+@@ -2546,6 +2598,208 @@
+             ],
+             "time": "2020-03-23T09:12:05+00:00"
+         },
++        {
++            "name": "ramsey/collection",
++            "version": "1.1.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/ramsey/collection.git",
++                "reference": "044184884e3c803e4cbb6451386cb71562939b18"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/ramsey/collection/zipball/044184884e3c803e4cbb6451386cb71562939b18",
++                "reference": "044184884e3c803e4cbb6451386cb71562939b18",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.2 || ^8"
++            },
++            "require-dev": {
++                "captainhook/captainhook": "^5.3",
++                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
++                "ergebnis/composer-normalize": "^2.6",
++                "fzaninotto/faker": "^1.5",
++                "hamcrest/hamcrest-php": "^2",
++                "jangregor/phpstan-prophecy": "^0.6",
++                "mockery/mockery": "^1.3",
++                "phpstan/extension-installer": "^1",
++                "phpstan/phpstan": "^0.12.32",
++                "phpstan/phpstan-mockery": "^0.12.5",
++                "phpstan/phpstan-phpunit": "^0.12.11",
++                "phpunit/phpunit": "^8.5",
++                "psy/psysh": "^0.10.4",
++                "slevomat/coding-standard": "^6.3",
++                "squizlabs/php_codesniffer": "^3.5",
++                "vimeo/psalm": "^3.12.2"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Ramsey\\Collection\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Ben Ramsey",
++                    "email": "ben@benramsey.com",
++                    "homepage": "https://benramsey.com"
++                }
++            ],
++            "description": "A PHP 7.2+ library for representing and manipulating collections.",
++            "keywords": [
++                "array",
++                "collection",
++                "hash",
++                "map",
++                "queue",
++                "set"
++            ],
++            "funding": [
++                {
++                    "url": "https://github.com/ramsey",
++                    "type": "github"
++                }
++            ],
++            "time": "2020-08-11T00:57:21+00:00"
++        },
++        {
++            "name": "ramsey/uuid",
++            "version": "4.1.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/ramsey/uuid.git",
++                "reference": "cd4032040a750077205918c86049aa0f43d22947"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/ramsey/uuid/zipball/cd4032040a750077205918c86049aa0f43d22947",
++                "reference": "cd4032040a750077205918c86049aa0f43d22947",
++                "shasum": ""
++            },
++            "require": {
++                "brick/math": "^0.8 || ^0.9",
++                "ext-json": "*",
++                "php": "^7.2 || ^8",
++                "ramsey/collection": "^1.0",
++                "symfony/polyfill-ctype": "^1.8"
++            },
++            "replace": {
++                "rhumsaa/uuid": "self.version"
++            },
++            "require-dev": {
++                "codeception/aspect-mock": "^3",
++                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7.0",
++                "doctrine/annotations": "^1.8",
++                "goaop/framework": "^2",
++                "mockery/mockery": "^1.3",
++                "moontoast/math": "^1.1",
++                "paragonie/random-lib": "^2",
++                "php-mock/php-mock-mockery": "^1.3",
++                "php-mock/php-mock-phpunit": "^2.5",
++                "php-parallel-lint/php-parallel-lint": "^1.1",
++                "phpbench/phpbench": "^0.17.1",
++                "phpstan/extension-installer": "^1.0",
++                "phpstan/phpstan": "^0.12",
++                "phpstan/phpstan-mockery": "^0.12",
++                "phpstan/phpstan-phpunit": "^0.12",
++                "phpunit/phpunit": "^8.5",
++                "psy/psysh": "^0.10.0",
++                "slevomat/coding-standard": "^6.0",
++                "squizlabs/php_codesniffer": "^3.5",
++                "vimeo/psalm": "3.9.4"
++            },
++            "suggest": {
++                "ext-bcmath": "Enables faster math with arbitrary-precision integers using BCMath.",
++                "ext-ctype": "Enables faster processing of character classification using ctype functions.",
++                "ext-gmp": "Enables faster math with arbitrary-precision integers using GMP.",
++                "ext-uuid": "Enables the use of PeclUuidTimeGenerator and PeclUuidRandomGenerator.",
++                "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
++                "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Ramsey\\Uuid\\": "src/"
++                },
++                "files": [
++                    "src/functions.php"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "description": "A PHP library for generating and working with universally unique identifiers (UUIDs).",
++            "homepage": "https://github.com/ramsey/uuid",
++            "keywords": [
++                "guid",
++                "identifier",
++                "uuid"
++            ],
++            "funding": [
++                {
++                    "url": "https://github.com/ramsey",
++                    "type": "github"
++                }
++            ],
++            "time": "2020-08-18T17:17:46+00:00"
++        },
++        {
++            "name": "ramsey/uuid-doctrine",
++            "version": "1.6.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/ramsey/uuid-doctrine.git",
++                "reference": "9facc4689547e72e03c1e18df4a0ee162b2778b0"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/ramsey/uuid-doctrine/zipball/9facc4689547e72e03c1e18df4a0ee162b2778b0",
++                "reference": "9facc4689547e72e03c1e18df4a0ee162b2778b0",
++                "shasum": ""
++            },
++            "require": {
++                "doctrine/orm": "^2.5",
++                "php": "^5.4 | ^7 | ^8",
++                "ramsey/uuid": "^3.5 | ^4"
++            },
++            "require-dev": {
++                "jakub-onderka/php-parallel-lint": "^1",
++                "mockery/mockery": "^0.9 | ^1",
++                "phpunit/phpunit": "^4.8.36 | ^5.7 | ^6.5 | ^7",
++                "squizlabs/php_codesniffer": "^3.5"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Ramsey\\Uuid\\Doctrine\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "description": "Allow the use of ramsey/uuid as a Doctrine field type.",
++            "homepage": "https://github.com/ramsey/uuid-doctrine",
++            "keywords": [
++                "database",
++                "doctrine",
++                "guid",
++                "identifier",
++                "uuid"
++            ],
++            "time": "2020-01-27T05:09:17+00:00"
++        },
+         {
+             "name": "symfony/asset",
+             "version": "v5.1.5",
+diff --git a/config/packages/ramsey_uuid_doctrine.yaml b/config/packages/ramsey_uuid_doctrine.yaml
+new file mode 100644
+index 00000000..cfc3036f
+--- /dev/null
++++ b/config/packages/ramsey_uuid_doctrine.yaml
+@@ -0,0 +1,4 @@
++doctrine:
++    dbal:
++        types:
++            uuid: 'Ramsey\Uuid\Doctrine\UuidType'
+diff --git a/symfony.lock b/symfony.lock
+index ac39e851..6e60ce47 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -13,6 +13,9 @@
+             "src/Entity/.gitignore"
+         ]
+     },
++    "brick/math": {
++        "version": "0.9.1"
++    },
+     "doctrine/annotations": {
+         "version": "1.0",
+         "recipe": {
+@@ -170,6 +173,24 @@
+     "psr/simple-cache": {
+         "version": "1.0.1"
+     },
++    "ramsey/collection": {
++        "version": "1.1.0"
++    },
++    "ramsey/uuid": {
++        "version": "4.1.1"
++    },
++    "ramsey/uuid-doctrine": {
++        "version": "1.3",
++        "recipe": {
++            "repo": "github.com/symfony/recipes-contrib",
++            "branch": "master",
++            "version": "1.3",
++            "ref": "471aed0fbf5620b8d7f92b7a5ebbbf6c0945c27a"
++        },
++        "files": [
++            "config/packages/ramsey_uuid_doctrine.yaml"
++        ]
++    },
+     "symfony/asset": {
+         "version": "v4.2.8"
+     },

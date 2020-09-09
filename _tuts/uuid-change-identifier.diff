@@ -1,0 +1,18 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 9f697590..efad4a12 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -47,11 +47,13 @@ class User implements UserInterface
+      * @ORM\Id()
+      * @ORM\GeneratedValue()
+      * @ORM\Column(type="integer")
++     * @ApiProperty(identifier=false)
+      */
+     private $id;
+ 
+     /**
+      * @ORM\Column(type="uuid", unique=true)
++     * @ApiProperty(identifier=true)
+      */
+     private $uuid;
+ 

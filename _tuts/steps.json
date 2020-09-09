@@ -2034,7 +2034,87 @@
             "id": "validation-inject-validate",
             "name": "Validation: inject & validate",
             "description": null
+        },
+        {
+            "id": "uuid-install-ramsey-uuid-doctrine",
+            "name": "UUID: install ramsey\/uuid-doctrine",
+            "description": null
+        },
+        {
+            "id": "uuid-add-uuid-field",
+            "name": "UUID: add uuid field",
+            "description": null
+        },
+        {
+            "id": "uuid-make-migration-safe",
+            "name": "UUID: make migration safe",
+            "description": null
+        },
+        {
+            "id": "uuid-make-not-null",
+            "name": "UUID: make not null",
+            "description": null
+        },
+        {
+            "id": "uuid-initialize-in-the-constructor",
+            "name": "UUID: initialize in the constructor",
+            "description": null
+        },
+        {
+            "id": "uuid-fetch-user-in-test",
+            "name": "UUID: fetch User in test",
+            "description": null
+        },
+        {
+            "id": "uuid-check-for-uuid-in-test",
+            "name": "UUID: check for uuid in test",
+            "description": null
+        },
+        {
+            "id": "uuid-change-identifier",
+            "name": "UUID: change identifier",
+            "description": null
+        },
+        {
+            "id": "uuid-use-uuid-in-all-tests",
+            "name": "UUID: use UUID in all tests",
+            "description": null
+        },
+        {
+            "id": "uuid-add-test-to-set-on-create",
+            "name": "UUID: add test to set on CREATE",
+            "description": null
+        },
+        {
+            "id": "uuid-expose-uuid-in-constructor",
+            "name": "UUID: expose uuid in constructor",
+            "description": null
+        },
+        {
+            "id": "uuid-rename-to-id",
+            "name": "UUID: rename to id",
+            "description": null
+        },
+        {
+            "id": "uuid-send-json-ld-content-type",
+            "name": "UUID: send json-ld Content-Type",
+            "description": null
+        },
+        {
+            "id": "uuid-remove-header",
+            "name": "UUID: remove header",
+            "description": null
+        },
+        {
+            "id": "uuid-remove-json-format",
+            "name": "UUID: remove json format",
+            "description": null
+        },
+        {
+            "id": "uuid-re-add-json-format",
+            "name": "UUID: re-add json format",
+            "description": null
         }
     ],
-    "sha": "6b034e0cf741bb89bc8ebc9f7eb0bfc7c721d6bb"
+    "sha": "fd404f55edc17121a50c786d89c8f7a9188d78f3"
 }

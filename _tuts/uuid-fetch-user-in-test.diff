@@ -1,0 +1,14 @@
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+index 05172df4..f136b740 100644
+--- a/tests/Functional/UserResourceTest.php
++++ b/tests/Functional/UserResourceTest.php
+@@ -21,6 +21,9 @@ class UserResourceTest extends CustomApiTestCase
+         ]);
+         $this->assertResponseStatusCodeSame(201);
+ 
++        $user = UserFactory::repository()->findOneBy(['email' => 'cheeseplease@example.com']);
++        $this->assertNotNull($user);
++
+         $this->logIn($client, 'cheeseplease@example.com', 'brie');
+     }
+ 

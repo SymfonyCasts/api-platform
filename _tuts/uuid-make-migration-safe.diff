@@ -1,0 +1,14 @@
+diff --git a/migrations/Version20200909145236.php b/migrations/Version20200909145236.php
+index 8f39b3b6..5e348fbb 100644
+--- a/migrations/Version20200909145236.php
++++ b/migrations/Version20200909145236.php
+@@ -20,7 +20,8 @@ final class Version20200909145236 extends AbstractMigration
+     public function up(Schema $schema) : void
+     {
+         // this up() migration is auto-generated, please modify it to your needs
+-        $this->addSql('ALTER TABLE user ADD uuid CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\'');
++        $this->addSql('ALTER TABLE user ADD uuid CHAR(36) DEFAULT NULL COMMENT \'(DC2Type:uuid)\'');
++        $this->addSql('UPDATE user SET uuid = UUID()');
+         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649D17F50A6 ON user (uuid)');
+     }
+ 

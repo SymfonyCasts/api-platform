@@ -1,0 +1,55 @@
+diff --git a/migrations/Version20200909145236.php b/migrations/Version20200909145236.php
+new file mode 100644
+index 00000000..8f39b3b6
+--- /dev/null
++++ b/migrations/Version20200909145236.php
+@@ -0,0 +1,33 @@
++<?php
++
++declare(strict_types=1);
++
++namespace DoctrineMigrations;
++
++use Doctrine\DBAL\Schema\Schema;
++use Doctrine\Migrations\AbstractMigration;
++
++/**
++ * Auto-generated Migration: Please modify to your needs!
++ */
++final class Version20200909145236 extends AbstractMigration
++{
++    public function getDescription() : string
++    {
++        return '';
++    }
++
++    public function up(Schema $schema) : void
++    {
++        // this up() migration is auto-generated, please modify it to your needs
++        $this->addSql('ALTER TABLE user ADD uuid CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\'');
++        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649D17F50A6 ON user (uuid)');
++    }
++
++    public function down(Schema $schema) : void
++    {
++        // this down() migration is auto-generated, please modify it to your needs
++        $this->addSql('DROP INDEX UNIQ_8D93D649D17F50A6 ON user');
++        $this->addSql('ALTER TABLE user DROP uuid');
++    }
++}
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 790f17c1..b0fba103 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -48,6 +48,11 @@ class User implements UserInterface
+      */
+     private $id;
+ 
++    /**
++     * @ORM\Column(type="uuid", unique=true)
++     */
++    private $uuid;
++
+     /**
+      * @ORM\Column(type="string", length=180, unique=true)
+      * @Groups({"user:read", "user:write"})

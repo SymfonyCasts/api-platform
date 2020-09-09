@@ -1,0 +1,77 @@
+diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
+index 72cbb350..40d60694 100644
+--- a/tests/Functional/CheeseListingResourceTest.php
++++ b/tests/Functional/CheeseListingResourceTest.php
+@@ -34,12 +34,12 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $this->assertResponseStatusCodeSame(201);
+ 
+         $client->request('POST', '/api/cheeses', [
+-            'json' => $cheesyData + ['owner' => '/api/users/'.$otherUser->getId()],
++            'json' => $cheesyData + ['owner' => '/api/users/'.$otherUser->getUuid()],
+         ]);
+         $this->assertResponseStatusCodeSame(400, 'not passing the correct owner');
+ 
+         $client->request('POST', '/api/cheeses', [
+-            'json' => $cheesyData + ['owner' => '/api/users/'.$authenticatedUser->getId()],
++            'json' => $cheesyData + ['owner' => '/api/users/'.$authenticatedUser->getUuid()],
+         ]);
+         $this->assertResponseStatusCodeSame(201);
+     }
+@@ -57,7 +57,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $this->logIn($client, $user2);
+         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+             // try to trick security by reassigning to this user
+-            'json' => ['title' => 'updated', 'owner' => '/api/users/'.$user2->getId()]
++            'json' => ['title' => 'updated', 'owner' => '/api/users/'.$user2->getUuid()]
+         ]);
+         $this->assertResponseStatusCodeSame(403, 'only author can updated');
+ 
+@@ -171,7 +171,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
+                 'title' => 'cheese2',
+                 'description' => 'cheese',
+                 'price' => 1000,
+-                'owner' => '/api/users/' . $user->getId(),
++                'owner' => '/api/users/' . $user->getUuid(),
+                 'shortDescription' => 'cheese',
+                 'createdAtAgo' => '1 second ago',
+             ]
+@@ -190,7 +190,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
+         $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
+         $this->assertResponseStatusCodeSame(404);
+ 
+-        $response = $client->request('GET', '/api/users/'.$otherUser->getId());
++        $response = $client->request('GET', '/api/users/'.$otherUser->getUuid());
+         $data = $response->toArray();
+         $this->assertEmpty($data['cheeseListings']);
+     }
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+index 71cc348a..e06957fd 100644
+--- a/tests/Functional/UserResourceTest.php
++++ b/tests/Functional/UserResourceTest.php
+@@ -36,7 +36,7 @@ class UserResourceTest extends CustomApiTestCase
+         $user = UserFactory::new()->create();
+         $this->logIn($client, $user);
+ 
+-        $client->request('PUT', '/api/users/'.$user->getId(), [
++        $client->request('PUT', '/api/users/'.$user->getUuid(), [
+             'json' => [
+                 'username' => 'newusername',
+                 'roles' => ['ROLE_ADMIN'] // will be ignored
+@@ -61,7 +61,7 @@ class UserResourceTest extends CustomApiTestCase
+         $authenticatedUser = UserFactory::new()->create();
+         $this->logIn($client, $authenticatedUser);
+ 
+-        $client->request('GET', '/api/users/'.$user->getId());
++        $client->request('GET', '/api/users/'.$user->getUuid());
+         $this->assertJsonContains([
+             'username' => $user->getUsername(),
+             'isMvp' => true,
+@@ -79,7 +79,7 @@ class UserResourceTest extends CustomApiTestCase
+         $user->save();
+         $this->logIn($client, $user);
+ 
+-        $client->request('GET', '/api/users/'.$user->getId());
++        $client->request('GET', '/api/users/'.$user->getUuid());
+         $this->assertJsonContains([
+             'phoneNumber' => '555.123.4567',
+             'isMe' => true,
