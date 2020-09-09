@@ -1,5 +1,5 @@
 diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
-index 68c43a2d..d81b073e 100644
+index 335227e5..77160e4c 100644
 --- a/src/Validator/ValidIsPublishedValidator.php
 +++ b/src/Validator/ValidIsPublishedValidator.php
 @@ -4,6 +4,7 @@ namespace App\Validator;
@@ -19,5 +19,5 @@ index 68c43a2d..d81b073e 100644
 +
 +            // or a normal validation error
              $this->context->buildViolation('Only admin users can unpublish')
-                 ->atPath('description')
                  ->addViolation();
+         }

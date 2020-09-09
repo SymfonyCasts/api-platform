@@ -1,8 +1,8 @@
 diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
-index df09382d..68c43a2d 100644
+index df09382d..335227e5 100644
 --- a/src/Validator/ValidIsPublishedValidator.php
 +++ b/src/Validator/ValidIsPublishedValidator.php
-@@ -50,5 +50,12 @@ class ValidIsPublishedValidator extends ConstraintValidator
+@@ -50,5 +50,11 @@ class ValidIsPublishedValidator extends ConstraintValidator
  
              return;
          }
@@ -10,7 +10,6 @@ index df09382d..68c43a2d 100644
 +        // we are UNpublishing
 +        if (!$this->security->isGranted('ROLE_ADMIN')) {
 +            $this->context->buildViolation('Only admin users can unpublish')
-+                ->atPath('description')
 +                ->addViolation();
 +        }
      }
