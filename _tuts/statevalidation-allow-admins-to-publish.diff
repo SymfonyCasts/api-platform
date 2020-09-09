@@ -1,5 +1,5 @@
 diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
-index d405ab81..8d95eac7 100644
+index bb89cd69..df09382d 100644
 --- a/src/Validator/ValidIsPublishedValidator.php
 +++ b/src/Validator/ValidIsPublishedValidator.php
 @@ -4,16 +4,19 @@ namespace App\Validator;
@@ -23,8 +23,8 @@ index d405ab81..8d95eac7 100644
      }
  
      public function validate($value, Constraint $constraint)
-@@ -32,7 +35,8 @@ class ValidIsPublishedValidator extends ConstraintValidator
-         if ($value->getIsPublished() && !$wasAlreadyPublished) {
+@@ -38,7 +41,8 @@ class ValidIsPublishedValidator extends ConstraintValidator
+         if ($value->getIsPublished()) {
              // we are publishing!
  
 -            if (strlen($value->getDescription()) < 100) {

@@ -1,0 +1,18 @@
+diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
+index e2b76042..2328e6d3 100644
+--- a/src/Validator/ValidIsPublishedValidator.php
++++ b/src/Validator/ValidIsPublishedValidator.php
+@@ -27,9 +27,11 @@ class ValidIsPublishedValidator extends ConstraintValidator
+         $originalData = $this->entityManager
+             ->getUnitOfWork()
+             ->getOriginalEntityData($value);
+-        dd($originalData);
+ 
+-        if (null === $value || '' === $value) {
++        $previousIsPublished = ($originalData['isPublished'] ?? false);
++        if ($previousIsPublished === $value->getIsPublished()) {
++            // isPublished didn't change!
++
+             return;
+         }
+ 

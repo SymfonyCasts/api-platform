@@ -1286,8 +1286,8 @@
             "description": null
         },
         {
-            "id": "statechangeaction-log-something",
-            "name": "StateChangeAction: log something",
+            "id": "delete-me-5",
+            "name": "delete me 5",
             "description": null
         },
         {
@@ -1323,6 +1323,11 @@
         {
             "id": "statevalidation-dump-original-data",
             "name": "StateValidation: dump original data",
+            "description": null
+        },
+        {
+            "id": "statevalidation-do-nothing-if-no-change",
+            "name": "StateValidation: do nothing if no change",
             "description": null
         },
         {
@@ -2116,5 +2121,5 @@
             "description": null
         }
     ],
-    "sha": "fd404f55edc17121a50c786d89c8f7a9188d78f3"
+    "sha": "6c245e1f0ef0c51055413ddfc4a945a159311610"
 }
