@@ -25,8 +25,8 @@ To be honest, this was *not* an easy tutorial to write. Not because it was
 hard to figure out how to make these customizations - though, some of this *is*
 tricky - but because we're getting *so* deep into API Platform, that sometimes
 there are *multiple* ways to accomplish something. We'll find the best paths and
-learn why. Oh, and a huge thanks to [Kévin Dunglas](http://github.com/dunglas)
-and [Antoine Bluchet](Antoine Bluchet) - core API platform developers - who helped
+learn why. Oh, and a huge thanks to [Kévin Dunglas](https://github.com/dunglas)
+and [Antoine Bluchet](https://github.com/soyuka) - core API platform developers - who helped
 me a *ton* to find those best paths.
 
 ## Project Setup
@@ -89,6 +89,11 @@ At your terminal, run:
 ```terminal
 symfony run bin/phpunit
 ```
+
+***TIP
+Using `symfony php bin/phpunit` is even better because it can
+intelligently find your php executable.
+***
 
 First, `symfony run` is just a shortcut to execute php. So this mean:
 
