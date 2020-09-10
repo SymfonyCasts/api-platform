@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index e127f7cd..638779e0 100644
+index 3447c337..f8466fa8 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -14,6 +14,7 @@
+@@ -13,6 +13,7 @@
          "nelmio/cors-bundle": "^2.1",
          "nesbot/carbon": "^2.17",
          "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
@@ -11,15 +11,15 @@ index e127f7cd..638779e0 100644
          "symfony/console": "5.1.*",
          "symfony/debug-bundle": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index 02e0c6af..0826aa6b 100644
+index 48702851..767d548b 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "eca6f361ab900c004ccd5c835f25384b",
-+    "content-hash": "3637e316aebd7205facc6c93402dd12e",
+-    "content-hash": "f87f6947580e2783706b94e253331326",
++    "content-hash": "8b102b24ff66b3529b08682be187b6c1",
      "packages": [
          {
              "name": "api-platform/core",
@@ -82,7 +82,7 @@ index 02e0c6af..0826aa6b 100644
          {
              "name": "doctrine/annotations",
              "version": "1.10.4",
-@@ -2546,6 +2598,208 @@
+@@ -2337,6 +2389,208 @@
              ],
              "time": "2020-03-23T09:12:05+00:00"
          },

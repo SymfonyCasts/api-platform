@@ -1,32 +1,32 @@
 diff --git a/composer.json b/composer.json
-index 504fb418..5b1b158c 100644
+index eff767dc..dba6f95e 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -30,7 +30,6 @@
-         "zenstruck/foundry": "^1.1"
+@@ -29,7 +29,6 @@
      },
      "require-dev": {
+         "doctrine/doctrine-fixtures-bundle": "^3.3",
 -        "hautelook/alice-bundle": "^2.5",
          "symfony/browser-kit": "5.1.*",
          "symfony/css-selector": "5.1.*",
          "symfony/maker-bundle": "^1.11",
 diff --git a/composer.lock b/composer.lock
-index 02a171e6..5d4598aa 100644
+index c40b25ed..883a6fb6 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "4813b28bbc6428cccb24e4299a4b0c46",
-+    "content-hash": "fdbec18e7f7f2f622f9dfa75091bcc7f",
+-    "content-hash": "8472da23f52e9f44c7d4b22b35d02b60",
++    "content-hash": "f50a9f64f5c009861f486b05ae257e66",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -7117,214 +7117,6 @@
-         }
-     ],
-     "packages-dev": [
+@@ -7052,214 +7052,6 @@
+             ],
+             "time": "2019-12-12T13:22:17+00:00"
+         },
 -        {
 -            "name": "hautelook/alice-bundle",
 -            "version": "2.7.2",
@@ -238,7 +238,7 @@ index 02a171e6..5d4598aa 100644
          {
              "name": "nikic/php-parser",
              "version": "v4.9.1",
-@@ -7377,246 +7169,6 @@
+@@ -7312,246 +7104,6 @@
              ],
              "time": "2020-08-30T16:15:20+00:00"
          },
@@ -485,11 +485,10 @@ index 02a171e6..5d4598aa 100644
          {
              "name": "symfony/browser-kit",
              "version": "v5.1.5",
-@@ -8073,91 +7625,6 @@
-                 }
+@@ -8009,91 +7561,6 @@
              ],
              "time": "2020-08-10T08:03:57+00:00"
--        },
+         },
 -        {
 -            "name": "theofidry/alice-data-fixtures",
 -            "version": "1.2.1",
@@ -574,9 +573,10 @@ index 02a171e6..5d4598aa 100644
 -                }
 -            ],
 -            "time": "2020-07-30T22:54:19+00:00"
-         }
-     ],
-     "aliases": [],
+-        },
+         {
+             "name": "zenstruck/foundry",
+             "version": "v1.1.2",
 diff --git a/config/bundles.php b/config/bundles.php
 index d271f9f6..ba1203af 100644
 --- a/config/bundles.php
