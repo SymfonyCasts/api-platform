@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index 5b1b158c..e127f7cd 100644
+index dba6f95e..3447c337 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -16,6 +16,7 @@
+@@ -15,6 +15,7 @@
          "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
          "symfony/asset": "5.1.*",
          "symfony/console": "5.1.*",
@@ -11,19 +11,19 @@ index 5b1b158c..e127f7cd 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 5d4598aa..02e0c6af 100644
+index 883a6fb6..48702851 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "fdbec18e7f7f2f622f9dfa75091bcc7f",
-+    "content-hash": "eca6f361ab900c004ccd5c835f25384b",
+-    "content-hash": "f50a9f64f5c009861f486b05ae257e66",
++    "content-hash": "f87f6947580e2783706b94e253331326",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -2960,6 +2960,86 @@
+@@ -2751,6 +2751,86 @@
              ],
              "time": "2020-09-02T07:07:40+00:00"
          },

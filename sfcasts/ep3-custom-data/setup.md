@@ -105,6 +105,11 @@ At your terminal, run:
 symfony run bin/phpunit
 ```
 
+***TIP
+Using `symfony php bin/phpunit` is even better because it can
+intelligently find your PHP executable.
+***
+
 First, `symfony run` is just a shortcut to execute PHP. So this mean:
 
 ```terminal-silent

@@ -1,72 +1,100 @@
-# Setting Published
+# Publishing a Listing
 
-Coming soon...
+One of the things that we *can't* do yet is publish a `CheeseListing`. Boo!
 
-One of the things that we can't do yet is publish a cheese listing. Whenever we
-created a cheese listing through our API, it's always, it always gets an, is
-published, = false value. And there's no actual way to change this yet because we
-haven't exposed any is published. Field is not exposed in our API. So here's the plan
-in the U. If you can imagine the UI, there will be a publish button. And obviously on
-cheese listing, there is an is published field, but publishing is more than just
-changing this field in our application. Let's pretend that publishing is an important
-thing. And when you publish something, in addition to changing, this is published
-field, the true, we need to run some custom code. Like maybe we need to send the
-cheese listing to elastic search, to be indexed, or we want to send some notification
-to people that have been waiting for that type of cheese.
+Right now, when we created a `CheeseListing` through our API, it always gets an
+`isPublished=false` value, which is the default. There is no actual way to change
+this because `isPublished` isn't exposed as a field in our API.
 
-How can we do this? What you might think that we need a custom end point or operation
-something like post /API /cheeses /curly brace ID /publish. You can do this. And
-we'll talk about custom operations in part four of this series, but this isn't
-restful in rest. Every URL is a unique resource. So from a rest standpoint /API
-/jesus' /ID /public publish, it makes it look like there is a keys publish resource,
-and that you're creating a new one of course rules are meant to be broken. And
-ultimately you should just get your job done. But in this tutorial, let's see if we
-can solve this in a restful way. How by making is published changeable in the same
-way as any other field, by making a put request, which is published colon true in the
-JSON body. That part will be pretty easy running code only when this value changes
-from false to true. That will be a little trickier and will involve a data persister
-and some clever logic. So let's start with the basic test of being able to update
-this field. So I'm going to go into tests and open she's listing resource test, and
-let's find test update she's listing I'll copy that, and then duplicate it below,
-update its name to test publish she's listing.
+In the imaginary UI of our site, there will be a "Publish" button that a user can
+click. When a user clicks they, we're going to obviously need to change the
+`isPublished` field from `false` to `true`. But publishing in our app is *more*
+than just updating this field in the database. In addition to updating the field,
+let's pretend that we need to run some custom code, like maybe we need to send a
+request to ElasticSearch to *index* the new listing or we want to send some
+notifications to users who are desperately waiting for this type of cheese.
 
-Now this cause I don't need to users. So I'll just create one user and log in is that
-one user, because eventually we're only going to allow owners of a cheese listing to
-a Paloma cheese listing, and then down here for the body, the JSON we're gonna send
-is published set to true. And let's see here, the status code we're actually going to
-want is 200. So the idea is we create a user. This uses the Foundry library, and then
-we create a cheese listing using the same Foundry library that's published that's,
-but we don't want this published thing that would make it already published. What got
-a new cheese listing set to that user as the owner will log in, is that, and then
-we'll send it port requests with is published set to true. So this is a very
-traditional way to update any field now to make things a little bit more interesting
-that at the bottom what's actually assert that this cheese listing actually is
-published after you read the test.
+## Publishing: Custom Endpoint
 
-So I will say she's listing->refresh. I'll talk about that in a second. And then this
-assert true that she's listing->get his public of cheese listing->get is published.
-Now that she's listing->refresh. This is another feature of that Foundry library. So
-whenever you create objects using the Foundry library, it actually passes you back
-here. Entity wrapped in a proxy object. So if I hold command on this refresh, you
-see, this is a little proxy object from Foundry. It wraps the NCD object. It has a
-couple of useful methods on it, like refresh. So I can call that and it's going to
-automatically make sure that that refreshes with the latest data from the database
-pretty convenient. All right, let me copy that method name. We'll spin over Symfony
-we're on bins last PG minute dash dash filter = test published cheese listing.
+So... how should we design this in our API? You *might* think that we need a custom
+endpoint or "operation" in ApiPlatform language. Something like
+`POST /api/cheeses/{id}/publish`.
 
-And with any luck this will fail and yes, it does fail. The asserting that false is
-true because this doesn't work yet. And the reason is simple is published as simply
-not part of our API. It does not have any groups on it like the other fields. So what
-we want, because if you go to the top of our doc of our API plat of our API resource
-configuration, as a reminder, our de normalization context uses a serializer group
-called cheese colon, right? So if we want a field to be writeable on the API, that's
-the group that needs to get in. So I'll copy that. Scroll on is published and say ad
-groups and then say curly, curly, and then paste. CI's colon right inside of there.
-Now, as long as this has a setter, and if I search for a set is published, there is a
-setter on this. Then the API is going to be able to use this setter and expose that
-field. All right. So spend over run the test and yes, this time it passes. So as I
-mentioned, that was pretty easy because we're just exposing a normal field in our
-API. Like anything else? The real question now is how can we run custom code, but
-only when it is published changes from false to true when it actually is published.
-Let's talk about how to do that next.
+You *can* do this. And we'll talk about custom operations in part 4 of this series.
+But this solution would *not* be RESTful. In REST, every URL represents the address
+to a unique resource. So from a REST standpoint POSTing to
+`/api/cheses/{id}/publish` makes it look like there is a "cheese publish" resource
+and that we're trying to create a new one.
 
+Of course, rules are *meant* to be broken. And ultimately, you should just get your
+job done however is best. But in this tutorial, let's see if we *can* solve this
+in a RESTful way. How? By making `isPublished` changeable in the *same* way as
+*any* other field: by making a PUT request with `isPublished: true` in the body.
+
+That part will be pretty easy. But running code *only* when this value changes
+from false to true? That will be a bit trickier.
+
+## Testing the PUT to update isPublished
+
+Let's start with a basic test where we update this field. Open
+`tests/Functional/CheeseListingTesourceTest`, find `testUpdateCheeseListing`, copy
+that method, paste, and rename it to `testPublishCheeseListing()`.
+
+Ok! I don't need 2 users: I'll just create one user and log in is that
+one user so that we have access to the PUT request. We already have security rules
+in place from the last tutorial to prevent anyone from editing anyone else's listing.
+Down here, for JSON body, send `isPublished` set to `true`. And... the status code
+we expect is 200.
+
+So here's the flow: we create a `User` - this uses the Foundry library and then
+we create a `CheeseListing`. Oh, but we don't want that `published()` method - that's
+a method I made to create a *published* listing: we definitely want to operate on
+an *unpublished* listing. Anyways, we set the user as the owner of the new cheese
+listing, log in as that user, and then send a PUT request to update th
+`isPublished` field.
+
+To make things more interesting, at the bottom, let's assert that the
+`CheeseListing` listing *is* in fact published after the request. Do that with
+`$cheeseListing->refresh()` - I'll talk about that in a second - and then
+`$this->assertTrue()` that `$cheeseListing->getIsPublished()`.
+
+The `$cheeseListing->refresh()` is another feature of Foundry library. Man, that
+library just keeps giving! Whenever you create an object with Foundry, it passes
+you back that object bu *wrapped* inside a `Proxy` object. Hold Command or Ctrl
+and click the `refresh()`. Yep! A tiny `Proxy` object from Foundry with several
+useful methods on it, like `refresh()`.
+
+Anyways, refresh will update the entity in my test with the latest data, and then
+we'll check if it's true.
+
+Ok, testing time! I mean, time to make sure our test fails! Copy the test method
+name, spin over to your terminal, and run:
+
+```terminal
+symfony php bin/phpunit --filter=testPublishCheeseListing
+```
+
+And... we're hoping for failure and... yes! Failed asserting that false is
+true because... the `isPublished` as simply *not* writable in our API yet.
+
+## Making isPublished Writable in the API
+
+Let's fix that! At the top of our `@ApiResource` annotation, as a reminder, we
+have a `denormalizationContext` option that sets the serialization groups to
+`cheese:write`. So if we want a field to be *writeable* in the API, it needs
+that group.
+
+Copy that, scroll down to `isPublished` and add `@Groups({})` and paste. Now, as
+long as this has a setter - and... yep there *is* a `setIsPublished()` method - it
+will be writable in the API.
+
+Let's see if it is! Go back to your terminal, run the test again:
+
+```terminal-silent
+symfony php bin/phpunit --filter=testPublishCheeseListing
+```
+
+And... got it! We can now publish a `CheeseListing`! But *we* know that this
+was the easy part. The *real* question is this: how can we run custom code
+*only* when a `CheeseListing` is published? So, only when the `isPublished`
+field changes from false to true? Let's find out how next.
