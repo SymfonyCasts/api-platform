@@ -1,6 +1,8 @@
 # Data Persister Decoration
 
-In the last course, we create this `UserDataPersister` class.
+In the last course, we create this `UserDataPersister` class:
+
+[[[ code('8afac30e1f') ]]]
 
 ## Um, what is a "Persister"?
 
@@ -27,19 +29,31 @@ to the database? Well, you *could* use a Doctrine listener for that... but if yo
 want that code to only run in the context of your API, how can we? The answer
 is to create a custom data persister. For example, we created `UserDataPersister`
 because we needed to encode the plain password and set it onto the `password`
-field before saving.
+field before saving:
+
+[[[ code('23b81c7548') ]]]
 
 To create this data persister, we implemented `DataPersisterInterface` and added
-a `supports()` method that says that we support `User` objects. As *soon* as we
-did that, *we* became *100%* responsible for persisting `User` objects. What I
-mean is, the normal, *core* Doctrine data persister will *no* longer be called
+a `supports()` method that says that we support `User` objects:
+
+[[[ code('c91cb51635') ]]]
+
+As *soon* as we did that, *we* became *100%* responsible for persisting `User` objects.
+What I mean is, the normal, *core* Doctrine data persister will *no* longer be called
 for `User` objects: our persister takes precedence. This is why we did our custom
-work up here, but then had to call `persist()` and `flush()` at the bottom.
+work up here, but then had to call `persist()` and `flush()` at the bottom:
+
+[[[ code('73d0976420') ]]]
 
 To prove that our data persister *replaces* the core persister for `User` objects,
-let's comment-out the `persist()` call and run our tests. Open
-`tests/Functional/UserResourceTest`. This `testCreateUser` method *should* now
-fail because the User won't *actually* be saved to the database.
+let's comment-out the `persist()` call and run our tests:
+
+[[[ code('21cec1024a') ]]]
+
+Open `tests/Functional/UserResourceTest`. This `testCreateUser()` method *should* now
+fail because the User won't *actually* be saved to the database:
+
+[[[ code('e964960c4c') ]]]
 
 Copy that method name and run:
 
@@ -51,7 +65,11 @@ And... yea! It failed! This test passed a minute ago, but now we get a 400
 bad request... which happens because the un-persisted entity is missing an `id`...
 and so ApiPlatform has trouble serializing it.
 
-If we put the `persist()` back and run the test again:
+If we put the `persist()` back:
+
+[[[ code('87b1058a86') ]]]
+
+And run the test again:
 
 ```terminal-silent
 symfony run bin/phpunit --filter=testCreateUser
@@ -68,13 +86,23 @@ can do its normal logic.
 
 And that's totally possible via decoration. Yep, instead of injecting the
 entity manager into the constructor, replace this with `DataPersisterInterface`
-and call it, how about, `$decoratedDataPersister`. Copy that and rename the
-variable and the `$entityManager` property to `$decoratedDataPersister`.
+and call it, how about, `$decoratedDataPersister`:
+
+[[[ code('f5910e75e9') ]]]
+
+Copy that and rename the variable and the `$entityManager` property to
+`$decoratedDataPersister`:
+
+[[[ code('082134fa77') ]]]
 
 This is nice because, down here, instead `persist()` and `flush()`, all we need
-is `$this->decoratedDataPersister->persist($data)`.
+is `$this->decoratedDataPersister->persist($data)`:
 
-Down in `remove()`, we can do the same: `$this->decoratedDataPersister->remove($data)`.
+[[[ code('a39184e310') ]]]
+
+Down in `remove()`, we can do the same: `$this->decoratedDataPersister->remove($data)`:
+
+[[[ code('56514e7eb3') ]]]
 
 Beautiful! But... before we try this... um... *don't* try this unless you have Xdebug
 installed. Because... when I run my test:
@@ -88,7 +116,10 @@ Ah! It's recursion!
 > Maximum function nesting level of 256 reached
 
 Ok, let's figure out what's going on. In the constructor, we just said
-`DataPersisterInterface` and Symfony, apparently, figure out what to pass us.
+`DataPersisterInterface` and Symfony, apparently, figured out what to pass us:
+
+[[[ code('f8291f2266') ]]]
+
 This means that the data persister must be passed via autowiring.
 
 Let's go get more info about that autowired service. Run:
@@ -111,15 +142,22 @@ persister service *actually* holds a *collection* of data persisters inside of i
 
 Basically, whenever something needs to be persisted, ApiPlatform calls `persist()`
 on this *one* data persister. Internally, *it* then loops over the persisters
-inside, calls `supports()` on each one, and then calls `persist()` on the
-first persister that supports the object.
+inside, calls `supports()` on each one:
+
+[[[ code('28004aeda9') ]]]
+
+And then calls `persist()` on the first persister that supports the object.
 
 So... this is really cool! If you need the *entire* data persister system, you
 can autowire this one service and call `persist()` on it.
 
 The *problem* is that we are *effectively* calling ourselves! ApiPlatform
 originally calls persist on the `ChainDataPersister`, it calls `persist()` on us...
-and then we call `persist()` back on the `ChainDataPersister`. Whoops!
+and then we call `persist()` back on the `ChainDataPersister`:
+
+[[[ code('479ae7db13') ]]]
+
+Whoops!
 
 So instead of injecting the *entire* data persister system, let's
 inject and use just the *one* data persister that we know we want: the one that is
