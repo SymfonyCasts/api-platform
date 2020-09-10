@@ -2,3 +2,8 @@ chapters:
     - setup
     - persister-decoration
     - decoration-deep-dive
+    - persister-context
+    - setting-published
+    - publish-state-change
+    - published-validator
+    - validator-logic
