@@ -81,7 +81,7 @@ the rules for this validator are going to need the `$isPublished` field, but als
 Now let's actually try the test right now. So over in my test, I'll copy the new test
 method name, and then I'll run a 
 
-```
+```terminal
 symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
@@ -115,7 +115,13 @@ be added about the cheese list in class. So we can make our code very specific i
 of there. And then, well, this let's just `dd($value)` to absolutely make sure we
 know what it looks like.
 
-Alright, so now let's move over, run the test again. And yes, we can see that the
+Alright, so now let's move over, run the test again. 
+
+```terminal-silent
+symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+```
+
+And yes, we can see that the
 founder is being called and it is being passed our `CheeseListing` object, which is
 going to be the `CheeseListing` object after it's the JSON has been deserialized.
 Uh, so you can actually see that the `isPublished` has been changed to true already.
