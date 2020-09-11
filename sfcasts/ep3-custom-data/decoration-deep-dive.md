@@ -16,7 +16,7 @@ for "doctrine". Ok: a metadata factory and... ah:
 I'll enter the number next to it - 105 - to get more details.
 
 Ok, the class is called just `DataPersister`. Back in PhpStorm, hit
-Shift+Shift, search for `DataPersister` and make sure to include "non-project items".
+`Shift`+`Shift`, search for `DataPersister` and make sure to include "non-project items".
 Select the one from ApiPlatform's Doctrine Bridge.
 
 And... cool! This looks pretty much exactly like we expected: it persists and
@@ -29,7 +29,9 @@ autowiring, we can *explicitly* configure this argument on `UserDataPersister`.
 To do that, open `config/services.yaml`, head to the bottom, and override the
 service decoration for `App\DataPersister\UserDataPersister`. Beneath, add `bind`
 and then the argument name, which is `decoratedDataPersister`. So
-`$decoratedDataPersister` set to an `@` symbol and then the service id.
+`$decoratedDataPersister` set to an `@` symbol and then the service id:
+
+[[[ code('a8e4957211') ]]]
 
 Thanks to this, Symfony knows to inject *this* specific service instead of the
 normal chain data persister. To prove it, try the tests again:
@@ -49,18 +51,26 @@ And, I want to point out a *subtle* difference between what we *just* did and
 how we hooked into a different part of ApiPlatform in the last tutorial. Specifically,
 the context builder system. In both cases, we wanted to run custom code
 inside part of ApiPlatform. For `AdminGroupsContextBuilder`, we used a
-`decorates` option. But in this case, we didn't. Why?
+`decorates` option:
+
+[[[ code('189a4066cd') ]]]
+
+But in this case, we didn't. Why?
 
 ## How the Context Builder System Works
 
 Let's talk about how the context builder system works in Symfony's
-service container. Open up our custom class: `App\Serializer\AdminGroupsContextBuilder`.
+service container. Open up our custom class: `App\Serializer\AdminGroupsContextBuilder`:
+
+[[[ code('f1ffeb6ab8') ]]]
 
 The class itself is pretty simple: it implements `SerializerContextBuilderInterface`
 and adds some conditional serialization groups based on the current user. We also
-inject a `$decorated` object that has the same `SerializerContextBuilderInterface`.
+inject a `$decorated` object that has the same `SerializerContextBuilderInterface`:
 
-So, on a high-level, this is class decoration: we are *decorating* some other
+[[[ code('04372d8194') ]]]
+
+So, on a high-level, this is "class decoration": we are *decorating* some other
 serializer context builder, calling it, but also adding our own logic. In
 `UserDataPersister`, we are *also* doing class decoration in the exact same
 way.
@@ -135,7 +145,7 @@ Ah, its class is `SerializerContextBuilder`! *This* is the *true*, original cont
 builder service. It's been decorated twice - once by us and once by ApiPlatform
 itself - to add more features.
 
-The point is: by leveraging service decoration, we can create a, sort of "chain"
+The point is: by leveraging service decoration, we can create a, sort of, "chain"
 of context builders... even though there isn't *technically* a chain class.
 But for the data persister system, this... simply isn't necessary! That system
 *has* a "chain data persister" and we can *freely* add however many data persisters
