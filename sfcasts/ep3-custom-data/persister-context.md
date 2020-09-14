@@ -16,9 +16,9 @@ Down in `persist()`, since this is an entity, we don't need to do anything fancy
 to determine if the object is being created versus updated. We can say: if
 `!$data->getId()`:
 
-Then log something: `$this->logger->info(sprintf())`:
-
 [[[ code('3e0151dc47') ]]]
+
+Then log something: `$this->logger->info(sprintf())`:
 
 > User %s just registered. Eureka!
 
