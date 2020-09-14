@@ -32,7 +32,7 @@ symfony php bin/phpunit --filter=testCreateUser
 ## Custom Code only for a Specific Operation
 
 Cool! So let's do something a bit harder: what if you need to run some custom code but
-only for a specific *operation*. In `CheeseListing`, we have 2 collection operations
+only for a specific *operation*. In `User`, we have 2 collection operations
 and 3 item operations. For the most part, by checking the id, you can pretty
 much figure out which operation is being used. But if you start also using a PATCH
 operation or custom operations, then this would *not* be enough.
