@@ -1,134 +1,147 @@
-# Published Validator
+# Validating Who/When Can Publish
 
-Coming soon...
+I have an idea! Let's complicate things!
 
-So we're going to complicate things. We can't just let anyone publish a `CheeseListing`
-only the owner or an admin should be able to do that. And we've already got
-that covered. Thanks to the `security` on the `CheeseListing`. `put` operation. If you
-scroll up here, you can say, `put` has `"security"="is_granted('EDIT', object)`, and what's
-going on. There is that, that is using the security system. Uh, it's going to be
-passed to our custom `CheeseListingVoter`, which we created in the previous tutorial.
-And basically this supports that `EDIT` attribute and it checks to make sure that the
-current user is the owner of the `CheeseListing` or that the current user is an admin.
-So it's already true that only the owner, an admin can even hit this put operation,
-but our logic gets a little more complicated than that. According to our business
-team and owner can only be allowed to publish their `CheeseListing`.
+We can't just let *anyone* publish a `CheeseListing`, only the owner or an admin
+should be able to do that. And we already have that covered thanks to the
+`security` attribute on the `CheeseListing` `put` operation. It has
+`"security"="is_granted('EDIT', object)`, which activate a custom voter that we
+created the in last tutorial: `CheeseListingVoter`. This looks for that `EDIT`
+attribute and checks to make sure that the current user is the owner of the
+`CheeseListing` or an admin. So it's already true that only the owner or an
+admin can even *hit* this `put` operation.
 
-If the `description` is longer than a hundred characters, if it's shorter publishing
-should fail what they 400 status code, but also an admin should be able to skip that
-rule and publish whenever they want, no matter what. Oh, and speaking of unpublished
-thing, a, an owner can actually not on publish their cheese listing, but that is
-something that we want an admin to be able to do. Yikes. So let's start with a test
-to describe all of this craziness first and `CheeseListingResourceTest`, to make
-sure that our `testPublishCheeseListing()` keeps working. We need to make sure that
-the Jesus thing you hear here has a long enough description. If you look in the
-`CheeseListingFactory` `src/Factory/CheeseListingFactory`, by default, the
-`description` is set to a, by default, the `description` is just set to this short
-description right here, but I've already added something called a state method here
-called `withLongDescription()` that will set it to three paragraphs from faker, which
-is definitely going to be longer than a hundred characters. So this is a long way of
-saying that inside of our test here, we can actually say `->withLongDescription()` to
-make sure that the object created the `CheeseListing` object created here is going to
-have a long enough `description`.
+But now we have a *new* requirement: to prevent low-quality listings from being
+added, our business team has told us that an owner can only publish a
+`CheeseListing` if the `description` is *longer* than 100 characters. Of it's
+shorter, publishing should *fail* with a 400 status code. Oh... but the business
+people *also* said that this rule *should* not apply to admins: they can publish
+no matter *how* short the description is.
 
-So that will take care of making that still pass. Now below this, I'm going to paste
-in a new test method, which you can get from the code block on this page. And let's
-just walk through it really quickly to see what the goal is. Now you can see here.
-The first case is that we're going to create `CheeseListing`. This `CheeseListing` is
-going to have a short `description` C here, and we're gonna try to publish it as a, the
-owner of that user. So the user is the owner. We're going to log in as that user, try
-to publish it and we'll get a 400 status code. But if we then log in as the admin
-user and do the same thing, this will actually work. Then there's a few other tests
-on here. We want to verify that if we log back in as the normal user, we are able to
-make other changes to our `CheeseListing`, just to make sure he didn't break anything.
+## Using Foundry State to Make a Longer Description
 
-And then down here for unpublished, we're going to log in. As a normal user, try to
-set `isPublished` to false. That shouldn't work. But if we log in as an admin user and
-said, `isPublished` a false that will work if they 200 status code. Phew. So how can
-we do this? If you think about it, it's kind of a strange mixture of validation and
-security. Like are these security checks or are these validation checks? And the line
-between validation security is sometimes blurry. So in theory, we could do something
-up here too. We can do some pretty crazy stuff with this security expression. There
-is a variable in here known as previous object, which is the object before the
-changing. So in theory, we could check the previous objects `isPublished` and the
-object `isPublished` and do different things. Or to keep this readable, we could
-actually pass both the object and previous object into our voter.
+Um... ok! So let's start with a test to describe all of this craziness. In
+`CheeseListingResourceTest`, to make sure that our `testPublishCheeseListing()`
+keeps working, we need to make sure that the `CheeseListing` has a long enough
+description.
 
-And then in our voter, use that to figure out what's going on. But I tend to view
-things like this security is best when you're trying to completely prevent access to
-an operation, but validation is best when you need to prevent certain data from
-changing in certain ways, even if the ways that they are allowed to change, depend on
-who the current user is. So a long way of saying we are going to solve this with a
-custom validator. So our terminal I'm gonna run 
+If you look in `CheeseListingFactory` - `src/Factory/CheeseListingFactory` - by
+default, the `description` is short. But I've already added something called a
+"state method": `withLongDescription()`. If we call this on the factory, it will
+set the description to three paragraphs via Faker... which will *definitely*
+be longer than 100 characters.
+
+This is a *long* way of saying that, inside the test, we add say `->withLongDescription()`
+to make sure that the object created the `CheeseListing` object created here is going to
+have a long enough `description`. Now, once we add the new restrictions, *this*
+test should still pass.
+
+## Testing the Validation Requirements
+
+Below this, I'm going to paste in a new test method, which you can get from the
+code block on this page. Let's quickly walk through it to see what the goal is.
+
+In the first case, we create a `CheeseListing` with a short `description`, log
+in as the owner of that listing, and then expect a 400 status code. But if we
+then log in as an admin user and do the same thing, this *will* work. We then
+have one more test to log back in as the normal user and change something
+*different*... just to make sure we didn't break anything.
+
+This finishes with two tests for unpublishing: we log in as a normal user, try
+to set `isPublished` to false and that should *not* work. But if we log in as an
+admin and do the same, this *will* work with a 200 status code.
+
+Phew! And yes, we could - and maybe should - break this test into smaller test
+methods to help debugging. I'm being a bit lazy by combining them.
+
+## Is this Security? Or Validation?
+
+So how can accomplish all of this? Well first... is this a security check or a
+validation check? Because sometimes, the difference between the two is blurry.
+
+In theory, we *could* do something inside the `security` attribute. The expression
+has a variable called `previous_object`, which is the object *before* it was
+updated. So, we could compare the previous object's `isPublished` with the
+object's `isPublished` and do different things. Or, to keep this readable, we could
+even pass both the `object` and `previous_object` into a voter as an array. That
+seems a little crazy to me... but it would probably work!
+
+But *I* tend to view things like this: security is best when you're trying to
+*completely* prevent access to an operation. But validation is best when the
+restrictions you need to apply are based on the *data* that's being sent, like
+preventing a field from changing to some value. That's true even if those rules
+depend on authenticated user.
+
+In other words, we're going to create a custom validator! At your terminal, run:
 
 ```terminal
 php bin/console make:validator
 ```
 
-, I'll call it. This. This `ValidIsPublished`.
+I'll call it: `ValidIsPublished`.
 
-That's going to generate two classes. The class that kind of represents the
-annotation and then the class that actually holds the validator logic. We can go over
-and see these inside of `src/Validator/`. Perfect. So before we actually add any
-logic to either of these classes, let's add this to our `CheeseListing`. So above the
-`CheeseListing` class add `@ValidIsPublished()`. Now, the reason we're
-adding this above the class and not maybe above the `$isPublished` property, is that by
-adding this above the class are custom valid. Validator is going to be passed in
-entire `CheeseListing` object, not just a single field. And that's important because
-the rules for this validator are going to need the `$isPublished` field, but also the
-`$description` field.
+This generated two classes: the class that represents the "annotation" and also
+the class that holds the actual validator logic. We can see both inside
+`src/Validator/`.
 
-Now let's actually try the test right now. So over in my test, I'll copy the new test
-method name, and then I'll run a 
+Perfect! Before we add any logic to either class, let's use the annotation in
+`CheeseListing`. So, above the `CheeseListing` class, add `@ValidIsPublished()`.
+
+Now, the reason we're adding this above the *class* - and not above the
+`$isPublished` property - is that our validator will need access to the entire
+`CheeseListing` so that it can check both the `isPublished` and `description`
+properties. If we had put this above `isPublished`, then only *that* field would
+be passed to us.
+
+Let's try our test and see what our failure looks like right now. Over in the test,
+copy the new method name, and then run:
 
 ```terminal
 symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
-and paste that method name, and it fails. Let's see what's going on here and check
-this out. It says the constraint at validator Valdez published cannot be put on
-classes. So by default, if we look to the valid is published, annotations are
-designed to go on properties, not classes, and you can change that inside of your
-validator to do that. You need to do two things. First, you do `@Target()`. Then you
-pass this `"CLASS"`. That's actually not that important. I think that actually more or
-less just helps your editor. What you really need to do over here is actually
-overriding methods. I'll go to Code Generate or Command + N but override methods.
+And... it had an error! Let's see what's going on:
 
-And we're going to override `getTargets()` by default, the `parent::getTargets()` just
-allows us to be out of the properties. We're going to return `self::CLASS_CONSTRAINT`
-So now our validator is allowed. We put on a class instead of a property. Now again,
-the fact that we added this above the class means that when our `CheeseListing` is
-validated automatically, this `ValidIsPublishedValidater` is going to be executed
-in the value that's passed here is going to be the `CheeseListing` object. So real
-quick, if you're not too familiar with Kyle custom validators work by default, if I
-add at Valdez published here, then Symfony is going to look for a service that's
-valid is published validator in automatically know that this, uh, validation, uh,
-annotation is connected with this validator service over here. So it's gonna
-automatically start calling `validate()`.
+> Constraint `ValidIsPublished` cannot be put on classes
 
-So let's add a little sanity check here. Actually, let me put it after the, at VAR,
-let's say, if not `$value instanceof CheeseListing`, then I'm going to throw a new
-`\LogicException`. It doesn't really matter what type of exception and say only 
-`CheeseListing` is supported. That's basically the only possible if we accidentally added
-the, uh, at valid is published on top of a different class. This is only intended to
-be added about the cheese list in class. So we can make our code very specific inside
-of there. And then, well, this let's just `dd($value)` to absolutely make sure we
-know what it looks like.
+Ah! By default, constraint annotations are only allowed to be placed above
+*properties*, not above the class. To change that, inside the validator class,
+we need to do two things. First, add `@Target()` and pass this `"CLASS"`. And second,
+I'll go to Code -> Generate - or Command + N - and select "Override methods" to
+override the `getTargets()` method. Make this return `self::CLASS_CONSTRAINT`.
 
-Alright, so now let's move over, run the test again. 
+*Now* or annotation can be put above a class.
+
+## Grabbing the CheeseListing inside the Validator
+
+This means that, when our `CheeseListing` is validated, Symfony will call
+`ValidIsPublishedValidater` and this `$value` is going to be the `CheeseListing`
+object.
+
+Real quick: if you're not familiar with how custom validators work, by default
+if I add `@ValidIsPublished`, then Symfony will look for a service called
+`ValidIsPublishedValidator`. So these two classes are already connected via
+a naming convention.
+
+Let's start with a little sanity check... right here: if not
+`$value instanceof CheeseListing`, then throw a new `\LogicException` - though the
+type doesn't really matter - and say:
+
+> Only  `CheeseListing` is supported.
+
+This is just to make sure that if we accidentally add the `@ValidIsPublished`
+above a *different* class, something will yell at us.
+
+Anyways, let's `dd($value)` to absolutely make sure we know what it looks like.
+
+Back to the tests! Run and...
 
 ```terminal-silent
 symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
-And yes, we can see that the
-founder is being called and it is being passed our `CheeseListing` object, which is
-going to be the `CheeseListing` object after it's the JSON has been deserialized.
-Uh, so you can actually see that the `isPublished` has been changed to true already.
-So this connects with the first test case inside of here, where we are, uh, we have a
-short description or logging in as a, as the owner and trying to set is published to
-true. So this JSON did deserealize, and it did update the `$isPublished` field. And now
-our job is to determine that that was an invalid change because the description is
-too short. How to do that. It's going to go back to our original data trick with
-doctrine. Let's do that next.
-
+Yes! The validator is called and our `CheeseListing` object has `isPublished`
+set to `true`, because this is the `CheeseListing` *after* the new data has been
+deserialized into it. The failure is from our first test case: we currently
+*allowing* this item to be published, even though the description is short. Next,
+let's prevent this. How? It's back to our "original data" trick from Doctrine.
