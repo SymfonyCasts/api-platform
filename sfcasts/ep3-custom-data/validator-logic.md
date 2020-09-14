@@ -1,160 +1,167 @@
-# Validator Logic
-
-Coming soon...
+# Publish State Change Validator Logic
 
 We're working on adding some pretty complex validation rules around who can publish
-or unpublish a `CheeseListing` and to get this logic, right. What we really need to
-know is how the `$isPublished` field is changing. Like, is it changing from false to
-true or true to false, or maybe it's not changing at all. And there are some other
-fields on cheese listing that are actually being changed. Okay. And Hey, we know how
-to get the original data via the `EntityManager`, just like we did in the 
-`CheeseListingDataPersister` by the way, if your API resource in our case, 
-`CheeseListing` is not an entity, which is totally allowed and something that we'll talk
-about later, then you can get the original object by injecting the `RequestStack`,
-getting the current request and reading the `previous_data` attribute. If
-that attribute is not there, then you know that your object is being created.
+or unpublish a `CheeseListing`. To get this logic right, what we really need to
+know is how the `$isPublished` field is *changing*... like, is it changing from
+false to true? Or true to false? Or maybe it's not changing at all because the
+PUT request is just updating some *different* fields.
 
-All right. So let's get the original data just like we did before. So I'll add a
-public function `__construct()`. We will add one argument and 
-`EntityManagerInterface $entityManager`, and I'll do my normal trick of hitting Alt + Enter and
-going to "Initialize properties" to create that property and set it now down here, we
-can say `$originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($value)`
-And below let's just `dd($originalData)` that 
-So we can make sure that that's working. Then I'll spend over here and rerun
-our test 
+And hey! We already know how to get the original data from Doctrine! We did it in
+`CheeseListingDataPersister`.
 
-```terminal-silent
-symfony run bin/phpunit --filter=testPublishCheeseListingValidation
-```
+Oh, and by the way: if your API resource is *not* an entity - which is *totally*
+allowed and something that we'll talk about later - then you can get the original
+object by injecting the `RequestStack`, getting the current request and then
+reading the `previous_data` attribute. If that attribute is *not* there, then you
+know that your object is being created.
 
-and awesome. Got it. So that same array that we saw earlier, and you can see
-that `$isPublished`, is `false` on the `$originalData`. Awesome. Okay. Let's remove the D D
-and we don't need this Knoll check. You do need that when you add validators to
-fields, that might be no, but because we added ours above the class where either
-we're always going to have a `CheeseListing` object let's we don't need to add that.
+## Fetching the Original Entity Data
 
-So, first thing I want to do is let's actually get the previous is published values
-like `$previousIsPublished = $originalData['isPublished'] ?? false`
-in case it's not set. So that's the same thing that we did
-in our `CheeseListingDataPersister`. Now, the first thing I wanna do actually
-inside of here is, uh, make sure that we do no, we don't do any validation, any
-special validation if the is published, didn't change. So if 
-`$previousIsPublished === $value->getIsPublished()`, then we don't need to do any 
-of our special is published logic. It's not changing. We can just return.
+Ok: let's get the original data just like we did before. Add a
+`public function __construct()` with `EntityManagerInterface $entityManager`.
+I'll do my normal trick of hitting Alt + Enter and going to "Initialize properties"
+to create that property and set it.
 
-I'll put a little comment above that. Alright, so let's handle the first real case
-inside of our test. So the first case here is that you cannot publish an owner, can
-not publish with a short description of the description of less than a hundred
-characters. So down here after the first, if statement will say, if `$value->getIsPublished()`
-published and immediately inside this, if statement, we know that we are publishing,
-we're published, and we know that the value of the publish changed. So we are
-publishing right now. So if `strlen($value->getDescription()) < 100`,
-then I'll actually copied this bill. Val violation logic up here from a copy from
-down there and paste it up here. We'll say `$this->context->buildViolation()`.
-You notice this is reading constraint, error message. That's coming off. The valid is
-published. This allows you to customize the message when you use your annotation
-right here and the options. We're not even going to use that. I'm just going to
-hardcode all this stuff in the validator. Cause I am not designing this constraint to
-be used in multiple places. So we'll keep it simple and just put the message right
-here. I'll say cannot publish description is too short.
+Below in the method, we can say
+`$originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($value)`.
+Let's `dd($originalData)` to make sure it's working.
 
-We don't need a parameter. This is a little wild card in case you have like a good
-little curly curly value inside your message. But I am going to add a little `atPath('description')`
-That's kind of a nice thing. This is going to make it look like this is
-failing on the description field specifically, and then down here in either case
-we'll return, we don't need to add any more publishing, any more logic, any more
-validation, logic. All right. So if we run this test, now 
+Spin over and try the test:
 
 ```terminal-silent
 symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
-you can see it fails, but
-check us out. It's failing now on admin can publish a short description. So if you
-look over at our cheese listing resource tests, it actually has passed our first
-condition. Yay. That is returning a 400 status code. And down, down here, it's
-failing because when we log in as the admin user, it is also returning a 400 status
-code. Alright? So our next condition is if the user is an admin, then we do want to
-allow you to publish, even if there's a short description. So to do that in our
-validator, we're gonna need to know we're gonna be able to, we're going to need to
-use the, `isGranted()` function, which we know comes from the security service. So a lot
-of second argument is the constructor `Security $security`. I'll go initialize those,
-that property.
+Got it! It's the same array that we saw earlier and you can see
+that `$isPublished` is `false` on the `$originalData`!
 
-And then down here, right before we do our check inside the if statement, we'll say,
-if the length is less than a hundred and Oh, I totally messed that up and got lucky
-that it passed Silly PHP. So say if the length is less than a hundred And not
-`$this->security->isGranted('ROLE_ADMIN')`. Then we actually want to, uh, add the
-violate violations, all thing up here. So there's, don't allow short descriptions
-unless you are an admin. All right. So test driven development here. Let's see if we
-can get past this failure. Why don't we run our tests? Now
+Ok: remove the `dd()` and we don't need this null check. You *do* need that when
+you add a validator to a property... which might be null, but because we added
+our constraint above the class, we will *always* get a `CheeseListing` object.
 
-```terminal-silent
-symfony run bin/phpunit --filter=testPublishCheeseListingValidation
-```
+Get the previous is published value with
+`$previousIsPublished = $originalData['isPublished'] ?? false`
+in case it's not set. That's the same thing that we did in
+`CheeseListingDataPersister`.
 
-It fails,
+Let's start by checking if the published field did *not* change: if
+`$previousIsPublished === $value->getIsPublished()`, then we don't need to do
+*any* special validation. Just return and I'll add a comment.
 
-But now you can see it says normal user cannot unpublish. So if we look back on our
-test here, you can see, we actually are passing this case. We're actually passing the
-third case. And now we're down here to a normal user. Can not unpublish by the way
-you notice, I created this kind of giant test method where I'm kind of going through
-this entire process. It cleaner way to do this would be to break all of these
-different tests down into their own test method. It would make it a lot more obvious,
-which one of these is failing. I'm being a little lazy by combining them, but in your
-project, you can choose to kind of do a better job than I am.
+## Not Allowing Short Descriptions
 
-Alright,
+The first real case from our test is that an owner cannot publish if the description
+is less than 100 characters.
 
-So let's add the unpublished logic right now when we unpublish, it is actually
-allowing the user to do that and returning 200, okay. Status. But really we only want
-to allow admins to be able to do that. So down here at the bottom, because we have
-this return statement here and we checked to make sure that published is changing. If
-we get down to the bottom of this, we know we are on publishing. So we'll say, if not
-`$this->security->isGranted('ROLE_ADMIN')`. If we're not a real admin, this is not
-allowed. So a copy of my `context->buildViolation()` from earlier in this time, we will
-say only admin users can on Polish, or maybe you don't even want to give that many
-details to your user. It's up to you. And I'm gonna remove the `atPath()` this time.
-This has nothing to do with the description. So this will make it look kind of like a
-global validation air. That's not attached to any specific field.
+No problem: add if `$value->getIsPublished()`. Inside, we know that the field
+*is* changing from false to true: this listing *is* being published. So
+if `strlen($value->getDescription()) < 100`, we need to fail! I'll copy the
+`buildViolation()` code from below and move it up here.
 
-Alright, let's try the test 
+The argument is the validation message... and this is coming from the
+`ValidIsPublished` annotation. This allows you to customize the message when you
+use it via annotations options.
+
+But I'm not going to use that: this isn't a reusable validation constraint... so
+it's simpler to keep everything in one spot:
+
+> Cannot publish: description is too short!
+
+And we don't need a parameter - that's if you need a dynamic wildcard in your message.
+Oh, but I *will* add `->atPath('description')`.
+
+That's nice: it will make the validation failure look like it's attached to the
+`description` field, even though we added the constraint to the entire class.
+
+If the length *is* long enough, just return.
+
+Testing time! When we run the test now...
 
 ```terminal-silent
 symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
-and yes, got it. So thanks for our validator and the
-original data. We're just able to write the exact logic that we need. Now, when we
-set this up, we chose to use 400 validation errors, which is really nice because the
-user gets this 400 status code, and then they get the actual description of what went
-wrong. Like you can not publish because your description is too short. Now, if we
-wanted to, we could have returned a 402 access denied instead, which might
-especially make sense if a normal user tries to unpublish maybe we want to give them
-a 403. How would we do that? Well, one of the really cool things about the
-way Symfony is architected is that even though we're in a validator, we are free at
-any point during our request to throw an `AccessDeniedException`
+It still fails... but... yes! It's *now* failing on "admin can publish a short
+description". Over in `CheeseListingResourceTest`, it our first assertion *passed*!
+It *is* returning a 400 status code.
 
-So literally right here, I can say, throw new `AccessDeniedException()`, make sure you
-get the one from the `Security` components. And I'll say only admin users can unpublish
-and that's it to actually see that working, 
+## Allowing Admin Users to Publish
+
+It's failing now because when we log in as an admin user, it is *also* returning
+a 400 status code instead of allowing this.
+
+To fix this, we need to see if the user is an admin. Add a second argument to the
+constructor `Security $security`. I'll initialize this property... then below,
+update the if statement: if the description is too short *and* *not*
+`$this->security->isGranted('ROLE_ADMIN')`, then fail validation. I'll add a
+comment to summarize this.
+
+Ok! This is *true* test-driven development. Try the test now:
 
 ```terminal-silent
 symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
-this will make our test fail, but we
-should be able to see what the response looks like. Yep. There it is. Giant thing
-here. You can see 403 for bin that is totally up to you. I'm going to
-comment that out and kind of keep my validation logic, but you can do whatever you
-want. All right. So we now have a restful way for the user to publish and we can run
-a custom logic. Like I said, in the part for this tutorial, we'll talk about other
-ways to do this, like using the messenger integration or creating a truly custom end
-point, but I really, really liked this solution. So next I want to talk about
-something slightly different. I want to talk about custom fields inside of your
-entity in previous tutorials. How can we add a completely custom field? That's not in
-our entity and maybe even a custom field that requires a service to Calgary. That
-value. We actually did this in a previous tutorial, but I want to take it to the next
-level by adding the field in a way where it actually will show up properly inside of
-our API documentation. That's next.
+It fails... but we're further!
 
+> Normal user cannot unpublish
+
+If we look at the test... yea! The second and third cases are now passing and we're
+down to the unpublish logic. You can start to see why breaking each test case
+into its own method might be a bit cleaner, even if it's more work up-front.
+
+## Adding the Unpublish Validation
+
+Let's add the unpublishing validation logic, which is a bit easier: *only* an
+admin can unbpulish. At the bottom of the validator - thanks to the `return`
+statement and the fact that we checked to make sure that the `isPublished` *is*
+changing, at the bottom, we *know* that this cheese listing is being *un* published.
+
+Ok: if *not* `$this->security->isGranted('ROLE_ADMIN')` - if we're not an admin,
+then this is not allowed. Copy `$context->buildViolation()` from earlier, give
+it a nice message - only admin users can unpublish - and remove the `atPath()`:
+this has nothing to do with the description.
+
+Let's try it!
+
+```terminal-silent
+symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+```
+
+And... yes! That *huge* test now *passes*. Thanks to our validator and the
+original data, we're able to write the *exact* logic we need.
+
+## 400 vs 403 Errors
+
+When we set this up, we chose to use 400 validation errors, which is really nice
+because the user gets a 400 status code and can see a collection of descriptive
+validation errors.
+
+If you wanted, you could instead return a 403 access denied, which might
+especially make sense when a normal user tries to unpublish. How would we do
+that?
+
+One of the *really* cool things about the way Symfony is architected is that
+we are free - at any point during our request - to throw an `AccessDeniedException`.
+So literally, in the middle of the validation, we can say
+`throw new AccessDeniedException()` - make sure you to get the one from the
+`Security` component. I'll say: "only admin users can unpublish".
+
+To see this in action, run the test again:
+
+```terminal-silent
+symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+```
+
+This will fail but... awesome: we can see the response. A *giant* 403 error.
+I'll comment that out and keep my validation logic.
+
+We now have a RESTful way to publish a listing and execute custom logic. In the
+fourth part of this series, we'll talk about other ways that we could have
+accomplished this, like using the Messenger integration or creating a truly
+custom operation. But I really like this solution.
+
+Next: I want to talk about how to add a completely custom field to your resource:
+a field that doesn't live in your entity and that might even require a service
+to calculate. We actually did this in a previous tutorial... but it was *so*
+custom that it didn't show up in our documentation. Let's see an even better way.
