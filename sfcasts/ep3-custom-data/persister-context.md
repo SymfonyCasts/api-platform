@@ -7,7 +7,7 @@ to another? Let's talk about *all* of that.
 
 Here's our first goal: log a message *only* when a user is *created* in our API.
 And this one is pretty simple. Start by adding a third argument to the constructor for
-`LoggerInterface $logger`. I'll hit `Alt`+Enter` and go to "Initialize Properties" as
+`LoggerInterface $logger`. I'll hit `Alt`+`Enter` and go to "Initialize Properties" as
 a shortcut to create that property and set it:
 
 [[[ code('fa3fada5b6') ]]]
