@@ -7,17 +7,24 @@ to another? Let's talk about *all* of that.
 
 Here's our first goal: log a message *only* when a user is *created* in our API.
 And this one is pretty simple. Start by adding a third argument to the constructor for
-`LoggerInterface $logger`. I'll hit Alt+Enter and go to "Initialize Properties" as
-a shortcut to create that property and set it.
+`LoggerInterface $logger`. I'll hit `Alt`+`Enter` and go to "Initialize Properties" as
+a shortcut to create that property and set it:
+
+[[[ code('fa3fada5b6') ]]]
 
 Down in `persist()`, since this is an entity, we don't need to do anything fancy
 to determine if the object is being created versus updated. We can say: if
-`!$data->getId()`, then log something:
-`$this->logger->info(sprintf())`:
+`!$data->getId()`:
 
-> user %s just registered. Eureka!
+[[[ code('3e0151dc47') ]]]
 
-And pass `$data->getEmail()`.
+Then log something: `$this->logger->info(sprintf())`:
+
+> User %s just registered. Eureka!
+
+And pass `$data->getEmail()`:
+
+[[[ code('166f386b6b') ]]]
 
 That's it! Custom code for when a user is created, which in a real app might be
 sending a registration email or throwing a party!
@@ -31,24 +38,39 @@ symfony php bin/phpunit --filter=testCreateUser
 
 ## Custom Code only for a Specific Operation
 
-Cool! So let's do something a bit harder: what if you need to run some custom code but
-only for a specific *operation*. In `User`, we have 2 collection operations
-and 3 item operations. For the most part, by checking the id, you can pretty
-much figure out which operation is being used. But if you start also using a PATCH
-operation or custom operations, then this would *not* be enough.
+Cool! So let's do something a bit harder: what if you need to run some custom code
+but only for a specific *operation*. In `User`, we have 2 collection operations
+and 3 item operations:
+
+[[[ code('4e2279e538') ]]]
+
+For the most part, by checking the id, you can pretty much figure out which
+operation is being used. But if you start also using a PATCH operation or
+custom operations, then this would *not* be enough.
 
 Like many parts of ApiPlatform, a data persister has a normal interface -
-`DataPersisterInterface` - but also an optional, *stronger* interface that gives
-you access to extra info about what's going on.
+`DataPersisterInterface`:
 
-Change the interface to `ContextAwareDataPersisterInterface`.
+[[[ code('17cd5662f1') ]]]
+
+But also an optional, *stronger* interface that gives you access to extra info
+about what's going on.
+
+Change the interface to `ContextAwareDataPersisterInterface`:
+
+[[[ code('35d46c6603') ]]]
 
 This *extends* `DataPersisterInterface` and the difference *now* is that all
 the methods suddenly have an `array $context` argument. Copy that and also add
-it to `persist()` and down here on `remove()`
+it to `persist()` and down here on `remove()`:
 
-Beautiful! To see what's inside this array, at the top of persist, `dump($context)`...
-and then go run the test again:
+[[[ code('4a219fa94e') ]]]
+
+Beautiful! To see what's inside this array, at the top of persist, `dump($context)`:
+
+[[[ code('4c0a0cb1ab') ]]]
+
+And then go run the test again:
 
 ```terminal-silent
 symfony php bin/phpunit --filter=testCreateUser
@@ -72,8 +94,14 @@ And... yep! There's a good example of both situations.
 
 Armed with this info, we are dangerous! Back in the persister, if
 `$context['item_operation_name']` - don't forget your `$` - `?? null` - to avoid
-an error when this key does not exist - `=== 'put'`, then this is the "put"
-item operation. Log `User %s is being updated` and pass `$data->getId()`.
+an error when this key does not exist - `=== 'put'`:
+
+[[[ code('bc19085638') ]]]
+
+Then this is the PUT item operation. Log `User %s is being updated` and pass
+`$data->getId()`:
+
+[[[ code('3ccdd7f81b') ]]]
 
 I love it! When we run the tests now:
 
@@ -90,5 +118,9 @@ What if we need to run code only when a specific *field* *changes* from
 one value to another?
 
 For example, our `CheeseListing` entity has an `isPublished` field, which - so far -
-isn't writable in our API at all. Next: let's make it possible for a user to
-publish their listing... but *also* execute some code when that happens.
+isn't writable in our API at all:
+
+[[[ code('2789613da1') ]]]
+
+Next: let's make it possible for a user to publish their listing... but *also*
+execute some code when that happens.
