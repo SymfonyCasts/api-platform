@@ -744,7 +744,7 @@ index b8ef0c7b..a834a677 100644
      {
          $client = self::createClient();
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index 2094ec51..61a9c362 100644
+index 047a1cb5..5557d868 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -5,12 +5,9 @@ namespace App\Tests\Functional;

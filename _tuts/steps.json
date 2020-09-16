@@ -1136,6 +1136,11 @@
             "description": null
         },
         {
+            "id": "pre-ep3-add-isme-tests",
+            "name": "PRE_EP3: add isMe tests",
+            "description": null
+        },
+        {
             "id": "pre-ep3-install-foundry",
             "name": "PRE_EP3: install Foundry",
             "description": null
@@ -1356,8 +1361,8 @@
             "description": null
         },
         {
-            "id": "userisme-add-test-for-isme",
-            "name": "UserIsMe: add test for isMe",
+            "id": "delete-me-3",
+            "name": "delete me 3",
             "description": null
         },
         {
@@ -2121,5 +2126,5 @@
             "description": null
         }
     ],
-    "sha": "1ff3fd3d5bde77db99c97adc6d5b6864cbd69290"
+    "sha": "1d7fb4eba52ecc1a3c113f0b0f001728e7006071"
 }

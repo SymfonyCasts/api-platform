@@ -211,7 +211,7 @@ index 79382802..b8ef0c7b 100644
          $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
          $this->assertResponseStatusCodeSame(404);
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index a802fc41..2094ec51 100644
+index af23a607..047a1cb5 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -3,6 +3,7 @@
@@ -232,7 +232,7 @@ index a802fc41..2094ec51 100644
  
          $client->request('PUT', '/api/users/'.$user->getId(), [
              'json' => [
-@@ -42,39 +44,34 @@ class UserResourceTest extends CustomApiTestCase
+@@ -42,25 +44,20 @@ class UserResourceTest extends CustomApiTestCase
              'username' => 'newusername'
          ]);
  
@@ -263,7 +263,8 @@ index a802fc41..2094ec51 100644
          ]);
  
          $data = $client->getResponse()->toArray();
-         $this->assertArrayNotHasKey('phoneNumber', $data);
+@@ -70,10 +67,10 @@ class UserResourceTest extends CustomApiTestCase
+         ]);
  
          // refresh the user & elevate
 -        $user = $em->getRepository(User::class)->find($user->getId());
@@ -276,9 +277,3 @@ index a802fc41..2094ec51 100644
  
          $client->request('GET', '/api/users/'.$user->getId());
          $this->assertJsonContains([
-             'phoneNumber' => '555.123.4567'
-         ]);
-     }
--}
-\ No newline at end of file
-+}
