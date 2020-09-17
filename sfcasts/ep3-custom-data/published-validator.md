@@ -143,7 +143,7 @@ Ah! By default, constraint annotations are only allowed to be placed above
 *properties*, not above the class. To change that, inside the validator class,
 we need to do two things. First, add `@Target()` and pass this `"CLASS"`:
 
-[[[ code('ae2af27427') ]]]
+[[[ code('c752dd42e4') ]]]
 
 Second, I'll go to "Code"->"Generate" - or `Command`+`N` on a Mac - and select
 "Override methods" to override `getTargets()`. Make this return:
