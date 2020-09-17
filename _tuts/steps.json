@@ -1571,6 +1571,11 @@
             "description": null
         },
         {
+            "id": "embeddednormalization-return-2-stats",
+            "name": "EmbeddedNormalization: return 2 stats",
+            "description": null
+        },
+        {
             "id": "embeddednormalization-return-some-listings",
             "name": "EmbeddedNormalization: return some listings",
             "description": null
@@ -2146,5 +2151,5 @@
             "description": null
         }
     ],
-    "sha": "020f3ec0d62e01e854e22b9eca112c0016d237c2"
+    "sha": "51932884617c569427921c55194dcf412a9b97bb"
 }
