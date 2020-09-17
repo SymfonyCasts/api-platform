@@ -7,3 +7,4 @@ chapters:
     - publish-state-change
     - published-validator
     - validator-logic
+    - data-provider
