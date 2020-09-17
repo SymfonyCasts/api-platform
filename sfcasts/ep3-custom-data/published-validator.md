@@ -67,7 +67,7 @@ code:
 Next, we log in as an admin user, do the same thing and check that this *does*
 work:
 
-[[[ code('7a293cac17') ]]]
+[[[ code('9d0a22e11d') ]]]
 
 I also have a test that logs back in as the normal user and changes something
 *different*... just to make sure *normal* edits still work:
