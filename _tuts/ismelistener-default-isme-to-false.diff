@@ -1,9 +1,9 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 861fa8a1..538b2311 100644
+index 064f5628..cec41f74 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -97,7 +97,7 @@ class User implements UserInterface
-      * @var bool Returns true if this is the currently-authenticated user
+@@ -98,7 +98,7 @@ class User implements UserInterface
+      *
       * @Groups({"user:read"})
       */
 -    private $isMe;
@@ -11,7 +11,7 @@ index 861fa8a1..538b2311 100644
  
      public function __construct()
      {
-@@ -257,10 +257,6 @@ class User implements UserInterface
+@@ -258,10 +258,6 @@ class User implements UserInterface
  
      public function getIsMe(): bool
      {

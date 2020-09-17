@@ -1,25 +1,17 @@
 diff --git a/src/Doctrine/UserSetIsMvpListener.php b/src/Doctrine/UserSetIsMvpListener.php
 new file mode 100644
-index 00000000..e4f6d304
+index 00000000..1b5318a4
 --- /dev/null
 +++ b/src/Doctrine/UserSetIsMvpListener.php
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,13 @@
 +<?php
 +
 +namespace App\Doctrine;
 +
 +use App\Entity\User;
-+use Symfony\Component\Security\Core\Security;
 +
 +class UserSetIsMvpListener
 +{
-+    private $security;
-+
-+    public function __construct(Security $security)
-+    {
-+        $this->security = $security;
-+    }
-+
 +    public function postLoad(User $user)
 +    {
 +        $user->setIsMvp(strpos($user->getUsername(), 'cheese') !== false);

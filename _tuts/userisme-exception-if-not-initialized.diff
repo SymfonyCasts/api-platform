@@ -1,8 +1,8 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index b9e46898..861fa8a1 100644
+index 6365ea0d..064f5628 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -257,6 +257,10 @@ class User implements UserInterface
+@@ -258,6 +258,10 @@ class User implements UserInterface
  
      public function getIsMe(): bool
      {

@@ -1,8 +1,8 @@
 diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
-index 3f5e1329..8e9180aa 100644
+index 8eb0966c..8e9180aa 100644
 --- a/src/DataProvider/UserDataProvider.php
 +++ b/src/DataProvider/UserDataProvider.php
-@@ -18,8 +18,14 @@ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, R
+@@ -18,8 +18,12 @@ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, R
  
      public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
      {
@@ -13,8 +13,6 @@ index 3f5e1329..8e9180aa 100644
 +        foreach ($users as $user) {
 +            $user->setIsMe(true);
 +        }
-+
-+        return $users;
-     }
  
-     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+         return $users;
+     }

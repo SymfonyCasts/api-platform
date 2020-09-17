@@ -38,10 +38,10 @@ index 00000000..8f39b3b6
 +    }
 +}
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 790f17c1..b0fba103 100644
+index c4b71203..48846418 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -48,6 +48,11 @@ class User implements UserInterface
+@@ -49,6 +49,11 @@ class User implements UserInterface
       */
      private $id;
  

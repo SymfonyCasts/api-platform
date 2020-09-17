@@ -1,0 +1,12 @@
+diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
+index 5557d868..a8a32d67 100644
+--- a/tests/Functional/UserResourceTest.php
++++ b/tests/Functional/UserResourceTest.php
+@@ -53,6 +53,7 @@ class UserResourceTest extends CustomApiTestCase
+         $this->logIn($client, $authenticatedUser);
+ 
+         $client->request('GET', '/api/users/'.$user->getId());
++        $this->assertResponseStatusCodeSame(200);
+         $this->assertJsonContains([
+             'username' => $user->getUsername(),
+         ]);

@@ -1,8 +1,8 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index efad4a12..9ca71ffb 100644
+index 63318796..25053904 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -54,6 +54,7 @@ class User implements UserInterface
+@@ -55,6 +55,7 @@ class User implements UserInterface
      /**
       * @ORM\Column(type="uuid", unique=true)
       * @ApiProperty(identifier=true)
@@ -10,7 +10,7 @@ index efad4a12..9ca71ffb 100644
       */
      private $uuid;
  
-@@ -115,10 +116,10 @@ class User implements UserInterface
+@@ -118,10 +119,10 @@ class User implements UserInterface
       */
      private $isMvp = false;
  

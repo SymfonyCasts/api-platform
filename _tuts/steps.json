@@ -1406,8 +1406,8 @@
             "description": null
         },
         {
-            "id": "userisme-check-for-null",
-            "name": "UserIsMe: check for null",
+            "id": "userisme-exception-if-not-initialized",
+            "name": "UserIsMe: exception if not initialized",
             "description": null
         },
         {
@@ -1426,6 +1426,11 @@
             "description": null
         },
         {
+            "id": "userisme-add-response-status-code-check",
+            "name": "UserIsMe: add response status code check",
+            "description": null
+        },
+        {
             "id": "userisme-add-item-provider-interface",
             "name": "UserIsMe: add item provider interface",
             "description": null
@@ -1438,6 +1443,11 @@
         {
             "id": "userisme-populate-isme-in-item",
             "name": "UserIsMe: populate isMe in item",
+            "description": null
+        },
+        {
+            "id": "delete-me-7",
+            "name": "delete me 7",
             "description": null
         },
         {
@@ -1463,6 +1473,16 @@
         {
             "id": "ismelistener-default-isme-to-false",
             "name": "IsMeListener: default isMe to false",
+            "description": null
+        },
+        {
+            "id": "ismelistener-dd-data-attributes",
+            "name": "IsMeListener: dd data attributes",
+            "description": null
+        },
+        {
+            "id": "ismelistener-remove-dd",
+            "name": "IsMeListener: remove dd",
             "description": null
         },
         {
@@ -2126,5 +2146,5 @@
             "description": null
         }
     ],
-    "sha": "1d7fb4eba52ecc1a3c113f0b0f001728e7006071"
+    "sha": "020f3ec0d62e01e854e22b9eca112c0016d237c2"
 }

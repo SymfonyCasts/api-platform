@@ -13,14 +13,22 @@ index c9c5851a..3bee7a40 100644
          bind:
              $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 889ea9aa..b28d7c4b 100644
+index 70fd40fa..8edd76eb 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -35,6 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
+@@ -5,6 +5,7 @@ namespace App\Entity;
+ use ApiPlatform\Core\Annotation\ApiFilter;
+ use ApiPlatform\Core\Annotation\ApiResource;
+ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
++use App\Doctrine\UserSetIsMvpListener;
+ use Doctrine\Common\Collections\ArrayCollection;
+ use Doctrine\Common\Collections\Collection;
+ use Doctrine\ORM\Mapping as ORM;
+@@ -35,6 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
   * @ApiFilter(PropertyFilter::class)
   * @UniqueEntity(fields={"username"})
   * @UniqueEntity(fields={"email"})
-+ * @ORM\EntityListeners({"App\Doctrine\UserSetIsMvpListener"})
++ * @ORM\EntityListeners({UserSetIsMvpListener::class})
   * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
   */
  class User implements UserInterface

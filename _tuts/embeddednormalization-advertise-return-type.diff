@@ -1,8 +1,8 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index a9bdd207..ead57634 100644
+index 72ee63b4..ebb15597 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -207,6 +207,7 @@ class User implements UserInterface
+@@ -210,6 +210,7 @@ class User implements UserInterface
      /**
       * @Groups({"user:read"})
       * SerializedName("cheeseListings")

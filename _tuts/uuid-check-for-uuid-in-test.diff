@@ -1,8 +1,8 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 7a3dfcb1..9f697590 100644
+index de58b661..b8206c8f 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
-@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
+@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  use Doctrine\Common\Collections\Collection;
  use Doctrine\ORM\Mapping as ORM;
  use Ramsey\Uuid\Uuid;
@@ -10,7 +10,7 @@ index 7a3dfcb1..9f697590 100644
  use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  use Symfony\Component\Security\Core\User\UserInterface;
  use Symfony\Component\Serializer\Annotation\Groups;
-@@ -289,4 +290,9 @@ class User implements UserInterface
+@@ -292,4 +293,9 @@ class User implements UserInterface
      {
          $this->isMvp = $isMvp;
      }
@@ -21,7 +21,7 @@ index 7a3dfcb1..9f697590 100644
 +    }
  }
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index f136b740..71cc348a 100644
+index 842353bf..58610e39 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -23,6 +23,9 @@ class UserResourceTest extends CustomApiTestCase
