@@ -8,3 +8,10 @@ chapters:
     - published-validator
     - validator-logic
     - data-provider
+    - data-persister
+    - decorate-persister
+    - item-data-provider
+    - set-via-listener
+    - post-load-listener
+    - custom-resource
+    - embedded-normalization
