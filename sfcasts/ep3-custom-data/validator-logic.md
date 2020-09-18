@@ -185,8 +185,13 @@ changing, at the bottom, we *know* that this cheese listing is being *un* publis
 
 If *not* `$this->security->isGranted('ROLE_ADMIN')` - if we're not an admin,
 then this is not allowed. Copy `$context->buildViolation()` from earlier, give
-it a nice message - only admin users can unpublish - and remove the `atPath()`:
-this has nothing to do with the description.
+it a nice message:
+
+> Only admin users can unpublish
+
+And remove the `atPath()`: this has nothing to do with the description:
+
+[[[ code('143c84c259') ]]]
 
 Try it!
 
@@ -199,9 +204,12 @@ original data, we're able to write the *exact* logic we need.
 
 ## 400 vs 403 Errors
 
-When we set this up, we chose to use 400 validation errors, which is really nice
-because the user gets a 400 status code and can see a collection of descriptive
-validation errors.
+When we set this up, we chose to use 400 validation errors:
+
+[[[ code('d9fbe1c9fd') ]]]
+
+Which is really nice because the user gets a 400 status code and can see
+a collection of descriptive validation errors.
 
 If you wanted, you could instead return a 403 access denied, which might
 especially make sense when a normal user tries to unpublish. How could we do
@@ -211,7 +219,11 @@ One of the *really* cool things about the way Symfony is architected is that
 we are free - at any point during the request - to throw an `AccessDeniedException`.
 So literally, in the middle of the validator, we can say
 `throw new AccessDeniedException()` - make sure you to get the one from the
-`Security` component. I'll say: "only admin users can unpublish".
+`Security` component. I'll say:
+
+> Only admin users can unpublish
+
+[[[ code('f8b1e9b4ae') ]]]
 
 To see this in action, run the test again:
 
@@ -220,7 +232,9 @@ symfony php bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
 This will fail but... sweet! We can see the response: a *giant* 403 error.
-I'll comment that out and keep my validation logic.
+I'll comment that out and keep my validation logic:
+
+[[[ code('047ff2aa3d') ]]]
 
 We now have a RESTful way to publish a listing and execute custom logic! In the
 fourth part of this series, we'll talk about other ways that we could have
