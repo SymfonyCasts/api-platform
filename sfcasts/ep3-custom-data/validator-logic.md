@@ -52,12 +52,12 @@ Below in the method, we can say
 `$originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($value)`.
 Let's `dd($originalData)` to make sure it's working:
 
-[[[ code('e56b32ff71') ]]]
+[[[ code('75356b07a9') ]]]
 
 Spin over and try the test:
 
 ```terminal-silent
-symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+symfony php bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
 Got it! It's the same array that we saw earlier and it *correctly* shows that
@@ -65,7 +65,7 @@ Got it! It's the same array that we saw earlier and it *correctly* shows that
 
 Remove the `dd()` and we also don't need this null check:
 
-[[[ code('32131b5e0f') ]]]
+[[[ code('8d4f5b8162') ]]]
 
 You *do* need that when you add a validator to a property - which might be
 null - but not when your constraint is above a class. We will *always*
@@ -75,7 +75,7 @@ For the previous is published value, let's say:
 `$previousIsPublished = $originalData['isPublished'] ?? false`
 in case it's not set:
 
-[[[ code('804a543aaa') ]]]
+[[[ code('52f5813d2c') ]]]
 
 That's the same thing we did in `CheeseListingDataPersister`:
 
@@ -85,7 +85,7 @@ Let's start by checking to see if the published field has *not* changed: if
 `$previousIsPublished === $value->getIsPublished()`, then we don't need to do
 *any* special validation. Just return, and I'll add a comment:
 
-[[[ code('c0b3b7e644') ]]]
+[[[ code('1653052473') ]]]
 
 ## Not Allowing Short Descriptions
 
@@ -94,13 +94,13 @@ is less than 100 characters.
 
 To enforce this add if `$value->getIsPublished()`:
 
-[[[ code('4fdd110c25') ]]]
+[[[ code('f7c0a58734') ]]]
 
 Inside, we know that the field *is* changing from false to true: this listing
 *is* being published. So if `strlen($value->getDescription()) < 100`, we need
 to fail! Copy the `buildViolation()` code from below and move it up here:
 
-[[[ code('eb016d19a1') ]]]
+[[[ code('189f453f15') ]]]
 
 The argument is the validation message... and this is coming from the
 `ValidIsPublished` annotation:
@@ -131,7 +131,7 @@ If the length *is* long enough, just return:
 Testing time! Run the test and...
 
 ```terminal-silent
-symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+symfony php bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
 It still fails... but... yes! It's *now* failing on "admin can publish a short
@@ -191,7 +191,7 @@ this has nothing to do with the description.
 Try it!
 
 ```terminal-silent
-symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+symfony php bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
 And... yes! That *huge* test now *passes*. Thanks to our validator and the
@@ -216,7 +216,7 @@ So literally, in the middle of the validator, we can say
 To see this in action, run the test again:
 
 ```terminal-silent
-symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+symfony php bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
 This will fail but... sweet! We can see the response: a *giant* 403 error.
