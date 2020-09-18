@@ -1,4 +1,4 @@
-# Decorate Persister
+# Decorate Provider
 
 Coming soon...
 
