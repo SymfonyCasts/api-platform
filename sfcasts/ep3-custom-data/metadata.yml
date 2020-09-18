@@ -9,6 +9,7 @@ chapters:
     - validator-logic
     - data-provider
     - decorate-provider
+    - is-me-field
     - item-data-provider
     - set-via-listener
     - post-load-listener
