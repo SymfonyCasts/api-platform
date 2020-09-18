@@ -7,24 +7,52 @@ false to true? Or true to false? Or maybe it's not changing at all because the
 PUT request is only updating *other* fields.
 
 And hey! We already know how to get the original data from Doctrine! We did it in
-`CheeseListingDataPersister`.
+`CheeseListingDataPersister`:
+
+[[[ code('687641c0de') ]]]
 
 Oh, and by the way: if your API resource is *not* an entity - which is *totally*
 allowed and something that we'll talk about later - then you can get the original
 object by injecting the `RequestStack`, getting the current request and then
-reading the `previous_data` attribute. If that attribute is *not* there, then you
-know that your object is being created.
+reading the `previous_data` attribute:
+
+```php
+use Symfony\Component\HttpFoundation\RequestStack;
+
+class PizzaMachine
+{
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
+    public function makePizza()
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        $originalData = $request->attributes->get('previous_data');
+    }
+}
+```
+
+If that attribute is *not* there, then you know that your object is being created.
 
 ## Fetching the Original Entity Data
 
 Ok: let's get the original data just like we did before. Add a
 `public function __construct()` with `EntityManagerInterface $entityManager`.
-I'll do my normal trick of hitting Alt + Enter and going to "Initialize properties"
-to create that property and set it.
+I'll do my normal trick of hitting `Alt`+`Enter` and going to "Initialize properties"
+to create that property and set it:
+
+[[[ code('2978e1962c') ]]]
 
 Below in the method, we can say
 `$originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($value)`.
-Let's `dd($originalData)` to make sure it's working.
+Let's `dd($originalData)` to make sure it's working:
+
+[[[ code('e56b32ff71') ]]]
 
 Spin over and try the test:
 
@@ -35,32 +63,53 @@ symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 Got it! It's the same array that we saw earlier and it *correctly* shows that
 `isPublished` is *originally* `false`!
 
-Remove the `dd()` and we also don't need this null check. You *do* need that when
-you add a validator to a property - which might be null - but not when your
-constraint is above a class. We will *always* get a `CheeseListing` object.
+Remove the `dd()` and we also don't need this null check:
+
+[[[ code('32131b5e0f') ]]]
+
+You *do* need that when you add a validator to a property - which might be
+null - but not when your constraint is above a class. We will *always*
+get a `CheeseListing` object.
 
 For the previous is published value, let's say:
 `$previousIsPublished = $originalData['isPublished'] ?? false`
-in case it's not set. That's the same thing we did in
-`CheeseListingDataPersister`.
+in case it's not set:
+
+[[[ code('804a543aaa') ]]]
+
+That's the same thing we did in `CheeseListingDataPersister`:
+
+[[[ code('f61bebae96') ]]]
 
 Let's start by checking to see if the published field has *not* changed: if
 `$previousIsPublished === $value->getIsPublished()`, then we don't need to do
-*any* special validation. Just return, and I'll add a comment.
+*any* special validation. Just return, and I'll add a comment:
+
+[[[ code('c0b3b7e644') ]]]
 
 ## Not Allowing Short Descriptions
 
 The first case in our test is that an owner cannot publish if the description
 is less than 100 characters.
 
-To enforce this add if `$value->getIsPublished()`. Inside, we know that the field
-*is* changing from false to true: this listing *is* being published. So
-if `strlen($value->getDescription()) < 100`, we need to fail! Copy the
-`buildViolation()` code from below and move it up here.
+To enforce this add if `$value->getIsPublished()`:
+
+[[[ code('4fdd110c25') ]]]
+
+Inside, we know that the field *is* changing from false to true: this listing
+*is* being published. So if `strlen($value->getDescription()) < 100`, we need
+to fail! Copy the `buildViolation()` code from below and move it up here:
+
+[[[ code('eb016d19a1') ]]]
 
 The argument is the validation message... and this is coming from the
-`ValidIsPublished` annotation. This allows you to customize the message when you
-use it via annotation options.
+`ValidIsPublished` annotation:
+
+[[[ code('2c2254ab6e') ]]]
+
+This allows you to customize the message when you use it via annotation options:
+
+[[[ code('dcca950c27') ]]]
 
 But... I'm not going to use that: we're not creating a reusable constraint... so
 it's simpler to keep everything in one spot:
@@ -68,12 +117,18 @@ it's simpler to keep everything in one spot:
 > Cannot publish: description is too short!
 
 We also don't need a parameter: that's if you need a dynamic wildcard in your message.
-Oh, but I *will* add `->atPath('description')`.
+Oh, but I *will* add `->atPath('description')`:
+
+[[[ code('11c711c9ca') ]]]
 
 That's nice: it will make the validation failure look like it's attached to the
 `description` field even though we added the constraint to the entire class.
 
-If the length *is* long enough, just return. Testing time! Run the test and...
+If the length *is* long enough, just return:
+
+[[[ code('388062eb79') ]]]
+
+Testing time! Run the test and...
 
 ```terminal-silent
 symfony run bin/phpunit --filter=testPublishCheeseListingValidation
@@ -81,23 +136,32 @@ symfony run bin/phpunit --filter=testPublishCheeseListingValidation
 
 It still fails... but... yes! It's *now* failing on "admin can publish a short
 description". Over in `CheeseListingResourceTest`, our first assertion *passed*!
-It *is* returning a 400 status code.
+It *is* returning a 400 status code:
+
+[[[ code('cadfe75428') ]]]
 
 ## Allowing Admin Users to Publish
 
 It's failing now because when we log in as an admin user, it is *also* returning
-a 400 status code instead of allowing this.
+a 400 status code instead of allowing this:
+
+[[[ code('2696d6b5ed') ]]]
 
 To fix that, we need to see if the user is an admin. Add a second argument to the
-constructor `Security $security`. I'll initialize this property... then below,
-update the if statement: if the description is too short *and* *not*
+constructor `Security $security`. I'll initialize this property:
+
+[[[ code('6d23ced44b') ]]]
+
+Then below, update the if statement: if the description is too short *and* *not*
 `$this->security->isGranted('ROLE_ADMIN')`, fail validation. I'll add a
-comment to summarize this.
+comment to summarize this:
+
+[[[ code('fafbac441c') ]]]
 
 This is *true* test-driven development. Try the test again:
 
 ```terminal-silent
-symfony run bin/phpunit --filter=testPublishCheeseListingValidation
+symfony php bin/phpunit --filter=testPublishCheeseListingValidation
 ```
 
 It fails... but we are further!
@@ -105,8 +169,12 @@ It fails... but we are further!
 > Normal user cannot unpublish
 
 If we look at the test... yea! The second and third cases are now passing and we're
-down to the unpublish logic. You can start to see why breaking each test case
-into its own method might be a bit cleaner, even if it's more work up-front.
+down to the unpublish logic:
+
+[[[ code('321cdb66b7') ]]]
+
+You can start to see why breaking each test case into its own method might be
+a bit cleaner, even if it's more work up-front.
 
 ## Adding the Unpublish Validation
 
