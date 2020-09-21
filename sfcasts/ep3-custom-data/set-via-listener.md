@@ -4,55 +4,60 @@ Coming soon...
 
 We needed to add a custom field and that custom field requires a service to calculate
 its value. Then, as I mentioned earlier, there are three solutions. First, you could
-create a totally custom API resource class. That's not actually an entity. And we'll
+create a totally custom ApiResource class. That's not actually an entity. And we'll
 talk about that later. Or you can create an output DTO, or you can do what we did at
 a non persisted field to your entity. I like this last option because it's the least
 nucleolar. If most of your fields come from the entity, creating a custom resources,
-overkill and output DTS, which are really cool, calm with a few drawbacks. So that's
+overkill and output DTO, which are really cool, calm with a few drawbacks. So that's
 what we did. And then we used a data provider to set that field.
 
 The point is the cleanest way to create a custom field is to not really make it a
-custom field, make it a real normal API field on your API resource class. But there
-are multiple ways to set that field. The one we saw was the pure API platform
+custom field, make it a real normal API field on your ApiResource class. But there
+are multiple ways to set that field. The one we saw was the pure APIplatform
 solution B pro is that you can exactly customize this field for your API. The
-downside is that if you used your user, your user object to do anything outside of
-your API, the is me field, won't be set. So here's an alternate idea. What if we at a
+downside is that if you used your user, your `User` object to do anything outside of
+your API, the `$isMe` field, won't be set. So here's an alternate idea. What if we at a
 normal, boring Symfony event listener, that's executed early during the request and
-we set the ismy field from there on a high level and makes sense if you have a user
+we set the `$isMe` field from there on a high level and makes sense if you have a user
 object and it has an enemy property, then we should be honest. We should set this as
 early as we can during the request.
 
 Once security has figured out who is authenticated. So first let's remove our current
-solution and user data for sister I'll comment out the dataset is me and add a little
+solution and user data persister I'll comment out the data set is me and add a little
 comment now handled in listener, and then over in user data provider, I'll do the
 same thing coming out. The first is me call. And then the second is me call. All
-right. So now I'm back to a broken state where the ismy field has never set. All
-right. So to create an event listener, find your terminal and run Ben consult, make
-subscriber. Why should create an event subscriber and I'll call this set is me on
-current user subscriber. And for the event we actually want Colonel that request, or
+right. So now I'm back to a broken state where the `$isMe` field has never set. All
+right. So to create an event listener, find your terminal and run 
+
+```terminal
+php bin/console make:subscriber
+```
+
+Why should create an event subscriber and I'll call this `SetIsMeOnCurrentUserSubscriber`
+And for the event we actually want `kernel.request`, or
 actually that's sort of its old name. Its new name is this long. Is this class name
 right here? So I'll paste that down here. Perfect.
 
-All right, let's go check out the new class in source events, subscriber and
+All right, let's go check out the new class in `src/EventSubscriber/` and
 brilliant we're subscribing to this event. And now our methods can be called early on
 when Symfony is running. So our job is fairly simple. We are going to find out who
 find the authenticated user if there, and if there is one we're going to, we're going
-to, going to call set is me on it. So we know that we're going to need a constructor
-public function,_underscore construct a security security I'll hit alt enter and go
-to initialize properties to create that property and set it then down in on request
-events. The first thing I'm actually going to do is say, if not event->is master
-requests, then just return. That's not that important, but if you've seen our
+to, going to call `setIsMe()` on it. So we know that we're going to need a constructor
+public function `__construct()` a `Security $security` I'll hit Alt + Enter and go
+to "Initialize properties" to create that property and set it then down in `onRequestEvent()`
+events. The first thing I'm actually going to do is say, if not `$event->isMasterRequest()`
+then just return. That's not that important, but if you've seen our
 something, something tutorial on, uh, our deep dive tutorial, where we talk about sub
 requests, we don't need to run this on a sub request.
 
-Only on the master request. Then I'll say user = this->security arrow, get user and
+Only on the master request. Then I'll say `$user = $this->security->getUser()` and
 upload some documentation above this to help out my editor. We know this will be in
-our project, our user entity or no, of course, if there is no user authenticated,
+our project, our `User` entity or `null`, of course, if there is no user authenticated,
 then we will do nothing. But if there is, this means that we found our user, we're
-going to say user arrow,->set is meat troop. So the cool thing about doctrine is that
-we just set the ismy field on the authenticated user object. If API platform later
+going to say `$user->setIsMe(true)`. So the cool thing about doctrine is that
+we just set the `$isMe` field on the authenticated `User` object. If API platform later
 queries for that exact user, it's actually going to reuse this exact same object in
-memory. So the fact that we changed the ismy here means it's going to be changed on
+memory. So the fact that we changed the `$isMe` here means it's going to be changed on
 the object. That's eventually returned from doctrine. All right. So to see this is
 working, let's actually run over and run Symfony PHP, Ben /PHP unit. And I'm going to
 run tests functional you the entire user resource test.
@@ -66,10 +71,10 @@ That's right. Two failures. Let's not do that.
 So to see if this is working, go over and I'm going to go back to AP /API /user that
 JSON LD and got it is me true. Oh, didn't mean to do that. I think I went backwards.
 What just happened well done right now, this means that we're going to be setting the
-ismy field for the current user, but purposely not setting it for all other users. So
-actually now in the user class, I'm going to default is me to false mean that, Hey,
+`$isMe` field for the current user, but purposely not setting it for all other users. So
+actually now in the user class, I'm going to default `$isMe` to `false` mean that, Hey,
 if we did not set this, it simply means that it must mean that we are not actually
-that user. And then down here in the get is me. This logic exception is no longer
+that user. And then down here in the get is me. This `LogicException` is no longer
 needed. All right. So let's try this. I'll actually go over and refresh my end point.
 
 Perfect. You can see as me as true on the individual end point. And if I refresh the
@@ -84,12 +89,12 @@ platform event system yet, but one of the things I want to show you is that it g
 to, is that a lot of what happens between an API platform behind the scenes is
 actually done via normal event listeners.
 
-So for example, this Reed listener here is actually responsible for calling the data
-providers to actually get the data from the database. The DC realize listener is what
-DC realizes the JSON and updates or creates your object. Then later about validated
-listener, right? Listener calls the data persisters and then there's some other ones.
-Now, what I want you to notice is that both the real listener and the D serializer
-listener are listening on kernel. That request that's the same event that we are
+So for example, this `ReedListener` here is actually responsible for calling the data
+providers to actually get the data from the database. The `DeserealizeListener` is what
+deserealizes the JSON and updates or creates your object. Then later about `ValidateListener`
+`WriteListener` calls the data persisters and then there's some other ones.
+Now, what I want you to notice is that both the readlistener and the deserializer
+listener are listening on `kernel.request` that's the same event that we are
 listening on and they will have a priority of four and two. Now, by default, when
 you, when you create a subscriber, you can specify down here a priority since we
 haven't. Our priority is zero. What that means is that we're actually being called
@@ -98,16 +103,16 @@ whatever data is being queried for.
 
 Or maybe if this is a new item, the data that's being created and sets it as a
 request attribute. So check this out. I'm actually going to go up here. And as an
-experiment, I'm going to say D D->event, arrow, get request, arrow, attributes,
+experiment, I'm going to say `dd($event->getRequest()->attributes->get('data')`,
 arrow, get data. That's the special key where API platform puts its data. Now, if we
 spin over now and our refresh, the collections end point for users, you can see that
 this is our page Nader object. The one we can loop over to get users. And if I go to
-/user /one that JSON LD, then it is an individual user object. So you can use this
+`/user/1.jsonld`, then it is an individual user object. So you can use this
 data key off of the request attributes to get access to the items that you're working
-with, uh, on this request. So I'll remove that DD.
+with, uh, on this request. So I'll remove that `dd()`.
 
 So this is really nice, but there's even another way that we could have loaded and
-set the ismy field. The only problem with this solution is that it's only going to
+set the `$isMe` field. The only problem with this solution is that it's only going to
 work inside of a request. This isn't going to work inside of a custom command instead
 of our CLI, because there is no request. So this listener's never going to be called,
 which for a security makes sense. There's if we're running a console command and not
