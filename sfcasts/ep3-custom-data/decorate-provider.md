@@ -6,7 +6,7 @@ usually handles that!
 
 ## Finding the Core Doctrine Data Provider
 
-Let's actually find that class. I'll hit Shift + Shift and look for
+Let's actually find that class. I'll hit `Shift`+`Shift` and look for
 `CollectionDataProvider` - I'm kind of guessing that name. Oh, and make sure to
 include "Non-Project" items. Here it is: a `CollectionDataProvider` in the
 Doctrine ORM Bridge.
@@ -65,13 +65,17 @@ The "default" is referring to our "default" ORM connection.
 
 Ok! Let's go use this! Over in `UserDataProvider`, remove the `UserRepository`
 argument. Instead, inject a collection data provider:
-`CollectionDataProviderInterface` and I'll call it `$collectionDataProvider`.
+`CollectionDataProviderInterface` and I'll call it `$collectionDataProvider`:
+
+[[[ code('b54a11690e') ]]]
 
 You could also type-hint the *specific* Doctrine data provider class that we
 *know* we're going to inject - your call. Rename the argument and property...
 and then in `getCollection()`, return
 `$this->collectionDataProvider->getCollection()` and pass it `$resourceClass`,
-`$operationName` and - it looks a bit silly, but also pass `$context`.
+`$operationName` and - it looks a bit silly, but also pass `$context`:
+
+[[[ code('dd91e42bc6') ]]]
 
 That argument doesn't exist on the `getCollection()` method of
 `CollectionDataProviderInterface`, but we know that it *will* exist in the
@@ -82,12 +86,14 @@ installed - because... it's recursion! Every programmers favorite thing!
 
 By default, Symfony will autowire the *main* collection data provider. It calls
 us, we call it, it calls us, chaos ensues. We had the same problem with
-our data persister
+our data persister.
 
 To fix this, open `config/services.yaml` and, at the bottom, override the user
 data provider service: `App\DataProvider\UserDataProvider`. Add `bind` and, in
 this case, we're going to bind the `$collectionDataProvider` argument. Set this
-to `@`, then go copy the service id that we know we need, and paste.
+to `@`, then go copy the service id that we know we need, and paste:
+
+[[[ code('95cf116176') ]]]
 
 *Now* it should work. Refresh the browser and... got it! Let's check the number
 of results and... yes! It stops at 30 users but says that there are 51 total.
