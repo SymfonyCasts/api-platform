@@ -4,9 +4,14 @@ Most of the time, the fields in our API match the properties in our entity.
 But we know that doesn't always need to be the case. In the previous tutorial,
 there were several times when we needed to add a *custom* field. For example, in
 `CheeseListing`, we added a `shortDescription` field to the API by adding a
-`getShortDescription` method and putting it in the `cheese:read` group. We did
-the same with `setTextDescription()`: this added a `textDescription` field that
-could be *written* in the API.
+`getShortDescription()` method and putting it in the `cheese:read` group:
+
+[[[ code('0566e03198') ]]]
+
+We did the same with `setTextDescription()`: this added a `textDescription`
+field that could be *written* in the API:
+
+[[[ code('e9c8f85780') ]]]
 
 ## Custom Fields that Require a Service
 
@@ -16,8 +21,11 @@ of a custom field, then you can't use this trick because these classes don't hav
 
 We even tackled this in the previous tutorial! We added an `isMe` boolean
 field to `User`. We did this by leveraging a custom normalizer:
-`src/Serializer/Normalizer/UserNormalizer`. We basically added an extra field
-*right* before the array is turned into JSON.
+`src/Serializer/Normalizer/UserNormalizer`:
+
+[[[ code('2ee2daeeb4') ]]]
+
+We basically added an extra field *right* before the array is turned into JSON.
 
 But this solution had a flaw. Look at the documentation on the `User`
 resource: I'll open the "get" operation and, down here, you can see the schema
@@ -33,7 +41,11 @@ there is a simpler solution.
 
 In `UserResourceTest`, if you find `testGetUser()`, we *do* have a test that looks
 for the `isMe` field. It's false in the first test and true after we log in as this
-user. Copy that method name... and let's just make sure it's passing:
+user:
+
+[[[ code('c519d51fa4') ]]]
+
+Copy that method name... and let's just make sure it's passing:
 
 ```terminal
 symfony php bin/phpunit --filter=testGetUser
@@ -41,7 +53,9 @@ symfony php bin/phpunit --filter=testGetUser
 
 Right now... it *does* pass. Time to break things! In `UserNormalizer`,
 remove the `isMe` property. Actually, we can just return
-`$this->normalizer->normalize()` directly.
+`$this->normalizer->normalize()` directly:
+
+[[[ code('8c750f44b9') ]]]
 
 This class still adds a custom group, but it no longer adds a custom field.
 Try the test now:
@@ -85,14 +99,22 @@ load some *extra* data, a custom data provider is the key.
 ## Creating the Data Provider
 
 In the `src/` directory, let's see, make a new `DataProvider/` directory and,
-inside, create a new PHP class called `UserDataProvider`.
+inside, create a new PHP class called `UserDataProvider`:
+
+[[[ code('8347006fcc') ]]]
 
 The idea is that this class will take *full* responsibility for loading user
 data... well, for now, just the "collection" user data. Add two interfaces:
 `ContextAwareCollectionDataProviderInterface` - yep, that's a *huge* name - and
-also `RestrictedDataProviderInterface`. Before we talk about these, I'll go to
-the Code -> Generate menu - or Command + N on a Mac - click "Implement Methods"
-and select both methods that are needed.
+also `RestrictedDataProviderInterface`:
+
+[[[ code('225159f699') ]]]
+
+Before we talk about these, I'll go to the "Code"->"Generate" menu - or
+`Command`+`N` on a Mac - click "Implement Methods" and select both methods
+that are needed:
+
+[[[ code('971f22d21b') ]]]
 
 So, to create a collection data provider, the only interface that you should
 need - in theory - is something called `CollectionDataProviderInterface`. If you
@@ -107,7 +129,9 @@ in a few minutes.
 The `RestrictedDataProviderInterface` is actually what requires the `supports()`
 method. If we didn't have that, API Platform would use our data provider for *every*
 class, not just the `User` class. Let's add our logic:
-`return $resourceClass === User::class`.
+`return $resourceClass === User::class`:
+
+[[[ code('c066e534f7') ]]]
 
 Perfect!
 
@@ -117,10 +141,14 @@ users. So... simple, right? We just need to query the database and return every
 
 Well, that's not going to be *quite* right, but it's close enough for now. Add
 a `public function __construct()` and autowire `UserRepository $userRepository`.
-I'll do my Alt + Enter trick and go to "Initialize Properties" to create that
-property and set.
+I'll do my `Alt`+`Enter` trick and go to "Initialize Properties" to create that
+property and set:
 
-Now, in `getCollection()`, return `$this->userRepository->findAll()`.
+[[[ code('0e9893ce56') ]]]
+
+Now, in `getCollection()`, return `$this->userRepository->findAll()`:
+
+[[[ code('8118640fbf') ]]]
 
 Sweet! Let's try it. We still haven't added the `isMe` field, so instead
 of trying the test, let's do this in the browser. Go to `/api/users.jsonld`.
@@ -141,8 +169,8 @@ autoconfiguration: if you create a service that implements
 find it and start calling its `supports()` method.
 
 So *that's* great... but the fact that we lost pagination and filtering is...
-*not* so great. Our API documentation still *advertises* that pagination and filtering
-exist, but it's a lie. None of that would work.
+*not* so great. Our API documentation still *advertises* that pagination and
+filtering exist, but it's a lie. None of that would work.
 
 It turns out that the core Doctrine data provider is *also* responsible for reading
 the page and filter query parameters and changing the query *based* on them.
