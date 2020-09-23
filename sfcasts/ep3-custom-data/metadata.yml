@@ -12,6 +12,7 @@ chapters:
     - is-me-field
     - item-data-provider
     - set-via-listener
+    - listeners-data
     - post-load-listener
     - custom-resource
     - embedded-normalization

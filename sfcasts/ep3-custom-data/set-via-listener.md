@@ -1,122 +1,87 @@
-# Set Via Listener
+# Setting a Custom Field Via a Listener
 
-Coming soon...
+When you need to add a custom field... and that custom field requires a service
+to populate its value, you have 3 possible solutions: you can create a totally
+custom ApiResource class that's not an entity, you can create an output DTO *or*
+you can do what we did: add a non-persisted field to your entity. I like this last
+option because it's the least... nuclear. If most of your fields come from normal
+persisted properties on your entity, creating a custom resource is overkill and
+output DTO's - which are *really* cool - come with a few drawbacks.
 
-We needed to add a custom field and that custom field requires a service to calculate
-its value. Then, as I mentioned earlier, there are three solutions. First, you could
-create a totally custom ApiResource class. That's not actually an entity. And we'll
-talk about that later. Or you can create an output DTO, or you can do what we did at
-a non persisted field to your entity. I like this last option because it's the least
-nucleolar. If most of your fields come from the entity, creating a custom resources,
-overkill and output DTO, which are really cool, calm with a few drawbacks. So that's
-what we did. And then we used a data provider to set that field.
+So that's what we did: we created a non-persisted, normal property on our entity
+and populated it in a data provider.
 
-The point is the cleanest way to create a custom field is to not really make it a
-custom field, make it a real normal API field on your ApiResource class. But there
-are multiple ways to set that field. The one we saw was the pure APIplatform
-solution B pro is that you can exactly customize this field for your API. The
-downside is that if you used your user, your `User` object to do anything outside of
-your API, the `$isMe` field, won't be set. So here's an alternate idea. What if we at a
-normal, boring Symfony event listener, that's executed early during the request and
-we set the `$isMe` field from there on a high level and makes sense if you have a user
-object and it has an enemy property, then we should be honest. We should set this as
-early as we can during the request.
+But in reality, there are *multiple* ways that we could set that field. The data
+provider solution is the *pure* API Platform solution. The downside is that if
+you your `User` object in some code that runs *outside* of an API Plaatform API
+call, the `$isMe` field won't be set!
 
-Once security has figured out who is authenticated. So first let's remove our current
-solution and user data persister I'll comment out the data set is me and add a little
-comment now handled in listener, and then over in user data provider, I'll do the
-same thing coming out. The first is me call. And then the second is me call. All
-right. So now I'm back to a broken state where the `$isMe` field has never set. All
-right. So to create an event listener, find your terminal and run 
+That might be ok - or you might not even have that situation. But let's look
+at another idea. What if we create a normal, boring Symfony event listener that's
+executed early during the request and we set the `$isMe` field from *there*.
+
+Let's try it! First, remove our current solution: in `UserDataPersister` I'll
+comment-out the `$data->setIsMe()` with a common that this will now be set in
+a listener. Then over in `UserDataProvider`, I'll do the same thing with the
+first `setIsMe()`... and the second.
+
+Sweet! We are back to the broken state where the `$isMe` field is never set.
+
+## Creating the Event Subscriber
+
+To create the event listener, find your terminal and run:
 
 ```terminal
 php bin/console make:subscriber
 ```
 
-Why should create an event subscriber and I'll call this `SetIsMeOnCurrentUserSubscriber`
-And for the event we actually want `kernel.request`, or
-actually that's sort of its old name. Its new name is this long. Is this class name
-right here? So I'll paste that down here. Perfect.
+Well, this will *really* create an event *subscriber*, which I like a bit better.
+Let's call it `SetIsMeOnCurrentUserSubscriber`. And for the event, we want
+`kernel.request`. Or really, that's its old name. It's *new* name is this
+`RequestEvent` class. Copy that and paste it below.
 
-All right, let's go check out the new class in `src/EventSubscriber/` and
-brilliant we're subscribing to this event. And now our methods can be called early on
-when Symfony is running. So our job is fairly simple. We are going to find out who
-find the authenticated user if there, and if there is one we're going to, we're going
-to, going to call `setIsMe()` on it. So we know that we're going to need a constructor
-public function `__construct()` a `Security $security` I'll hit Alt + Enter and go
-to "Initialize properties" to create that property and set it then down in `onRequestEvent()`
-events. The first thing I'm actually going to do is say, if not `$event->isMasterRequest()`
-then just return. That's not that important, but if you've seen our
-something, something tutorial on, uh, our deep dive tutorial, where we talk about sub
-requests, we don't need to run this on a sub request.
+Perfect! Let's go check out the new class in `src/EventSubscriber/`. And...
+brilliant! The `onKernelRequest()` will now be called when the `RequestEvent`
+is dispatched, which is early in Symfony.
 
-Only on the master request. Then I'll say `$user = $this->security->getUser()` and
-upload some documentation above this to help out my editor. We know this will be in
-our project, our `User` entity or `null`, of course, if there is no user authenticated,
-then we will do nothing. But if there is, this means that we found our user, we're
-going to say `$user->setIsMe(true)`. So the cool thing about doctrine is that
-we just set the `$isMe` field on the authenticated `User` object. If API platform later
-queries for that exact user, it's actually going to reuse this exact same object in
-memory. So the fact that we changed the `$isMe` here means it's going to be changed on
-the object. That's eventually returned from doctrine. All right. So to see this is
-working, let's actually run over and run Symfony PHP, Ben /PHP unit. And I'm going to
-run tests functional you the entire user resource test.
+## Populating the Field
 
-And
+So our job is fairly simple: we need to find the authenticated `User` and, if
+there *is* an authenticated user, call `setIsMe(true)` on it.
 
-Well, we have one failure.
+Add a public function `__construct()` with a `Security $security` argument. I'll
+hit Alt + Enter and go to "Initialize properties" to create that property and set
+it. Then down in `onRequestEvent()`, start with: if not `$event->isMasterRequest()`,
+then return.
 
-That's right. Two failures. Let's not do that.
+That's not *super* important, but if your app uses sub-requests, there's no reason
+for this code to *also* run for those. If you don't know what I'm talking about
+and *want* to, check out our
+[Symfony Deep Dive Tutorial](https://symfonycasts.com/screencast/deep-dive/sub-request).
 
-So to see if this is working, go over and I'm going to go back to AP /API /user that
-JSON LD and got it is me true. Oh, didn't mean to do that. I think I went backwards.
-What just happened well done right now, this means that we're going to be setting the
-`$isMe` field for the current user, but purposely not setting it for all other users. So
-actually now in the user class, I'm going to default `$isMe` to `false` mean that, Hey,
-if we did not set this, it simply means that it must mean that we are not actually
-that user. And then down here in the get is me. This `LogicException` is no longer
-needed. All right. So let's try this. I'll actually go over and refresh my end point.
+Anyways, get the user with `$user = $this->security->getUser()` and add some
+phpdoc above this to help my editor: we know this will be a `User` object or
+`null` if the user isn't logged in. If there is *no* user, just return. But
+if there *is* a user, call `$user->setIsMe(true)`.
 
-Perfect. You can see as me as true on the individual end point. And if I refresh the
-main one, it is me true. And then false on all the other ones. We got it. So one
-thing you might be wondering inside the subscriber is, okay, this was really easy
-because the object we want it to operate on was the user object. So I could very
-easily fetch the user object and set date on it. But what if the custom field we're
-trying to set is not the user object. It's just some entity. Where do we get the
-entity from in this situation to answer that question, I'm actually going to go over
-it in Google for APF platform events. We have not talked about much about the API
-platform event system yet, but one of the things I want to show you is that it gets
-to, is that a lot of what happens between an API platform behind the scenes is
-actually done via normal event listeners.
+We just set the `$isMe` field on the authenticated `User` object. One cool thing about
+Doctrine is that if API platform *later* queries for that *exact* user, Doctrine
+will return this *exact* same object in memory, which means that that the `$isMe`
+field *will* be properly set.
 
-So for example, this `ReedListener` here is actually responsible for calling the data
-providers to actually get the data from the database. The `DeserealizeListener` is what
-deserealizes the JSON and updates or creates your object. Then later about `ValidateListener`
-`WriteListener` calls the data persisters and then there's some other ones.
-Now, what I want you to notice is that both the readlistener and the deserializer
-listener are listening on `kernel.request` that's the same event that we are
-listening on and they will have a priority of four and two. Now, by default, when
-you, when you create a subscriber, you can specify down here a priority since we
-haven't. Our priority is zero. What that means is that we're actually being called
-after these two listeners. Now that's really important because these listeners take
-whatever data is being queried for.
+This means that we will be setting the `$isMe` field for the *current* user, but
+purposely *not* setting it for all other `User` objects. So now, in the `User`
+class, we should default `$isMe` to `false` to mean:
 
-Or maybe if this is a new item, the data that's being created and sets it as a
-request attribute. So check this out. I'm actually going to go up here. And as an
-experiment, I'm going to say `dd($event->getRequest()->attributes->get('data')`,
-arrow, get data. That's the special key where API platform puts its data. Now, if we
-spin over now and our refresh, the collections end point for users, you can see that
-this is our page Nader object. The one we can loop over to get users. And if I go to
-`/user/1.jsonld`, then it is an individual user object. So you can use this
-data key off of the request attributes to get access to the items that you're working
-with, uh, on this request. So I'll remove that `dd()`.
+> Hey! If we did not set this, it must mean that this is *not* the
+> currently-authenticated user.
 
-So this is really nice, but there's even another way that we could have loaded and
-set the `$isMe` field. The only problem with this solution is that it's only going to
-work inside of a request. This isn't going to work inside of a custom command instead
-of our CLI, because there is no request. So this listener's never going to be called,
-which for a security makes sense. There's if we're running a console command and not
-going to be an authenticated user anyways, but in other cases, you might have a field
-that you want that, that, uh, you need to calculate. And you do want that to be set
-inside of your CLI. Also let's solve that with a custom doctrine, post load listener,
+Down in `getIsMe()`, the `LogicException` is no longer needed.
 
+Testing time! At your browser, refresh the item endpoint and... got it! And
+if we go to `/api/cheeses.jsonld`... the first item has `isMe: true` and the
+others are `isMe: false`.
+
+Next: what if the object that we need to set the field on is *not* the `User`
+object? How could we get access to that object inside of the listener? What
+if it's a collection endpoint and we need to set a field on *multiple* objects?
