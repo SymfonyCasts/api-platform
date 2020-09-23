@@ -1,50 +1,68 @@
-# Listeners & Accessing the Resource Objects
+# Core Listeners & Accessing the "Resource" Objects
 
-Coming soon...
+I gotta admit... I kinda cheated with the last example. The logic in the listener
+was *really* easy because the object that we needed to operate on was the
+currently-authenticated `User` object. That made it *super* easy to grab that *one*
+object and set some data on it.
 
-But... I admit... I kinda cheated with this example. It was *really* easy because
-the object that I needed to operate on was the currently-authenticated `User`
-object. That made it *super* easy to grab that *one* object and set some data
-on it.
+But... what if the object we need to set the data on is *not* a `User` object...
+it's a `CheeseListing` or something else. For example, if the user goes to
+`/api/cheeses/1.jsonld`, how can we get access to the `CheeseListing` object
+with id 1 so that we can set data on it? Or even more interesting, if the user
+goes to `/api/cheeses.jsonld`, how could we get access to *all* of the
+`CheeseListing` objects that are about to be displayed so that we can set a
+custom field?
 
-But... what if object we need to set the data on is *not* a `User` object...
-it's `CheeseListing` or something else. Where could we get that object from
-inside of our listener?
+## The Core API Platform Listeners
 
-is not the user object. It's just some entity. Where do we get the
-entity from in this situation to answer that question, I'm actually going to go over
-it in Google for APF platform events. We have not talked about much about the API
-platform event system yet, but one of the things I want to show you is that it gets
-to, is that a lot of what happens between an API platform behind the scenes is
-actually done via normal event listeners.
+To answer that question, search for "API Platform events". We haven't talked much
+about the API Platform event system yet. But in reality, almost *everything*
+that API Platform does is *actually* done by a listener behind the scenes.
 
-So for example, this `ReedListener` here is actually responsible for calling the data
-providers to actually get the data from the database. The `DeserealizeListener` is what
-deserealizes the JSON and updates or creates your object. Then later about `ValidateListener`
-`WriteListener` calls the data persisters and then there's some other ones.
-Now, what I want you to notice is that both the readlistener and the deserializer
-listener are listening on `kernel.request` that's the same event that we are
-listening on and they will have a priority of four and two. Now, by default, when
-you, when you create a subscriber, you can specify down here a priority since we
-haven't. Our priority is zero. What that means is that we're actually being called
-after these two listeners. Now that's really important because these listeners take
-whatever data is being queried for.
+For example, this `ReadListener` is what's responsible for calling the data
+providers to, for example, fetch the objects from the database. Then, the
+`DeserealizeListener` is what deserializes the JSON on `POST`, `PUT` and `PATCH`
+request to update or create the object. Later, `ValidateListener` executes
+validation and `WriteListener` calls the data *persisters*. There are a few other
+listeners, but those do the majority of the work.
 
-Or maybe if this is a new item, the data that's being created and sets it as a
-request attribute. So check this out. I'm actually going to go up here. And as an
-experiment, I'm going to say `dd($event->getRequest()->attributes->get('data')`,
-arrow, get data. That's the special key where API platform puts its data. Now, if we
-spin over now and our refresh, the collections end point for users, you can see that
-this is our page Nader object. The one we can loop over to get users. And if I go to
-`/user/1.jsonld`, then it is an individual user object. So you can use this
-data key off of the request attributes to get access to the items that you're working
-with, uh, on this request. So I'll remove that `dd()`.
+Now, check this out: both `ReadListener` and `DeserializeListener` listen to
+the `kernel.request` event - the *same* event that *we* are listening to. And
+these have a priority of 4 and 2.
 
-So this is really nice, but there's even another way that we could have loaded and
-set the `$isMe` field. The only problem with this solution is that it's only going to
-work inside of a request. This isn't going to work inside of a custom command instead
-of our CLI, because there is no request. So this listener's never going to be called,
-which for a security makes sense. There's if we're running a console command and not
-going to be an authenticated user anyways, but in other cases, you might have a field
-that you want that, that, uh, you need to calculate. And you do want that to be set
-inside of your CLI. Also let's solve that with a custom doctrine, post load listener,
+When you create a subscriber, you *can* specify a priority in the
+`getSubscribedEvents()` method. Since we haven't, our priority is zero. That
+means that our listener is called *after* both `ReadListener` and `DeserializeListener`.
+
+That's important because after calling the data providers, `ReadListener` *stores*
+that information on a request attribute! And if `DeserializeListener` creates
+a *new* object, it does the same.
+
+## Grabbing the Request "data" Attribute
+
+Check this out, in our listener - as an experiment - add
+`dd($event->getRequest()->attributes->get('data')`.
+
+That's the special key where API platform puts the "data" for the current API
+request. When we spin over now and refresh the collections endpoint for users...
+awesome! It's our `Paginator` object! We could loop over that to get access to
+ever `User` object that is *about* to be serialized.
+
+And when we go to `/user/1.jsonld`, this dumps the *individual* `User` object.
+
+So... this is awesome! At any point, we can grab the `data` key off of the request
+attributes to get access to the item or *items* that for the current API request.
+*This* is how you could set a custom field for *any* entity inside a listener.
+
+Remove that `dd()`.
+
+I really like the listener solution! Though, it does have two downsides, which
+may or may not be important. First, the event system isn't used in API Platform's
+GraphQL support... so this won't work if you're using GraphQL. And second, if
+you're writing some custom console commands, the `isMe` field will *never* be
+set there... because there's no request and so no `RequestEvent`!
+
+For the `isMe` field... that's probably fine... because *nobody* is the
+currently-authenticated user in a console command anyways. But if you *did*
+want the field to be available everywhere - *even* in a console command - we have
+one more solution: a Doctrine `postLoad` listener. Let's check that out next!
