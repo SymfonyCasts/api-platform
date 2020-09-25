@@ -1,8 +1,11 @@
 # Custom Item Data Provider
 
 We've successfully used our collection data provider to populate the `isMe` field
-on each `User` resource returned by the *collection* operation. If we go to
-`/api/users.jsonld`, we see it!
+on each `User` resource returned by the *collection* operation:
+
+[[[ code('9c70dfb4d7') ]]]
+
+If we go to `/api/users.jsonld`, we see it!
 
 But if we go to an individual item, we get this error... because the `isMe` field is
 *not* being set yet. We can also see this in our tests - the `testGetUser()` method
@@ -14,7 +17,9 @@ symfony php bin/phpunit --filter=testGetUser
 
 And this should fail with the same error as the browser. Hmm, it *does* fail...
 but not *quite* like I expected. Ah, I need to make my test smarter. Before checking
-the JSON, add `$this->assertResponseStatusCodeSame(200)`.
+the JSON, add `$this->assertResponseStatusCodeSame(200)`:
+
+[[[ code('27729e6f51') ]]]
 
 Now when we try the test:
 
@@ -34,38 +39,57 @@ providers in the same file.
 ## Creating the Item Data Provider
 
 Add a third interface called - wait for this mouthful -
-`DenormalizedIdentifiersAwareItemDataProviderInterface`.
+`DenormalizedIdentifiersAwareItemDataProviderInterface`:
+
+[[[ code('0e87d61d2e') ]]]
 
 Wow. If you jump into this class, it extends a less strict
 `ItemDataProviderInterface`. I'm implementing that other crazy interface because
 that's what the *core* Doctrine item data provider uses... and I want to be able
 to pass it the same arguments.
 
-Ok: go to the Code -> Generate menu - or Command + N on a Mac - and implement the
-one method we need: `getItem()`. Then let's *immediately* inject the core Doctrine
-item provider. Add the new argument: `ItemDataProviderInterface $itemDataProvider`.
-Hit Alt+Enter to initialize that property and then... because I'm a bit obsessive
-about order, I'll make sure this is the *second* property.
+Ok: go to the "Code"->"Generate" menu - or `Command`+`N` on a Mac - and implement the
+one method we need: `getItem()`:
 
-Finally, down in `getItem()`, return `$this->itemDataProvider->getItem()` - yes
+[[[ code('d78e37c687') ]]]
+
+Then let's *immediately* inject the core Doctrine item provider. Add the new
+argument: `ItemDataProviderInterface $itemDataProvider`. Hit `Alt`+`Enter` to
+initialize that property and then... because I'm a bit obsessive about order,
+I'll make sure this is the *second* property:
+
+[[[ code('e6deaf09cc') ]]]
+
+Finally, down in `getItem()`, return `$this->itemDataProvider->getItem()` - yes,
 I *totally* just forgot the `itemDataProvider` part, I'll catch that in a second -
-and pass this `$resourceClass`, `$id`, `$operationName` and also `$context`.
+and pass this `$resourceClass`, `$id`, `$operationName` and also `$context`:
+
+[[[ code('6c17eb7ca6') ]]]
 
 To tell Symfony to *specifically* pass us the *Doctrine* item provider, go back to
 `services.yaml`: we need to add one more bind. The name of the argument is
 `$itemDataProvider` - so I'll copy that - and that should be passed the *same*
 service id as above, but with the name "item". If you used `debug:container`,
-that's what you would see.
+that's what you would see:
+
+[[[ code('8b579f7997') ]]]
 
 Beautiful! Before we try this, let's jump straight in and set the `isMe` field.
 To do that, instead of returning, add `$item =` and I'll - as usual - put some
-phpdoc above this because *we* know this will be a `User` object or null - it will
-be `null` if the id wasn't found in the database. To prevent that being a
-problem, if not, `$item`, then, return null.
+phpdoc above this because *we* know this will be a `User` object or null:
+
+[[[ code('f21092f4a9') ]]]
+
+It will be `null` if the id wasn't found in the database. To prevent that being a
+problem, if not, `$item`, then, return null:
+
+[[[ code('c5fac3b9c8') ]]]
 
 At this point, we *know* we have a `User` object. So we can say
 `$item->setIsMe()` `$this->security->getUser() === $item`. Finish by returning
-`$item` at the bottom.
+`$item` at the bottom:
+
+[[[ code('2eed6337f8') ]]]
 
 Ok! We're ready to try the test:
 
@@ -75,7 +99,11 @@ symfony php bin/phpunit --filter=testGetUser
 
 And... ah! Recursion! The problem is coming from line 43 of `UserDataProvider`.
 That's the dummy mistake I made a few minutes ago: add `itemDataProvider->`
-and *then* `getItem()`. Come on Ryan!
+and *then* `getItem()`:
+
+[[[ code('c029dba2fc') ]]]
+
+Come on Ryan!
 
 Now when we try it:
 
@@ -106,11 +134,15 @@ there was never anything to load!
 
 The fix for this is to *also* make sure that we set this field in the data persister.
 At the top, add one more argument - `Security $security` - and then initialize that
-property.
+property:
 
-Below in `persist()` -  we could add the logic in the if statement where we *know*
+[[[ code('60a1a5d2c7') ]]]
+
+Below, in `persist()` -  we could add the logic in the if statement where we *know*
 this is a new item - but it doesn't hurt to set it every time a `User` is saved.
-Add `$data->setIsMe($this->security->getUser() === $data)`.
+Add `$data->setIsMe($this->security->getUser() === $data)`:
+
+[[[ code('379eac87e6') ]]]
 
 Try the test now:
 
