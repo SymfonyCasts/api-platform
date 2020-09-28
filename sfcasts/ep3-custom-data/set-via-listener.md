@@ -41,7 +41,7 @@ Let's call it `SetIsMeOnCurrentUserSubscriber`. And for the event, we want
 `RequestEvent` class. Copy that and paste below.
 
 Perfect! Let's go check out the new class in `src/EventSubscriber/`. And...
-brilliant! The `onKernelRequest()` will now be called when the `RequestEvent`
+brilliant! The `onRequestEvent()` will now be called when the `RequestEvent`
 is dispatched, which is early in Symfony.
 
 ## Populating the Field
