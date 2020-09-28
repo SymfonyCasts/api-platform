@@ -2,14 +2,20 @@
 
 When you need to add a custom field... and you need a service to *populate* the
 data on that field, you have 3 possible solutions: you can create a totally
-custom ApiResource class that's not an entity, you can create an output DTO *or*
+custom API resource class that's not an entity, you can create an output DTO *or*
 you can do what we did: add a non-persisted field to your entity. I like this last
 option because it's the least... nuclear. If most of your fields come from normal
 persisted properties on your entity, creating a custom resource is overkill and
 output DTO's - which are *really* cool - come with a few drawbacks.
 
 So that's what we did: we created a non-persisted, normal property on our entity,
-exposed in our API and populated it in a data provider.
+exposed in our API:
+
+[[[ code('7a953e2c7f') ]]]
+
+And populated it in a data provider:
+
+[[[ code('b189af275e') ]]]
 
 But in reality, there are *multiple* ways that we could *set* that field. The data
 provider solution is the *pure* API Platform solution. The downside is that if
@@ -22,8 +28,14 @@ executed early during the request and we set the `$isMe` field from *there*.
 
 Let's try it! First, remove our current solution: in `UserDataPersister` I'll
 comment-out the `$data->setIsMe()` and add a comment that this will now be set in
-a listener. Then over in `UserDataProvider`, I'll do the same thing with the
-first `setIsMe()`... and the second.
+a listener:
+
+[[[ code('b41132ec61') ]]]
+
+Then over in `UserDataProvider`, I'll do the same thing with the first
+`setIsMe()`... and the second:
+
+[[[ code('15927b2b27') ]]]
 
 Sweet! We are back to the broken state where the `$isMe` field is never set.
 
@@ -42,7 +54,9 @@ Let's call it `SetIsMeOnCurrentUserSubscriber`. And for the event, we want
 
 Perfect! Let's go check out the new class in `src/EventSubscriber/`. And...
 brilliant! The `onRequestEvent()` will now be called when the `RequestEvent`
-is dispatched, which is early in Symfony.
+is dispatched, which is early in Symfony:
+
+[[[ code('713d886287') ]]]
 
 ## Populating the Field
 
@@ -50,9 +64,15 @@ So our job is fairly simple! We need to find the authenticated `User` if there
 is one, and *if* there is, call `setIsMe(true)` on it.
 
 Add public function `__construct()` with a `Security $security` argument. I'll
-hit Alt + Enter and go to "Initialize properties" to create that property and set
-it. Then down in `onRequestEvent()`, start with: if not `$event->isMasterRequest()`,
-then return.
+hit `Alt`+`Enter` and go to "Initialize properties" to create that property
+and set it:
+
+[[[ code('cbc05ae2d7') ]]]
+
+Then down in `onRequestEvent()`, start with: if not `$event->isMasterRequest()`,
+then return:
+
+[[[ code('8ed0e455e6') ]]]
 
 That's not *super* important, but if your app uses sub-requests, there's no reason
 for this code to *also* run for those. If you don't know what I'm talking about
@@ -60,9 +80,15 @@ and *want* to, check out our
 [Symfony Deep Dive Tutorial](https://symfonycasts.com/screencast/deep-dive/sub-request).
 
 Anyways, get the user with `$user = $this->security->getUser()` and add some
-phpdoc above this to help my editor: we know this will be a `User` object or
-`null` if the user isn't logged in. If there is *no* user, just return. But
-if there *is* a user, call `$user->setIsMe(true)`.
+PHPDoc above this to help my editor: we know this will be a `User` object or
+`null` if the user isn't logged in:
+
+[[[ code('e7814daddf') ]]]
+
+If there is *no* user, just return. But if there *is* a user, call
+`$user->setIsMe(true)`:
+
+[[[ code('be22f94fe1') ]]]
 
 Cool! We just set the `$isMe` field on the authenticated `User` object. One cool
 thing about Doctrine is that if API platform *later* queries for that *same* user,
@@ -76,7 +102,11 @@ setting it for all other `User` objects. In the `User` class, let's now default
 > Hey! If we did not set this, it must mean that this is *not* the
 > currently-authenticated user.
 
-Down in `getIsMe()`, the `LogicException` is no longer needed.
+[[[ code('76fa2d7562') ]]]
+
+Down in `getIsMe()`, the `LogicException` is no longer needed:
+
+[[[ code('5d0884e5da') ]]]
 
 Testing time! At your browser, refresh the item endpoint and... got it! And
 if we go to `/api/cheeses.jsonld`... the first item has `isMe: true` and the
