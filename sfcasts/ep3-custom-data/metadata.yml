@@ -15,4 +15,5 @@ chapters:
     - listeners-data
     - post-load-listener
     - custom-resource
+    - resource-collection
     - embedded-normalization
