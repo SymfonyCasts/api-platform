@@ -31,8 +31,12 @@ the `kernel.request` event - the *same* event that *we* are listening to! And
 these have a priority of 4 and 2.
 
 When you create a subscriber, you *can* specify a priority in the
-`getSubscribedEvents()` method. Since we haven't, our priority is zero. That
-means that both `ReadListener` and `DeserializeListener` are called *before* us.
+`getSubscribedEvents()` method:
+
+[[[ code('0885dfe23e') ]]]
+
+Since we haven't, our priority is zero. That means that both `ReadListener` and
+`DeserializeListener` are called *before* us.
 
 That's important because after calling the data providers, `ReadListener` *stores*
 that information on a request *attribute*. And if `DeserializeListener` creates
@@ -41,7 +45,9 @@ a *new* object, it does the same thing!
 ## Grabbing the Request "data" Attribute
 
 Check this out, in our listener - as an experiment - add
-`dd($event->getRequest()->attributes->get('data'))`.
+`dd($event->getRequest()->attributes->get('data'))`:
+
+[[[ code('3f480789ff') ]]]
 
 That's the special key where API platform puts the "data" for the current API
 request. When we spin over now and refresh the collections endpoint for users...
@@ -54,7 +60,9 @@ So... this is awesome! At any point, we can grab the `data` key off of the reque
 attributes to get access to the item or *items* for the current API request.
 *This* is how you could set a custom field for *any* entity inside a listener.
 
-Remove that `dd()`.
+Remove that `dd()`:
+
+[[[ code('806206ccbc') ]]]
 
 I *really* like the listener solution! Though, it does have two downsides, which
 may or may not be important. First, the event system isn't used in API Platform's
