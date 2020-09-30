@@ -17,7 +17,7 @@ level: it's called a "name converter".
 Anyways, it would be kinda nice if the input field were just called `description`.
 We'd have input `description`, output `description`. Sure, internally, *we* would
 know `setTextDescription()` was called on input and `getDescription()` on output,
-but the user wouldn't need to care or worry about that.
+but the user wouldn't need to care or worry about this.
 
 And... yes! You can *totally* control this with a *super* useful annotation. Above
 `setTextDescription()`, add `@SerializedName()` with `description`.
@@ -36,7 +36,7 @@ now we *do* have a constructor, but it doesn't have any required arguments. That
 means that the serializer has *no* problems instantiating this class when we POST
 a new `CheeseListing`.
 
-But... yea know what? Because *every* `CheeseListing` needs a title, I'd like to
+But... you know what? Because *every* `CheeseListing` needs a title, I'd like to
 give this a new required argument called `$title`. You definitely don't need to
 do this, but for a lot of people, it makes sense: if a class has required properties:
 force them to be passed in via the constructor!
