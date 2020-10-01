@@ -1,10 +1,11 @@
-# Embedded Normalization
+# Why/When a Many Relation is IRI Strings vs Embedded
 
-Coming soon...
+I want to show you something a bit *surprising* about how our new custom object
+is being serialized. To make things more realistic, add a `$stats2`, and let's
+actually use 1000 visitors for day one - our site is at least *kind* of popular -
+2000 for `$stats2` and set this to minus 1 days from now. Put that new `$stats2`
+into the return statement.
 
-Let's talk, we're adding a second daily stature and point just to make it a little
-bit more realistic. I'll do `$stats2`. And let's actually do a thousand users on one
-day, 2000 users on another day. And we'll give this one minus one days. That's kind
 of cool because when you at, and then I'll make sure I include `$stats2`, over there.
 That's kind of cool because now we can kind of really get the daily stats, the idea
 of a daily stats with one day and then the previous day, and then we'd have more
@@ -13,7 +14,7 @@ we're passing an empty array as our fourth argument here, which is supposed to b
 `CheeseListing` objects. So we're just going to kind of fake this by querying the
 database for a couple of cheese, those things, and putting them in there.
 
-Plus that's great public function `__construct()` and I'll auto wire, the 
+Plus that's great public function `__construct()` and I'll auto wire, the
 `CheeseListingRepository` I'll Alt + Enter and go to "Initialize properties" to create that property
 and set it okay. Before we start creating those stats, let's just create some, let's
 get some, let's say `$listings = $this->cheeseListingRepository->findBy([], [], 5)`
@@ -22,7 +23,7 @@ then five. So we'll just get five listings and we'll use those as the most popul
 five listings for everything. Hey dude, we got this.
 
 I didn't know that you were going to be Spiderman tonight. I can work for cut just a
-couple more minutes and then we'll come and write down. Okay. 
+couple more minutes and then we'll come and write down. Okay.
 
 So instead of this
 empty array, we'll pass `$listings` and `$listings`. All right, let's give this a try. And
@@ -48,8 +49,8 @@ an array, thanks to the typing on the constructor, but API platform doesn't know
 an array of cheeses listings. No, this Jesus thing here is not actually enough to
 tell API platform. Should it be maybe, but we need to use a different syntax. So
 instead of by the documentation here, though, it doesn't really matter. I'm actually
-going to start documenting the property directly. So here's the key we need add 
-`@var` and then say `array` open less than greater than, and inside of here, say 
+going to start documenting the property directly. So here's the key we need add
+`@var` and then say `array` open less than greater than, and inside of here, say
 `CheeseListing`. So a little bit of a lesser known syntax for how to say that you are an
 array of cheese listings.
 
@@ -59,7 +60,7 @@ Check out that difference now is what we expect an array of. IRI strings, if we
 were choosing to serialize any of these cheeses in the daily stats group read group,
 then it would turn into an embedded object. But since we're not, it's an IRI string.
 Now the only problem with this `array<CheeseListing>` syntax is that our editors
-doesn't actually understand it. It's kind of disappointing PHPStorm, 
+doesn't actually understand it. It's kind of disappointing PHPStorm,
 `$this->mostPopularListings[0]->`It doesn't actually auto-complete anything. It
 doesn't know what that object is. Um, so what I do actually here is I want to be this
 at bar is going to be for API platform. And then I'll say, or she's listing last
@@ -109,7 +110,7 @@ before it even starts doing any of this other work. Now, right now, when it's lo
 at our code and building this property, CA metadata cache API platform knows that
 she's the cheese listening's property is a collection of `CheeseListing` objects and
 knows that thanks to the doctrine, annotation, it reads this and says, this is a
-collection of `CheeseListing` objects, but it does not realize that 
+collection of `CheeseListing` objects, but it does not realize that
 `getPublishedCheeseListings()` returns, and a collection of `CheeseListing` objects. It knows as a
 `Collection`, and this is an `IterableCollection`. So basically he knows it's an `array`,
 but it doesn't know what is an array of now, why is this a problem? Well, whenever it
