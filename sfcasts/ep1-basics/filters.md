@@ -65,7 +65,7 @@ How else can we filter? What about searching by text? On top of the class, add
 another filter: `@ApiFilter()`. This one is called `SearchFilter::class` and
 has the same `properties` option... but with a bit more config. Say `title` set
 to `partial`. There are also settings to match on an `exact` string, the `start`
-of a string, `end` or a string or on `word_start`.
+of a string, `end` of a string or on `word_start`.
 
 Anyways, *this* time, I remember that we need to add the `use` statement manually.
 Say `use SearchFilter` and auto-complete the one for the ORM.
