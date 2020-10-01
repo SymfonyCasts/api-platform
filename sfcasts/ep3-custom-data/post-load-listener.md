@@ -152,7 +152,8 @@ $user->setBio($bio);
 
 // ---
 
-class User {
+class User
+{
     public function setBio(\Stringable $bio)
     {
         $this->bio = $bio;
