@@ -7,8 +7,11 @@ like `CheeseListing` or `User`.
 ## Custom Fields vs Custom Resource Class
 
 But really, an API resource can be *any* object that pulls data from... anywhere!
-So instead of adding un-persisted `$isMe` and `$isMvp` fields to `User`, we could
-have created a totally different non-entity class - like `UserApiResource` - with
+So instead of adding un-persisted `$isMe` and `$isMvp` fields to `User`:
+
+[[[ code('071edeea00') ]]]
+
+We could have created a totally different non-entity class - like `UserApiResource` - with
 *exactly* the fields in our API.
 
 And, the *way* we would do that is pretty similar to what we've seen: we would need
@@ -33,22 +36,35 @@ So... let's get started! Step one: create an API resource class that looks
 *exactly* how we want our API to look... regardless of how the underlying data
 looks or where it's coming from.
 
-In the `Entity/` directory, create a new class called `DailyStats`. And yes,
-I'm putting this in the `Entity/` directory even though this isn't going to be
+In the `Entity/` directory, create a new class called `DailyStats`:
+
+[[[ code('52b4f68322') ]]]
+
+And yes, I'm putting this in the `Entity/` directory even though this isn't going to be
 a *Doctrine* entity. That's *totally* allowed and it's up to you if you like this
 or not. If you *do* want to put API Resource classes somewhere else, then in
 `config/packages/api_platform.yaml`, you'll need to tweak the config to tell
-API Platform to look in that new spot. Easy peasy!
+API Platform to look in that new spot:
+
+[[[ code('409a72592b') ]]]
+
+Easy peasy!
 
 Back in the new class, for simplicity - and... because this class *will* stay
 very simple - I'm going to use *public* properties: `public $date`,
 `public $totalVisitors` and a `public $mostPopularListings` that will hold an
-array of `CheeseListing` objects. If you're using PHP 7.4, you can also add
-property *types*, which will *also* help API Platform's documentation. More
-on that soon. Or, if you don't want this stuff to be public, use the normal
-private properties with getters and setters: whatever you want.
+array of `CheeseListing` objects:
 
-To *officially* make this an API Resource class, above, add `@ApiResource`.
+[[[ code('713f4ac7f8') ]]]
+
+If you're using PHP 7.4, you can also add property *types*, which will *also*
+help API Platform's documentation. More on that soon. Or, if you don't want
+this stuff to be public, use the normal private properties with getters and setters:
+whatever you want.
+
+To *officially* make this an API Resource class, above, add `@ApiResource`:
+
+[[[ code('69973a50c1') ]]]
 
 That's it! Spin back to the browser and refresh the documentation. Say hello to
 our `DailyStats` resource! No... it won't magically work yet, but it *is*
@@ -58,7 +74,9 @@ already documented.
 
 Now, I don't mean to be picky, but I don't love this `daily_stats` URL - dashes
 are much more hipster. We can fix that by adding an option to the annotation:
-`shortName="daily-stats"`.
+`shortName="daily-stats"`:
+
+[[[ code('65fe797828') ]]]
 
 When we refresh the docs now... that did it! But we could have *also* solved this
 "Ryan hates underscores" problem in a more *global* way. Search for
@@ -71,8 +89,11 @@ That's called the `path_segment_name_generator` and it's something you can custo
 It uses underscores by default, but there's a pre-built service that loves dashes.
 
 Copy the example config. Then, remove the `shortName` option and in
-`api_platform.yaml` paste that config anywhere. Back on our docs, let's try it!
-Beautiful! The URL is *still* `/api/daily-stats`.
+`api_platform.yaml` paste that config anywhere:
+
+[[[ code('0afd22e71b') ]]]
+
+Back on our docs, let's try it! Beautiful! The URL is *still* `/api/daily-stats`.
 
 Next: let's make these operations actually *work*, starting with the
 get collection operation. How do we do that? By adding a data provider... and a
