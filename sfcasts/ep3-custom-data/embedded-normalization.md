@@ -52,7 +52,7 @@ API Platform that this is an array of `CheeseListing` objects... but for some
 reason it doesn't read that syntax.
 
 It's not important, but let's move the documentation to the property directly.
-Say `@var array` than greater than, less than with `CheeseListing` inside.
+Say `@var array` then greater than, less than with `CheeseListing` inside.
 
 This syntax is... maybe a bit lesser-known than the `CheeseListing[]` syntax.
 It comes from PSR-5 - a draft standard for PHP documentation.

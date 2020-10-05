@@ -10,7 +10,7 @@ There is also a `getPublishedCheeseListings()` method, which *is* part of the AP
 and we actually gave it the `cheeseListings` name.
 
 Let's put in our lab coats and do an experiment! Science! Start by removing the
-`SerializedName` annotation. We're still going to expose this property, but it will
+`SerializedName` annotation. We're still going to expose this method, but it will
 use its natural name: `publishedCheeseListings`. Then, up on the `cheeseListings`
 property add `user:read` to *also* expose this.
 
@@ -30,8 +30,8 @@ it will realize that there are no embedded properties and return an array of IRI
 strings.
 
 But... surprise! When we refresh, `cheeseListings` *is* an array of IRI strings,
-but check out `publishedCheeseListings`! It's still an embedded object! Other
-than the fact that `publishedCheeseListings` may have less items in it, these
+but check out `publishedCheeseListings`! It's still an array of embedded objects!
+Other than the fact that `publishedCheeseListings` may have less items in it, these
 two fields return the *same* thing! And yet, they're being serialized in
 different ways!
 
@@ -101,7 +101,7 @@ I've seen some odd behavior in some cases. If you have any questions, let us kno
 down in the comments.
 
 Ok, let's undo *everything*: take off `readableLink`, but leave the `@var` because
-that's actually helpful. Put back the `@SerializedName()` and, on the `cheeseListing`
+that's actually helpful. Put back the `@SerializedName()` and, on the `cheeseListings`
 property, remove `user:read`. Back in `CheeseListing`, I'll undo to re-add the
 `user:read` groups.
 
