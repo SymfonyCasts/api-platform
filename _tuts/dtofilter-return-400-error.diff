@@ -1,24 +1,24 @@
 diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
-index eb4e2a1a..725ede53 100644
+index 0c11287a..94e193a8 100644
 --- a/src/ApiPlatform/DailyStatsDateFilter.php
 +++ b/src/ApiPlatform/DailyStatsDateFilter.php
 @@ -4,6 +4,7 @@ namespace App\ApiPlatform;
  
- use ApiPlatform\Core\Api\FilterInterface;
- use App\DataProvider\DailyStatsPaginator;
+ use ApiPlatform\Core\Serializer\Filter\FilterInterface;
+ use Symfony\Component\HttpFoundation\Request;
 +use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  
  class DailyStatsDateFilter implements FilterInterface
  {
-@@ -12,6 +13,11 @@ class DailyStatsDateFilter implements FilterInterface
-         if ($propertyName === 'from') {
-             $fromDate = \DateTimeImmutable::createFromFormat('Y-m-d', $value);
+@@ -19,6 +20,11 @@ class DailyStatsDateFilter implements FilterInterface
  
-+            // you could optionally return a 400 error
-+            if (!$fromDate) {
-+                throw new BadRequestHttpException('Invalid "from" date format');
-+            }
+         $fromDate = \DateTimeImmutable::createFromFormat('Y-m-d', $from);
+ 
++        // you could optionally return a 400 error
++        if (!$fromDate) {
++            throw new BadRequestHttpException('Invalid "from" date format');
++        }
 +
-             if ($fromDate) {
-                 $dailyStatsPaginator->setFromDate($fromDate);
-             }
+         if ($fromDate) {
+             $fromDate = $fromDate->setTime(0, 0, 0);
+             $context[self::FROM_FILTER_CONTEXT] = $fromDate;

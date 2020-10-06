@@ -1,17 +1,22 @@
 diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
 new file mode 100644
-index 00000000..690a51f0
+index 00000000..e79a08f9
 --- /dev/null
 +++ b/src/ApiPlatform/DailyStatsDateFilter.php
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,17 @@
 +<?php
 +
 +namespace App\ApiPlatform;
 +
-+use ApiPlatform\Core\Api\FilterInterface;
++use ApiPlatform\Core\Serializer\Filter\FilterInterface;
++use Symfony\Component\HttpFoundation\Request;
 +
 +class DailyStatsDateFilter implements FilterInterface
 +{
++    public function apply(Request $request, bool $normalization, array $attributes, array &$context)
++    {
++    }
++
 +    public function getDescription(string $resourceClass): array
 +    {
 +    }

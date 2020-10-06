@@ -1,6 +1,6 @@
 diff --git a/tutorial/StatsHelper.php b/tutorial/StatsHelper.php
 new file mode 100644
-index 00000000..46188f69
+index 00000000..57df59a7
 --- /dev/null
 +++ b/tutorial/StatsHelper.php
 @@ -0,0 +1,112 @@
@@ -54,7 +54,7 @@ index 00000000..46188f69
 +
 +            $stats[$dateString] = $this->createStatsObject($statData);
 +
-+            if (count($stats) >= $limit) {
++            if (null !== $limit && count($stats) >= $limit) {
 +                break;
 +            }
 +        }

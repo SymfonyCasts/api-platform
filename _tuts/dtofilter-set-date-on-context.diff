@@ -1,0 +1,27 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+index ae386574..0c11287a 100644
+--- a/src/ApiPlatform/DailyStatsDateFilter.php
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
+ 
+ class DailyStatsDateFilter implements FilterInterface
+ {
++    public const FROM_FILTER_CONTEXT = 'daily_stats_from';
++
+     public function apply(Request $request, bool $normalization, array $attributes, array &$context)
+     {
+         $from = $request->query->get('from');
+@@ -15,7 +17,12 @@ class DailyStatsDateFilter implements FilterInterface
+             return;
+         }
+ 
+-        dd($from);
++        $fromDate = \DateTimeImmutable::createFromFormat('Y-m-d', $from);
++
++        if ($fromDate) {
++            $fromDate = $fromDate->setTime(0, 0, 0);
++            $context[self::FROM_FILTER_CONTEXT] = $fromDate;
++        }
+     }
+ 
+     public function getDescription(string $resourceClass): array

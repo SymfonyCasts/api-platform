@@ -1,0 +1,12 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+index 430239e1..c989b953 100644
+--- a/src/ApiPlatform/DailyStatsDateFilter.php
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -9,6 +9,7 @@ class DailyStatsDateFilter implements FilterInterface
+ {
+     public function apply(Request $request, bool $normalization, array $attributes, array &$context)
+     {
++        dd($request->query->all());
+     }
+ 
+     public function getDescription(string $resourceClass): array

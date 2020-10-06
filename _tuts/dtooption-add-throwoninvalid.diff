@@ -1,11 +1,11 @@
 diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
-index 725ede53..cbd3f5fd 100644
+index 94e193a8..9e8b7499 100644
 --- a/src/ApiPlatform/DailyStatsDateFilter.php
 +++ b/src/ApiPlatform/DailyStatsDateFilter.php
-@@ -8,13 +8,20 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
- 
- class DailyStatsDateFilter implements FilterInterface
+@@ -10,6 +10,13 @@ class DailyStatsDateFilter implements FilterInterface
  {
+     public const FROM_FILTER_CONTEXT = 'daily_stats_from';
+ 
 +    private $throwOnInvalid;
 +
 +    public function __construct(bool $throwOnInvalid = false)
@@ -13,14 +13,15 @@ index 725ede53..cbd3f5fd 100644
 +        $this->throwOnInvalid = $throwOnInvalid;
 +    }
 +
-     public function apply(string $propertyName, $value, DailyStatsPaginator $dailyStatsPaginator)
+     public function apply(Request $request, bool $normalization, array $attributes, array &$context)
      {
-         if ($propertyName === 'from') {
-             $fromDate = \DateTimeImmutable::createFromFormat('Y-m-d', $value);
+         $from = $request->query->get('from');
+@@ -21,7 +28,7 @@ class DailyStatsDateFilter implements FilterInterface
+         $fromDate = \DateTimeImmutable::createFromFormat('Y-m-d', $from);
  
-             // you could optionally return a 400 error
--            if (!$fromDate) {
-+            if (!$fromDate && $this->throwOnInvalid) {
-                 throw new BadRequestHttpException('Invalid "from" date format');
-             }
+         // you could optionally return a 400 error
+-        if (!$fromDate) {
++        if (!$fromDate && $this->throwOnInvalid) {
+             throw new BadRequestHttpException('Invalid "from" date format');
+         }
  

@@ -1,8 +1,8 @@
 diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
-index 90b255e5..623a255e 100644
+index 90b255e5..d53dead5 100644
 --- a/src/DataProvider/DailyStatsPaginator.php
 +++ b/src/DataProvider/DailyStatsPaginator.php
-@@ -3,11 +3,18 @@
+@@ -3,10 +3,17 @@
  namespace App\DataProvider;
  
  use ApiPlatform\Core\DataProvider\PaginatorInterface;
@@ -10,17 +10,16 @@ index 90b255e5..623a255e 100644
  
  class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
  {
-+    private $statsHelper;
      private $dailyStatsIterator;
- 
++    private $statsHelper;
++
 +    public function __construct(StatsHelper $statsHelper)
 +    {
 +        $this->statsHelper = $statsHelper;
 +    }
-+
+ 
      public function getLastPage(): float
      {
-         return 2;
 @@ -36,8 +43,9 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
      public function getIterator()
      {

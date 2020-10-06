@@ -1,0 +1,33 @@
+diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
+index 247e0c74..62625497 100644
+--- a/src/DataProvider/DailyStatsProvider.php
++++ b/src/DataProvider/DailyStatsProvider.php
+@@ -8,6 +8,7 @@ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
+ use ApiPlatform\Core\DataProvider\Pagination;
+ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+ use ApiPlatform\Core\Exception\ResourceClassNotSupportedException;
++use App\ApiPlatform\DailyStatsDateFilter;
+ use App\Entity\DailyStats;
+ use App\Repository\CheeseListingRepository;
+ use App\Service\StatsHelper;
+@@ -25,7 +26,6 @@ class DailyStatsProvider implements ContextAwareCollectionDataProviderInterface,
+ 
+     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
+     {
+-        dd($context);
+         list($page, $offset, $limit) = $this->pagination->getPagination($resourceClass, $operationName);
+ 
+         $paginator = new DailyStatsPaginator(
+@@ -33,7 +33,11 @@ class DailyStatsProvider implements ContextAwareCollectionDataProviderInterface,
+             $page,
+             $limit
+         );
+-        $paginator->setFromDate(new \DateTime('2020-08-30'));
++
++        $fromDate = $context[DailyStatsDateFilter::FROM_FILTER_CONTEXT] ?? null;
++        if ($fromDate) {
++            $paginator->setFromDate($fromDate);
++        }
+ 
+         return $paginator;
+     }
