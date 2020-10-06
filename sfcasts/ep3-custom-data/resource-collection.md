@@ -6,7 +6,9 @@ we'll remove all the other operations for now.
 ## Limiting the Operations
 
 We can do that by saying `itemOperations={}` and `collectionOperations={}` with
-`get` inside.
+`get` inside:
+
+[[[ code('3c106229bd') ]]]
 
 Try the docs now. Yep! An API Resource with only *one* operation. Let's try
 this operation to see what *currently* happens. I'll cheat and go directly to
@@ -18,20 +20,35 @@ With a data provider of course!
 ## Creating the Data Provider
 
 Inside the `DataProvider/` directory, create a new class called
-`DailyStatsProvider`. Let's keep this as simple as possible: implement
-`CollectionDataProviderInterface` and `RestrictedDataProviderInterface` so
-so that we can support *only* the `DailyStats` class. Next, go to
-Code -> Generate - or Command + N - on a Mac and select "Implement Methods" to
-generate the two methods that we need.
+`DailyStatsProvider`:
 
-For supports, it's easy: return `$resourceClass === DailyStats::class`.
+[[[ code('957a2f7479') ]]]
+
+Let's keep this as simple as possible: implement `CollectionDataProviderInterface`
+and `RestrictedDataProviderInterface` so so that we can support *only* the
+`DailyStats` class:
+
+[[[ code('ae6b1eca98') ]]]
+
+Next, go to "Code"->"Generate" - or `Command`+`N` - on a Mac and select
+"Implement Methods" to generate the two methods that we need:
+
+[[[ code('aadaa52223') ]]]
+
+For supports, it's easy: return `$resourceClass === DailyStats::class`:
+
+[[[ code('a0568ae1b2') ]]]
 
 For `getCollection()`... we're going to *eventually* load the data from a
 JSON file. But to start, let's create a dummy object: `$stats = new DailyStats()`,
 `$stats->date = new \DateTime()`, `$stats->totalVisitors = 100` and
-we'll leave `$mostPopularListings` empty right now.
+we'll leave `$mostPopularListings` empty right now:
 
-At the bottom return an array with `$stats` inside.
+[[[ code('d19cce27eb') ]]]
+
+At the bottom return an array with `$stats` inside:
+
+[[[ code('d4cc64d8f4') ]]]
 
 ### You Need a "get" item Operation
 
@@ -45,8 +62,12 @@ with the IRI for the resource. For an item, the IRI is the URL to the *item* ope
 the URL you could go to, to fetch a *single* `DailyStats` resource.
 
 The problem in *this* situation is that, inside `DailyStats`, we've specifically
-said that we don't *want* any item operations. This kind of confuses API Platform,
-which has a brief existential crises before saying:
+said that we don't *want* any item operations:
+
+[[[ code('b11751cab7') ]]]
+
+This kind of confuses API Platform, which has a brief existential crises
+before saying:
 
 > How can I generate a URL to the item operation if there aren't any! Ah!
 
@@ -55,7 +76,9 @@ do that later. But let's pretend that we *don't* want to use that workaround
 because we *don't* want an item operation.
 
 The solution is... well... it's *still* an ugly workaround. I'll paste in some
-config... and then I need to add a `use` statement for this `NotFoundAction` class.
+config... and then I need to add a `use` statement for this `NotFoundAction` class:
+
+[[[ code('ce9be847ee') ]]]
 
 So... this basically says:
 
@@ -76,25 +99,36 @@ which we'll talk about later in the tutorial.
 
 To give our `DailyStats` an identifier, we *could* add a `public $id` or
 `public $uuid`... but we don't need to! Why? Because the `$date` is *already* a
-unique identifier: we're only going to have one `DailyStats` per day.
+unique identifier: we're only going to have one `DailyStats` per day:
+
+[[[ code('e1c34a5fc5') ]]]
 
 How do we tell API Platform to use this property as the identifier? In Doctrine,
-it happens automatically thanks to the `@ORM\Id` annotation. When you're not
-in an entity - or if you want to use a field *other* than the database id in
-an entity - you can add `@ApiProperty()` with `identifier=true`.
+it happens automatically thanks to the `@ORM\Id` annotation:
+
+[[[ code('9dede90739') ]]]
+
+When you're not in an entity - or if you want to use a field *other* than
+the database id in an entity - you can add `@ApiProperty()` with `identifier=true`:
+
+[[[ code('b4a75c49bd') ]]]
 
 Cool! Let's refresh and celebrate! With... another error:
 
-> DateTime could not be converted to string
+> `DateTime` could not be converted to string
 
 Oh, duh! API Platform needs to convert our identifier into a *string*.
 Since this is a `Datetime` object... that doesn't work.
 
 And... that's ok! I have a better idea. Create a new
 `public function getDateString()` that returns a `string`. Inside, return
-`$this->date->format('Y-m-d')`.
+`$this->date->format('Y-m-d')`:
 
-Then, take the `ApiProperty` annotation and move it down here!
+[[[ code('c9711e7035') ]]]
+
+Then, take the `ApiProperty` annotation and move it down here:
+
+[[[ code('acb211e5a4') ]]]
 
 Yea! That's allowed and it's *perfect*: our identifier is the *string* date.
 
