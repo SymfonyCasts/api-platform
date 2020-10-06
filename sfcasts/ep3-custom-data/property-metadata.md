@@ -83,7 +83,7 @@ is a string that will be formatted as a `date-time`, `totalVisitors` is
 an integer and eventually `mostPopularListings` will be an array of strings:
 an array of IRI strings.
 
-Want to add *more* documentation? We already know how: add `@var` above the property:
+Want to add *more* documentation? We already know how:
 
 > The 5 most popular cheese listings from this date!
 
