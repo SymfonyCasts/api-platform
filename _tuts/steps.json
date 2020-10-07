@@ -1831,6 +1831,11 @@
             "description": null
         },
         {
+            "id": "dtooption-inject-logger",
+            "name": "DTOOption: inject logger",
+            "description": null
+        },
+        {
             "id": "entityfilteroption-add-uselike-argument",
             "name": "EntityFilterOption: add useLike argument",
             "description": null
@@ -2151,5 +2156,5 @@
             "description": null
         }
     ],
-    "sha": "bb8f0746cf0864e971530f1caeb03319a410c2fd"
+    "sha": "003cdc10b2ed473e4b1481414a5690a085fd699e"
 }

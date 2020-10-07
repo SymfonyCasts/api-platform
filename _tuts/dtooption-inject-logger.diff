@@ -1,0 +1,35 @@
+diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
+index 9e8b7499..95ad14ec 100644
+--- a/src/ApiPlatform/DailyStatsDateFilter.php
++++ b/src/ApiPlatform/DailyStatsDateFilter.php
+@@ -3,6 +3,7 @@
+ namespace App\ApiPlatform;
+ 
+ use ApiPlatform\Core\Serializer\Filter\FilterInterface;
++use Psr\Log\LoggerInterface;
+ use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+ 
+@@ -10,10 +11,12 @@ class DailyStatsDateFilter implements FilterInterface
+ {
+     public const FROM_FILTER_CONTEXT = 'daily_stats_from';
+ 
++    private $logger;
+     private $throwOnInvalid;
+ 
+-    public function __construct(bool $throwOnInvalid = false)
++    public function __construct(LoggerInterface $logger, bool $throwOnInvalid = false)
+     {
++        $this->logger = $logger;
+         $this->throwOnInvalid = $throwOnInvalid;
+     }
+ 
+@@ -33,6 +36,8 @@ class DailyStatsDateFilter implements FilterInterface
+         }
+ 
+         if ($fromDate) {
++            $this->logger->info(sprintf('Filtering from date "%s"', $from));
++
+             $fromDate = $fromDate->setTime(0, 0, 0);
+             $context[self::FROM_FILTER_CONTEXT] = $fromDate;
+         }
