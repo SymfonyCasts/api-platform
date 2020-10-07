@@ -19,3 +19,10 @@ chapters:
     - property-metadata
     - embedded-normalization
     - collections-readable-link
+    - custom-resource-item
+    - paginator
+    - pagination-context
+    - custom-resource-put
+    - custom-filter
+    - custom-resource-filter
+    - apply
