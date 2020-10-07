@@ -1,0 +1,12 @@
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 26bfd6f2..5f5f8dd9 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -209,6 +209,7 @@ class User implements UserInterface
+     }
+ 
+     /**
++     * @ApiProperty(readableLink=true)
+      * @Groups({"user:read"})
+      * @SerializedName("cheeseListings")
+      * @return Collection<CheeseListing>

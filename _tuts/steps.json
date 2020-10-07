@@ -1871,6 +1871,11 @@
             "description": null
         },
         {
+            "id": "dtooutput-dd-in-supports",
+            "name": "DTOOutput: dd() in supports",
+            "description": null
+        },
+        {
             "id": "dtooutput-add-supports",
             "name": "DTOOutput: add supports()",
             "description": null
@@ -1948,6 +1953,11 @@
         {
             "id": "dtonormalizeissue-remove-extra-groups",
             "name": "DTONormalizeIssue: remove extra groups",
+            "description": null
+        },
+        {
+            "id": "dtonormalizeissue-re-add-readablelink",
+            "name": "DTONormalizeIssue: re-add readableLink",
             "description": null
         },
         {
@@ -2156,5 +2166,5 @@
             "description": null
         }
     ],
-    "sha": "003cdc10b2ed473e4b1481414a5690a085fd699e"
+    "sha": "abe9a6d6d06d03d917e832b303763461a7f07c90"
 }

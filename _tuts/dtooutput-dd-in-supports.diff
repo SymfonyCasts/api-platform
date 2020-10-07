@@ -1,18 +1,12 @@
 diff --git a/src/DataTransformer/CheeseListingOutputDataTransformer.php b/src/DataTransformer/CheeseListingOutputDataTransformer.php
-index 7ece2270..0b4b9f3b 100644
+index 51635ce7..7ece2270 100644
 --- a/src/DataTransformer/CheeseListingOutputDataTransformer.php
 +++ b/src/DataTransformer/CheeseListingOutputDataTransformer.php
-@@ -10,11 +10,11 @@ class CheeseListingOutputDataTransformer implements DataTransformerInterface
- {
-     public function transform($object, string $to, array $context = [])
-     {
--
-+        dd($object, $to);
-     }
+@@ -15,6 +15,6 @@ class CheeseListingOutputDataTransformer implements DataTransformerInterface
  
      public function supportsTransformation($data, string $to, array $context = []): bool
      {
--        dd($data, $to);
-+        return $data instanceof CheeseListing && $to === CheeseListingOutput::class;
+-
++        dd($data, $to);
      }
  }

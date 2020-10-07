@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 368f41dd..1acf9fe1 100644
+index f8a78f1c..1b58b313 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +10,7 @@ index 368f41dd..1acf9fe1 100644
  use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  use Symfony\Component\Security\Core\User\UserInterface;
  use Symfony\Component\Serializer\Annotation\Groups;
-@@ -293,4 +294,9 @@ class User implements UserInterface
+@@ -294,4 +295,9 @@ class User implements UserInterface
      {
          $this->isMvp = $isMvp;
      }
