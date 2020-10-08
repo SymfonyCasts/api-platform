@@ -11,7 +11,7 @@ index dba6f95e..3447c337 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 883a6fb6..48702851 100644
+index 61a8c6ab..7059a566 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -131,10 +131,10 @@ index 00000000..26d4e53d
 +    # See the "server:dump" command to start a new server.
 +    dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
 diff --git a/symfony.lock b/symfony.lock
-index 25de2072..ac39e851 100644
+index e2c9eb6c..69874295 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -200,6 +200,18 @@
+@@ -203,6 +203,18 @@
      "symfony/css-selector": {
          "version": "v4.3.3"
      },

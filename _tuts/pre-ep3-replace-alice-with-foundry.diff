@@ -11,7 +11,7 @@ index eff767dc..dba6f95e 100644
          "symfony/css-selector": "5.1.*",
          "symfony/maker-bundle": "^1.11",
 diff --git a/composer.lock b/composer.lock
-index c40b25ed..883a6fb6 100644
+index 7d3e1953..61a8c6ab 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -648,7 +648,7 @@ index c361d431..d44a6956 100644
      protected function createUser(string $email, string $password): User
      {
 diff --git a/symfony.lock b/symfony.lock
-index 8e4ef28a..25de2072 100644
+index 0d72b09f..e2c9eb6c 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -113,39 +113,9 @@
@@ -691,7 +691,7 @@ index 8e4ef28a..25de2072 100644
      "nelmio/cors-bundle": {
          "version": "1.5",
          "recipe": {
-@@ -200,18 +170,6 @@
+@@ -203,18 +173,6 @@
      "psr/simple-cache": {
          "version": "1.0.1"
      },
@@ -710,7 +710,7 @@ index 8e4ef28a..25de2072 100644
      "symfony/asset": {
          "version": "v4.2.8"
      },
-@@ -522,15 +480,6 @@
+@@ -537,15 +495,6 @@
      "symfony/yaml": {
          "version": "v4.2.8"
      },

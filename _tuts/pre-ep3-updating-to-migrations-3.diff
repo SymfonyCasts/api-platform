@@ -33,7 +33,7 @@ similarity index 100%
 rename from src/Migrations/Version20190515191421.php
 rename to migrations/Version20190515191421.php
 diff --git a/symfony.lock b/symfony.lock
-index 4b8bffc5..83e638c8 100644
+index e9827d6d..88bd1d71 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -56,16 +56,16 @@

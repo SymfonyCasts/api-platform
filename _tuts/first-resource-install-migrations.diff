@@ -11,7 +11,7 @@ index 57f616bd..96b720cc 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index ee6038da..25cdf922 100644
+index ae131b61..5da880c2 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -293,7 +293,7 @@ index ee6038da..25cdf922 100644
          },
          {
              "name": "phpdocumentor/reflection-common",
-@@ -4002,6 +4219,56 @@
+@@ -4016,6 +4233,56 @@
              "homepage": "https://symfony.com",
              "time": "2019-05-20T16:15:26+00:00"
          },
@@ -350,7 +350,7 @@ index ee6038da..25cdf922 100644
          {
              "name": "symfony/twig-bridge",
              "version": "v4.2.9",
-@@ -4618,6 +4885,115 @@
+@@ -4632,6 +4899,115 @@
                  "negotiation"
              ],
              "time": "2017-05-14T17:21:12+00:00"
@@ -491,7 +491,7 @@ diff --git a/src/Migrations/.gitignore b/src/Migrations/.gitignore
 new file mode 100644
 index 00000000..e69de29b
 diff --git a/symfony.lock b/symfony.lock
-index 9db9a064..bd64c78d 100644
+index 73b3863a..802b0769 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,6 +58,19 @@
@@ -536,7 +536,7 @@ index 9db9a064..bd64c78d 100644
      },
      "phpdocumentor/reflection-common": {
          "version": "1.0.1"
-@@ -276,6 +295,9 @@
+@@ -288,6 +307,9 @@
      "symfony/serializer": {
          "version": "v4.2.8"
      },
@@ -546,7 +546,7 @@ index 9db9a064..bd64c78d 100644
      "symfony/twig-bridge": {
          "version": "v4.2.8"
      },
-@@ -323,5 +345,11 @@
+@@ -335,5 +357,11 @@
      },
      "willdurand/negotiation": {
          "version": "v2.3.1"

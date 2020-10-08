@@ -11,7 +11,7 @@ index 4f91947a..4b0b62a3 100644
          "symfony/yaml": "4.3.*"
      },
 diff --git a/composer.lock b/composer.lock
-index aeaae43f..41dfc8bb 100644
+index f7bc8877..d5b95c59 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -108,7 +108,7 @@ index aeaae43f..41dfc8bb 100644
          {
              "name": "nelmio/cors-bundle",
              "version": "1.5.6",
-@@ -3494,6 +3572,135 @@
+@@ -3508,6 +3586,135 @@
              ],
              "time": "2019-06-04T09:22:54+00:00"
          },
@@ -322,7 +322,7 @@ index 00000000..2762653c
 +            level: debug
 +            channels: ["!event"]
 diff --git a/symfony.lock b/symfony.lock
-index 3f428424..efaf9a51 100644
+index d358eec6..60178730 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -121,6 +121,9 @@
@@ -335,7 +335,7 @@ index 3f428424..efaf9a51 100644
      "myclabs/deep-copy": {
          "version": "1.9.1"
      },
-@@ -307,6 +310,23 @@
+@@ -310,6 +313,23 @@
              "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
          }
      },

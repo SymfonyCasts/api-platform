@@ -11,7 +11,7 @@ index c316c088..904fce40 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index e43531d0..2bdc12b7 100644
+index 90990f1d..19b046b8 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -90,7 +90,7 @@ index e43531d0..2bdc12b7 100644
          {
              "name": "ocramius/package-versions",
              "version": "1.4.0",
-@@ -4269,6 +4329,81 @@
+@@ -4283,6 +4343,81 @@
              "homepage": "https://symfony.com",
              "time": "2019-01-16T20:31:39+00:00"
          },
@@ -197,7 +197,7 @@ index 5c4b4175..10bca7de 100644
  services:
      # default configuration for services in *this* file
 diff --git a/symfony.lock b/symfony.lock
-index 7a745e84..e7269c12 100644
+index 6180b75a..2735ad1f 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -113,6 +113,9 @@
@@ -210,7 +210,7 @@ index 7a745e84..e7269c12 100644
      "nikic/php-parser": {
          "version": "v4.2.1"
      },
-@@ -304,6 +307,19 @@
+@@ -316,6 +319,19 @@
      "symfony/stopwatch": {
          "version": "v4.2.8"
      },

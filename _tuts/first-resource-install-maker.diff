@@ -12,7 +12,7 @@ index d8e99d97..57f616bd 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 6df44d8f..ee6038da 100644
+index 061a3af5..ae131b61 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -24,7 +24,7 @@ index 6df44d8f..ee6038da 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -4620,7 +4620,125 @@
+@@ -4634,7 +4634,125 @@
              "time": "2017-05-14T17:21:12+00:00"
          }
      ],
@@ -162,7 +162,7 @@ index 1edaed6d..b55f43b2 100644
 +    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
  ];
 diff --git a/symfony.lock b/symfony.lock
-index 6df0d615..9db9a064 100644
+index 383df5d8..73b3863a 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -97,6 +97,9 @@
@@ -175,7 +175,7 @@ index 6df0d615..9db9a064 100644
      "ocramius/package-versions": {
          "version": "1.4.2"
      },
-@@ -213,6 +216,15 @@
+@@ -216,6 +219,15 @@
      "symfony/inflector": {
          "version": "v4.2.8"
      },
@@ -188,6 +188,6 @@ index 6df0d615..9db9a064 100644
 +            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
 +        }
 +    },
-     "symfony/polyfill-mbstring": {
-         "version": "v1.11.0"
+     "symfony/mime": {
+         "version": "v4.3.1"
      },

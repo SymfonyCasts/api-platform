@@ -81,7 +81,7 @@ index de132300..6a52c04e 100644
      },
      "config": {
 diff --git a/composer.lock b/composer.lock
-index c6b62439..d14d89c0 100644
+index 493c479a..0648c8f2 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -93,7 +93,7 @@ index c6b62439..d14d89c0 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -4825,6 +4825,62 @@
+@@ -4839,6 +4839,62 @@
              ],
              "time": "2019-03-14T07:32:46+00:00"
          },
@@ -227,10 +227,10 @@ index 00000000..56f4b194
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index e7269c12..a0565a71 100644
+index 2735ad1f..57c04633 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -373,6 +373,24 @@
+@@ -385,6 +385,24 @@
              "config/routes/dev/web_profiler.yaml"
          ]
      },

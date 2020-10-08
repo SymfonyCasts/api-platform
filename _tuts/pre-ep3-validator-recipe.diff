@@ -22,10 +22,10 @@ index a695e1a6..350786a1 100644
 +        #auto_mapping:
 +        #    App\Entity\: []
 diff --git a/symfony.lock b/symfony.lock
-index 19834cf6..b0d6aee3 100644
+index a79e48a9..b4717252 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -453,12 +453,12 @@
+@@ -468,12 +468,12 @@
          ]
      },
      "symfony/validator": {
