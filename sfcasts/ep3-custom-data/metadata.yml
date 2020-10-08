@@ -26,3 +26,10 @@ chapters:
     - custom-filter
     - custom-resource-filter
     - apply
+    - filter-arguments
+    - filter
+    - output-class
+    - data-transformer
+    - output-fields
+    - dto-quirks
+    - input-dto
