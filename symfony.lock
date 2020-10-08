@@ -1,4 +1,7 @@
 {
+    "php": {
+        "version": "7.2.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -88,7 +91,16 @@
     "symfony/http-kernel": {
         "version": "v4.2.8"
     },
+    "symfony/mime": {
+        "version": "v4.3.1"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
+    },
     "symfony/polyfill-mbstring": {
+        "version": "v1.11.0"
+    },
+    "symfony/polyfill-php72": {
         "version": "v1.11.0"
     },
     "symfony/routing": {
