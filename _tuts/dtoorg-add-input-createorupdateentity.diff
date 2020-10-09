@@ -24,7 +24,7 @@ index 5f1d0d32..7d8f19f4 100644
  
      public function supportsTransformation($data, string $to, array $context = []): bool
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 9ae4f661..b6b3f165 100644
+index a0a4fca1..4bf897f8 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -2,6 +2,7 @@
@@ -35,7 +35,7 @@ index 9ae4f661..b6b3f165 100644
  use App\Entity\User;
  use Symfony\Component\Serializer\Annotation\Groups;
  use Symfony\Component\Serializer\Annotation\SerializedName;
-@@ -33,6 +34,20 @@ class CheeseListingInput
+@@ -34,6 +35,20 @@ class CheeseListingInput
  
      public $description;
  

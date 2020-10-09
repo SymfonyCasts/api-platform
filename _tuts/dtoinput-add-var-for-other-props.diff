@@ -1,5 +1,5 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index de80fad4..9ae4f661 100644
+index de80fad4..a0a4fca1 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -9,11 +9,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
@@ -16,3 +16,11 @@ index de80fad4..9ae4f661 100644
       * @Groups({"cheese:write", "user:write"})
       */
      public $price;
+@@ -25,6 +27,7 @@ class CheeseListingInput
+     public $owner;
+ 
+     /**
++     * @var bool
+      * @Groups({"cheese:write"})
+      */
+     public $isPublished = false;

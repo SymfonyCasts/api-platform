@@ -1,8 +1,8 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 551f6e71..3c939016 100644
+index d848cd86..24d466df 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
-@@ -58,8 +58,8 @@ class CheeseListingInput
+@@ -59,8 +59,8 @@ class CheeseListingInput
              $cheeseListing = new CheeseListing($this->title);
          }
  

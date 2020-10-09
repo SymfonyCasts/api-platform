@@ -1,5 +1,5 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 3c939016..a54ac30f 100644
+index 24d466df..40dd80cf 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -4,26 +4,36 @@ namespace App\Dto;
@@ -39,7 +39,7 @@ index 3c939016..a54ac30f 100644
       */
      public $owner;
  
-@@ -32,6 +42,9 @@ class CheeseListingInput
+@@ -33,6 +43,9 @@ class CheeseListingInput
       */
      public $isPublished = false;
  

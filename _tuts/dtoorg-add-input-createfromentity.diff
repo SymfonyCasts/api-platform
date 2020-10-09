@@ -1,8 +1,8 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index b6b3f165..3c939016 100644
+index 4bf897f8..24d466df 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
-@@ -34,6 +34,24 @@ class CheeseListingInput
+@@ -35,6 +35,24 @@ class CheeseListingInput
  
      public $description;
  
