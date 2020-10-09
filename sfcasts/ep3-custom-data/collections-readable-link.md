@@ -14,11 +14,8 @@ Let's put in our lab coats and do an experiment! Science! Start by removing the
 use its natural name: `publishedCheeseListings`. Then, up on the `cheeseListings`
 property add `user:read` to *also* expose this.
 
-Let's see what it looks like! Head over to `/api/users.jsonld` and... pff. I got
-logged out. Let me log back in. The problem is that *sometimes* I play around a
-bit between videos and mess myself up like this.
-
-*Anyways*... cool! Each `User` now has `cheeseListings` and `publishedCheeseListings`
+Let's see what it looks like! Head over to `/api/users.jsonld` and... cool! 
+Each `User` now has `cheeseListings` and `publishedCheeseListings`
 properties and they're *both* embedded objects. The reason *why* is that the
 `$title` and `$price` properties in `CheeseListing` have the `user:read` group.
 
