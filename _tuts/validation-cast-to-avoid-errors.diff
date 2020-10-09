@@ -1,9 +1,13 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 24d466df..d848cd86 100644
+index 24d466df..29f871cf 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
-@@ -59,8 +59,8 @@ class CheeseListingInput
-             $cheeseListing = new CheeseListing($this->title);
+@@ -56,11 +56,11 @@ class CheeseListingInput
+     public function createOrUpdateEntity(?CheeseListing $cheeseListing): CheeseListing
+     {
+         if (!$cheeseListing) {
+-            $cheeseListing = new CheeseListing($this->title);
++            $cheeseListing = new CheeseListing((string) $this->title);
          }
  
 -        $cheeseListing->setDescription($this->description);

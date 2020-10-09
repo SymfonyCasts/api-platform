@@ -28,3 +28,15 @@ index 8be4212b..57d33f46 100644
   *     }
   * )
   * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
+diff --git a/src/Entity/User.php b/src/Entity/User.php
+index 9cb29e6a..4fb2a0fd 100644
+--- a/src/Entity/User.php
++++ b/src/Entity/User.php
+@@ -55,7 +55,6 @@ class User implements UserInterface
+     /**
+      * @ORM\Column(type="uuid", unique=true)
+      * @ApiProperty(identifier=true)
+-     * @SerializedName("id")
+      * @Groups({"user:write"})
+      */
+     private $uuid;
