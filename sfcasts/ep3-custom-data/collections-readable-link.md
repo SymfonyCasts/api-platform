@@ -5,14 +5,25 @@ the `mostPopularListings` collection, we had to explicitly *tell* it what was
 inside the collection. Why?
 
 To learn what's going on, let's look at another example. Inside `User`, we have
-a `cheeseListings` property, which is *writable* in our API, but isn't *readable*.
+a `cheeseListings` property, which is *writable* in our API, but isn't *readable*:
+
+[[[ code('3fa5834428') ]]]
+
 There is also a `getPublishedCheeseListings()` method, which *is* part of the API
-and we actually gave it the `cheeseListings` name.
+and we actually gave it the `cheeseListings` name:
+
+[[[ code('e323183519') ]]]
 
 Let's put in our lab coats and do an experiment! Science! Start by removing the
-`SerializedName` annotation. We're still going to expose this method, but it will
-use its natural name: `publishedCheeseListings`. Then, up on the `cheeseListings`
-property add `user:read` to *also* expose this.
+`SerializedName` annotation:
+
+[[[ code('074611a35a') ]]]
+
+We're still going to expose this method, but it will use its natural name:
+`publishedCheeseListings`. Then, up on the `cheeseListings` property add
+`user:read` to *also* expose this:
+
+[[[ code('850b88c3ab') ]]]
 
 Let's see what it looks like! Head over to `/api/users.jsonld` and... cool! 
 Each `User` now has `cheeseListings` and `publishedCheeseListings`
@@ -20,7 +31,9 @@ properties and they're *both* embedded objects. The reason *why* is that the
 `$title` and `$price` properties in `CheeseListing` have the `user:read` group.
 
 Let's remove those temporarily. Go into `CheeseListing` and take `user:read` off
-of `$title` and `user:read` off of `$price`.
+of `$title` and `user:read` off of `$price`:
+
+[[[ code('bf6710a1f8') ]]]
 
 Thanks to this change, when API Platform goes to serialize these two array fields,
 it will realize that there are no embedded properties and return an array of IRI
@@ -46,11 +59,16 @@ though it's caching all of this, we don't *really* notice it.
 And this metadata collection process happens *before* API Platform starts handling
 *any* request, which means the metadata is built *purely* by looking at our *code*.
 Right now, when it looks at the `cheeseListings` property, it knows that
-this is an array of `CheeseListing` objects thanks to the *Doctrine* annotations.
+this is an array of `CheeseListing` objects thanks to the *Doctrine* annotations:
+
+[[[ code('dd6579f8c7') ]]]
 
 But it does *not* know that `getPublishedCheeseListings()` returns a collection
-of `CheeseListing` objects. It *does* know that its a `Collection`... but not
-what's *inside* that `Collection`.
+of `CheeseListing` objects:
+
+[[[ code('47488e519e') ]]]
+
+It *does* know that its a `Collection`... but not what's *inside* that `Collection`.
 
 Why is this a problem? Well, whenever API platform serializes a collection,
 before it even *starts*, it asks its own metadata: what is this a collection *of*?
@@ -67,7 +85,9 @@ metadata - but whenever you have a collection field, you should think:
 > Does API Platform know what this is a collection *of*?
 
 For `getPublishedCheeseListings()`, we already know the solution. Add `@return`
-`Collection<CheeseListing>`.
+`Collection<CheeseListing>`:
+
+[[[ code('d9247a24fb') ]]]
 
 Try it! Refresh the endpoint and... we get an array of IRI strings in *both* cases.
 
@@ -76,7 +96,9 @@ Try it! Refresh the endpoint and... we get an array of IRI strings in *both* cas
 Now, you *can* actually control this behavior directly... with an option
 that - honestly - makes my head spin a little bit. Instead of allowing API Platform
 to figure out if a property should be an embedded object or an IRI string, you can
-force it with `@ApiProperty({readableLink=true})`.
+force it with `@ApiProperty({readableLink=true})`:
+
+[[[ code('6967934bbc') ]]]
 
 Refresh now. Yep! This forces it to be an embedded object. `readableLink` is an
 internal option that's set on *every* API field, and it's *normally* determined
@@ -98,9 +120,17 @@ I've seen some odd behavior in some cases. If you have any questions, let us kno
 down in the comments.
 
 Ok, let's undo *everything*: take off `readableLink`, but leave the `@return` because
-that's actually helpful. Put back the `@SerializedName()` and, on the `cheeseListings`
-property, remove `user:read`. Back in `CheeseListing`, I'll undo to re-add the
-`user:read` groups.
+that's actually helpful. Put back the `@SerializedName()`:
+
+[[[ code('93263f9343') ]]]
+
+And, on the `cheeseListings` property, remove `user:read`:
+
+[[[ code('69602ae34e') ]]]
+
+Back in `CheeseListing`, I'll undo to re-add the `user:read` groups:
+
+[[[ code('f781fbf781') ]]]
 
 Go over and refresh to make sure things are back to normal.
 
