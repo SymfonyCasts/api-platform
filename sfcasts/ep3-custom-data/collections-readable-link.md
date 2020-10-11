@@ -97,7 +97,7 @@ that you want to embed and `readableLink=false` says to use an IRI link... thoug
 I've seen some odd behavior in some cases. If you have any questions, let us know
 down in the comments.
 
-Ok, let's undo *everything*: take off `readableLink`, but leave the `@var` because
+Ok, let's undo *everything*: take off `readableLink`, but leave the `@return` because
 that's actually helpful. Put back the `@SerializedName()` and, on the `cheeseListings`
 property, remove `user:read`. Back in `CheeseListing`, I'll undo to re-add the
 `user:read` groups.
