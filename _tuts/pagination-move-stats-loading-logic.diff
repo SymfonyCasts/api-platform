@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
-index 90b255e5..d53dead5 100644
+index 4bedca04..f16fa7c5 100644
 --- a/src/DataProvider/DailyStatsPaginator.php
 +++ b/src/DataProvider/DailyStatsPaginator.php
 @@ -3,10 +3,17 @@

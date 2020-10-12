@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
-index 99cbaec2..90b255e5 100644
+index 175524da..52f08482 100644
 --- a/src/DataProvider/DailyStatsPaginator.php
 +++ b/src/DataProvider/DailyStatsPaginator.php
 @@ -4,8 +4,10 @@ namespace App\DataProvider;
@@ -16,7 +16,7 @@ index 99cbaec2..90b255e5 100644
          return 2;
 @@ -30,4 +32,14 @@ class DailyStatsPaginator implements PaginatorInterface
      {
-         return $this->getTotalItems();
+         return 10;
      }
 +
 +    public function getIterator()

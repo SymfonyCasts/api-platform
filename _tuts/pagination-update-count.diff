@@ -1,0 +1,13 @@
+diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
+index 52f08482..4bedca04 100644
+--- a/src/DataProvider/DailyStatsPaginator.php
++++ b/src/DataProvider/DailyStatsPaginator.php
+@@ -30,7 +30,7 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate
+ 
+     public function count()
+     {
+-        return 10;
++        return iterator_count($this->getIterator());
+     }
+ 
+     public function getIterator()

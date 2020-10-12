@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
-index 8492a69a..fe1dc4ef 100644
+index c0af9925..896951ba 100644
 --- a/src/DataProvider/DailyStatsPaginator.php
 +++ b/src/DataProvider/DailyStatsPaginator.php
 @@ -11,6 +11,10 @@ class DailyStatsPaginator implements PaginatorInterface, \IteratorAggregate

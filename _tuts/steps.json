@@ -1656,6 +1656,11 @@
             "description": null
         },
         {
+            "id": "pagination-update-count",
+            "name": "Pagination: update count()",
+            "description": null
+        },
+        {
             "id": "pagination-move-stats-loading-logic",
             "name": "Pagination: move stats loading logic",
             "description": null
@@ -2166,5 +2171,5 @@
             "description": null
         }
     ],
-    "sha": "8927a3af0e0f0739c703dd2ca8874837ec621422"
+    "sha": "c5f44a869720cf3cfedd4609ea6ce7b2e6179d03"
 }
