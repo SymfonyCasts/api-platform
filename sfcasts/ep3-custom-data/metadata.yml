@@ -24,6 +24,7 @@ chapters:
     - pagination-context
     - custom-resource-put
     - custom-filter
+    - entity-filter-logic
     - custom-resource-filter
     - apply
     - filter-arguments
