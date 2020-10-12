@@ -1,83 +1,120 @@
-# Paginator
+# Custom Paginator
 
-Coming soon...
+When an API resource is a Doctrine entity like `CheeseListing`, life is good!
+We get *tons* of things for free, like pagination and access to a bunch of pre-built
+filters.
 
-When an API resource is a doctrine entity like `CheeseListing`, we get a lot of things
-for free. Like we got automatic pagination on cheese listing by doing nothing. And
-we also get access to all of these filters. These filters don't work for custom
-resources. These work because API platform knows how to, um, use these to query
-doctrine. So if you want filters or pagination on a custom API resource, you need to
-do a little bit of work yourself. Fortunately, it's not too hard. Let's start with
-pagination because right now, if you look at our question, I point it just lists
-every single daily stats was a item. There is no pagination. So here's the idea
-inside of our data provider, instead of returning an array of DailyStats objects
-from get collection, we're going to return a page, a Nader object that sort of
-contains those `DailyStats` objects. So in the `src/DataProvider/` directory, let's
-create a new PHP class called `DailyStatsPaginator`. And later the only rule for now is
-that this needs to implement a `PaginatorInterface` from `ApiPlatform`. Then I'll go
-to Code -> Generate or Command + N on a Mac go to "Implement Methods" and let's
-implement all five methods that we need. Perfect. And I want to make sure that `count()`
-is on the bottom. It's just gonna work down there a little bit better.
+But... these filters will *not* work for custom resources... because API platform
+has *no* idea how to work with your custom data source. Yep, if you want filters
+or pagination on a custom API resource, you need to some work yourself.
 
-Alright. Does he get this working? Let's just fill out some dummy data here. So
-return `getLastPage()`. Let's pretend that there's just two pages. For `getTotalItems()`.
-We'll pretend that there's 25 items. For `getCurrentPage()`. We'll pretend we're on page
-one. `getItemsPerPage()` we'll return. Now that we're on 10, we're doing 10 per page.
-And for `count()`, this is actually, we can actually just return `$this->getTotalItems()`
-items. All right, perfect. So there's no `DailyStats` objects in here yet, but let's
-do as little as possible and see if we can get things working. So I can do this as
-provider, instead of returning the array of objects, let's return a new `DailyStatsPaginator`
-Ooh. All right. Let's try it. Go back over and refresh the
-collection. End point and air class daily stats page in it are must implement the
-interface traversable as part of either iterator or iterator aggregate. Wow. Okay. So
-the interface on our page and inter-class helps give APM platform a bunch of
-information about a page, a nation for our resource, but ultimately, whatever we, we
-returned from gate collection needs to be something that's API platform can loop
-over, can iterate over.
+But no worries: it's not too hard and we're kicking butt anyways. Let's start with
+pagination.
 
-So to get this working, there's a couple of different ways, but I'm going to add a
-second interface here called `\IteratorAggregate`.
-And then I'm going to create a new private property called `$dailyStatsIterator` And
-then thanks to that new interface down at the bottom, I'll go to Code -> Generate or
-Command + N on a Mac and go to "Implement Methods". And this requires one new method
-called `getIterator()`. And what I'm gonna do here is actually, I'm going to check to
-see if `$this->dailyStatsIterator === null`. And if it is no, we will set it. 
-`$this->daylyStatsIterator = ` and I use another core class called new `\ArrayIterator()`. 
-And for now I'm just going to pass this an empty array. I'll put a little to do up here to do
-actually go load the stats and at the bottom I'll return `$this->dailyStatsIterator`.
+## Pagination and your Data Provider
 
-So basically words, we're creating an iterator with the `DailyStats`, objects and
-it's, and I'm creating a property here just that we don't, uh, um, create this
-iterator over and over and over again, if get iterator is called multiple times. All
-right. So now when we go over and refresh that end point, it works. I mean, there's
-nothing inside the collection here. You can see an empty hydro member, but you can
-see total items, 25. You can see that the, uh, hydro colon, uh, colon, uh, links here
-are telling us how to get to the next page. And the last page, all that information
-is coming from our page and enter object. All right, to actually do the heavy lifting
-of loading our daily stats objects.
+Right now, our collection endpoint lists *every* daily stats items... no matter
+*how* many there are.
 
-We can use our `StatsHelper` that we have access to instead of `DailyStatsProvider`.
-So that is as page editor. Let's add a constructor on top. So I'll say public
-function `__construct()`, and we'll have `DailyStats $dailyStats`. Now this is
-not a service. So Symfony is not going to auto wire this, but we're going to pass
-this in. When we create the `DailyStatsPaginator` in a second, I'll hit Alt + Enter
-and go to "Initialize properties" to create that property and set it. Then before we
-use it, I'll go over to `DailyStatsProvider`. And you can see here, I'll just add this
-aerostats helper to the, when we instantiate daily stats page Nader. Now for now,
-we're going to completely ignore a page, a nation, and actually showing a subset of
-results. We're going to continue just returning all of the daily stats on a no matter
-what so down and get iterator instead of the empty array. I'll say this aerostats
-that's Halbert. Oh, what did I do? What did I call that?
+Here's the idea behind pagination: inside our data provider, instead of returning
+an array of `DailyStats` objects from `getCollection()`, we're going to return a
+`Paginator` object that *contains* the `DailyStats` objects that should be returned
+for whatever page we're on.
 
-Oh, this is Ryan. I'm on run. `StatsHelper` is more injecting here. Hmm. It's all ad
-inside of the new `\ArrayIterator` of `$this->statsHelper->fetchMany()` to
-return everything. Alright, let's check it out. Let me go over next time. Refresh and
-yeah, it sort of works. I mean, it does work, right. We have hydro member. We have
-all the items in it and down here in the bottom, we have our page name and
-information and all the next pages, but we know it's not really working because a lot
-of this data is hard coded, and we're still returning all 30 daily stats on every
-page. So next let's finish this. But in order to do that, we're actually going to
-need to ask a pamphlet from what page we're on. Like, are we on page one or are we on
-page two? Because we'll need that information to figure out exactly which daily stats
-objects we should return. That's next.
+In the `src/DataProvider/` directory, create a new PHP class called
+`DailyStatsPaginator`. The only rule is that this needs to implement a
+`PaginatorInterface` from `ApiPlatform`. I'll go to Code -> Generate - or
+Command + N on a Mac - and select "Implement Methods". Select all
+*five* methods we need.
 
+Perfect! Oh, but I'll move `count()` to the bottom - it's just a bit less important.
+
+To get this working, let's return some dummy data. In `getLastPage()`, pretend
+that there are two pages. For `getTotalItems()`, pretend there are 25 items. For
+`getCurrentPage()`, pretend we're on page 1, for `getItemsPerPage()` return that
+we want to show 10 items per page. And for `count()` we can return
+`$this->getTotalItems()`.
+
+Oh, yea know what? When I recorded this, I made a careless mistake. The `count()`
+method should actually return the number of items on *this* page - not the *total*
+number of items. I'll mention that again later when we *actually* have items
+to count.
+
+Ok: there are no `DailyStats` objects inside this object yet... but let's
+do as *little* as possible to see if we can get things working.
+
+Back in the provider,, instead of returning the array of objects, return a new
+`DailyStatsPaginator`.
+
+Ooh. Let's try it. Head back over and refresh the collection end point. And...
+error!
+
+> class `DailyStatsPaginator` must implement the interface `Traversable` as part
+> of either `Iterator` or `IteratorAggregate`.
+
+Wow. Okay. So the `PaginatorInterface` gives API Platform a bunch of information
+about pagination, like how many pages there are and what page we're currently on.
+But ultimately, whatever we return from `getCollection()` needs to be something
+that API platform can *loop* over - can iterate over.
+
+In other words, we need to make our paginator *iterable*. One way to do that is
+to add a second interface: `\IteratorAggregate`. And then, I'm going to create a
+new private property called `$dailyStatsIterator`.
+
+Finally, thanks to the new interface, at the bottom, go to Code -> Generate - or
+Command + N on a Mac - and select "Implement Methods". This requires one new function
+called `getIterator()`.
+
+Inside, first check to see if `$this->dailyStatsIterator === null`. If it *is*
+null, set it: `$this->dailyStatsIterator = ` and use another core class
+`new \ArrayIterator()` - and, for now, pass it an empty array. I'll put a little
+TODO up here:
+
+> todo - actually go "load" the stats
+
+At the bottom of the method, return `$this->dailyStatsIterator`.
+
+Basically, we're creating an iterator with the `DailyStats` objects inside. Well,
+it's an empty array now, but it *will* eventually hold `DailyStats`. This property
+and if statement are there in case `getIterator()` is called multiple times. If
+it is, this prevents us from unnecessarily creating this iterator again.
+
+*Anyways*, thanks to this, our paginator class *is* now iterable. And when we
+refresh the collection endpoint... it works! I mean, there's nothing *inside*
+the collection - `hydra:member` is empty - but you can see `totalItems` 25 and
+links below to tell us how to get to the first, next and last pages.
+
+## Iterating over DailyStats in the Paginator
+
+To do the heavy lifting of loading the `DailyStats` objects, we can leverage the
+`StatsHelper` object, which we have access to inside of `DailyStatsProvider`.
+
+Inside `DailyStatsPaginator`, add a constructor: public function `__construct()`
+with `DailyStats $dailyStats`.
+
+Now, this class is *not* a service... So Symfony is *not* going to autowire this
+argument. This is actually a "model" class that represents a paginated collection
+of `DailyStats`. But in a minute, we'll pass `StatsHelper` directly when we create
+the `DailyStatsPaginator`.
+
+Anyways, hit Alt + Enter and go to "Initialize properties" to create that property
+and set it. Then, before we use it, go to `DailyStatsProvider` and pass
+`$this->statsHelper` when we instantiate `DailyStatsPaginator`.
+
+For right now,  we're going to *completely* ignore pagination and show *all*
+of the `DailyStats` no matter *what* page we're on. To do that, down in
+`getIterator()`, instead of the empty array, pass `$this->statsHelper->fetchMany()`.
+
+Let's check it out! Head over to your browser, refresh and... it works! Well,
+`hydra:member` still contains *every* `DailyStats` record... but all the pagination
+info *is* there.
+
+So next, let's finish this! To do that, we'll need to ask API Platform:
+
+> Hey! What page are we on?
+
+And also:
+
+> Yo! How many items per page should I show?
+
+Because technically, that's configurable via annotations.
