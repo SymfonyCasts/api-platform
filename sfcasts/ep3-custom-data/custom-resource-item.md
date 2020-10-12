@@ -1,92 +1,90 @@
 # Custom Resource GET Item
 
 Our `get` collection operation for `DailyStats` is working nicely. But you know
-what? I'd love to be *also* be able to fetch stats for a single day. The docs say
-that this operation *is* already available... but we know that's a lie.
+what? I'd love to *also* be able to fetch stats for a *single* day. The docs say
+that this operation *already* exists... but we know it's a lie!
 
-If you look at the top of the `DailyStats` class, we *kind of* added this `get`
-item operation... but we made it go to a 404 page. We did that as a workaround
+If you look at the top of the `DailyStats` class, we *kind of* added the `get`
+item operation... but we made it return a 404 response. We did that as a workaround
 so that API Platform could generate an IRI for `DailyStats`. Now I want to make
 this *truly* work.
 
-Remove all of the custom configuration so that it now says we have a normal, get
-item operation and a normal get collection operation.
+Remove all of the custom config so that we now have a normal get item operation
+and a normal get collection operation.
 
 Before we do *anything* else, let's see what happens if we try it. Go to
-`/api/daily-stats.jsonld`, copy the `@id` for one of the daily stats, and go
+`/api/daily-stats.jsonld`, copy the `@id` for one of the daily stats, and navigate
 there. A 404! Oh, but let me add `.jsonld`. *There's* the 404 in the JSON-LD
 format.
 
 To get the collection operation working, we created a `DailyStatsProvider` that
-is a collection data provider. To get an *item* operation, we'll need an *item*
-data provider. Since we don't have one yet, 404!
+was a *collection* data provider. To get an *item* operation working, we need an
+*item* data provider. Since we don't have one yet, 404!
 
 ## Adding ItemDataProviderInterface
 
 No problem for us: we've done this before! Add another interface called
-`ItemDataProviderInterface`. Then, down here, go to Code -> Generate or
-Command + N on a Mac, select "Implement Methods" and implement the `getItem()`
+`ItemDataProviderInterface`. Then, down here, go to Code -> Generate - or
+Command + N on a Mac - select "Implement Methods" and implement the `getItem()`
 function that we need.
 
 Our job here is to read this `$id` and return the `DailyStats` object for that
-`$id` or null if there is none.
+`$id`, or null if there is none.
 
 ## "Dynamic" Data from a JSON File
 
 Before we do that, let's make all of this a bit more realistic. Our collection
-operation returns a couple of hardcoded `DailyStats`. Let's pretend that we have
-a JSON file filled with stats... or maybe we have some external API we can talk
-to, to help get this data.
+operation returns some hardcoded `DailyStats`. Let's pretend that we have
+a JSON file filled with this data... or maybe in a real project, you might have
+an external API you could talk to in order to fetch the data.
 
 If you downloaded the course code, then you should have a `tutorial/` directory
 with a `fake_stats.json` file inside. *This* will be our data source. Right next
 to this is a `StatsHelper` class, which holds code to read from that file.
 
-Copy both of these. Then, create a new directory in `src/` called `Service/` and
+Copy both of these. Then create a new directory in `src/` called `Service/` and
 paste them both there.
 
 Perfect. Let's take a quick look at the new `StatsHelper`. There's nothing fancy:
 it has three public methods - `fetchMany()`, where you can pass it a limit, offset
 and even some filtering criteria, which we'll talk about later - `fetchOne()`, where
-you pass a date string also a `count()` method.
+you pass a date string and also a `count()` method.
 
 And... that's basically it. The rest of this file is boring code to read that
-`fake_stats.json` file, parse through it and creating the `DailyStats` objects.
+`fake_stats.json` file, parse through it and create `DailyStats` objects.
 
 ## Using the "Dynamic" Data
 
 In `DailyStatsProvider` let's use this! We won't need the `CheeseListingRepository`
-anymore - `StatsHelper` takes care of all of that. So autowire it instead:
+anymore: `StatsHelper` takes care of all of that. So autowire it instead:
 `StatsHelper $statsHelper`, then `$this->statsHelper = $statsHelper` and rename
 the property to `$statsHelper`. We can also get rid of couple of `use` statements.
 
 Down in `getCollection()`, it's now as simple as return
-`$this->statsHelper->fetchMany()` and pass it - for now - no arguments.
+`$this->statsHelper->fetchMany()`. For now, pass it *no* arguments.
 
-Cool! Let's see if that works first. I'll go back to the collection endpoint,
-refresh and... yes! We get a big list of `DailyStats` data coming from that JSON
-file.
+Cool! Let's see if that works. Go back to the collection endpoint, refresh and...
+yes! We get a big list of `DailyStats` data coming from that JSON file!
 
 ## Finishing getItem()
 
 Let's use `StatsHelper` to finish `getItem()`. Thanks to the `supports()` method,
-our `getItem()` method should be called *every* time a request is made to an "item"
+our `getItem()` method *should* be called *every* time a request is made to an "item"
 operation for `DailyStats`. Let's make sure that's working with `dd($id)`.
 
-Back at the browser, go forward, refresh and... nice! Our date string is dumped
-out.
+Back at the browser, go forward, refresh and... nice! Our date string is dumped.
 
-Finally, in `getItem()`, we can return `$this->statsHelper->fetchOne()` and
+Now over in `getItem()`, we can return `$this->statsHelper->fetchOne()` and
 pass it the date string, which... is the `$id` variable.
 
 Testing time! Over at the browser, refresh! 404!? I mean, of course! The date in
-URL is *not* one of the days I have in my JSON file. Go back one page, refresh
-the collection endpoint, then copy a different one - like `2020-09-01`.
+the URL is *not* one of the dates I have in my JSON file. Go back one page, refresh
+the collection endpoint and copy a different one - like `2020-09-01`.
 
-So if we go to `/daily-stats/2020-09-01.json`, then... it works! And if we go
-to ad date that us *not* in that JSON file, we get a 404.
+So if we go to `/api/daily-stats/2020-09-01.json`, then... it works! And if we go
+to a date that is *not* in that JSON file, we get a 404.
 
 So setting up our item operation was actually pretty easy. Next, let's talk about
 pagination. Because if we go back to `/api/daily-stats.jsonld` and refresh...
-there are a *lot* of items here. Because we're not using Doctrine, we *no* longer
+there are a *lot* of items here. Since we're not using Doctrine, we *no* longer
 get pagination for free. If we need it, we have to add it ourselves.
