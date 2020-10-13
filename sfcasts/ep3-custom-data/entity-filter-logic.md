@@ -1,110 +1,139 @@
 # Custom Entity Filter Logic
 
-Coming soon...
+Let's review our goal: to be able to add `?search=cheese` and have that search
+across *several* columns in the database.
 
-So our goal is reminder is to be able to go over here and have something that
-`?search=cheese`, and that would actually search for that string across
-several different, uh, uh, columns in the database. So in `getDescription()`, I'm going
-to describe that. I don't need to do anything fancy here. I'm gonna return an `array`.
-That array is going to have one item in it because we only support one query
-parameter with this filter and that's going to be called `search`. And I'll just set
-that to another `array`. And here's where we start using those keys that you saw inside
-of the property filter. And I guess again, the best way is just to look these up
-first, I'm going to say `'property' => null`, that's not really important. You'll see why in
-a second. And then I'll say `'type' => 'string'`. This is going to help with documentation.
-Know what kind of field to build for this type. And then I'm going to say `'required' => false`
-And this is all helping the documentation. All right. So let's go over here.
-I'm gonna go to the first tab with my documentation refresh and let's open up `/api/cheeses`
-Look down here and look down here and sweet. There it is `search` and it says
-string query.
+In `getDescription()`, let's describe that lofty goal. We don't need any fancy,
+dynamic property stuff here like we saw in the core filters. Just return an
+`array` with one item for the one query parameter: `search`. Set that to *another*
+`array` and here is where we start using the keys that we saw inside
+`PropertyFilter`. I'll cheat and list the ones we need. First, set
+`'property' => null`. If a filter *does* relate to a specific property, put
+that here. As far as I can tell, this is only used in the Hydra filter documentation,
+not even in OpenAPI, which is what drives the Swagger interactive docs. Wow,
+that sentence was a LOT of buzzwords. Phew!
 
-And if you look down inside of our no, no, no. And if we want, we can even give that
-a little bit more documentation. So one of the other fields we're going to have on
-here is called `openapi`. I'll set that to an `array` and here, one of the keys that you
-can pass here is called `description` search across multiple fields. I personally
-don't know all the opposites or capacity here. I've just been kind of digging around
-and seeing what I need. So feel free to dig further. If I refresh this time, go back
-to that. Perfect. You can see now I have like a little bit of extra documentation
-that shows up above that field, which is pretty cool. Okay. Enough of the
-documentation. Now let's get onto the part where we actually apply that filter. So
-you can see that this `filterProperty()` is past `$property` `$value`.
+Next set `'type' => 'string'` and `'required' => false` - both things that will
+help the docs.
 
-Then a couple of other things that are specific, the doctrine all around the 
-`QueryBuilder`, in something called a `QueryNameGenerator` that we're going to talk about in
-a second. And a couple of other pieces, let's actually figure out what that `$property`
-in `$value` are. So I'm going to `dd()` `$property` and `$value`. And then we'll go over here back
-to my other tab where I kind of have my, uh, more on the cheese, the collection that
-point and hit enter. And okay, so that makes sense, right? It passes us search, which
-is the thing that's up here and also cheese. Now, the really important thing to
-understand here is that this `filterProperty()` is going to be called for every single
-query parameter that's on the URL. So if I go up here and say `?dog=bark`
-I'm going to get dog and bark up there. Now, obviously our filter is not meant
-to operate on the dog query parameter. So what this means is that this property here,
-we want to only do our filtering logic when that `$property === 'search'`.
+Let's check it out! Find the API docs, refresh and open up the `/api/cheeses`
+operation. And... there it is: `search`! And it says "string".
 
-So that's the first thing I'll do in here is say, if `$property` does not equal `'search'`
-then return. So it's a little weird cause they use the language property. We're not
-really, this isn't really a property. We've just decided to call our queer parameter
-search. But that's how the logic looks. And the rest of this now is just a good query
-building logic. So as you can see, we're past the query builder here, which is maybe
-some other filters have already worked on. So our job is just to modify it. So do
-that. First thing we need to know is what the alias is. That's being used in the
-query. So we can get that as saying `$alias = $queryBuilder->getRootAlias()`. And
-then it looks a little bit funny, `getRootAliases()` and then zero, it looks a little
-funny, but that's how you get that.
+We can *even* help this a bit more. Add another key called `openapi`. Set that
+to another `array`. One of the keys that you can pass here is called `description`.
+How about:
 
-And now we'll say `$queryBuilder->andWhere()`, and I'm going to pass this `sprintf()` cause
-we need to do a little bit dynamic in here. Now what I'm gonna say is we're going to
-search by the title or description fields. So I'm gonna say `%s.title`. That
-percent asks is eventually I'm gonna use the alias for that. And then `LIKE :search`
-to use a parameter `OR` again, `%s.description LIKE :search`. And
-then for the 2 `%s`, we're going to pass `$alias` and `$alias` are perfect. And then
-the next line after this, me actually break this into multiple lines. We need to say
-`setParameter()` so we can fill in that search part. So we'll set search and that'll be
-equal `'%'.$value.'%'`. So we can do the fuzzy search. All right, let's try
-this as a reminder. I'm going to take off my query parameter entirely right now. So
-we're going to see what the list here is.
+> search across multiple fields.
 
-It's going to see a lot of these have block of cheddar in them select add a question,
-`?search=cheddar` and Oh, we get actually no results on this. Let's see, I may
-have messed something up. Nope. And I did. I always do that percent, a little extra S
-on the end there now in a refresh, there we go. You can see it actually is such a
-process. Use a size one is gone because it did not match this all the rest of these
-have cheddar in our name. And let's see, let's put the word cube and see if the
-description is being searched. And it is, it works. Of course we can prove it's even
-more by going to `/_profiler` and clicking on our token for our API point and
-going down here and actually seeing what the doctrine query looks for. So this is a
-really good spot here where we can see view format of query, whereas searching aware,
-and we still have the publisher or owner that actually comes from a doctrine
-extension. That's controlling security that we created in the last row. And then on
-your end, the `title` or the `description` are like, uh, our percent cube. Pretty cool.
-Now one last little detail I want to mention in here is that one of the things that
-we're passed here is called something, a query name generator.
+I personally don't know all the possible keys that we can have... I've just been
+digging around and seeing what I need. So feel free to dig further.
 
-Now the query name generates is probably not super important if you're creating a
-custom filter for your own project. So the idea is that this parameter here search,
-we could've called it anything. It doesn't matter just whatever we have here. It
-needs to match up with our `:search` inside of our query. Now, if there are many
-independent filters being used and in theory, two filters might use the same
-parameter name, which would mean that they would collide and one would override the
-other one. So the query name generator is the purpose of it is to avoid this problem.
-So let's just actually see what it looks like.
+When we refresh now and go back to that operation... nice! Our filter now has
+a description.
 
-So up here above the query, I'll say `$valueParameter = $queryNameGenerator->`. That
-argument that we have, and then say `generateParameterName()`. And I'll say `'search'`,
-that's basically going to return a string with search that has an, uh, an
-incrementing index on it. So that it's always unique. So this will be equal to
-something like `search1`. I'll put a little comment above this. Now down here, we
-just have to use it, which gets a little bit ugly. We got to add a couple of other
-percent SS. So instead of a `:search` here, it's `:%s` and then `:%s`
-and then we're going to have Haley is `$valueParameter`, AOE, S value
-parameter. How about that for making your head spin a little bit, then finally down
-here, instead of search, we're going to have `$valueParameter`. Phew.
+## How & When filterProperty() is Called
 
-Now, if I go over here and actually reopen my look over here, let's actually use the
-documentation here. I saw it, try it out and I will search for cube and the search
-field hit execute, and yes, you can see queue. Our filter is still working. So this
-is what it looks like to make a custom filter when you're using the doctrine O R M.
-But the process is different. If you are, for example, creating a custom filter for
-an API resource that is not backed by doctrine. So next let's create a custom filter
-for our daily stats or resource.
+Okay, enough with the documentation: let's get to the part where we actually
+*apply* that filter. For a Doctrine ORM filter, this happens in
+`filterProperty()`, which receives `$property` and `$value` arguments and then
+some Doctrine-specific stuff like `QueryBuilder`, something called a
+`QueryNameGenerator` - more on that in a few minutes - and a few other things.
+
+Let's figure out what that `$property` and `$value` are: `dd()` both of these.
+
+Then go find the *other* tab where we're fetching the cheese collection and hit
+enter to send the `?search=cheese` query parameter.
+
+Cool! It passes us `search` - which is the name of the query parameter - and also
+`cheese`. Now, the *really* important thing to understand is that
+`filterProperty()` is going to be called for *every* single query parameter
+that's on the URL. So if I go up here and say `?dog=bark`, it prints out
+`dog` and `bark`. Now, obviously our filter is not meant to operate on a `dog`,
+we'll leave that to trained veterinarians.
+
+Back in `filterProperty()`, check for *our* query parameter: if `$property` does
+not equal `'search'`, then return.
+
+So, it's a *little* weird because the method use the word "property"... but
+`search` isn't really a property... it's just what we decided to call our query
+parameter. And that's *fine*. Also, there is *no* logic that connects what we
+return from `getDescription()` and `filterProperty()`. So if you were expecting
+that maybe `filterProperty()` would only be called for query parameters that we
+return in `getDescription()`, that's *not* how it works. These two methods work
+totally independently.
+
+## Modifying the Query
+
+The rest of this method good-ol' query-building logic. We're passed the
+`QueryBuilder` that will be used to fetch the collection and our job is to *modify*
+it.
+
+To do that, we first need to know the class *alias* that's being used for the
+query. We can get that as saying `$alias = $queryBuilder->getRootAliases()` and -
+it looks a bit funny, but we want the 0 index.
+
+Now add the *real* logic: `$queryBuilder->andWhere()` and I'm going to pass this
+`sprintf()` because we need to dynamically put in the alias. Let's search on both
+the `title` and `description` fields. So, `%s.title` - the `%s` will be the alias -
+`LIKE :search` `OR`, again, `%s.description LIKE :search`. For the 2 `%s`, pass
+`$alias` and `$alias`.
+
+Let's split this into multiple lines. Then `->setParameter()` to set the `search`
+parameter `'%'.$value.'%'` for a fuzzy search.
+
+Let's try this! First, remove the query parameter entirely so we can see what
+the *full* list looks like. Ok, a lot of people are selling blocks of cheddar.
+Add `?search=cheddar` and ah! No results!
+
+I bet I messed something up! I did! I added an extra `s` on the parameter. Try
+it again. Much better! `/api/cheeses/1` is gone but the rest *do* have `cheddar`
+in their `title`.
+
+Let's try the word "cube" to see if the `description` is matching. And... that works
+too!
+
+To prove it, we can even *see* the query. Go to `/_profiler`... click the
+token for our API request, click into the Doctrine and click "view formatted query".
+Beautiful! The `is_published` and `owner_d`check come from a Doctrine extension
+we created in the last tutorial and relates to security. And *then* it searches
+on the `title` or `description` fields. Pretty cool.
+
+## The QueryNameGenerator
+
+Before we keep going, there was one argument that we have *not* used yet - the
+`$queryNameGenerator`.
+
+The query name generator is probably *not* super important unless you're creating
+a filter you want to search between projects.
+
+Here's the problem: the parameter we added - `search` -  could have been called
+anything - it just needs to match up with the `:search` inside the query. Now,
+if there are *many* independent filters being used, then, in theory, two filters
+might accidentally use the same parameter name. If that happened one would
+override the other.
+
+The query name generator's job is to help avoid this problem by generating a
+*unique* parameter name.
+
+Check out it say `$valueParameter = $queryNameGenerator->` - that's the argument
+we're being passed - then `generateParameterName('search')`. That will return a
+string with `search` then a unique index that increments - something like
+`search_p1` - the `p` is for parameter. I'll put a comment above this.
+
+Down in the query, using it *does* get a little ugly: instead of `:search` here,
+it's `:%s` and then another `:%s`. For the arguments, it's now `$alias`,
+`$valueParameter`, `$alias`, `$valueParameter`.
+
+*Finally,* in `setParameter()`, use `$valueParameter`.
+
+I'll be honest, that makes my head spin a little... and I might avoid doing this
+for custom filters in my *own* project.
+
+Anyways, let's make sure it works... by going to the documentation. Hit "Try it
+Out", fill in "cube" for the search and... Execute! Let's see... yep! Our filter
+is working!
+
+So this is what it looks like to make a custom filter when your resource is a
+Doctrine entity. But the process is different if you need to make a custom filter
+for an API resource that is *not* an entity. Let's tackle that next by making
+a filter for `DailyStats`.
