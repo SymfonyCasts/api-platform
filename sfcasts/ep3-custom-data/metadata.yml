@@ -26,9 +26,9 @@ chapters:
     - custom-filter
     - entity-filter-logic
     - custom-resource-filter
-    - apply
+    - apply-filter
     - filter-arguments
-    - filter
+    - filter-autowiring
     - output-class
     - data-transformer
     - output-fields

@@ -1,8 +1,6 @@
-# Apply
+# Apply Filter
 
 Coming soon...
-
-[inaudible]
 
 Let's talk about how these filter classes work. Internally. As I mentioned, each data
 provider is a 100 responsible for taking filters into account in changing the data.
