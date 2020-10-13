@@ -34,3 +34,12 @@ chapters:
     - output-fields
     - dto-quirks
     - input-dto
+    - input-transformer
+    - dto-update-problems
+    - input-initializer
+    - dto-organization
+    - type-validation
+    - input-dto-validation
+    - uuid
+    - uuid-identifier
+    - set-uuid
