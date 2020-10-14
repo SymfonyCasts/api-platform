@@ -1,103 +1,131 @@
-# Apply Filter
+# Custom Filter apply()
 
-Coming soon...
+Let's talk about how filter classes work internally. As we know, each data
+provider is 100% responsible for taking filters into account in changing the data.
+it returns based on them. So, filtering happens inside *each* data provider, not
+via some magic system that runs *after* them.
 
-Let's talk about how these filter classes work. Internally. As I mentioned, each data
-provider is a 100 responsible for taking filters into account in changing the data.
-It returns. There's not some system after we return our page native, that's going to
-then modify it. We need to modify our paginator here to take into account page
-nation and filtering. Now doctrines data provider in core, for example, has an
-extension system that allows anyone to modify the query that that's been made. I, I
-should see that by saying `doctrinedataprovider` looking for all non project items.
+## How Filters work in Doctrine
 
-And there it is on here `CollectionDataProvider` from `Orm\`. And you can see we've
-talked about this before. Here's it's get collection method, and then it actually has
-these things called collection extensions that it calls that allow you to modify the
-query. We actually have. One of these extensions is our `CheeseListingIsPublishedExtension`
-which we use right here to actually make sure that we don't return
-published listings, unless you're the owner or an admin. Now, why am I telling you
-this? Because one of the core, one of the doctrine extensions is called the filter
-extension.
+Let's look at how this is done in the core Doctrine data provider. Hit Shift+Shift,
+search for `doctrinedataprovider` and include non project items. There it is:
+`CollectionDataProvider` from `Orm\`. Here is the `getCollection()` method.
 
-You can actually open this up. I'll look for `FilterExtension.php`. Make sure you
-include all non-project items and get the one from `Orm\`. Here it is right here. And
-what the filter extension does is it actually loops over all the filters that are
-applied in our object in it calls `apply()` on each one and passes it. The query builder.
-This is why with our `CheeseSearchFilter`, all we needed to do was basically extend
-`AbstractFilter` and add this `filterProperty()` method. If you looked at an 
-`AbstractFilter`, it actually has that `apply()` method, which loops around a couple of things and
-calls our `filterProperty()`. So this is how a normal doctrine filter works. It's via
-the extension system. And then this filter extension system, which knows to call all
-of the filters. No, obviously that's not going to happen for us because we're not
-using the doctrine data provider, but because we made our filter implement the 
-`FilterInterface`, the one from core serializer API platform will help us out a bit. How by
-automatically calling our `apply()` method
+The Doctrine data provider has a system called "collection extensions": these are
+hook points that allow you to *modify* the query in any way. And... we actually
+*created* one of these extensions in the last tutorial:
+`CheeseListingIsPublishedExtension`. This modifies the query so that we don't
+return unpublished listings, unless you're the owner of the listing or an admin.
 
-On every request for a resource for an API platform resource class that has this
-filter on it. What I mean is on our `DailyStats`, we've added at API filter daily
-staff state filter. Thanks to that. Whenever we make request for a daily stats, it's
-going to call our `DailyStatsDateFilter::apply()` method automatically. This is huge.
-It means API platform is smart enough to activate our filter only when needed. So now
-we can just get to work in here. So we know that we want to read off the, from query
-parameter off of a URL. Unfortunately, if it's passing us the request object, so
-let's `dd($request->query->all())` so we can make sure that we can see that query
-parameter on there. Now I'm gonna go over and refresh. There it is, are `from` query
-parameter. Is there.
+## Doctrine's FilterExtension
 
-All right. So let's grab that. We'll say `$from = $request->query->get('from')`
-And of course, if no `$from` that's totally valid, it means there isn't a
-filter and we're just going to return without doing anything done here. Let's 
-`dd($from)`
+Why are we talking about these extension classes? Because one of the *core*
+Doctrine extensions is called `FilterExtension`.
 
-And refresh. Perfect. We have our nice little date string. Okay. So what do we do
-with that string? I mean, we're not exactly inside our `DailyStatsProvider` where we
-actually need this. We're over here in this filter class. So the answer is that we're
-going to add this information to the `$context`, check it out. The apply method is past
-the `$context` and it's passed it by reference, which means we can actually add a keys
-to the context to do this. It's actually at a public constant up here. We'll call it
-`FROM_FILTER_CONTEXT` We'll set that to, how about `daily_stats_from` this? May I a
-constant here? Cause this is the key that we're going to set our from date into on
-the context. But before I do that, let's actually convert this string into a `DateTime`
-object,
+Let's open it up: Shirt+Shift and look for `FilterExtension.php` making sure to
+include all non-project items. Get the one from `Orm\`. I *love* this. It loops
+over *all* of the filters that have been activated for this resource class, calls
+`apply()` on each one and passes it the `QueryBuilder`!
 
-So we do that with, `$fromDate = \DateTimeImmutable::createFromFormat()`
-And then I'm going to pass it, `Y-m-d` and then pass. It are `$from` using, 
-`createFromFormat()` because if this
-is passed an invalid format, then a create from format will actually return false,
-which is nice. Cause we can code defensively and say if `$fromDate`, that means we
-actually have a validate format. Then we can set it on the context, uh, before we do,
-I'm actually going to just do a little normalization here. I'll say 
-`$fromDate = $fromDate->setTime()` and pass this zero, zero, zero. So I wanna make sure it's set at
-midnight so that when we compare the dates where I was comparing midnight to
-midnight, the real key here, areas that we say `$context[self::FROM_FILTER_CONTEXT] = $fromDate`
+Thanks to this, in our `CheeseSearchFilter`, all *we* needed to do was extend
+`AbstractFilter` and fill in the `filterProperty()` method. The `apply()` method
+lives in `AbstractFilter`, which does some work and then ultimately calls our
+`filterProperty()` method.
 
-So the job of the supply method is not really to actually apply that filter, but just
-to advertise that advertise that it exists, that it should be applied in the context.
-So now we're dangerous. Well, we're almost dangerous. If we can get access to the
-`$context` from inside of our `DailyStatsProvider`, then we can read that key off of it
-and set the from date. Unfortunately, we do not have the context right now, but
-fortunately we know that we can get it. How by implementing instead of 
-`CollectionDataProvider`, implementing `ContextAwareCollectionDataProvider`, the only
-difference being that down here, we're not going to have an `array $context = []`
-argument. You can see now Peachtree storm is happy. All right. So let's just
-`dd($context)` here and see if we can see the filter passing this, uh, to the provider in
-the context. So if over now and refresh and yes, we got it. Whew. `daily_stats_from` it
-is on there perfectly. And if we take off the, from then everything still works. We
-just don't have that inside of the context.
+The point is: the Doctrine filter system works via a Doctrine *extension*, which
+knows to call a method on all of the filter objects.
 
-So now we can finally use this, remove the `dd()`, and also remove the down here. We'll
-say `$fromDate = $context`. And here's where we can use that con that constant 
-`DailyStatsDateFilter::FROM_FILTER_CONTEXT`. And then we'll do
-`?? null` So if it is set, use that value, otherwise set it to null. And
-then if we have a `$fromDate`, then we can call the `$paginator->setFromDate()` and
-pass it are `$fromDate`. Alright, let's get that a tribe. Our queer parameters
-filtering from Oh nine Oh one. When we refresh. Yes, it works. We only get those
-three results. The results starting on Oh nine Oh one. And if we take off the query
-parameter, awesome. We get everything. That's perfect, but I want to go just a teeny
-tiny bit further next inside of our daily stats filter. We decided that if the, if
-the date is an invalid format, that we're just going to ignore it, but we could also
-throw a 400 air that set tells the user that there's an invalid format. Heck we could
-even make that behavior configurable whether or not we should throw the error on our
-filter. Annotation doing that is gonna show us a mysterious truth about our filter
-class. It's a service.
+## How / When the apply() Method is Called
 
+But all of this stuff will *not* happen in this case... because we're *not*
+using the Doctrine data provider. But because we made our filter implement the
+`FilterInterface` from the core `Serializer\` namespace, API Platform will help
+us out a bit. How? By automatically calling our `apply()` method on *every*
+request for a an API resource class where our filter has been activated.
+
+What I mean is, because in `DailyStats` we added `@ApiFilter(DailyStatsFilter)`,
+whenever we make a request to a `DailyStats` operation, API Platform will
+automatically call our `DailyStatsDateFilter::apply()` method. That works via
+a *context builder* in the core of API Platform that loops over all of the filters
+for the current resource class, checks to see if they implement the `FilterInterface`
+that we're using and, if they do, calls `apply()`.
+
+So... this is huge! It means that API Platform is smart enough to automatically
+call our filter's `apply()` method but *only* when needed. This means we can get
+to work.
+
+## Grabbing the Query Parameter
+
+To see if we should filter, we need to read the query parameter from the URL.
+And... hey! We get the `Request` object as an argument! Schweet! Let's
+`dd($request->query->all())`.
+
+Back at your browser, refresh and... there it is! The `from` query param.
+
+Now, grab that with `$from = $request->query->get('from')`. And, if not `$from`,
+it means we should do *no* filtering. Return without doing anything. After,
+`dd($from)`.
+
+Refresh now and... yay! We have the date string.
+
+## Passing Info from the Filter to the Data Provider
+
+So... what do we *do* with that string? I mean, we're not inside
+`DailyStatsProvider` where we actually *need* this  info: we're way over here in
+the filter class.
+
+The answer is that we're going top ass this info *from* the filter *to* the data
+provider via the `$context`. Check it out: one of the arguments to `apply()` is
+the `$context` array and it's passed by *reference*. That means we can modify it.
+
+Head to the top of this class and add a new public constant, how about:
+`FROM_FILTER_CONTEXT` set that to `daily_stats_from`. This will be the key we
+set on `$context`.
+
+Before we do that, let's convert the string into a `DateTime` object:
+`$fromDate = \DateTimeImmutable::createFromFormat()` passing
+`Y-m-d` as the format and then `$from`.
+
+We're using `createFromFormat()` because if the `$from` string is an *invalid*
+format, it will return `false`. We can use that to code defensively: if `$fromDate`,
+then we know we have a valid date. Now say
+`$fromDate = $fromDate->setTime()` and pass zero, zero, zero to normalize all
+the dates to midnight. Finally, set this on the context:
+`$context[self::FROM_FILTER_CONTEXT] = $fromDate`.
+
+So the job of the `apply()` method in a custom, non-Doctrine filter is not
+*actually* to *apply* the filtering logic, but just to *pass* some filtering
+info into the context.
+
+## Reading the Context in the Data Provider
+
+And now, we're dangerous. Well... we're *almost* dangerous. If we can get access
+to the `$context` from inside `DailyStatsProvider`, then we can read that key off
+and set the from date. Unfortunately, we do *not* have the context yet. But
+fortunately, we know to get it!
+
+Instead of  `CollectionDataProvider`, implement `ContextAwareCollectionDataProvider`.
+The only difference is that `getCollection()` now has an extra `array $context = []`
+argument.
+
+To start, let's just `dd($context)` and see if we can see the filter info.
+
+Ok, refresh. And... we got it! The `daily_stats_from` is there! And if we take
+the `from` query param off, it still works, but the key is gone.
+
+Let's *finally* use this. Remove the `dd()` and, down here,
+add `$fromDate = $context[DailyStatsDateFilter::FROM_FILTER_CONTEXT]` with a
+`?? null` so that is defaults to null if the key doesn't exist. Then, if we have
+a `$fromDate`, call `$paginator->setFromDate()` and pass it there.
+
+Ok, let's give this a try! The query parameter should filter from 09-01. Refresh
+and... it works! We only get *three* results starting from 09-01! And if we take
+off the query param... we get everything.
+
+We just built a *completely* custom filter. We're crushing it! Next, in
+`DailyStatsFilter`, if the `from` data is an invalid format, we decided to ignore
+it. But we could *also* decided that we want to return a 400 error in this case.
+Let's see how to do that *and* how we could even make that behavior configurable.
+This will lead us down a path towards *true* filter enlightenment and uncovering
+their hidden secret. Basically, we're going to learn even *more* about the power
+behind filters.
