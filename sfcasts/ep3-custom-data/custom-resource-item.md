@@ -81,7 +81,7 @@ Testing time! Over at the browser, refresh! 404!? I mean, of course! The date in
 the URL is *not* one of the dates I have in my JSON file. Go back one page, refresh
 the collection endpoint and copy a different one - like `2020-09-01`.
 
-So if we go to `/api/daily-stats/2020-09-01.json`, then... it works! And if we go
+So if we go to `/api/daily-stats/2020-09-01.jsonld`, then... it works! And if we go
 to a date that is *not* in that JSON file, we get a 404.
 
 So setting up our item operation was actually pretty easy. Next, let's talk about
