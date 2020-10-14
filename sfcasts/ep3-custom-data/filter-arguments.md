@@ -2,7 +2,8 @@
 
 If we enter an invalid `from` date in the URL, it's simply ignored and we
 return everything. We did that on purpose in `DailyStatsDateFilter`. But another
-option is to return a 400 status code so that the user knows they messed up. How?
+option is to return a 400 status code so that the user knows they messed up. How
+could we do that?
 
 ## Returning a 400 any time you want
 
@@ -16,15 +17,16 @@ Pass this a message:
 
 > Invalid from date format.
 
-Cool! I know, I don't need this other if statements down here, but I'll leave.
-Let's see what this looks like. Refresh with the bad date and... cool! A nice
-JSON error message with: "Invalid from date format" and a 400 status code.
+Cool! I know, I don't need this other if statement down here, but I'll leave.
+
+Anyways, let's see what this looks like. Refresh with the bad date and... cool!
+A nice JSON error message with: "Invalid from date format" and a 400 status code.
 On production, the stack trace wouldn't be here, but the user *would* see this
 message.
 
 ## ApiFilter arguments Option
 
-But let's do an extra challenge. Pretend that we want to make this behavior -
+Let's do an extra challenge. Pretend that we want to make this behavior -
 whether to throw a 400 error on an invalid date format - something that is
 *configurable* when we activate the filter.
 
@@ -33,9 +35,9 @@ will reveal some cool stuff about how filters work.
 
 The `@ApiFilter()` annotation has several options that we can pass to it. Hold
 Command or Control and click to jump into that core annotation class. Yep! All of
-these public  properties are options that we can technically pass to this
+these public properties are options that we can technically pass to this
 annotation. But for the purposes of building a custom filter, the only options that
-really matter here are arguments and properties. We'll talk about `$properties`
+really matter are `arguments` and `properties`. We'll talk about `$properties`
 later.
 
 Close that class. Try this: add `arguments={}` and then pass a new argument called
@@ -43,12 +45,12 @@ Close that class. Try this: add `arguments={}` and then pass a new argument call
 
 What does this do? I don't know! Let's refresh and see what happens. Ah, error!
 
-> Class `DailyStatsDateFilter` does not have argument `throwOnInvalid`
+> Class `DailyStatsDateFilter` does not have argument `$throwOnInvalid`
 
 ## arguments Option Maps to Constructor Arguments
 
 API platform does a cool, but kind of strange thing: if you pass an `arguments`
-option to a filter, it tries to pass that argument - by *name* to - the
+option to a filter, it tries to pass that argument - by *name* - to the
 *constructor* of your filter.
 
 Check it out: in `DailyStatsDateFilter`, add a constructor: public function
@@ -66,9 +68,9 @@ code.
 ## The properties Option
 
 So it's kind of weird, but any `arguments` on the annotation map to constructor
-arguments by name. Oh, and the one other option that we couls pass to the filter
+arguments by name. Oh, and the one other option that we could pass to the annotation
 is `properties={}` if you want to configure that this is supposed to use a certain
-set of properties. Oh, and if you ever put `ApiFilter` above a property instead
+set of properties. And if you ever put `@ApiFilter` above a property instead
 of on top of the class, this `properties` option is automatically set for you.
 
 Either way, if the `properties` option is set, it's passed to your filter as an
