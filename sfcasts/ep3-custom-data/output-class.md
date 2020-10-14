@@ -7,22 +7,24 @@ add complex custom fields with some work. We did this in `User` with our custom
 
 And of course, with a custom class like `DailyStats` that is *not* an entity...
 we can do whatever we want! We get to make these classes look *exactly* like our
-API. On the downside, it takes more time to set up and we lose automatic features
+API. On the downside, these take more time to set up and we lose automatic features
 like pagination and filtering.
 
 But, like Jean-Luc Picard searching for a solution to an impossible situation,
-there is actually a *third* option, which is kind of in between these two.
+there *is* a *third* option, which is kind of "in between" these two.
+
+## Why DTO Classes?
 
 In `CheeseListing`, the `input` fields look quite different from the *output*
-fields. For example, the `isPublished` field is *writeable*, but it's not
-*readable*. And the description property is readable, but not writeable. Well,
-it *is*, but via a different way: a `setTextDescription()` method.
+fields. For example, the `isPublished` field is *writable*, but it's not
+*readable*. And the description property is readable, but not writable. Well,
+it *is* writable, but via a different way: a `setTextDescription()` method.
 
 We accomplished all of this by using smart serialization groups and some custom
 methods. The upside is that... it's simple! All the logic is in one class. The
 downside is that... well... it's not actually *that* simple. Our serialization
-and deserialization rules are not *that* clear: you can't quickly look at
-`CheeseListing` and figure out which fields are going to be readable or writeable.
+and deserialization rules are not *super* clear: you can't quickly look at
+`CheeseListing` and figure out which fields are going to be readable or writable.
 
 One solution to this is to have a separate class for your input and output.
 Basically, we would transform a `CheeseListing` into another object and then
@@ -37,15 +39,15 @@ I'll walk you through them along the way.
 
 ## Creating the Output Class
 
-So how do we start? By creating a class that has the *exact* field that should exist
+So how do we start? By creating a class that has the *exact* fields that should exist
 when a `CheeseListing` is *serialized*. In `src/`, create a new directory called
 `DTO/` and inside, a new PHP class called `CheeseListingOutput`.
 
 For now let's *just* have a `public $title` property.
 
-I'm going use public properties for a few reason. First, these classes should be
+I'm going to use public properties for a few reason. First, these classes should be
 simple and are only used for our API. And second, if you're using PHP 7.4, you can
-add *types* to the properties to still guarantee they're set correctly.
+add *types* to the properties to guarantee they're set correctly.
 
 Anyways, we'll add more properties later, but let's see if we can get this working.
 
