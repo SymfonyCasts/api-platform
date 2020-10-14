@@ -1,4 +1,4 @@
-# Custom Resource Put Operation
+# Custom Resource PUT Operation
 
 Back to the API documentation! Let's pretend that we also need to be able to
 *update* a `DailyStats`. Maybe, if you're an admin, sometimes you need to
