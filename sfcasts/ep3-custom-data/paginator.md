@@ -90,7 +90,7 @@ To do the heavy lifting of loading the `DailyStats` objects, we can leverage the
 `StatsHelper` object, which we have access to inside of `DailyStatsProvider`.
 
 Inside `DailyStatsPaginator`, add a constructor: public function `__construct()`
-with `DailyStats $dailyStats`.
+with `StatsHelper $statsHelper`.
 
 Now, this class is *not* a service... So Symfony is *not* going to autowire this
 argument. This is really a "model" class that represents a paginated collection
