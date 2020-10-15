@@ -37,7 +37,7 @@ we want to show 10 items per page. For `count()` return `$this->getTotalItems()`
 
 Oh, yea know what? When I recorded this, I made a careless mistake. The `count()`
 method should actually return the number of items on *this* page - not the *total*
-number of items. I'll mention that in a rew minutes when we *actually* have items
+number of items. I'll mention that in a few minutes when we *actually* have items
 to count.
 
 Ok: there are no `DailyStats` objects inside this class yet... but let's
