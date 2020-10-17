@@ -33,6 +33,7 @@ chapters:
     - data-transformer
     - output-fields
     - dto-quirks
+    - dto-embedded-quirks
     - input-dto
     - input-transformer
     - dto-update-problems
