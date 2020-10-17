@@ -1,4 +1,4 @@
-# Custom Entity Filter Logic
+# Custom Filter Logic for Entities
 
 Let's review our goal: to be able to add `?search=cheese` and have that search
 across *several* columns in the database.
