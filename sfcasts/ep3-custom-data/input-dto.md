@@ -1,100 +1,117 @@
-# Input Dto
+# Input DTO Class
 
-Coming soon...
+If you liked the *output* DTO, we can do the *same* thing for handling the
+*input* data for a resource. Basically, we create a class that looks *just* like
+the input fields that are sent when creating our updating a `CheeseListing` and
+then API Platform will start deserializing the JSON to create *that* object. Then,
+our job - via a data transformer - will be to convert that input object into the
+final `CheeseListing` so that API Platform can save it.
 
-If you like this output class thing, we can do the same thing for your input format.
-Basically, we create a class that looks just like the input fields that are sent to
-create our update HES listing, and then API platform will DC realize that JSON, to
-create that object, then our job via a data transformer will be to convert that input
-object into a cheese listing so that API platform can finally save it. So it's the
-exact same idea as the output, but just in the other direction. So let's get started
-in the source DTO directory, let's create a new class called she's listing input. Now
-this time I'm actually going to move over all of the fields that I, that are in my
-input field input, uh, immediately like title, um, price and summer, all the ones. So
-I'm actually going to start here with a public title and then put some PHP doc on
-there.
+## Creating the CheeseListingInput
 
-And then over on the title field, I'm going to steal the at groups off of that and
-delete it. We don't need ad groups on here at all anymore. And I'll paste the ad
-group over on top of the title field. Uh, but notice I need to actually re type the P
-here and hit tab to add the use statement for, to auto complete it. The other fields
-that we have inside of here are public price owner and is published. All of those you
-would find over here. If you look at it, a price down here, I'll steal the ag groups
-off of that and then delete them.
+So... it's the *exact* same idea as the output, just... the other direction.
+Though, there will be a few new, interesting and tricky pieces.
 
-And then owner looks that owner, if you look down here, actually has this cheese
-collection post group. So I'll copy that and delete it and go move that over to my
-input class. And then finally is published. That is a neat she's gone, right groups.
-I'll go steal that group and delete it and put it above is published. Now there is
-actually one other field in here. If I search for groups, it does actually set text
-description. So this actually allows us to send a description field, but ultimately
-when we send new, send it, it calls set, text description, and then we call an L to
-BR on it. So we're gonna do the exact same thing inside of our input class. So now we
-need to move this into our input class. It's all, copy it, delete it, and then paste
-it in here.
+Let's get started! In the `src/Dto/` directory, create a new class called
+`CheeseListingInput`. This time, let's move *all* of the fields that we can
+currently *send* to create or update a `CheeseListing` - like `title` and `price`,
+into here.
 
-And then ultimately, and then this uses assay realize names. I'll read type the M
-there had tab to add the Euston before that. Now it's only when we call set
-description, we set this on a description property. So I'm going to add a public
-description property up here. We're not going to add a group on there because we're
-not allowing that field to be written directly. It's just that we need to store the
-data. One set text description is called snow over in she's listing. If I search for
-groups, there are no groups. Even the annotation even isn't even used anymore. I can
-you remove ad groups and the serialized name use Damon. There's nothing inside here
-about a serialization of our properties. Okay. So we have Archie's listing input to
-actually tell API offering to use it. It's the same as output up here and on our
-jesus' intensity, we'll say input = remove the class and we'll say cheese linear
-listing input, Hong Kong class. And of course we'll need a use statement for that. So
-up here, I'll say use cheese listing input. Okay. We don't have any data transformer
-yet, but this should be enough to get this to show up in our docs. So if we go over
-here, so we move over to our browser, I'm going to refresh our docs homepage and go
-down to our post and point for cheeses and hit try it. And, Oh, interesting.
+Start with a `public $title`, and put some PHPDoc on it. The in `CheeseListing`,
+steal `@Groups`, delete it - we won't need any groups here anymore - and paste
+the `@Group` on top of the new `title` property. Oh, but, I'll re-type `up` on
+`Group` and hit tab so that PhpStorm adds the `use` statement for me.
 
-You know, only has the description of fear field in here, which is odd, but let's
-ignore that for now. Let's actually try this end point. So I'll pass a title and wave
-the description, just set a string. And I'm also going to pass a valid owner. So I'll
-say owner to /API /users /one. I know that one of my users in the database is
-actually, this one might want to double check in your database. All right. So let me
-try this. I had execute 400 air. It doesn't work, but the way it doesn't work as the
-coolest part, we get a bunch of this value should not be blank on title, description,
-price, even though we actually sent the title property. So thanks to our input =
-behind the scenes. When we send this JSON up here, APAP, Javier is now D serializing
-that into HES listing input object.
+The other fields we need are `public price$`, `owner` and `isPublished`. Let's
+go steal *their* groups: find `price`, move its `@Groups` over, then for `owner`,
+do the same... and finally, grab the `@Groups` for `isPublished`.
 
-Then after that, it creates a new cheese listing entity object, but nothing ever
-takes the Jesus thing, input object that has all the data and actually puts that data
-onto the cheese listing. So ultimately API platform validates and then tries to save
-a Jesus thing that has no data on it. So to fix this, we need our data transform. So
-inside of our data, transformer directory create a new PHP class called jeez listing
-input data transformer. And I'm going to make this, uh, implement of course, data
-transformer interface. And now I'll go into code generate or Command + N on a Mac and
-implement the two methods that we need.
+Now, there is *one* other field: search for `groups`. Yep, `setTextDescription`.
+This allows the user to send a `description` field... but ultimately the
+deserialization process calls `setTextDescription`, and then we call `nl2br` on
+it. We want to do the *exact* same thing in the input class. So, copy this method,
+delete it, and paste it at the bottom of `CheeseListingInput`. Re-type the end
+of `@SerializedName` and auto-complete to get its `use` statement.
 
-And as we know, this will instantly start being called now to support the
-transformation. This will look a little bit different for an input format. So I
-actually want to dump these three variables so we can see what they look like now,
-instead of using DD, I'm gonna use dump here. So dump data to in context, I'm not
-using DD because I don't actually want it to dump and die and print out the HTML
-because I'm not, that's not going to be very easy for me to, to read inside of this
-box down here. So instead I'm going to use dump so that this actually saves to the
-profiler. You'll see, in a second, if you don't remember how that works and then down
-at the bottom here, it will just return false. So that, uh, this, this method doesn't
-cause an air cause it needs to return a Boolean.
+Of course, when the deserializer *calls* this method, we're storing the end result
+on a `description` property... which doesn't exist yep. Let's add it:
+`public $description`. But we're *not* going to put this in any groups because
+we *don't* want this field to be writable directly - it's just there to store
+data.
 
-Alright, let's go over here and execute and, Oh, huh? It actually did do the dump in
-line. Now, normally when you use dump without dye, it doesn't dump it on the page. It
-just saves it so that you can look at it in the profiler. The reason we're seeing the
-dump here is I'm actually missing the little bundle that does that integration
-between the dump a function and the web debug toolbar. So to install it, find your
-terminal and run a composer require Symfony /debug bundle. So I have the bundle for
-the web debug toolbar, but I don't have the debug bundle, which as a couple of extra
-debugging tools, [inaudible]
+Ok! Back in `CheeseListing`, if we search for "Groups", cool! The gray means that
+both the `Groups` and `SerializedName` `use` statements are *not* needed anymore
+because we have moved *all* of this stuff. Remove both.
 
-Once this finishes, we should be able to go back over here and execute again and
-perfect 400 air JSON response, no HTML in there, but I can go down here to the, uh,
-the web, my web toolbar. And I'm actually gonna open this link here in new tab and
-perfect. It automatically took me down to the, uh, the debug columns so I can see the
-things being dumped right there and these correspond to the data too, and context. So
-next let's actually fuse this information to finish our data, data transformer and
-get this thing working.
+There is now *nothing* inside of `CheeeListing` about serializing or deserializing.
 
+Ok! Our `CheeseListingInput` is ready! To tell API Platform to *use* it, it's
+the same as `output`. On `CheeesListing,` add `input=`, remove the quotes, and
+say `CheeseListingInput::class`. Don't forget to add the `use` statement manually:
+`use CheeseListingInput`.
+
+## How Deserializing Works
+
+Ok! We don't have a data transformer yet, but this *should* be enough to get this
+to show up in our docs. Find your browser and refresh the docs homepage. Go
+down to the POST endpoint for cheeses and hit "Try it". And... Oh! Interesting.
+It only shows the `description` field here, which is odd... but let's ignore that
+for now.
+
+Try the endpoint with a `title`, `description` and a valid `owner`: `/api/users/1`.
+Double-check your database to make sure that's a *real* user.
+
+Testing time! Hit Execute and... 400 error! We didn't expect it to work yet, but
+the *way* it doesn't work is the cool part: we get a bunch of "this value should
+not be blank" errors on title, description and price... even though we actually
+*sent* some of these fields!
+
+Here's what's going on: thanks to the `input=` that we just added, when we send
+JSON to a `CheeseListing` operation, the serializer is now taking that JSON and
+using it to create a `CheeseListingInput` object - *not* a `CheeseListing` object.
+
+But... because we haven't created a data transformer yet, nothing ever *takes*
+that `CheeseListingInput` object and converts it into a `CheeseListing`. So...
+API Platform just creates an *empty* `CheeseListing`... then runs validation on
+that empty object and - if that had passed - it would try to save it.
+
+To fix this, we know the answer: we need a data transformer.
+
+## Creating the DataTransformer
+
+Inside of the `DataTransformer` directory, create a new PHP class called
+`CheeseListingInputDataTransformer`. Make this implement, of course,
+`DataTransformerInterface` and then go to Code -> Generate - or Command + N on
+a Mac - and generate the two methods we need.
+
+This time, the `supports()` method will look a *little* bit different. Dump
+all three arguments... and actually use *dump()* instead of `dd()` because we're
+going to test this inside the interactive docs... and reading HTML inside the
+response looks ugly there. But `dump()` will save the HTML to the *profiler* so
+we easily look ata it.
+
+Anyways, dump `$data`, `$to` and `$context`. And at the bottom return `false`
+just so this method doesn't cause an error: it *needs* to return a boolean.
+
+Ok: move over, hit "Execute" and... huh? It... actually *did* dump the variables
+right in the response... this is what I was trying to avoid? Normally, if you
+use `dump()` instead of `dd()`, it doesn't dump in the *response*, it instead
+saves it to the profiler.
+
+The reason this isn't happening is that I'm missing a bundle that adds the
+integration between the `dump()` function and the profiler. To install it, find
+your terminal and run:
+
+```terminal
+composer require symfony/debug-bundle
+```
+
+Once this finishes... we *should* be able to go back to the browser, hit Execute
+again and... perfect! A 400 error JSON response, but *no* HTML.
+
+To see the dumped variables, go down to the web debug toolbar and open the last
+request's profiler in a new tab. Nice! It automatically took me to the Debug
+section: here are the `$data`, `$to` and `$context` variables.
+
+Next: let's use this information to finish our data transformer and get this
+thing working!
