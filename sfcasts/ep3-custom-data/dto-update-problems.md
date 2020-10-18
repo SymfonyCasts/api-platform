@@ -1,80 +1,97 @@
-# Dto Update Problems
+# Input DTO Update Problems
 
-Coming soon...
+Our `CheeseListingInput` DTO now works to create *new* listings, but it does *not*
+work for updates. The reason is simple: our data transformer always creates *new*
+`CheeseListing` objects. What we *really* need to do is query for an existing
+`CheeseListing` object from the database if this is an update.
 
-Our input DTO now works to create new listings, but it does not work for updates yet.
-Like if we used the put end point to update AGS listing, and the reason is simple,
-our data transformer is always creating new cheese listing objects. What we really
-need to do is query for the existing jesus' and object. If this is in for an update
-and doing this as easy enough, when we make a put request or really any item, or
-really any Ida operation EBIT platform already queries for the underlying keys
-listing entity object, we just need to use that in our transformer. How API platform
-puts the object, the cheese listening object into the context, checking this out. We
-can say, if is set context less for bracket and then use abstract item normalizer
-colon, colon object to populate. This is actually a feature that's part of, um, Oh,
-let me fix my syntax.
+And... doing this as pretty easy! When we make a put request - or really, *any*
+item operation - API Platform *already* queries for the underlying `CheeseListing`
+entity object. We just need to use *that* in our transformer. How? API Platform
+puts that `CheeseListing` into the *context*.
 
-This is actually related to a feature that's just part of Symfony serializer.
-Normally, if you DC realize some JSON into an object, it's going to create a new
-object, but if you want it to update an existing object, then you actually pass the
-object on this key, inside the context, and then it will DC realize and update that
-object. So if you got bought from leverages this internally, and in the case of an
-input DTO, the object to populate is actually the underlying entity, the cheese
-listing object. So here we can say cheese listing = and I'll copy that long context
-thing. jesus' thing = context, abstract item normalizer object to populate else. And
-then I'll copy and move up. The cheese listing = new cheese listing line. That's it
-notice that this means that the title can't be updated won't won't be changeable on
-update. And that was actually, and that's because the only way to set the cheese
-listing on our title and cheese listing is actually being a constructor. And that was
-actually already the case before the title is only settable because the title is only
-settable on the cheese listing constructor. There's no set. It's not a constructor,
-but there's no set title.
+## Fetching the Entity from the Context
 
-The title was never used on update. APL platform does a great job of making our API
-work like our classes work. Anyways, let's try this over here. I still have my post
-end point up. I'm actually gonna copy all the data I sent with my post end point. And
-let's see this created a new one called /API /jesus' /53. So I'll close up that post
-endpoint. Let's open up the put end point. I'll hit try it out. But 53 for the ID and
-here I will paste in all of the fields. Well, let's change the price to be 5,000. And
-when we execute, Oh, we got 500 air cannot call them. Owner ID cannot be no figuring
-out. This takes a little bit of digging. Here's the problem. If you look over and
-look at our cheeses and input, the owner is in the cheese collection post group,
-which means it's not actually a field that's settable on update only on create so
-effectively, even though we're sending this owner a property here, that's not being
-a, that's basically being ignored.
+So... where *does* API Platform put the `CheeseListing` object after it queries
+for it? Check it out: if `isset($context[])` and look for a special key:
+`AbstractItemNormalizer::OBJECT_TO_POPULATE`. Oh, but let me fix my syntax.
 
-The problem is that then is when it's DC realize into the cheese listing input object
-inside of our transformer, this cheese listing, this input has its owner is no, which
-ultimately sets a no on our cheese listing. And it saves, tries to save with the no
-owner. But actually if you back up, there's a bigger problem. That's causing this in
-reality, when we're past the cheese listing input object, if a field, if a property
-on it is no, we don't really know if that field was no, because we actually sent
-Knoll for a field like for example, title Knoll, or if we simply left off that field,
-like onerous is effectively not even there because it's being ignored.
+This is actually a feature that's part of Symfony's serializer. Normally, if you
+deserialize some JSON into an object, the serializer will create a *new* object.
+But if you want it to update an *existing* object, you need to pass that object
+on this key in the context when deserializing. The serializer will notice it and
+use it.
 
-So we can't tell on the cheeses and input whether a field is actually set as no, or
-whether it's just simply being wasn't sent and should therefore be ignored. Ideally
-this cheese was an input object would first be initialized using the data from the
-cheese listing on a database, for example, where owner is set to a user object and
-then it would be did JSON, the, the JSON Fields that were sent would get serialized
-onto, but that doesn't happen. So we basically don't have enough information in this
-function to figure out if these fields were actually, if these fields are no, if they
-were actually sent or not, this is actually a missing feature in API platform. Well,
-it was until we talked to the API platform team about it, and then they added this
-feature for us. You can see it if you go to /API platform /core /poll /37 Oh one,
-which talks about a new feature called pre hydrate, which is going to be part of
-eight HubSpot from 2.6.
+In the case of an input DTO, the `OJBECT_TO_POPULATE` is *actually* the underlying
+`CheeseListing` object. So we can say `$cheeseListing = ` and I'll copy that long
+`$context` and paste it here. Else, copy and move up the
+`$cheeseListing = new CheeseListing()` line.
 
-And the way it's going to work is by the way I have a cool, uh, get up login is it's
-going to allow us to implement a new data transformer initializer interface on our
-data transformer, which is going to allow us to have this initialize method. When as
-soon as we have this, this is going to be called before our transform method. And the
-job here will be to grab the object, to populate off of the context and use it to
-create an initialize the data on our input object. So ultimately return our input
-object. Then, then now that our input object has the data initialized on it. When it
-calls transform this input object, won't be empty. This input object will, um, be the
-result of having that prefilled data. And then the JSON, uh, DC realized onto it.
-This should be part of API from 2.6, but since it's not available yet, let's
-implement this feature ourselves. How by leveraging a trick inside a custom
-normalizer that's next.
+That's it! Notice this means that the title *can't* be updated: if the user sent
+that field on a PUT request, we *can't* change it on the final `CheeseListing`
+because the *only* way to *set* that on a `CheeseListing` is via the constructor.
+There is no `setTitle()` method.
 
+And... that was actually *already* the case before! The `title` field was *never*
+used on update. API Platform does a great job of making our API work like our
+classes work.
+
+## Update Problem: Not Overriding Existing Data
+
+Anywho, let's try this. Back at the docs, I still have the POST endpoint open.
+Copy all the data I sent. And, let's see... this created a new cheese listing with
+the id `53`. Close up this operation, open  the put operation, hit "Try it out",
+put 53 for the ID and, in the box, paste the fields. Let's change the price to
+be 5,000.
+
+Hit Execute. And... ah! 500 error!
+
+> owner_id Cannot be null
+
+Figuring this out requires a bit of digging. Look over at `CheesesListingInput`.
+The owner is in the `cheese:collection:post` group. Thanks to our denormalization
+groups, this means it can only be set on an *create*. This means that, even though
+we're sending `owner`, it's being ignored.
+
+Ok... so why is that a problem? That *is* the behavior we want! The issue is that
+when the serializer deserializes the JSON into the `CheeseListingInput`, the
+`owner` property will be `null`... and then we pass that `null` value onto
+`$cheeseListing->setOwner()`. When API Platform tries to save the `CheeseListing`
+with no owner... error!
+
+But... let's back up: there's a bigger problem that's causing this. In reality,
+when we're passed the `CheeseListingInput` object, if a property on it is null,
+we don't really know if that field is null because the user explicitly *sent*
+`null` for a field - like `title: null` - or if they simply omitted the field.
+
+And... that's important! If a field is is *not* sent on an update, then it means
+the field should *not* be changed: we should use the value from the database.
+
+Ideally, this `CheeseListingInput` object would *first* be *initialized* using the
+data from the `CheeseListing` that's currently in the database. And *then* the
+JSON would be deserialized onto it. If we did this, any fields that were *not*
+send in the JSON would *remain* at their original value.
+
+But... that does *not* happen and it means that we don't have enough information
+in this function to figure out how to handle null fields.
+
+## The new DataTransformerInitializerInterface
+
+This is actually a missing feature in API Platform. Well, it was until we talked
+to the API Platform team about it... and then they added the feature. You can see
+it as [pull request 3701](https://github.com/api-platform/core/pull/3701) and it
+should be available in API Platform 2.6.
+
+Here's how it's going to work: you'll add a new interface to your data
+transformer: `DataTransformerInitializerInterface`, which will force us to have
+an `initialize()` method.
+
+As soon as we have this, API Platform will call it *before* our transform method.
+Our job will be to grab the `OBJECT_TO_POPULATE` off of the `$context` and use it
+to create and initialize the data on a `CheeseListingInput`. Then, when
+API Platform calls `transform()`. it will pass us an input object that is
+pre-filled with data.
+
+If you're using API Platform 2.6 and have any questions, let us know in the
+comments. But since 2.6 hasn't been released yet, let's implement this feature
+ourselves next by leveraging a trick inside a custom normalizer. That's next.
