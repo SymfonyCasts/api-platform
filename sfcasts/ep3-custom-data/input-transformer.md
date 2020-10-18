@@ -1,9 +1,9 @@
 # Input Data Transformer
 
-Coming soon...
-
-This also just fixed something in our documentation. Go back to the docs tab...
-actually, I'm going to open a new tab so I don't lose my testing data.
+Adding the `@var User` above the `owner` property was enough for the denormalizer
+to automatically convert the IRI string we're sending in our JSON into a proper
+`User` object. Yay! And this *also* fixed something in our documentation. Go back
+to the docs tab... actually, I'll open a new tab so I don't lose my testing data.
 
 On the original tab, until now, when we hit "Try it out", it only listed the
 `description` field in the example JSON. The docs didn't think that `title`,
@@ -28,32 +28,38 @@ and... yes! Now it sees as the fields.
 
 ## Finishing the transform Logic
 
-All right. So let's finish our job here inside of our data transformer, which is just
-put all the data into CI's listing. So instead of returning, let's say she's listing
-= new cheese listing and I can pass the titles, the first argument. So I'll say
-input,->title, and then she's listing set description, input,->description, she's
-listing set price, and put->price. She is listing set owner input,->owner, which we
-know will be that user object. And then she is listing->set is published to
-input.->is published, and then we will return that she's listing from the bottom.
-Okay. Moment of truth. I'll close my extra tab over here, go back to my original
-documentation tab, hit execute, and it fails with argument one past two cheeses and
-set price must be of type and no given. So actually I'm missing my price field up
-here, which is causing there to be a type error.
+Ok: let's finish our our data transformer. Instead of returning, say
+`$cheeseListing = new CheeseListing()` and we can pass the title as the first
+argument: `$input->title`. Then, some good, boring work:
+`$cheeseListing->setDescription($input->description)`,
+`$cheeseListing->setPrice($input->price)`,
+`$cheeseListing->setOwner($input->owner)` - which is a `User` object - and
+She is listing set owner input,->owner, which we
+`$cheeseListing->setIsPublished($input->ispublished)`. Return `$cheeseListing`
+at the bottom.
 
-When I pass Noldus at price, we're actually going to talk about this later. When we
-talk about validation for now, let's present, pretend that we're always going to pass
-every field that we need. So I'll pass a price set to 2000, try it again. And of
-course I have the same thing with set is published really this I meant to default to
-false. So the better way to fix that is actually just to have a default value in the
-input. Now let's see if I remembered everything and got it. Two Oh one status code
-that was just created.
+Okay: moment of truth. I'll close the extra tab, go back to the original
+documentation tab, hit Execute and... it fails? Argument 1 passed to
+`CheeseListing::setPrice()` must be of type int, null given.
 
-That is awesome. So it's a three step process. First API platform, DC realizes
-whatever JSON we send into our CI's listing input object. Second, we transform that
-cheese listing input, object image. We real cheese listing and our data transformer.
-And then third, the norm doc, the normal doctrine data persister saves things like
-always. So this works great, but the put up, but if, look at the docs, this put up
-end point here that updates the cheese resource. This will actually not work yet.
-Why? Because we're always creating a new cheesing object, which would cause a new
-item to be inserted into the database. Just getting the update to work with DTO
-input. DTO is a little bit tricky. So let's handle that next.
+The problem is that I forgot to pass a `price` field up in in the JSON, which causes
+the type error. We're going to talk more about this later when we chat about
+validation, bug for now, let's pass every field we need: `price` set to 2000.
+
+Try it again. And... bah! I get the same error for the `setIsPublished() `method.
+I really meant to default `isPublished` to false in `CheeseListingInput`.
+
+Ok, *one* more time. And... yes! A 201 status code. It worked!
+
+So using a DTO input is a 3 step process. First, API Platform deserializes
+the JSON we send into a `CheeseListingInput` object. Second, *we* transform that
+`CheeseListingInput` into a `CheeseListing` in our data transformer. And then
+third, the normal doctrine data persister saves things. That's a really clean
+process!
+
+But... back at the docs... if you look at the put operation that updates
+cheeses... this will *not* work yet. Why not? Because our data transformer always
+creates *new* `CheeseListing` objects... which would cause an INSERT query if
+we tried it.
+
+Next: let's make this work. It's... a bit trickier than it may seem at first.
