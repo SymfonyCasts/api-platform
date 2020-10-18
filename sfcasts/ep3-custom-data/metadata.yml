@@ -35,6 +35,7 @@ chapters:
     - dto-quirks
     - dto-embedded-quirks
     - input-dto
+    - denormalize-iris
     - input-transformer
     - dto-update-problems
     - input-initializer
