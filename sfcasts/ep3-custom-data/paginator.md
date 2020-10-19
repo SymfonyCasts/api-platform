@@ -19,21 +19,30 @@ Right now, our collection endpoint lists *every* daily stats items... no matter
 Here's how pagination works: inside our data provider, instead of returning
 an array of `DailyStats` objects from `getCollection()`, we're going to return a
 `Paginator` object that *contains* the `DailyStats` objects that should be returned
-for whatever page we're on.
+for whatever page we're on:
+
+[[[ code('77f79ee85e') ]]]
 
 In the `src/DataProvider/` directory, create a new PHP class called
 `DailyStatsPaginator`. The only rule is that this needs to implement a
-`PaginatorInterface` from `ApiPlatform`. I'll go to Code -> Generate - or
-Command + N on a Mac - and select "Implement Methods". Select all
-*five* methods we need.
+`PaginatorInterface` from `ApiPlatform`:
+
+[[[ code('34d37e9d93') ]]]
+
+I'll go to "Code"->"Generate" - or `Command`+`N` on a Mac - and select
+"Implement Methods". Select all *five* methods we need.
 
 Perfect! Oh, but I'll move `count()` to the bottom... it just feels better for me
-down there.
+down there:
+
+[[[ code('4b3ce0f923') ]]]
 
 To get this working, let's return some dummy data! In `getLastPage()`, pretend
 that there are two pages, for `getTotalItems()`, pretend there are 25 items, for
 `getCurrentPage()`, pretend we're on page 1 and for `getItemsPerPage()` return that
-we want to show 10 items per page. For `count()` return `$this->getTotalItems()`.
+we want to show 10 items per page. For `count()` return `$this->getTotalItems()`:
+
+[[[ code('77a58877ab') ]]]
 
 Oh, yea know what? When I recorded this, I made a careless mistake. The `count()`
 method should actually return the number of items on *this* page - not the *total*
@@ -44,12 +53,14 @@ Ok: there are no `DailyStats` objects inside this class yet... but let's
 do as *little* as possible to see if we can get things working.
 
 Back in the provider, instead of returning the array of objects, return a new
-`DailyStatsPaginator`.
+`DailyStatsPaginator`:
+
+[[[ code('69ee87dae7') ]]]
 
 Ooh. Let's try it. Head back over and refresh the collection endpoint. And...
 error!
 
-> class `DailyStatsPaginator` must implement the interface `Traversable` as part
+> Class `DailyStatsPaginator` must implement the interface `Traversable` as part
 > of either `Iterator` or `IteratorAggregate`.
 
 Wow. Okay. So the `PaginatorInterface` gives API Platform a bunch of info
@@ -58,12 +69,19 @@ But ultimately, whatever we return from `getCollection()` needs to be something
 that API platform can *loop* over - can iterate over.
 
 In other words, we need to make our paginator *iterable*. One way to do that is
-to add a second interface: `\IteratorAggregate`. And then, I'm going to create a
-new private property called `$dailyStatsIterator`.
+to add a second interface: `\IteratorAggregate`:
 
-Finally, thanks to the new interface, at the bottom, go to Code -> Generate - or
-Command + N on a Mac - and select "Implement Methods". This requires one new function
-called `getIterator()`.
+[[[ code('b2a353b51b') ]]]
+
+And then, I'm going to create a new private property called `$dailyStatsIterator`:
+
+[[[ code('920ee69b02') ]]]
+
+Finally, thanks to the new interface, at the bottom, go to "Code"->"Generate" - or
+`Command`+`N` on a Mac - and select "Implement Methods". This requires one new function
+called `getIterator()`:
+
+[[[ code('07e174f5eb') ]]]
 
 Inside, first check to see if `$this->dailyStatsIterator === null`. If it *is*
 null, set it: `$this->dailyStatsIterator = ` and use another core class
@@ -72,7 +90,11 @@ TODO up here:
 
 > todo - actually go "load" the stats
 
-At the bottom of the method, return `$this->dailyStatsIterator`.
+[[[ code('4815c7cd45') ]]]
+
+At the bottom of the method, return `$this->dailyStatsIterator`:
+
+[[[ code('30655f9bf7') ]]]
 
 Basically, we're creating an iterator with the `DailyStats` objects inside. Well,
 it's an empty array now, but it *will* hold `DailyStats` soon. The property
@@ -89,24 +111,41 @@ links below to tell us how to get to the first, next and last pages.
 To do the heavy lifting of loading the `DailyStats` objects, we can leverage the
 `StatsHelper` object, which we have access to inside of `DailyStatsProvider`.
 
-Inside `DailyStatsPaginator`, add a constructor: public function `__construct()`
-with `StatsHelper $statsHelper`.
+Inside `DailyStatsPaginator`, add a constructor: `public function __construct()`
+with `StatsHelper $statsHelper`:
+
+[[[ code('2973f1157f') ]]]
 
 Now, this class is *not* a service... So Symfony is *not* going to autowire this
 argument. This is really a "model" class that represents a paginated collection
 of `DailyStats`. But in a minute, we'll pass `StatsHelper` directly when we *create*
 this object.
 
-Anyways, hit Alt + Enter and go to "Initialize properties" to create that property
-and set it. Then, before we use it, go to `DailyStatsProvider` and pass
-`$this->statsHelper` when we instantiate `DailyStatsPaginator`.
+Anyways, hit `Alt`+`Enter` and go to "Initialize properties" to create that
+property and set it:
+
+[[[ code('5d5c77cca1') ]]]
+
+Then, before we use it, go to `DailyStatsProvider` and pass `$this->statsHelper`
+when we instantiate `DailyStatsPaginator`:
+
+[[[ code('873c5e49ee') ]]]
 
 For now, we're going to *completely* ignore pagination and still show *all*
 of the `DailyStats` no matter *which* page we're on. To do that, down in
-`getIterator()`, instead of the empty array, pass `$this->statsHelper->fetchMany()`.
+`getIterator()`, instead of the empty array, pass `$this->statsHelper->fetchMany()`:
+
+[[[ code('61986e268b') ]]]
 
 Oh, and by the way, you could *now* update the `count()` method to leverage
-`getIterator()`: `return iterator_count($this->getIterator())`.
+`getIterator()`: `return iterator_count($this->getIterator())`:
+
+```php
+public function count()
+{
+    return iterator_count($this->getIterator());
+}
+```
 
 Anyways, let's check it out! Head over to your browser, refresh and... it works!
 Well, `hydra:member` still contains *every* `DailyStats` record... but all the
