@@ -39,6 +39,7 @@ chapters:
     - input-transformer
     - dto-update-problems
     - input-initializer
+    - input-initializer-logic
     - dto-organization
     - type-validation
     - input-dto-validation
