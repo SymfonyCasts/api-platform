@@ -1,16 +1,21 @@
 # Custom Resource GET Item
 
-Our `get` collection operation for `DailyStats` is working nicely. But you know
+Our GET collection operation for `DailyStats` is working nicely. But you know
 what? I'd love to *also* be able to fetch stats for a *single* day. The docs say
 that this operation *already* exists... but we know it's a lie!
 
 If you look at the top of the `DailyStats` class, we *kind of* added the `get`
-item operation... but we made it return a 404 response. We did that as a workaround
-so that API Platform could generate an IRI for `DailyStats`. Now I want to make
-this *truly* work.
+item operation... but we made it return a 404 response:
+
+[[[ code('927ae4b7e3') ]]]
+
+We did that as a workaround so that API Platform could generate an IRI for
+`DailyStats`. Now I want to make this *truly* work.
 
 Remove all of the custom config so that we now have a normal get item operation
-and a normal get collection operation.
+and a normal get collection operation:
+
+[[[ code('cec6f107f9') ]]]
 
 Before we do *anything* else, let's see what happens if we try it. Go to
 `/api/daily-stats.jsonld`, copy the `@id` for one of the daily stats, and navigate
@@ -18,15 +23,24 @@ there. A 404! Oh, but let me add `.jsonld`. *There's* the 404 in the JSON-LD
 format.
 
 To get the collection operation working, we created a `DailyStatsProvider` that
-was a *collection* data provider. To get an *item* operation working, we need an
-*item* data provider. Since we don't have one yet, 404!
+was a *collection* data provider:
+
+[[[ code('edba5e37dd') ]]]
+
+To get an *item* operation working, we need an *item* data provider. Since
+we don't have one yet, 404!
 
 ## Adding ItemDataProviderInterface
 
 No problem for us: we've done this before! Add another interface called
-`ItemDataProviderInterface`. Then, down here, go to Code -> Generate - or
-Command + N on a Mac - select "Implement Methods" and implement the `getItem()`
-function that we need.
+`ItemDataProviderInterface`:
+
+[[[ code('611cc77506') ]]]
+
+Then, down here, go to "Code"->"Generate" - or `Command`+`N` on a Mac - select
+"Implement Methods" and implement the `getItem()` function that we need:
+
+[[[ code('c24ac6aaf6') ]]]
 
 Our job here is to read this `$id` and return the `DailyStats` object for that
 `$id`, or null if there is none.
@@ -43,12 +57,18 @@ with a `fake_stats.json` file inside. *This* will be our data source. Right next
 to this is a `StatsHelper` class, which holds code to read from that file.
 
 Copy both of these. Then create a new directory in `src/` called `Service/` and
-paste them both there.
+paste them both there:
 
-Perfect. Let's take a quick look at the new `StatsHelper`. There's nothing fancy:
-it has three public methods - `fetchMany()`, where you can pass it a limit, offset
-and even some filtering criteria, which we'll talk about later - `fetchOne()`, where
-you pass a date string and also a `count()` method.
+[[[ code('1ea01a54b4') ]]]
+
+Perfect. Let's take a quick look at the new `StatsHelper`:
+
+[[[ code('21fff5e288') ]]]
+
+There's nothing fancy: it has three public methods - `fetchMany()`, where you
+can pass it a limit, offset and even some filtering criteria, which we'll talk
+about later - `fetchOne()`, where you pass a date string and also a `count()`
+method.
 
 And... that's basically it. The rest of this file is boring code to read that
 `fake_stats.json` file, parse through it and create `DailyStats` objects.
@@ -58,10 +78,18 @@ And... that's basically it. The rest of this file is boring code to read that
 In `DailyStatsProvider` let's use this! We won't need the `CheeseListingRepository`
 anymore: `StatsHelper` takes care of all of that. So autowire it instead:
 `StatsHelper $statsHelper`, then `$this->statsHelper = $statsHelper` and rename
-the property to `$statsHelper`. We can also get rid of couple of `use` statements.
+the property to `$statsHelper`:
+
+[[[ code('720c1f2093') ]]]
+
+We can also get rid of couple of `use` statements:
+
+[[[ code('6f914a7935') ]]]
 
 Down in `getCollection()`, it's now as simple as return
-`$this->statsHelper->fetchMany()`. For now, pass it *no* arguments.
+`$this->statsHelper->fetchMany()`. For now, pass it *no* arguments:
+
+[[[ code('a88790b300') ]]]
 
 Cool! Let's see if that works. Go back to the collection endpoint, refresh and...
 yes! We get a big list of `DailyStats` data coming from that JSON file!
@@ -70,12 +98,20 @@ yes! We get a big list of `DailyStats` data coming from that JSON file!
 
 Let's use `StatsHelper` to finish `getItem()`. Thanks to the `supports()` method,
 our `getItem()` method *should* be called *every* time a request is made to an "item"
-operation for `DailyStats`. Let's make sure that's working with `dd($id)`.
+operation for `DailyStats`:
+
+[[[ code('8e0fd2bfa8') ]]]
+
+Let's make sure that's working with `dd($id)`:
+
+[[[ code('8bbe08a6e2') ]]]
 
 Back at the browser, go forward, refresh and... nice! Our date string is dumped.
 
 Now over in `getItem()`, we can return `$this->statsHelper->fetchOne()` and
-pass it the date string, which... is the `$id` variable.
+pass it the date string, which... is the `$id` variable:
+
+[[[ code('7d60c6c1b5') ]]]
 
 Testing time! Over at the browser, refresh! 404!? I mean, of course! The date in
 the URL is *not* one of the dates I have in my JSON file. Go back one page, refresh
