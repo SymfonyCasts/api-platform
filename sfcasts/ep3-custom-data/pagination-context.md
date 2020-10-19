@@ -14,36 +14,54 @@ let's force them to be passed in via the constructor. Add `int $currentPage` and
 `int $maxResults` arguments to the constructor. I'll even add a comma to separate
 them!
 
-Next, hit Alt+Enter and go to "Initialize Properties" to create those two properties
-and set them.
+[[[ code('8ce9fe45d2') ]]]
+
+Next, hit `Alt`+`Enter` and go to "Initialize Properties" to create those two
+properties and set them:
+
+[[[ code('4ae0035815') ]]]
 
 Sweet! Now in `getCurrentPage()`, return `$this->currentPage` and in
-`getItemsPerPage()`, return `$this->maxResults`.
+`getItemsPerPage()`, return `$this->maxResults`:
+
+[[[ code('333ea5b133') ]]]
 
 ## Completing all the Paginator Methods
 
 And... we even have enough info to complete the *other* methods. For `getLastPage()`,
-I'll paste in a calculation. This returns the ceiling of the total items divided
-by the the max items per page. And if that equals zero because there are *no*
-results, return 1.
+I'll paste in a calculation:
 
-Next, in `getTotalItems()`, `return $this->statsHelper->count()`.
+[[[ code('af2ad4f85c') ]]]
+
+This returns the ceiling of the total items divided by the max items
+per page. And if that equals zero because there are *no* results, return 1.
+
+Next, in `getTotalItems()`, `return $this->statsHelper->count()`:
+
+[[[ code('36115f720a') ]]]
 
 That method returns the *total* number of results, not just the results on *this*
 page.
 
-Finally in `getIterator()`, we need to figure out which results we should show
+Finally, in `getIterator()`, we need to figure out which results we should show
 based on the current page. We'll do that by calculating a limit and offset. Say
-`$offset =` and I'll paste in another calculation. The offset is the current page
-minus one, times the items per page.
+`$offset =` and I'll paste in another calculation:
+
+[[[ code('6a362bdc15') ]]]
+
+The offset is the current page minus one, times the items per page.
 
 Now, for `fetchMany()`, this accepts limit and offset arguments. Pass it
-the limit - `$this->getItemsPerPage()` - and then `$offset`.
+the limit - `$this->getItemsPerPage()` - and then `$offset`:
+
+[[[ code('6873ef0f4e') ]]]
 
 Phew! Our paginator is now 100% ready. To test it, open `DailyStatsProvider`.
 We now need to pass it the current page and the max items per page. To start,
 let's hardcode these: pretend we're on page 1 and we want to show 3 items per page
-so that pagination is really obvious.
+so that pagination is really obvious:
+
+[[[ code('36a2c50dfa') ]]]
 
 Let's see what it look like! Refresh the page and... awesome! 3 results,
 30 `totalItems` - which is correct - and we're currently on page 1, next is page
@@ -66,8 +84,14 @@ parameter directly because API Platform *already* has this info! Where? It's
 hiding in a service called `Pagination`: a service that we can autowire.
 
 Add a second argument to `DailyStatsProvider`: `Pagination` - the one from
-`DataProvider` and call it `$pagination`. I'll hit Alt+Enter and go to
-Initialize Properties to create that property and set it.
+`DataProvider` and call it `$pagination`:
+
+[[[ code('20e648b6ff') ]]]
+
+I'll hit `Alt`+`Enter` and go to Initialize Properties to create that property
+and set it:
+
+[[[ code('99c9bc8e8a') ]]]
 
 Ok: `Pagination` is an object that knows everything about the *current*
 pagination situation. So it has methods like `getPage()` and `getOffset()`,
@@ -77,7 +101,9 @@ of info as an array.
 
 Check it out: use the odd function `list()` to create three variables - `$page`,
 `$offset` and `$limit` - and set this to `$this->pagination->getPagination()`
-passing `$resourceClass` and `$operationName`.
+passing `$resourceClass` and `$operationName`:
+
+[[[ code('e72c95dad8') ]]]
 
 Notice that there *is* a third argument - `$context`. I'm *not* going to
 pass that simply because I don't *have* `$context` in this method. But if you *did*
@@ -86,21 +112,26 @@ edge cases where pagination changes based on the context - then make your class
 implement `ContextAwareCollectionDataProviderInterface`, which allows you to have
 a `$context` argument on `getCollection()`.
 
-Anyways, hold Command or Ctrl to jump into the `getPagination()` method. This
+Anyways, hold `Command` or `Ctrl` to jump into the `getPagination()` method. This
 returns an array containing the current page, the offset and the limit. We're
 using the strange `list()` function as a quick way to create three new variables:
 `$page` set to the array's zero index, `$offset` set to the 1 index and `$limit`
 to the 2 index.
 
-Thanks to this, below, we can use `$page` and `$limit`. We don't actually need
-`$offset` because we're calculating that ourselves.
+Thanks to this, below, we can use `$page` and `$limit`:
+
+[[[ code('4d97e84bfa') ]]]
+
+We don't actually need `$offset` because we're calculating that ourselves.
 
 Let's see if it works! Move over, refresh and this time... hmm. It looks like it's
 not paginating at all. The problem is that API Platform allows 30 items per page
 by default. And our JSON file has... yep - 30 items in it.
 
 Let's limit this to showing 7 results per page. To do that, go over to
-`DailyStats` and pass a new option: `paginationItemsPerPage` set to 7.
+`DailyStats` and pass a new option: `paginationItemsPerPage` set to 7:
+
+[[[ code('0924235100') ]]]
 
 *This* is why we read the max per page - which is the `$limit` - from API Platform's
 `Pagination` object instead of hardcoding it.
