@@ -1,79 +1,90 @@
-# Input Dto Validation
+# Input DTO Validation
 
-Coming soon...
+One nice thing about input DTOs is that after our data transformer is called and
+we return the final `CheeseListing`, that object is validated like normal. We saw
+this: we submitted empty JSON to create a new `CheeseListing` and got back errors
+like "the title should not be blank".
 
-One really nice thing about having an input DTO is that after our data transformer is
-called and we return our cheese return, the final `CheeseListing` object, our entity,
-or `CheeseListing` entity is still validated like normal. We saw this, we submitted an empty
-object to create a new cheese listing. And ultimately we got back air is that the
-title should not be blank. And the description not should not be blank. And these are
-coming from the assert rules that we have on our cheeses against D so yay validation.
-Doesn't change. You can process everything through your input object. It finally ends
-up on your `CheeseListing` entity object, and that is valid like normal. But if you
-want, you do have a choice to make the whole validation set up a bit cleaner. One
-complaint about Symfony's validator system is that for it to work, you need to allow
-your entities to get into an invalid state. Basically, even though `$title`, it has an
-`@Assert\NotBlank()` on it. You need to first allow a blank or no value to be set
-onto this property so that it can then be validated. This was actually the root of
-our problem a second ago.
+These are coming from the `@Assert` rules on `CheeseListing`. `CheeseListing` is
+*still* validated.
 
-Actually, `CheeseListingInput`,
+But... this isn't the *only* way that validation can work. One complaint that you'll
+sometimes here about Symfony's validator is that, for it to work, you need to allow
+your entity to get into an invalid state. Basically, even though `$title` should
+not be blank, we need to first *allow* a blank or null value to be set onto the
+property so that it can *then* be validated.
 
-We added these typecasting here basically to help us set invalid data onto the
-CheeseListing object. So another option is to move the validation from the entity into the
-input class. Then we'll validate. Then we can validate the input class so that if we,
-when we finally set the data on this `CheeseListing` object, we know that this data is in fact
-valid. So let's try this first. Let's undo the typecasting inside of `CheeseListingInput`
-because once we're done, we will know that this will always be validated being put on
-there next, and `CheeseListing`. I'm going to move all of these ad asserts over into
-our input. So this will just be, I'll grab the two off of `$title`, move those onto the
-`$title` property.
+This was at the root of a problem we had a minute ago. In `CheeseListingInput`,
+we had to add some type-casting here to help us set invalid data onto `CheeseListing`
+without causing a PHP error... so that it could *then* be validated.
 
-I'll need a use statement, but I'll grab that in a second. I'll grab the one off
-`$description`, one off of `$price` up and all the delete, the extra one on `$description`. By
-the way, you could also keep these, uh, you could, you still can keep these
-validation rules on your entity if you want to. Um, it depends if you need them, if
-validating your entity in other contexts. So let me write this. I'll copy the not
-blank onto price. And then let's see here also `@IsValidOwner()` custom one. I'll put
-that above owner. Okay, perfect. Now I do need a couple of use statements here. So
-I'm actually going to three type the end K on blank that added the use statement. I
-need up here for all the asserts and for our custom `IsValidOwner`. I'll say E R.
-There we go.
+## Moving the Constraints to the Input
 
-Hit tab as the use statement up for that one as well. All right, cool. So we now have
-all of our validation rules on jesus' input. We have no validation rules anymore on
-our cheese listing. Now, unfortunately, API Platform does not automatically validate
-your input DTO objects. It only validates your final API resource object. So we'll
-need to add the validation manually, but it's kind of a cool exercise to see how you
-could run validation anywhere in API platform and cause the nice validation error
-response that we want here. So to do it inside of our data transformer, we're
-literally going to do validation right here. So first of all, need the validator. So
-I'll say public function `__construct()` and then say `ValidatorInterface`
-But watch out here, grab the one from `ApiPlatform\`, not `Symfony\`. I'll
-explain why in a second, I'll call that validator and I'll go to Alt + Enter and go to
-"Initialize properties" to create that property and set it now down here, by the time
-we're past input here, this is going to be the `$input` object that contains the DC
-realized JSON onto it.
+Another option is to move the validation from the entity into the *input* class.
+If we did that, then when we set the data onto this `CheeseListing` object, we would
+*know* that the data is - in fact - valid.
 
-So we actually want to basically validate it right here on the first line before we
-use it to, uh, update our cheese listing. So to do that, we can say 
-`$this->validator->validate($input)`, and that's it. So the validator from API platform, what
-it does is it actually wraps Symfonys validator. And it does that so that it can add
-some validation groups to the context, but it also does that because it actually
-throws a very special exception, which will cause this output. We can actually see
-this face shift shift. Look for `validator.php` include non project items and open
-the validator from API platform.
+So let's try this. Undo the typecasting in `CheeseListingInput` because once
+we're done, we will know that the data *is* valid and this won't be necessary.
 
-You can see that rap Symfonys validator does some stuff with the validation groups,
-but most down here, once it actually used the validation gets back these violations
-and throws this `ValidationException`. This is actually an exception you can throw up
-from anywhere to cause the nice validation response. Alright, so let me close it up
-and let's go over here and try it. When I had executed see yes, 400 air and we get
-the exact same responses before, but now these are coming from our input object. Our
-input object must be fully valid before that data will be transformed onto our entity
-object. So if you like this, do it. If you don't leave your validation constraints on
-your entity class. So next let's talk about one last topic right now. All of our, uh,
-resources have been using IDs auto increment IDs as our ID property. But in a lot of
-cases, you can make your life easier, especially as a JavaScript developer by using U
-U IDs. So let's see how to do that next.
+Next in `CheeseListing`, I'm going to move *all* of the `@Assert` constraints onto
+our input. Copy the two off of `$title` and move those into `CheeseListingInput`.
+We *do* need a `use` statement... but let's worry about that in a minute.
 
+Copy the constraint from `$description`, move it, copy the one from
+`$price` delete it and... also delete the constraint from `$description`. We
+*could* also choose to *keep* these validation rules in our entity... which would
+make sense if we used this class outside of our API and it needed to be validated
+there.
+
+Paste the constraint above `price` and... there's one more constraint above
+`owner`: `@IsValidOwner()`. Copy it, delete it, and move it into the input.
+
+That's it! To get the `use` statements, re-type the end of `NotBlank` and hit tab
+to auto-complete it - that added the `use` statement on top - and do the same
+for `IsValidOwner`.
+
+Ok cool! All of the validation rules live here and we have *no* constraints
+in `CheeseListing`.
+
+## Validating the Input Class
+
+But... unfortunately, API Platform does *not* automatically validate your input
+DTO objects: it *only* validates the final API resource object. So we'll need to
+run validation manually... which is both surprisingly easy *and* interesting
+because we'll see how we can trigger API Platform's super nice validation error
+response manually.
+
+Inside of our data transformer, before we start transferring data, *this* is where
+validation should happen. To do that, we need the validator! Add a public function
+`__construct()` with a `ValidatorInterface` argument. But grab the one
+from `ApiPlatform\`, *not* `Symfony\`. I'll explain why in a second. Call that
+argument `$validator` and then I'll go to Alt + Enter and select "Initialize
+properties" to create that property and set it.
+
+Down in `transform()`, `$input` will be the object that contains the deserialized
+JSON that we want to validate. Do that with
+`$this->validator->validate($input)`.
+
+That's it! The validator from API platform is a wrapper around Symfony's validator.
+It wraps it so that it can *add* a few nice things. Let's check it out.
+
+Hit Shift + Shift, look for `Validator.php`, include non project items and open
+the Validator from API Platform. As I mentioned, this wraps Symfony's validator...
+which it does so that it can add the validation groups from API Platform's config.
+
+But *more* importantly, at the bottom, after *executing* validation, it gets back
+these "violations" and throws a `ValidationException`. This is a special exception
+that you can throw from anywhere to trigger the nice validation error response.
+
+So... let's go see it! At the browser, hit Execute and... yeehaw! A 400 validation
+error response! But *now* this is coming from validating our input object. The
+input must  be *fully* valid before the data will be transferred to our entity.
+
+So if you like this, do it! If you don't, leave your validation constraints on
+your entity.
+
+Next: it's time for our final topic! Right now, all of our resources use their
+auto-increment database id as the identifier in the API. But in many cases,
+you can make your life easier - or the life of a JavaScript developer who is *using*
+your API - by using UUID's instead.
