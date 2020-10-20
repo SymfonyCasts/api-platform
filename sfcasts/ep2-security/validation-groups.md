@@ -95,7 +95,7 @@ The POST operation should execute all validation constraints in *both* the
 Find your terminal and, this time, run *all* the user tests:
 
 ```terminal
-php bin/phpunit test/Functional/UserResourceTest.php
+php bin/phpunit tests/Functional/UserResourceTest.php
 ```
 
 Green!
