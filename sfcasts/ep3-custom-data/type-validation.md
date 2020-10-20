@@ -1,78 +1,115 @@
 # Type Validation
 
-Coming soon...
+Let's talk about validation. Even outside of DTO's, there are two layers of validation.
+The first asks: is a piece of data even *settable* on a property. Like, is it a
+valid data *type* for that property? And second, does it pass validation rules?
 
-Let's talk about validation. Even outside of DTO's. There are two layers of validation
-to think about. First is a piece of data even settable on a property. Like is it a
-valid data type for that property? And second, does it pass validation rules? So
-let's talk about that first one. Before even thinking about validation, we should ask
-can a piece of data even be set onto a property. For example, if the deserealizer sets
-a property vs. Setter. Okay. For example, if you pretend we don't have an input class
+## Validation for Invalid Types
 
-Then `setPrice()` is set. The price field is set via `setPrice()`. Since this center has a
-type pent that is not nullable. If you had tried to set a null price to this, then
-the data wouldn't even be settable on this property, and you would get a 400 air.
-It's not validation is that the piece of data can't even be set onto the property. We
-can actually see this, even though we're using a `CheeseListeningInput`. So right now
-we're actually using a teaser to input and our properties are public, which means
-technically we can say anything on them, but we do have this ad bar into on there,
-which actually tells a platform that this is supposed to be an in tight. Thanks that
-we go over here and it's actually refresh the documentation, go to the post Jesus and
-point it, try it out. And let's try setting just the `price` field to Apple, right?
+Let's start with that *first* type. Before even thinking about validation, we need
+to ask: is it even possible for a piece of data to be *set* onto a property? For
+example, pretend for a minute that we *don't* have an input class. In that case,
+if a `price` field is sent in the JSON, it will be set via the `setPrice()` method.
+And since the `int` argument is *not* nullable, if you tried to send a null `price`,
+that value would *not* even be legal to set on this property.
 
-Want to hit execute.
+When this happens, API Platform returns a 400 error. It's not a validation error
+exactly... but it effectively means the same thing.
 
-There you go. 400 error. And it says the type of price attribute for class Jesus. It
-must be of any string given. So API platform determines if, if it should show this
-air by finding the type of the field, which it doesn't many different ways, like the
-type on the setter, PHP documentation like we have in this case or various other
-places, and then sees it, the piece of data that it's about to put on it violates
-that. So two things about this first, unfortunately, unlike true validation errors,
-you don't get a nice list of all of the errors here.
+Let's see a real example. Inside `CheeseListeningInput`, all the properties are
+public... and we're not using PHP 7.4 property types. This means that, technically,
+we can set each property to *anything*. But, we *also* have this `@var`, which tells
+API Platform that this is *supposed* to be an `int`. And while that documentation
+wouldn't *normally* make any difference in how our code behaves, it *does* cause
+something to happen in API Platform.
 
-Like if there were three properties that needed to be blank here, you would only, you
-wouldn't see all three. Instead. It just fails once. And you get this different type
-of air. The API platform folks would like to change this so that I can collect all of
-the errors, list them just like validation errors, but someone needs to do the work
-in the Symfony serializer first to make it possible. There is a pull request open to
-do that. Second, the stack trays on this air will not be shown on where in
-production, but the hydro colon description will notice it. It's kind of got
-sensitive information. It mentions our, our actual internal class name publicly. This
-only happens with input. DTO is not with normal API resource classes, and it's
-actually a bug that's been fixed and will be released an API platform, 2.5.8.
-Anyways, this whole idea of whether or not a piece of data can even be set on a
-property is something you just need to be aware of because these sort of sanity
-validation, sanity errors are not quite as nice as a validation errors. And if you're
-using an input DTO, you need to be even more aware of this idea of can a field to be
-set, be set to this piece of data. Why we'll take this out. Let's actually send a
-completely empty objects to create a cheese listing on me. It execute 500 air.
+Move over refresh the documentation. Now go to the `POST` cheeses endpoint, click
+"Try it out", and just send a `price` field set to, how about, `apple`.
 
-It says argument one, pass two `setDescription()` must be of type string. No given this
-is coming from over in our teases to inputs. See here, it said line 66.
+Hit Execute. 400 error! It says:
 
-So quite literally
+> The type of the "price" attribute for class `CheeseListingInput` must be an
+> int, string given.
 
-We, this, `$this->description` has no role in the set description on `CheeseListing`
-does not allow null. So we actually get a PHP level 500 air. If `CheeseListingInput` had a
-`setDescription()` method instead, and that D string type, and it didn't allow no, we
-would get a nice 400 air instead of this 500 air. Since we don't have that. And since
-setting null on the description, property is technically allowed
+*This* is cool. When the deserializer does its work, it *first* tries to figure
+out what *type* the field should be, which we know it does in a number of different
+ways, like reading Doctrine metadata, setter argument type-hints and even PHPDoc.
+Then, for scalar types line the `int` price, if the field sent in the JSON is
+*not* a valid type, API Platform throws this error.
 
-And actually it's set text description with this one. Nope. I need to undo that
-setting things it's not actually ever set
+## The Cons of Type Validation
 
-Since description is not required. It ends up being no on this obligation and we set
-an alarm on jesus' name. So this is just something that you need to be aware of. That
-kind of tighter. You write your DTO like with the required arguments and, and not
-nullable type hints. The less likely you're going to need to worry about this for us
-to fix it. We can just type it here. Let's uh, we'll cast the description to a `(string)`
-or cast the price to an `(int)`. And then up here, we'll pass the title to a `(string)`.
-That's going to avoid that. That's a PHP error. Now you're thinking, wait a second. I
-still don't want description and pricing title to be norm it's useless thing. Hold on
-a second. Cause if you try it now, it's not going to allow this. We actually get a
-true validation error saying that the title and description should not be blank. This
-sort of sanity validation. Next, let's talk more about how validation works with
-input details. We clearly have some validation automatically. Um, how does that work?
-And can we move the validation and should validation rules live in the entity or
-should they live in the input object? That's nice.
+I love this feature, but I *do* need to mention two things about it. First,
+unfortunately, unlike true validation errors, the response doesn't contain a nice
+list of *all* of the errors.
 
+For example, if we sent *another* invalid field, instead of seeing *both* errors,
+you would see just one: whichever one *happened* to be tried first. After fixing
+that error, *then* you would see the next one. The response for these type errors
+also isn't perfect: it doesn't tell you - in a machine-readable way - which field
+the error comes from. True validation errors do a much better job.
+
+This *is* something that the API Platform team would like to change so that it
+can list *all* of the errors at once... but someone needs to do some work on
+the Symfony serializer to make it possible. There *is* a pull request open to
+do that.
+
+The second thing I want to mention is about the error itself. The stack trace on
+this error would *not* be shown on production, but the `hydra:description` *would*.
+But notice: it mentions our internal class name!
+
+Very quickly: this *only* happens when using input DTO's and it's a bug that has been
+fixed and will be released in API Platform 2.5.8. Starting in that version, the
+class name should *not* be in the error message.
+
+The *big* point is: this whole idea of whether or not a piece of data can be
+set on a property is something you just need to be aware of because these, sort
+of, "sanity errors" are not quite as nice as true validation errors.
+
+## Special Case for Input DTOs: Null Fields
+
+And if you're using an input DTO, you need to be even *more* aware of this
+question of: "can a field be set to a certain value?". Why?
+
+Send a completely *empty* object to create a `CheeseListing`. This should return
+a 400 error. But which kind? A type error like we just saw or a true validation
+error?
+
+The answer is that this should return a *true* validation error - saying that
+some of the fields are required thanks to the `NotBlank` validation constraints.
+When a field is *not* in the JSON, it's simply *not* ever set on the object. So
+*not* sending a `price` field is different than sending a `price` field set to
+`null`, which would *not* be allowed thanks to our PHPDoc.
+
+But when we hit Execute... ah! 500 error! It says:
+
+> Argument 1 passed to `setDescription()` must be of type string, null given
+
+This is coming from over `CheeseListingInput` on line 66. Ah: because the
+`description` field wasn't sent, `$this->description` is null... but then
+`setDescription()` on `CheeseListing` does not *allow* null. The result is a
+very not cool 500 error.
+
+There are 2 solutions to this. First, you could add validation constraints to
+your input class to guarantee that certain properties are not null. We're going
+to talk about that in a few minutes.
+
+Or, you can do some type-casting to avoid the errors. For example: we can cast
+the description to a `(string)`, cast the price to an `(int)` And then, up here,
+we can cast the title to a `(string)`.
+
+*That* should fix the error. Now, if you're thinking:
+
+> Wait a second! I still don't want `description` and `title` to be empty or the
+`price` to be zero!
+
+Me either! But check this out: At your browser, hit Execute again. And... surprise!
+We see *true* validation errors! It says that `title` and `description` should not
+be blank! So yes, even with an input class, validation *still* happens on our
+final resource object. Oh, and why is there no error for `price`? That field
+*does* have a `NotBlank` constraint, but it should probably have a `GreaterThan`
+constraint to prevent it from being set to zero.
+
+Anyways, we can see that validation *still* happens when we're using an input class.
+How does that work? Can we move the validation to the input class? And should we?
+That's next.
