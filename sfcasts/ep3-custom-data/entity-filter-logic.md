@@ -7,14 +7,24 @@ In `getDescription()`, let's describe that lofty goal. We don't need any fancy,
 dynamic property stuff like we saw in the core filters. Just return an
 `array` with one item for the one query parameter: `search`. Set that to *another*
 `array` and... here is where we start using the keys that we saw inside
-`PropertyFilter`. I'll cheat and list the ones we need. First, set
-`'property' => null`. If a filter *does* relate to a specific property, put
-that here. As far as I can tell, this is only used in the Hydra filter documentation,
-not even in OpenAPI, which is what drives the Swagger interactive docs. Wow,
-that sentence was FULL of buzzwords. Phew!
+`PropertyFilter`:
 
-Next set `'type' => 'string'` and `'required' => false`: both things that will
-help the docs.
+[[[ code('89c544e8cc') ]]]
+
+I'll cheat and list the ones we need. First, set `'property' => null`:
+
+[[[ code('ee5e22685f') ]]]
+
+If a filter *does* relate to a specific property, put that here. As far as I can tell,
+this is only used in the Hydra filter documentation, not even in OpenAPI, which is
+what drives the Swagger interactive docs. Wow, that sentence was FULL of buzzwords.
+Phew!
+
+Next set `'type' => 'string'` and `'required' => false`:
+
+[[[ code('b1b2365389') ]]]
+
+Both things that will help the docs.
 
 Let's check it out! Find the API docs, refresh and open up the `/api/cheeses`
 operation. And... there it is: `search`! And it says "string".
@@ -24,6 +34,8 @@ to another `array`. One of the keys you can pass here is called `description`.
 How about:
 
 > search across multiple fields.
+
+[[[ code('a817e79016') ]]]
 
 I personally do *not* know all the possible keys that we can have... I've just been
 digging around and finding what I need. So feel free to dig further.
@@ -37,9 +49,13 @@ Okay, enough with the documentation: let's get to the part where we actually
 *apply* that filter. For a Doctrine ORM filter, this happens in
 `filterProperty()`, which receives `$property` and `$value` arguments and then
 some Doctrine-specific stuff like `QueryBuilder`, something called a
-`QueryNameGenerator` - more on that in a few minutes - and a some other stuff.
+`QueryNameGenerator` - more on that in a few minutes - and a some other stuff:
 
-Let's figure out what that `$property` and `$value` are: `dd()` both of these.
+[[[ code('d55cc1a817') ]]]
+
+Let's figure out what that `$property` and `$value` are: `dd()` both of these:
+
+[[[ code('92c54121aa') ]]]
 
 Then go find the *other* tab where we're fetching the cheese collection and hit
 enter to send the `?search=cheese` query param.
@@ -52,7 +68,9 @@ that's on the URL. So if I go up here and say `?dog=bark`, it prints out
 we'll leave that to trained veterinarians.
 
 Back in `filterProperty()`, check for *our* query parameter: if `$property` does
-not equal `'search'`, then return.
+not equal `'search'`, then return:
+
+[[[ code('b68f8cc051') ]]]
 
 So, it's a *little* weird because the method uses the word "property"... but
 `search` isn't really a property... it's just what we decided to call our query
@@ -64,28 +82,38 @@ independently.
 
 ## Modifying the Query
 
-The rest of this method is good-ol' query-building logic. We're passed the
+The rest of this method is good-old query-building logic. We're passed the
 `QueryBuilder` that will be used to fetch the collection, and *our* job is to
 *modify* it.
 
 To do that, we first need to know the class *alias* that's being used for the
 query. We can get that by saying `$alias = $queryBuilder->getRootAliases()` and -
-it looks a bit funny - but we want the 0 index.
+it looks a bit funny - but we want the 0 index:
+
+[[[ code('40ac984803') ]]]
 
 Now add the *real* logic: `$queryBuilder->andWhere()`, pass this
 `sprintf()` - because the alias will be dynamic - and search on both
 the `title` and `description` fields. So, `%s.title LIKE :search` `OR`
 `%s.description LIKE :search`. For the 2 `%s`, pass `$alias` and `$alias`.
+And... I'll split this onto multiple lines:
 
-And... I'll split this onto multiple lines. Finish with `->setParameter()` to
-assign the `search` parameter to `'%'.$value.'%'` for a fuzzy search.
+[[[ code('5412d308e5') ]]]
+
+Finish with `->setParameter()` to assign the `search` parameter to `'%'.$value.'%'`
+for a fuzzy search:
+
+[[[ code('ff9033f96b') ]]]
 
 Let's try this! First, remove the query parameter entirely so we can see what
 the *full* list looks like. Ok, a lot of people are selling blocks of cheddar.
 Add `?search=cheddar` and ah! No results!?
 
-This smells like a typo! Bah! I added an extra `s` on the parameter. Try
-it again. Much better! `/api/cheeses/1` is gone but the rest *do* have `cheddar`
+This smells like a typo! Bah! I added an extra `s` on the parameter:
+
+[[[ code('39a79ee2d6') ]]]
+
+Try it again. Much better! `/api/cheeses/1` is gone but the rest *do* have `cheddar`
 in their `title`.
 
 Let's try the word "cube" to see if the `description` is matching. And... that works
@@ -105,8 +133,11 @@ The query name generator is probably *not* very important unless you're creating
 a filter that you want to share between projects.
 
 Here's the problem it solves: the parameter we added - `search` -  could have been
-called anything - it just needs to match the `:search` inside the query. Now,
-if there are *many* independent filters being used, then, in theory, two filters
+called anything - it just needs to match the `:search` inside the query:
+
+[[[ code('3f3f403785') ]]]
+
+Now, if there are *many* independent filters being used, then, in theory, two filters
 might accidentally use the same parameter name. If that happened one would
 override the other. That's no fun.
 
@@ -114,15 +145,24 @@ The query name generator's job is to help avoid this problem by generating a
 *unique* parameter name.
 
 Check it out: say `$valueParameter = $queryNameGenerator->` - that's the argument
-we're being passed - then `generateParameterName('search')`. That will return a
-string with `search` then a unique index that increments: something like
-`search_p1` or `search_p2`. I'll put a comment above this.
+we're being passed - then `generateParameterName('search')`:
+
+[[[ code('6a2b788d0c') ]]]
+
+That will return a string with `search` then a unique index that increments:
+something like `search_p1` or `search_p2`. I'll put a comment above this:
+
+[[[ code('047bcb368c') ]]]
 
 Down in the query, using it *does* get ugly: instead of `:search`,
 it's `:%s` and then another `:%s`. For the arguments, we need `$alias`,
-`$valueParameter`, `$alias`, `$valueParameter`.
+`$valueParameter`, `$alias`, `$valueParameter`:
 
-*Finally,* in `setParameter()`, use `$valueParameter`.
+[[[ code('2b2ce05f03') ]]]
+
+*Finally,* in `setParameter()`, use `$valueParameter`:
+
+[[[ code('6c3c691d1e') ]]]
 
 I'll be honest, that makes my head spin a little... and I might avoid doing this
 for custom filters in my *own* project.
