@@ -1,123 +1,147 @@
-# Uuid
+# UUID's
 
-Coming soon...
+Let's add a *bonus* feature to our app. Right now, the id of each resource is its
+auto-increment database ID. We can see this on all of our endpoints. If you Execute
+the cheese collection endpoint... the IRIs are `/api/cheeses/1`. You'll also use
+the database id to update or do anything else.
 
-What's that one
+Using auto-increment id's like this is *fine*. But it *can* have a few downsides.
+For example, it can expose some info - like how *many* users you have...
+or - by just changing the ids to 1, 2 or 3, you could easily browse through *all*
+of the users... though you should - ya know - use *security* to avoid this if
+it's a problem.
 
-Bonus thing to our app. UUIDs. So right now the idea of each resource is a auto
-increment database ID. And we see this on all of our end points, no matter what we
-do, if you, uh, execute for example, full this, the cheeses it's /api/cheeses/1
-And if you want to fetch with these, you're going to fetch it by ID Juan. If
-you want to update it, and you're going to use the database ID. And in some cases,
-most cases, a lot of cases, that's fine, but some cases that can have some downsides
-first, it exposes some information. For example, it could allow someone to, uh, to
-just fetch user, try to patch the user data one by one, by just incrementing the ID.
-Obviously you should have security to prevent that, but it can expose maybe how many
-users you have in your database or something else.
+Auto-increment IDs have another downside: when you use an auto-increment
+database id as the key in your API, it means that *only* your *server* can create
+them. But if your API clients - like JavaScript - could *instead* choose
+their *own* id, it would actually simplify their lives. Think about it:
+if you're creating a new resource in JavaScript, you normally need to send the
+AJAX call and wait for the response so that you can *then* use the new id.
+That's especially common with frontend frameworks when managing state.
 
-The other, the real, another real significant common downside is that when you use it
-auto increment database IDs, as your ID and your API, then the only then only your
-server can create those IBS. And a lot of times it can be convenient. If something
-else can create the ID, like if your JavaScript could create the, the ID and yes,
-JavaScript can create UUIDs who you ideas can be created in any language. And if
-JavaScript could create UUID and then send that when it's creating a new resource
-that can often simplify your JavaScript, because it doesn't need to wait for the
-response to know what the ID is.
+Another option is to use a UUID: a, sort of, randomly-generated string that *anyone* -
+including JavaScript - can create. If we allowed that, our *JavaScript* could
+generate that UUID, send the AJAX request *with* that UUID and then not have to
+wait for the response to update the state.
 
-Let's try changing the ID of user to be a UUID. So here's the goal. We're going to
-add a user ID to the user entity, and we're gonna do that by creating a new `$uuid`
-property that will store the UUID string. And then we're gonna make API platform
-use this as the identifier, instead of the auto increment ID Symfony 5.2, we'll have
-a new you UID component, which should allow us to easily generate you UUIDs and do
-some of this work. But since that hasn't been released yet, we can use the Ramsey UUID
-library, which is honestly awesome, and has been allowing it around for a long times.
-So find your terminal and run `composer require ramsey`, which has been Ramsey, good
-friend of mine from Nashville `uuid-doctrine`. 
+## Installing ramsey/uuid
 
-```terminal-silent
+So that's our next mission: replace the auto-increment id with a UUID in our API
+so that API clients have the *option* to generate the id themselves. We'll do
+this for our `User` resource.
+
+So... how *do* we generate these UUID strings? Symfony 5.2 will come with a
+new UUID component, which should allow us to easily generate UUID's and store them
+in Doctrine. But since that hasn't been released yet, we can use `ramsey/uuid`,
+which is honestly awesome and has been around for a long time. Also, Ben Ramsey
+is a *really* nice dude and an old friend from Nashville. Ben generates the *best*
+UUIDs.
+
+Find your terminal and run:
+
+```terminal
 composer require ramsey/uuid-doctrine
 ```
 
-Now the actual library is `ramsey/uuid`
-This installs a library that allows us to have a UUID doctrine type, and
-you'll see that it will also install the underlying `ramsey/uuid` library.
+The actual library that generate UUID's is `ramsey/uuid`. The library *we're*
+installing *requires* that, but also adds a new UUID doctrine *type*.
 
-This one's still a recipe from the contribute pository so make sure you say yes to
-that or yes, permanently. And since I committed before I ran this `composer require`
-I'll run and 
+This will execute a recipe from the contrib repository so make sure you say "yes"
+to that or yes permanently. I committed before I ran `composer require`, so we
+can see the changes with:
 
 ```terminal
 git status
 ```
- 
-here. So you can see what that did. It modified the normal
-files, but it also added a configuration file. So let's go over and check that out.
-`config/packages/ramsey_uuid_doctrine.yaml`, and this adds a new UUID doctrine field type to
-doctrine. Just cool. So what that allows us to do is create a new property in here
-with a uuid type. So check this out. We can say private `$uuid`, and then up here,
-I'll say `@ORM\Column()` and then type = oops.
 
-And I'll say `@ORM\Column(type="uuid")`, which would not have worked a second ago. Now
-I'm also going to say `unique=true`, cause this will be a, a key in the database.
-Now, if you're wondering why I'm not going to use this as the actual primary key by
-like removing living at RMID down here and deleting, this is that you actually can do
-that. But some databases, like MySQL have performance problems when you have a
-string primary key, uh, with foreign keys. So use, if you have a good database like
-Postgres, which supports you, you had these correctly, feel free to do that, but
-there's no huge disadvantage to having a true ID property. And then, uh, you, you UID
-that we use in our API. Alright, so we added a new property. So now let's generate
-the migration for it. So I'll go over here and I'll run
+Ok: it modified the normal files, but *also* added a configuration file. Let's
+go check that out: `config/packages/ramsey_uuid_doctrine.yaml`.
+
+## The UUID Doctrine Type
+
+Ah! *This* adds the new UUID Doctrine type I was talking about. What this
+allows us to do - back in `User` - is add a new property - private `$uuid` -
+and, above this, say `@ORM\Column()` with `type="uuid"`. That would *not* have
+worked before we installed that library and got the new config file. Also set
+this to `unique=true`.
+
+UUID's are strings, but the `uuid` type will make sure to store the UUID in the
+*best* possible way for whatever database system you're using. And when we query,
+it will turn that string *back* into a UUID *object*, which is ultimately what's
+stored on this property. You'll see that in a minute.
+
+Could we know *remove* the auto-increment column and make *this* the primary
+key in Doctrine? Yes, you *could*. But I won't. Why? Some databases - like MySQL -
+have performance problems with foreign keys when your primary key is a string.
+PostgreSQL does *not* have this problem, so do whatever is best for you. But there's
+no real disadvantage to having the auto-increment primary key, but a UUID as
+your *API* identifier.
+
+## Generating a Safe Migration
+
+Ok: we added a new property. So let's generate the migration for it. Find your
+terminal and run:
 
 ```terminal
 symfony console make:migration
 ```
 
-Okay, let's go check that out. And
-the `migrations/` directory down here, there is my new migration file. And since I'm
-using my SQL perfect, you can see it as a UID, char 36, not at all. Perfect. Now the
-only tricky thing is that because we do already have a database with users in it. Uh,
-the fact that this is
+Let's go check that out. Go into the `migrations/` directory... and open the
+latest file. Since I'm using MySQL, you can see that it's storing this as a
+`char` field with a length of 36.
 
-Not no is going to make this migration fail. If I try this right now, it would
-actually fail because all the roads would have a Knoll, a UID. So what I'm gonna do
-is be careful with this. I'm actually going to change this to `DEFAULT NULL`.
+The only tricky thing is that because we *do* already have a database with
+users in it - the fact that this column is `NOT NULL` will make the migration
+fail because the existing records will have *no* value.
 
-And in a later migration in a second, I will then change that to a, to B, not at all.
-Then the next line after this, we can actually set that `$this->addSql()` and we can say,
-`UPDATE user SET uuid = UUID()`  that's a, MySQL function that we can
-fortunately use. Alright, so let's try this. I'll run over and I'll run 
+To fix this, temporarily change it to `DEFAULT NULL`. Then, right after this,
+say `$this->addSql()` with `UPDATE user SET uuid = UUID()`. That's a MySQL
+function to generate UUID's.
+
+Let's try this! Back at your terminal, run the migration:
 
 ```terminal
 symfony console doctrine:migrations:migrate
 ```
 
-Yes, it works. And then I'm going to generate
-one more migration to actually now that that column is sets to actually change it to
-normal. So I ran `make:migration` again. 
+It works! Now generate *one* more migration as a lazy way to set the field *back*
+to `NOT NULL`:
 
 ```terminal-silent
 symfony console make:migration
 ```
 
-And if you look at the new new migration,
-perfect, this just changed the UID from default note to not know what should now
-work. So I'll go back over here and run the migrations one more time. Got it. Okay.
-So at this point we have a new column, but nobody is sending it and nobody is using
-it.
+If you look at the new migration... perfect! This changes `uuid` from
+`DEFAULT NULL` to `NOT NULL`. Run the migrations one last time:
 
-And actually let's run our tests right now, 
+```terminal-silent
+symfony console doctrine:migrations:migrate
+```
+
+## Auto-Setting the UUID
+
+Got it! So at this point, we have a new column... but nobody is using it. Let's
+run the user tests:
 
 ```terminal
 symfony php bin/phpunit tests/Functional/UserResourceTest.php
 ```
 
-And I'll specifically run my user resource test and it explodes like crazy. And it's a feeling
-cause column you UID can not be known. It's required in the database. We're never
-setting it. So unlike an auto increment ID, the UID is not going to be automatically
-set, which is fine. It just means that we need to initialize it in our constructor.
-So if I scroll down here, we already have a constructor. I will say 
-`$this->uuid = Uuid` get the one from `Ramsey\`. You, All `Uuid::uuid4()`
-right, run the test again. Now they're happy. Of course, we're not actually using the
-UID in the API. It's not exposed as a field. We're not using as our identifier yet,
-but let's do that next.
+And... ah! It explodes like crazy! Of course: column uuid cannot be null. It's
+required in the database... but we're never setting it.
 
+Unlike an auto-increment ID, the UUID is *not* automatically set, which is fine.
+We can set it *ourselves* in the constructor. Scroll down... we already have
+a constructor. Add `$this->uuid = Uuid` - auto-complete the one from
+`Ramsey\` - then call `uuid4()`, which is how you get a *random* UUID string.
+
+Run the tests again:
+
+```terminal-silent
+symfony php bin/phpunit tests/Functional/UserResourceTest.php
+```
+
+*Now* they're happy!
+
+Next, the UUID is *not* part of our API at *all* yet. Let's tell API Platform
+to start using *it* as the identifier.
