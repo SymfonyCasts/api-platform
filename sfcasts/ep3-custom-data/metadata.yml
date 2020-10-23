@@ -46,3 +46,4 @@ chapters:
     - uuid
     - uuid-identifier
     - set-uuid
+    - uuid-quirk
