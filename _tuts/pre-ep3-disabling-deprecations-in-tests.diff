@@ -1,5 +1,5 @@
 diff --git a/phpunit.xml.dist b/phpunit.xml.dist
-index ae0173d5..ec5fe502 100644
+index ae0173d5f..ec5fe5020 100644
 --- a/phpunit.xml.dist
 +++ b/phpunit.xml.dist
 @@ -13,6 +13,7 @@

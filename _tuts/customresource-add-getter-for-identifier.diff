@@ -1,5 +1,5 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index 35863e48..a5481e18 100644
+index 35863e48a..a5481e184 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -21,12 +21,17 @@ use ApiPlatform\Core\Action\NotFoundAction;

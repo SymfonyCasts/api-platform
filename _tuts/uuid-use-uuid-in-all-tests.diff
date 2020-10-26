@@ -1,5 +1,5 @@
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 72cbb350..40d60694 100644
+index 72cbb350e..40d606941 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -34,12 +34,12 @@ class CheeseListingResourceTest extends CustomApiTestCase
@@ -45,7 +45,7 @@ index 72cbb350..40d60694 100644
          $this->assertEmpty($data['cheeseListings']);
      }
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index 58610e39..999448e4 100644
+index 58610e39e..999448e4f 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -36,7 +36,7 @@ class UserResourceTest extends CustomApiTestCase

@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
-index 442cbbaf..0e4ea1a3 100644
+index 442cbbaf4..0e4ea1a3d 100644
 --- a/src/DataProvider/DailyStatsProvider.php
 +++ b/src/DataProvider/DailyStatsProvider.php
 @@ -4,14 +4,21 @@ namespace App\DataProvider;

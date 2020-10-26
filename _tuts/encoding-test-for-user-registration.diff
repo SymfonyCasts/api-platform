@@ -1,6 +1,6 @@
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
 new file mode 100644
-index 00000000..eaf88e5b
+index 000000000..eaf88e5b7
 --- /dev/null
 +++ b/tests/Functional/UserResourceTest.php
 @@ -0,0 +1,27 @@

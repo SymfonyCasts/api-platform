@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index d178a740..c6da257a 100644
+index d178a740e..c6da257aa 100644
 --- a/README.md
 +++ b/README.md
 @@ -35,6 +35,7 @@ the database & tables!
@@ -12,7 +12,7 @@ index d178a740..c6da257a 100644
  If you get an error that the database exists, that should
 diff --git a/src/Migrations/Version20190508193750.php b/src/Migrations/Version20190508193750.php
 new file mode 100644
-index 00000000..0c2c8e98
+index 000000000..0c2c8e989
 --- /dev/null
 +++ b/src/Migrations/Version20190508193750.php
 @@ -0,0 +1,35 @@

@@ -1,5 +1,5 @@
 diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
-index f3a4685b..2cf5a2b3 100644
+index f3a4685be..2cf5a2b38 100644
 --- a/assets/js/components/LoginForm.vue
 +++ b/assets/js/components/LoginForm.vue
 @@ -27,8 +27,8 @@
@@ -14,7 +14,7 @@ index f3a4685b..2cf5a2b3 100644
                  isLoading: false
              }
 diff --git a/public/build/app.js b/public/build/app.js
-index e3aae342..0957f363 100644
+index e3aae3426..0957f363d 100644
 --- a/public/build/app.js
 +++ b/public/build/app.js
 @@ -337,8 +337,8 @@ __webpack_require__.r(__webpack_exports__);

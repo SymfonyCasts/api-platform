@@ -1,5 +1,5 @@
 diff --git a/src/DataPersister/DailyStatsPersister.php b/src/DataPersister/DailyStatsPersister.php
-index 7072d5a4..2892e9a7 100644
+index 7072d5a4d..2892e9a75 100644
 --- a/src/DataPersister/DailyStatsPersister.php
 +++ b/src/DataPersister/DailyStatsPersister.php
 @@ -4,16 +4,28 @@ namespace App\DataPersister;

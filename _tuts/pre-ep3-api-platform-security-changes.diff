@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 14ad1003..3b2b4360 100644
+index 14ad10039..3b2b43609 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -20,14 +20,14 @@ use Symfony\Component\Validator\Constraints as Assert;
@@ -22,7 +22,7 @@ index 14ad1003..3b2b4360 100644
   *     shortName="cheese",
   *     attributes={
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 47921063..d7ff9449 100644
+index 479210639..d7ff9449a 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -16,18 +16,18 @@ use Symfony\Component\Validator\Constraints as Assert;

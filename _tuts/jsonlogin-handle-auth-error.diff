@@ -1,5 +1,5 @@
 diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
-index e743455a..42e7316a 100644
+index e743455ac..42e7316ad 100644
 --- a/assets/js/components/LoginForm.vue
 +++ b/assets/js/components/LoginForm.vue
 @@ -51,7 +51,11 @@

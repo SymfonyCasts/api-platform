@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 4b0b62a3..8a01a9dd 100644
+index 030445f4e..649f23643 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -2,7 +2,7 @@
@@ -11,7 +11,7 @@ index 4b0b62a3..8a01a9dd 100644
          "ext-ctype": "*",
          "ext-iconv": "*",
          "api-platform/api-pack": "^1.2",
-@@ -17,13 +17,19 @@
+@@ -18,13 +18,19 @@
          "symfony/webpack-encore-bundle": "^1.6",
          "symfony/yaml": "4.3.*"
      },
@@ -32,7 +32,7 @@ index 4b0b62a3..8a01a9dd 100644
          }
      },
      "autoload": {
-@@ -36,14 +42,6 @@
+@@ -37,14 +43,6 @@
              "App\\Tests\\": "tests/"
          }
      },
@@ -47,7 +47,7 @@ index 4b0b62a3..8a01a9dd 100644
      "scripts": {
          "auto-scripts": {
              "cache:clear": "symfony-cmd",
-@@ -56,19 +54,10 @@
+@@ -57,19 +55,10 @@
              "@auto-scripts"
          ]
      },

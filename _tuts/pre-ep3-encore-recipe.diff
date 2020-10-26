@@ -1,13 +1,13 @@
 diff --git a/config/packages/test/webpack_encore.yaml b/config/packages/test/webpack_encore.yaml
 new file mode 100644
-index 00000000..02a76515
+index 000000000..02a765150
 --- /dev/null
 +++ b/config/packages/test/webpack_encore.yaml
 @@ -0,0 +1,2 @@
 +#webpack_encore:
 +#    strict_mode: false
 diff --git a/config/packages/webpack_encore.yaml b/config/packages/webpack_encore.yaml
-index 1ad206b7..9191f4f4 100644
+index 1ad206b76..9191f4f46 100644
 --- a/config/packages/webpack_encore.yaml
 +++ b/config/packages/webpack_encore.yaml
 @@ -1,14 +1,25 @@
@@ -45,7 +45,7 @@ index 1ad206b7..9191f4f4 100644
 +    # Put in config/packages/prod/webpack_encore.yaml
 +    # cache: true
 diff --git a/package.json b/package.json
-index 9fdf8729..68193199 100644
+index 9fdf87293..681931991 100644
 --- a/package.json
 +++ b/package.json
 @@ -1,6 +1,6 @@
@@ -65,10 +65,10 @@ index 9fdf8729..68193199 100644
      },
      "license": "UNLICENSED",
 diff --git a/symfony.lock b/symfony.lock
-index b4717252..1fa4cbb4 100644
+index c192547d9..6820711cf 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -504,18 +504,19 @@
+@@ -492,18 +492,19 @@
          ]
      },
      "symfony/webpack-encore-bundle": {
@@ -92,7 +92,7 @@ index b4717252..1fa4cbb4 100644
              "package.json",
              "webpack.config.js"
 diff --git a/webpack.config.js b/webpack.config.js
-index 2e64d0e8..9b2b2a9c 100644
+index 2e64d0e8b..9b2b2a9c9 100644
 --- a/webpack.config.js
 +++ b/webpack.config.js
 @@ -48,9 +48,9 @@ Encore

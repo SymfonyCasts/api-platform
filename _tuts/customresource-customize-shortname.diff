@@ -1,5 +1,5 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index e37edc1f..41b805e5 100644
+index e37edc1fd..41b805e5f 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -5,7 +5,9 @@ namespace App\Entity;

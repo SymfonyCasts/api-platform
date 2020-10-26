@@ -1,5 +1,5 @@
 diff --git a/config/routes/annotations.yaml b/config/routes/annotations.yaml
-index d49a502a..e92efc59 100644
+index d49a502a8..e92efc596 100644
 --- a/config/routes/annotations.yaml
 +++ b/config/routes/annotations.yaml
 @@ -1,3 +1,7 @@
@@ -11,10 +11,10 @@ index d49a502a..e92efc59 100644
 +    resource: ../../src/Kernel.php
 +    type: annotation
 diff --git a/symfony.lock b/symfony.lock
-index 4e5ba818..6607f5b5 100644
+index 52014e2ea..77b4489b1 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -19,7 +19,7 @@
+@@ -22,7 +22,7 @@
              "repo": "github.com/symfony/recipes",
              "branch": "master",
              "version": "1.0",

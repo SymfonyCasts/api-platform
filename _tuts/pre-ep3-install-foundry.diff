@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index f98a236e..eff767dc 100644
+index 71222bc2e..7d0b70262 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -36,7 +36,8 @@
+@@ -37,7 +37,8 @@
          "symfony/phpunit-bridge": "5.1.*",
          "symfony/stopwatch": "5.1.*",
          "symfony/twig-bundle": "5.1.*",
@@ -13,19 +13,19 @@ index f98a236e..eff767dc 100644
      "config": {
          "preferred-install": {
 diff --git a/composer.lock b/composer.lock
-index 5e7f8bf2..7d3e1953 100644
+index fe0005bcf..7b94ce85c 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "e3c8dfa2808aaf431bd4b11a0a31edad",
-+    "content-hash": "8472da23f52e9f44c7d4b22b35d02b60",
+-    "content-hash": "d7281dcf07a52520100e0986c3c912ce",
++    "content-hash": "e42a3c734dbd179450a8cfca8ce3211b",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -8093,6 +8093,71 @@
+@@ -8120,6 +8120,71 @@
                  }
              ],
              "time": "2020-07-30T22:54:19+00:00"
@@ -98,7 +98,7 @@ index 5e7f8bf2..7d3e1953 100644
      ],
      "aliases": [],
 diff --git a/config/bundles.php b/config/bundles.php
-index 1cbd4d83..d271f9f6 100644
+index 1cbd4d830..d271f9f66 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -16,4 +16,5 @@ return [
@@ -108,10 +108,10 @@ index 1cbd4d83..d271f9f6 100644
 +    Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['all' => true],
  ];
 diff --git a/symfony.lock b/symfony.lock
-index 1c8d4e1b..0d72b09f 100644
+index 044f84f73..1dd441d16 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -560,5 +560,8 @@
+@@ -548,5 +548,8 @@
      },
      "zendframework/zend-eventmanager": {
          "version": "3.2.1"

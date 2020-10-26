@@ -1,5 +1,5 @@
 diff --git a/src/Controller/SecurityController.php b/src/Controller/SecurityController.php
-index 58ed8319..fca3d216 100644
+index 58ed83193..fca3d2169 100644
 --- a/src/Controller/SecurityController.php
 +++ b/src/Controller/SecurityController.php
 @@ -13,6 +13,12 @@ class SecurityController extends AbstractController

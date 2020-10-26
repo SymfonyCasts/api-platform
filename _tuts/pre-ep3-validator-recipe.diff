@@ -1,5 +1,5 @@
 diff --git a/config/packages/test/validator.yaml b/config/packages/test/validator.yaml
-index 2febc403..1e5ab788 100644
+index 2febc4035..1e5ab7880 100644
 --- a/config/packages/test/validator.yaml
 +++ b/config/packages/test/validator.yaml
 @@ -1,4 +1,3 @@
@@ -9,7 +9,7 @@ index 2febc403..1e5ab788 100644
 -        # disable_not_compromised_password: true
 +        not_compromised_password: false
 diff --git a/config/packages/validator.yaml b/config/packages/validator.yaml
-index a695e1a6..350786a1 100644
+index a695e1a62..350786a13 100644
 --- a/config/packages/validator.yaml
 +++ b/config/packages/validator.yaml
 @@ -1,3 +1,8 @@
@@ -22,10 +22,10 @@ index a695e1a6..350786a1 100644
 +        #auto_mapping:
 +        #    App\Entity\: []
 diff --git a/symfony.lock b/symfony.lock
-index a79e48a9..b4717252 100644
+index 8247d0fc2..c192547d9 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -468,12 +468,12 @@
+@@ -456,12 +456,12 @@
          ]
      },
      "symfony/validator": {

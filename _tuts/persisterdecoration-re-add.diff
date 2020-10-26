@@ -1,5 +1,5 @@
 diff --git a/src/DataPersister/UserDataPersister.php b/src/DataPersister/UserDataPersister.php
-index e8a10e10..953e68a2 100644
+index e8a10e107..953e68a2b 100644
 --- a/src/DataPersister/UserDataPersister.php
 +++ b/src/DataPersister/UserDataPersister.php
 @@ -35,7 +35,7 @@ class UserDataPersister implements DataPersisterInterface

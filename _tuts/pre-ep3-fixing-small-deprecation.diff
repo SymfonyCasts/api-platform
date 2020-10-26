@@ -1,5 +1,5 @@
 diff --git a/config/bootstrap.php b/config/bootstrap.php
-index c66626c3..e8866107 100644
+index c66626c32..e8866107c 100644
 --- a/config/bootstrap.php
 +++ b/config/bootstrap.php
 @@ -14,7 +14,7 @@ if (is_array($env = @include dirname(__DIR__).'/.env.local.php')) {

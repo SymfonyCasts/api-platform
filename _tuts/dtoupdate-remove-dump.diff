@@ -1,5 +1,5 @@
 diff --git a/src/DataTransformer/CheeseListingInputDataTransformer.php b/src/DataTransformer/CheeseListingInputDataTransformer.php
-index 21fab55f..5f1d0d32 100644
+index 21fab55fa..5f1d0d321 100644
 --- a/src/DataTransformer/CheeseListingInputDataTransformer.php
 +++ b/src/DataTransformer/CheeseListingInputDataTransformer.php
 @@ -14,7 +14,6 @@ class CheeseListingInputDataTransformer implements DataTransformerInterface

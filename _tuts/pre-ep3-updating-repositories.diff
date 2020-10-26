@@ -1,5 +1,5 @@
 diff --git a/src/Repository/CheeseListingRepository.php b/src/Repository/CheeseListingRepository.php
-index 8f3cddad..5871a280 100644
+index 8f3cddad7..5871a2801 100644
 --- a/src/Repository/CheeseListingRepository.php
 +++ b/src/Repository/CheeseListingRepository.php
 @@ -4,7 +4,7 @@ namespace App\Repository;
@@ -21,7 +21,7 @@ index 8f3cddad..5871a280 100644
          parent::__construct($registry, CheeseListing::class);
      }
 diff --git a/src/Repository/UserRepository.php b/src/Repository/UserRepository.php
-index 8e822023..2ebc111e 100644
+index 8e8220239..2ebc111e2 100644
 --- a/src/Repository/UserRepository.php
 +++ b/src/Repository/UserRepository.php
 @@ -4,7 +4,7 @@ namespace App\Repository;

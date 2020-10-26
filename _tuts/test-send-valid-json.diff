@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/Test/ApiTestAssertionsTrait.php b/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
-index d0ffc6fb..b1d3999d 100644
+index d0ffc6fb8..b1d3999d1 100644
 --- a/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
 +++ b/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
 @@ -13,9 +13,13 @@ declare(strict_types=1);
@@ -84,7 +84,7 @@ index d0ffc6fb..b1d3999d 100644
 +}
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/ApiTestCase.php b/src/ApiPlatform/Test/ApiTestCase.php
-index a99dce13..35341785 100644
+index a99dce135..353417853 100644
 --- a/src/ApiPlatform/Test/ApiTestCase.php
 +++ b/src/ApiPlatform/Test/ApiTestCase.php
 @@ -13,9 +13,10 @@ declare(strict_types=1);
@@ -168,7 +168,7 @@ index a99dce13..35341785 100644
 +}
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php b/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
-index 9a23676a..3fecdaf9 100644
+index 9a23676a2..3fecdaf9e 100644
 --- a/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
 +++ b/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
 @@ -167,4 +167,4 @@ trait BrowserKitAssertionsTrait
@@ -179,7 +179,7 @@ index 9a23676a..3fecdaf9 100644
 +}
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Client.php b/src/ApiPlatform/Test/Client.php
-index 70eed34e..aa9438e6 100644
+index 70eed34e5..aa9438e69 100644
 --- a/src/ApiPlatform/Test/Client.php
 +++ b/src/ApiPlatform/Test/Client.php
 @@ -89,10 +89,10 @@ final class Client implements HttpClientInterface
@@ -227,7 +227,7 @@ index 70eed34e..aa9438e6 100644
 +}
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Constraint/ArraySubset.php b/src/ApiPlatform/Test/Constraint/ArraySubset.php
-index 55886a25..980427ac 100644
+index 55886a253..980427ac4 100644
 --- a/src/ApiPlatform/Test/Constraint/ArraySubset.php
 +++ b/src/ApiPlatform/Test/Constraint/ArraySubset.php
 @@ -126,4 +126,4 @@ final class ArraySubset extends Constraint
@@ -238,7 +238,7 @@ index 55886a25..980427ac 100644
 +}
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php b/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
-index 26585deb..3d98f690 100644
+index 26585deb7..3d98f6901 100644
 --- a/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
 +++ b/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
 @@ -25,16 +25,19 @@ use PHPUnit\Framework\Constraint\Constraint;
@@ -336,7 +336,7 @@ index 26585deb..3d98f690 100644
 +}
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Response.php b/src/ApiPlatform/Test/Response.php
-index 05a8176f..f2dee2d0 100644
+index 05a8176ff..f2dee2d0e 100644
 --- a/src/ApiPlatform/Test/Response.php
 +++ b/src/ApiPlatform/Test/Response.php
 @@ -55,7 +55,7 @@ final class Response implements ResponseInterface
@@ -356,7 +356,7 @@ index 05a8176f..f2dee2d0 100644
 +}
 \ No newline at end of file
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 0726445e..ad32e913 100644
+index 0726445ea..ad32e913f 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -10,7 +10,8 @@ class CheeseListingResourceTest extends ApiTestCase

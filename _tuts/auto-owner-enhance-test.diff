@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 3fcf3efb..b561e35a 100644
+index 3fcf3efbe..b561e35a5 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -98,7 +98,6 @@ class CheeseListing
@@ -11,7 +11,7 @@ index 3fcf3efb..b561e35a 100644
      private $owner;
  
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index c8c72725..46c716f1 100644
+index c8c727251..46c716f1e 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -31,7 +31,7 @@ class CheeseListingResourceTest extends CustomApiTestCase

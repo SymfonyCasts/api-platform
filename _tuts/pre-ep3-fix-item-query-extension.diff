@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
-index ea612c39..6a1c9023 100644
+index ea612c39d..6a1c90238 100644
 --- a/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 +++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 @@ -39,7 +39,18 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
@@ -26,7 +26,7 @@ index ea612c39..6a1c9023 100644
 \ No newline at end of file
 +}
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 9797bab8..8922a21c 100644
+index 9797bab87..8922a21c5 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -120,10 +120,11 @@ class CheeseListingResourceTest extends CustomApiTestCase

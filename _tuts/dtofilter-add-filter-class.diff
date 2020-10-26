@@ -1,6 +1,6 @@
 diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
 new file mode 100644
-index 00000000..e79a08f9
+index 000000000..e79a08f90
 --- /dev/null
 +++ b/src/ApiPlatform/DailyStatsDateFilter.php
 @@ -0,0 +1,17 @@
@@ -22,7 +22,7 @@ index 00000000..e79a08f9
 +    }
 +}
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index 533ee8dd..7786c2f6 100644
+index 533ee8dde..7786c2f6e 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -2,9 +2,11 @@

@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index dba6f95e..3447c337 100644
+index bfe3c7844..3cd81ea5d 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -15,6 +15,7 @@
+@@ -16,6 +16,7 @@
          "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
          "symfony/asset": "5.1.*",
          "symfony/console": "5.1.*",
@@ -11,19 +11,19 @@ index dba6f95e..3447c337 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 61a8c6ab..7059a566 100644
+index c8b3421dc..f26ce1fbb 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "f50a9f64f5c009861f486b05ae257e66",
-+    "content-hash": "f87f6947580e2783706b94e253331326",
+-    "content-hash": "2ddc12585e298ec106eed302c7c161fc",
++    "content-hash": "8cc0964386175ecb2422216ca62de119",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -2751,6 +2751,86 @@
+@@ -2774,6 +2774,86 @@
              ],
              "time": "2020-09-02T07:07:40+00:00"
          },
@@ -111,7 +111,7 @@ index 61a8c6ab..7059a566 100644
              "name": "symfony/dependency-injection",
              "version": "v5.1.5",
 diff --git a/config/bundles.php b/config/bundles.php
-index ba1203af..a279eab9 100644
+index ba1203afb..a279eab91 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -14,4 +14,5 @@ return [
@@ -122,7 +122,7 @@ index ba1203af..a279eab9 100644
  ];
 diff --git a/config/packages/dev/debug.yaml b/config/packages/dev/debug.yaml
 new file mode 100644
-index 00000000..26d4e53d
+index 000000000..26d4e53d2
 --- /dev/null
 +++ b/config/packages/dev/debug.yaml
 @@ -0,0 +1,4 @@
@@ -131,7 +131,7 @@ index 00000000..26d4e53d
 +    # See the "server:dump" command to start a new server.
 +    dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
 diff --git a/symfony.lock b/symfony.lock
-index e2c9eb6c..69874295 100644
+index 08a47d2d8..a58ca463d 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -203,6 +203,18 @@

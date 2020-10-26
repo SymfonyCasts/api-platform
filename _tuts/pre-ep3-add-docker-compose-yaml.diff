@@ -1,5 +1,5 @@
 diff --git a/.env.test b/.env.test
-index f58508ca..c9bd8dd7 100644
+index f58508cae..c9bd8dd79 100644
 --- a/.env.test
 +++ b/.env.test
 @@ -2,5 +2,5 @@
@@ -10,7 +10,7 @@ index f58508ca..c9bd8dd7 100644
 +DATABASE_TEST_URL=$DATABASE_URL
  PANTHER_APP_ENV=panther
 diff --git a/README.md b/README.md
-index f14df210..f95cc0bd 100644
+index f14df210b..f95cc0bd1 100644
 --- a/README.md
 +++ b/README.md
 @@ -9,7 +9,7 @@ If you've just downloaded the code, congratulations!!
@@ -156,7 +156,7 @@ index f14df210..f95cc0bd 100644
  
 diff --git a/config/packages/test/doctrine.yaml b/config/packages/test/doctrine.yaml
 new file mode 100644
-index 00000000..53f98461
+index 000000000..53f984617
 --- /dev/null
 +++ b/config/packages/test/doctrine.yaml
 @@ -0,0 +1,4 @@
@@ -166,7 +166,7 @@ index 00000000..53f98461
 +        url: '%env(resolve:DATABASE_TEST_URL)%'
 diff --git a/docker-compose.yaml b/docker-compose.yaml
 new file mode 100644
-index 00000000..678579d9
+index 000000000..678579d92
 --- /dev/null
 +++ b/docker-compose.yaml
 @@ -0,0 +1,19 @@

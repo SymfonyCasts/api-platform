@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index 3447c337..f8466fa8 100644
+index 3cd81ea5d..0b85761ab 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -13,6 +13,7 @@
+@@ -14,6 +14,7 @@
          "nelmio/cors-bundle": "^2.1",
          "nesbot/carbon": "^2.17",
          "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
@@ -11,15 +11,15 @@ index 3447c337..f8466fa8 100644
          "symfony/console": "5.1.*",
          "symfony/debug-bundle": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index 7059a566..d5e93bd0 100644
+index f26ce1fbb..066d66560 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "f87f6947580e2783706b94e253331326",
-+    "content-hash": "8b102b24ff66b3529b08682be187b6c1",
+-    "content-hash": "8cc0964386175ecb2422216ca62de119",
++    "content-hash": "27a3bfbecea2c60acd0d571b36d42935",
      "packages": [
          {
              "name": "api-platform/core",
@@ -80,9 +80,9 @@ index 7059a566..d5e93bd0 100644
 +            "time": "2020-08-18T23:57:15+00:00"
 +        },
          {
-             "name": "doctrine/annotations",
-             "version": "1.10.4",
-@@ -2337,6 +2389,208 @@
+             "name": "composer/package-versions-deprecated",
+             "version": "1.11.99",
+@@ -2360,6 +2412,208 @@
              ],
              "time": "2020-03-23T09:12:05+00:00"
          },
@@ -293,7 +293,7 @@ index 7059a566..d5e93bd0 100644
              "version": "v5.1.5",
 diff --git a/config/packages/ramsey_uuid_doctrine.yaml b/config/packages/ramsey_uuid_doctrine.yaml
 new file mode 100644
-index 00000000..cfc3036f
+index 000000000..cfc3036f9
 --- /dev/null
 +++ b/config/packages/ramsey_uuid_doctrine.yaml
 @@ -0,0 +1,4 @@
@@ -302,7 +302,7 @@ index 00000000..cfc3036f
 +        types:
 +            uuid: 'Ramsey\Uuid\Doctrine\UuidType'
 diff --git a/symfony.lock b/symfony.lock
-index 69874295..9d03bbf7 100644
+index a58ca463d..b514baa84 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -13,6 +13,9 @@
@@ -312,9 +312,9 @@ index 69874295..9d03bbf7 100644
 +    "brick/math": {
 +        "version": "0.9.1"
 +    },
-     "doctrine/annotations": {
-         "version": "1.0",
-         "recipe": {
+     "composer/package-versions-deprecated": {
+         "version": "1.11.99"
+     },
 @@ -173,6 +176,24 @@
      "psr/simple-cache": {
          "version": "1.0.1"

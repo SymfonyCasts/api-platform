@@ -1,6 +1,6 @@
 diff --git a/src/DataPersister/DailyStatsPersister.php b/src/DataPersister/DailyStatsPersister.php
 new file mode 100644
-index 00000000..d5706cb1
+index 000000000..d5706cb15
 --- /dev/null
 +++ b/src/DataPersister/DailyStatsPersister.php
 @@ -0,0 +1,20 @@

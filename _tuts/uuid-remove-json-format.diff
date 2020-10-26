@@ -1,5 +1,5 @@
 diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
-index 03c2cf58..0c64b88e 100644
+index 03c2cf586..0c64b88e6 100644
 --- a/config/packages/api_platform.yaml
 +++ b/config/packages/api_platform.yaml
 @@ -10,9 +10,10 @@ api_platform:
@@ -16,7 +16,7 @@ index 03c2cf58..0c64b88e 100644
              mime_types:
                  - text/html
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 57d33f46..8be4212b 100644
+index 57d33f461..8be4212bb 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -42,7 +42,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;

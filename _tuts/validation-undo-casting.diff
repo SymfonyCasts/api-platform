@@ -1,5 +1,5 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 29f871cf..24d466df 100644
+index 29f871cfa..24d466df4 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -56,11 +56,11 @@ class CheeseListingInput

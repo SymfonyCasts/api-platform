@@ -1,6 +1,6 @@
 diff --git a/.env.test b/.env.test
 new file mode 100644
-index 00000000..24a43c03
+index 000000000..24a43c03b
 --- /dev/null
 +++ b/.env.test
 @@ -0,0 +1,4 @@
@@ -9,7 +9,7 @@ index 00000000..24a43c03
 +APP_SECRET='$ecretf0rt3st'
 +SYMFONY_DEPRECATIONS_HELPER=999999
 diff --git a/.gitignore b/.gitignore
-index e9a690c7..428f6fc2 100644
+index e9a690c72..428f6fc23 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -1,4 +1,3 @@
@@ -29,7 +29,7 @@ index e9a690c7..428f6fc2 100644
 +###< symfony/phpunit-bridge ###
 diff --git a/bin/phpunit b/bin/phpunit
 new file mode 100644
-index 00000000..4d1ed05d
+index 000000000..4d1ed05d3
 --- /dev/null
 +++ b/bin/phpunit
 @@ -0,0 +1,13 @@
@@ -47,10 +47,10 @@ index 00000000..4d1ed05d
 +
 +require dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php';
 diff --git a/composer.json b/composer.json
-index 6a52c04e..5ee7a8b4 100644
+index 1445e3d29..b3557cb9a 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -65,6 +65,7 @@
+@@ -66,6 +66,7 @@
      },
      "require-dev": {
          "symfony/maker-bundle": "^1.11",
@@ -60,19 +60,19 @@ index 6a52c04e..5ee7a8b4 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 0648c8f2..26a0d099 100644
+index 11c2be701..573aca41f 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "67f37afc886c0c4e5b92f38e1f986689",
-+    "content-hash": "a3be7326e1fe5f43bad2ad65bb1156ca",
+-    "content-hash": "a254384648747e8bdf1b285b6327a7c1",
++    "content-hash": "bfa08bf2f9ddb6388f1c014f31675232",
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -5286,6 +5286,179 @@
+@@ -5313,6 +5313,179 @@
              ],
              "time": "2019-05-25T20:07:01+00:00"
          },
@@ -252,7 +252,7 @@ index 0648c8f2..26a0d099 100644
          {
              "name": "symfony/maker-bundle",
              "version": "v1.12.0",
-@@ -5354,6 +5527,71 @@
+@@ -5381,6 +5554,71 @@
              ],
              "time": "2019-07-09T22:19:18+00:00"
          },
@@ -324,7 +324,7 @@ index 0648c8f2..26a0d099 100644
          {
              "name": "symfony/profiler-pack",
              "version": "v1.0.4",
-@@ -5382,6 +5620,34 @@
+@@ -5409,6 +5647,34 @@
              "description": "A pack for the Symfony web profiler",
              "time": "2018-12-10T12:11:44+00:00"
          },
@@ -361,7 +361,7 @@ index 0648c8f2..26a0d099 100644
              "version": "v4.3.2",
 diff --git a/phpunit.xml.dist b/phpunit.xml.dist
 new file mode 100644
-index 00000000..00eda563
+index 000000000..00eda563f
 --- /dev/null
 +++ b/phpunit.xml.dist
 @@ -0,0 +1,33 @@
@@ -399,10 +399,10 @@ index 00000000..00eda563
 +    </listeners>
 +</phpunit>
 diff --git a/symfony.lock b/symfony.lock
-index 57c04633..8991c7ba 100644
+index 48340e582..ed724cdbe 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -155,6 +155,9 @@
+@@ -158,6 +158,9 @@
      "symfony/asset": {
          "version": "v4.2.8"
      },
@@ -412,7 +412,7 @@ index 57c04633..8991c7ba 100644
      "symfony/cache": {
          "version": "v4.2.8"
      },
-@@ -177,6 +180,9 @@
+@@ -180,6 +183,9 @@
      "symfony/contracts": {
          "version": "v1.0.2"
      },
@@ -422,7 +422,7 @@ index 57c04633..8991c7ba 100644
      "symfony/debug": {
          "version": "v4.2.8"
      },
-@@ -186,6 +192,9 @@
+@@ -189,6 +195,9 @@
      "symfony/doctrine-bridge": {
          "version": "v4.2.8"
      },
@@ -432,7 +432,7 @@ index 57c04633..8991c7ba 100644
      "symfony/dotenv": {
          "version": "v4.2.8"
      },
-@@ -250,6 +259,22 @@
+@@ -253,6 +262,22 @@
              "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
          }
      },
@@ -455,7 +455,7 @@ index 57c04633..8991c7ba 100644
      "symfony/mime": {
          "version": "v4.3.1"
      },
-@@ -319,6 +344,9 @@
+@@ -322,6 +347,9 @@
      "symfony/stopwatch": {
          "version": "v4.2.8"
      },
@@ -467,4 +467,4 @@ index 57c04633..8991c7ba 100644
          "recipe": {
 diff --git a/tests/.gitignore b/tests/.gitignore
 new file mode 100644
-index 00000000..e69de29b
+index 000000000..e69de29bb

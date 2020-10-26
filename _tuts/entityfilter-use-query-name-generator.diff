@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
-index c22069a8..dc99994b 100644
+index c22069a8c..dc99994b5 100644
 --- a/src/ApiPlatform/CheeseSearchFilter.php
 +++ b/src/ApiPlatform/CheeseSearchFilter.php
 @@ -15,8 +15,10 @@ class CheeseSearchFilter extends AbstractFilter

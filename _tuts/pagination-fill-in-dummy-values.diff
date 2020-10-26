@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsPaginator.php b/src/DataProvider/DailyStatsPaginator.php
-index c7f7107c..175524da 100644
+index c7f7107ca..175524da3 100644
 --- a/src/DataProvider/DailyStatsPaginator.php
 +++ b/src/DataProvider/DailyStatsPaginator.php
 @@ -8,21 +8,26 @@ class DailyStatsPaginator implements PaginatorInterface

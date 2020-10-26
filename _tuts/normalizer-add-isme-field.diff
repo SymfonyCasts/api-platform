@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
-index a56f46dd..43520a7e 100644
+index a56f46dda..43520a7eb 100644
 --- a/src/Serializer/Normalizer/UserNormalizer.php
 +++ b/src/Serializer/Normalizer/UserNormalizer.php
 @@ -27,7 +27,8 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor

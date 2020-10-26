@@ -1,5 +1,5 @@
 diff --git a/assets/js/app.js b/assets/js/app.js
-index 75dbb0b0..1f9238da 100644
+index 75dbb0b09..1f9238da2 100644
 --- a/assets/js/app.js
 +++ b/assets/js/app.js
 @@ -2,8 +2,8 @@ import Vue from 'vue';
@@ -17,7 +17,7 @@ index 75dbb0b0..1f9238da 100644
 +    },
 +}).$mount('#cheese-app');
 diff --git a/assets/js/components/CheeseWhizApp.vue b/assets/js/components/CheeseWhizApp.vue
-index 45ad7e34..db18cf6b 100644
+index 45ad7e34e..db18cf6b3 100644
 --- a/assets/js/components/CheeseWhizApp.vue
 +++ b/assets/js/components/CheeseWhizApp.vue
 @@ -30,9 +30,9 @@
@@ -69,7 +69,7 @@ index 45ad7e34..db18cf6b 100644
 \ No newline at end of file
 +</style>
 diff --git a/assets/js/components/LoginForm.vue b/assets/js/components/LoginForm.vue
-index f298d858..f3a4685b 100644
+index f298d858c..f3a4685be 100644
 --- a/assets/js/components/LoginForm.vue
 +++ b/assets/js/components/LoginForm.vue
 @@ -61,6 +61,3 @@
@@ -80,7 +80,7 @@ index f298d858..f3a4685b 100644
 -<style scoped lang="scss">
 -</style>
 diff --git a/templates/frontend/homepage.html.twig b/templates/frontend/homepage.html.twig
-index 3eb908cd..b02b446c 100644
+index 3eb908cde..b02b446ce 100644
 --- a/templates/frontend/homepage.html.twig
 +++ b/templates/frontend/homepage.html.twig
 @@ -1,13 +1,14 @@

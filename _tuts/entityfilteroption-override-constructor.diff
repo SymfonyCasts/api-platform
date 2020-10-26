@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
-index dc99994b..adf2152e 100644
+index dc99994b5..adf2152e2 100644
 --- a/src/ApiPlatform/CheeseSearchFilter.php
 +++ b/src/ApiPlatform/CheeseSearchFilter.php
 @@ -5,9 +5,18 @@ namespace App\ApiPlatform;

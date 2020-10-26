@@ -1,6 +1,6 @@
 diff --git a/tutorial/StatsHelper.php b/tutorial/StatsHelper.php
 new file mode 100644
-index 00000000..57df59a7
+index 000000000..57df59a76
 --- /dev/null
 +++ b/tutorial/StatsHelper.php
 @@ -0,0 +1,112 @@
@@ -118,7 +118,7 @@ index 00000000..57df59a7
 +}
 diff --git a/tutorial/fake_stats.json b/tutorial/fake_stats.json
 new file mode 100644
-index 00000000..f55d8aa2
+index 000000000..f55d8aa21
 --- /dev/null
 +++ b/tutorial/fake_stats.json
 @@ -0,0 +1,124 @@

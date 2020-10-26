@@ -1,6 +1,6 @@
 diff --git a/src/Doctrine/UserSetIsMvpListener.php b/src/Doctrine/UserSetIsMvpListener.php
 new file mode 100644
-index 00000000..1b5318a4
+index 000000000..1b5318a4d
 --- /dev/null
 +++ b/src/Doctrine/UserSetIsMvpListener.php
 @@ -0,0 +1,13 @@

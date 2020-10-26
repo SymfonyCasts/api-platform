@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/Normalizer/UserNormalizer.php b/src/Serializer/Normalizer/UserNormalizer.php
-index 384fd522..851b7b93 100644
+index 384fd5229..851b7b93a 100644
 --- a/src/Serializer/Normalizer/UserNormalizer.php
 +++ b/src/Serializer/Normalizer/UserNormalizer.php
 @@ -4,17 +4,13 @@ namespace App\Serializer\Normalizer;

@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index 5e7b3646..617fed15 100644
+index 02ce14f98..db5a1c941 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -29,9 +29,13 @@
+@@ -30,9 +30,13 @@
      },
      "require-dev": {
          "hautelook/alice-bundle": "^2.5",
@@ -19,19 +19,19 @@ index 5e7b3646..617fed15 100644
      "config": {
          "preferred-install": {
 diff --git a/composer.lock b/composer.lock
-index 8c549161..674508f8 100644
+index f4cf183f6..592387f9f 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "65c9cee0717a23ec6c460888278fafed",
-+    "content-hash": "14491b0d098b70270c5a705b2369e437",
+-    "content-hash": "7fbb3b00c84e1e4127137acc44adeb59",
++    "content-hash": "7f706f2d52361e70825e8e58d3769833",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -6371,62 +6371,6 @@
+@@ -6398,62 +6398,6 @@
              "homepage": "https://symfony.com",
              "time": "2019-07-18T13:23:37+00:00"
          },
@@ -94,3 +94,27 @@ index 8c549161..674508f8 100644
          {
              "name": "symfony/var-dumper",
              "version": "v4.3.2",
+diff --git a/symfony.lock b/symfony.lock
+index bc07b3c86..8b924b45f 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -361,9 +361,6 @@
+     "symfony/polyfill-php72": {
+         "version": "v1.11.0"
+     },
+-    "symfony/profiler-pack": {
+-        "version": "v1.0.4"
+-    },
+     "symfony/property-access": {
+         "version": "v4.2.8"
+     },
+@@ -415,9 +412,6 @@
+     "symfony/stopwatch": {
+         "version": "v4.2.8"
+     },
+-    "symfony/test-pack": {
+-        "version": "v1.0.6"
+-    },
+     "symfony/translation": {
+         "version": "3.3",
+         "recipe": {

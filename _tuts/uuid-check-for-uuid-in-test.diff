@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index f8a78f1c..1b58b313 100644
+index f8a78f1cf..1b58b313e 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
@@ -21,7 +21,7 @@ index f8a78f1c..1b58b313 100644
 +    }
  }
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index 842353bf..58610e39 100644
+index 842353bfa..58610e39e 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -23,6 +23,9 @@ class UserResourceTest extends CustomApiTestCase
