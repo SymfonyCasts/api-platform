@@ -1,89 +1,140 @@
-# UUID Quirk
+# UUID Quirk with "id" Name
 
-Coming Soon...
+There is one *tiny* little quirk with you UUID's. What is it? If you want to be
+able to send it in JSON, the field can't be called... `id`!
 
+## Naming the Identifier "id"
 
-by the way, there is one little quirk
-with you UUIDs and that is they can't be called ID. Let me show you what I mean head
-up to the year. You're already a property and let's pretend that we just want to call
-this ID, uh, in the, uh, API. So for example, instead of sending you a field called,
-uh, your ID here, I just want that to be called ID. So to make that happen, I can add
-an `@SerializedName("id")` and then over my test, it simply means that I just
-need to change that field, right? We've done this type of thing before. Normally that
-works fine, but if we rerun that test,
+I know, that's sounds kinda strange, so let me show you. Find the `uuid` property
+and pretend that we want to call this `id` in the API. Literally, instead of sending
+a field called `uuid`, I want to send one called `id`.
 
-```terminal-silent
-synfony php bin/phpunit --filter=testCreateUserWithUuid
-```
+The easiest way to make that happen is to add `@SerializedName("id")`.
 
-it fails and it says an Erik or an update is
-not allowed for this operation. So this is basically a bog /complex area inside of a
-API platform where in the JSON, and right now there's not a fix for it. There is a
-workaround. However, whenever you send the data, the APM platform, it tries to figure
-out what format you're sending it.
+Then over in the test, it's simple: change `uuid` to `id`.
 
-You know, for example, if we send XML, we would need to tell it, uh, it would need to
-know that that's XML. So we can DC to realize it and back smelt by default and assume
-that you're sending JSON, however, in the same way that you can get content back as,
-uh, as JSON or JSON LD. So for example, by default, we get back JSON LD format. So
-when we use an API and point blank /APSs Jesus, we can get things back as JSON L D,
-or we can actually get things back as JSON. So there's when you request a resource,
-you can tell it what outputs you want. You can actually do the same thing. When you
-send an input, you can actually send it data and say, the data I'm providing you is
-JSON or XML. Now it doesn't make much difference on the input format, but you can
-actually tell API platform that I'm sending you JSON LD format of data versus JSON.
-
-And if you do that, that actually makes just a small enough difference in how the,
-how the content is DC realized that it avoids this air. There's a long way of saying
-that the workaround ground for this is actually descend a content type header. So in
-the test, I'll set `headers` and I'll set that and I'll send that to an array with
-`Content-Type` set to `Application/ld+json`, we're trying to test out it passes
-now, to be honest with you, I don't really know if that makes any other changes in
-how our objects do seem to realize it doesn't seem to, um, but full disclosure. I
-don't know that for sure it does around this bug. So the destabilization logic is
-slightly different internally when you're passing this, now this work ground works
-great. If you are the only person using your own API, because you just need to know
-to include this header. But if other people are going to be using your API, then it's
-kind of ugly for them to have to pass this content type header to avoid that error.
-So another workaround is actually to disable the JSON format entirely in always
-forced JSON LD.
-
-So I'm actually gonna do is remove this header here, and then I'm going to go into
-`config/packages/api_platform.yaml` and down here, I'm going to comment
-out the `json` format. Now, as soon as I do that, whenever we send JSON input, it's
-going to use JSON LD is the default format instead of JSON. There's one other spot I
-need to change just so I don't get an error. If I go into entity, `CheeseListing`, uh,
-an uh, past tutorial, we actually, uh, set specific formats for one of our
-operations. No, was that specific format for this? I'm actually going to remove JSON
-from the list and since no longer even available as a global format. So now I'm not
-passing the header anymore and
+We've done this type of thing before. And until now, it's been working fine. If
+you're getting the feeling that it *won't* work this time... yea... you're right.
+Run that test again:
 
 ```terminal-silent
-synfony php bin/phpunit --filter=testCreateUserWithUuid
+symfony php bin/phpunit --filter=testCreateUserWithUuid
 ```
 
-it still fails.
+It fails! It says:
 
-Oh, of course, huh? Because forgot. I need to actually keep this line right here.
-There we go. So this tells it, if we send data applications, that's JSON use this
-type course. That's the piece that I was missing.
+> Update is not allowed for this operation.
+
+This... is sort of a bug in API Platform. Well... it's not that simple - it's related
+to the idea that the `id` field is, sort of special, in the `jsonapi` format.
+
+Obviously, the easiest fix is to *not* call your field `id` if you want to allow
+it to be sent on create. But, if you really *do* want to call it `id`, then we
+have two work-arounds.
+
+## Sending the Data as json-ld
+
+Whenever you send data, API Platform tries to figure out what *format* that data
+is. For example, if we sent XML instead of JSON, API Platform would somehow need
+to *know* the data is XML so that it could use the correct deserializer.
+
+And the same thing happens with the data we get *back* from our API. Normally,
+our API return JSON. Well, more specifically, it returns in the JSON-LD format -
+we can see that if we go to `/api/cheeses.jsonld`.
+
+But we can *also* get things back as normal json! We're controlling this here
+by adding `.json` to the URL, but the *normal* way you should control this is
+by sending an `Accept` header to tell the API which format you want.
+
+We haven't talked about it yet, but you can do the *same* thing for the format
+of your *input* data. Yep, you can say:
+
+> Hey API! The data I'm providing you is JSON... or XML... or gibberish.
+
+You can *even* tell API Platform that you are sending JSON-LD instead of plain JSON.
+Now.... in reality, that makes very little difference - the JSON would still look
+the same. But internally, this activates a different denormalizer that *avoids*
+the error.
+
+How do we tell API Platform what format the data we're sending is in? With the
+`Content-Type` header. In the test, add `headers` and set that to an array with `Content-Type` equals `application/ld+json`, which is the official "media type"
+or "mime type" for JSON-LD.
+
+Let's try it!
 
 ```terminal-silent
-synfony php bin/phpunit --filter=testCreateUserWithUuid
+symfony php bin/phpunit --filter=testCreateUserWithUuid
 ```
 
-It's now it's going to interpret
-that as using the JSON LD format when we sign it and now I pass this. So I just want
-to be aware of that limitation and that workaround. I'm actually going to remove all
-of this and, uh, and be content with using just you UID. So I'll put that format
-back. I will re add it to my JSON and then over inside my resource, I'm actually
-going to remove that serialized name so we can get back to the good spot.
+*Now* having an `id` field is ok.
 
-Okay. That's it. Whoa. We just like API platform and really rest in general to
-another level of flexibility with custom fields, custom API resources, and a lot more
-in the next course, we'll dive a bit deeper into one last area we haven't talked
-about yet, which is true custom end points, uh, including custom end points that are
-done in a controller and also custom end points that are done with messenger
-integration and Symfony. And if there is something that we still haven't talked about
-yet, that you really want to know about, let us know in the comments. Okay. Go make
-some awesome JSON, and we'll see you next time.
+## Removing the JSON format Entirely
+
+If you're the only person using your API, then this is probably ok: you just
+need to know to include *this* specific header. But if third-parties will use
+your API, then it's kind of ugly to force them to pass this *exact* header or
+get a weird error.
+
+Oh, and by the way, your API clients *do* need to include a `Content-Type` header
+when sending data, otherwise API Platform won't understand it or will think that
+you're sending form data instead of JSON. Basically, you'll get a 400 error. But
+the `Content-Type` header is *usually* sent automatically by most clients and set
+to `application/json`... because the client realizes you're sending JSON.
+
+So... if you want to prevent your API users from needing to override that and
+send `application/ld+json`, there is another - kind of more extreme - option:
+disable the JSON format and always force JSON-LD.
+
+Let's try this. Remove the header... and then go into
+`config/packages/api_platform.yaml`. Down here, comment-out the `json` format
+completely. This means that this is *no* longer a format that our API can read
+or output.
+
+There's one other spot I need to change to avoid an error. Open `CheeseListing`.
+In a previous tutorial, we set specific formats for this resource to allow a `csv`
+format. Remove `json` from this list.
+
+Ok, let's see what happens! When we run the test...
+
+```terminal-silent
+symfony php bin/phpunit --filter=testCreateUserWithUuid
+```
+
+It *still* fails. And the error is cool!
+
+> The content-type application/json is not supported
+
+The test client - realizing that we're sending JSON data - sent this header
+automatically *for* us. But now that our API doesn't support JSON, this fails!
+
+Back in `api_platform.yaml`, move that `application/json` line up under the
+`jsonld` mime type. This means that if the `Content-Type` header is `application/json`,
+use `jsonld`.
+
+Try the test one more time.
+
+```terminal-silent
+symfony php bin/phpunit --filter=testCreateUserWithUuid
+```
+
+And... got it! This solution is a bit odd... but if you're always using JSON-LD,
+it's one option. But I'm going to remove all of this and be happy to call the field
+`uuid`. So I'll put that formats back, re-add the `json` format and, over in the
+resource class, remove the `SerializedName`.
+
+Whoa! Friends! That's it! Congratulations on taking your API Platform skills up
+another *huge* level! You can now properly add custom fields in... about 10 different
+ways, including by creating custom API resources or DTO's. We also learned how
+to run custom code on a "state change", like when a cheese listing becomes
+published. That's a great way to keep your endpoints RESTful, but still run
+the business code you need in situations like this.
+
+In the next course, we'll dive a bit deeper into one area we haven't talked about
+much yet: creating true, custom endpoints, both via a controller and also via
+API Platform's Messenger integration.
+
+If there's something that we still haven't talked about, let us know down in the
+comments!
+
+Now, go make some awesome JSON, let us know what cool stuff you're building and
+we'll seeya next time.
