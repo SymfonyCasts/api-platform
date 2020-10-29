@@ -35,14 +35,22 @@ what *type* `title` will be.
 
 And... that's no surprise! When we serialize a `CheeseListing` entity, API Platform
 can use the Doctrine metadata above the `title` property to figure out that it's a
-string. But in this case, when it looks at `title`, it doesn't get *any* info
-about it.
+string:
+
+[[[ code('7569a22520') ]]]
+
+But in this case, when it looks at `title`, it doesn't get *any* info about it:
+
+[[[ code('49b486593d') ]]]
 
 No problem! We just need to add that info ourselves. One way is by using PHP 7.4
-property types. For example, I can say `public string $title`. Now, my editor
-*thinks* this is invalid because it thinks I'm using PHP 7.3... but I'm actually
-using 7.4. So this *will* work. But if you're not using 7.4, you can always
-use `@var` instead.
+property types. For example, I can say `public string $title`:
+
+[[[ code('83a3499853') ]]]
+
+Now, my editor *thinks* this is invalid because it thinks I'm using PHP 7.3... but
+I'm actually using 7.4. So this *will* work. But if you're not using 7.4, you can
+always use `@var` instead.
 
 ## DTO Metadata Cache Bug
 
@@ -56,7 +64,7 @@ the property metadata cache. But there's a *bug* in that logic when using an inp
 or output class.
 
 ***TIP
-You can track this issue here: https://github.com/api-platform/core/issues/3695.
+You can track this issue here: https://github.com/api-platform/core/issues/3695
 ***
 
 It's not a big deal once you know about it: we can trigger a rebuild manually by
@@ -69,27 +77,39 @@ Back in the class, I'm going to remove the PHP 7.4 type and use `@var` instead,
 
 > The title of this listing
 
+[[[ code('94decb5501') ]]]
+
 That will *also* be used in the docs.
 
 ## Adding More Fields
 
 Ok, let's add the *rest* of the fields we need to this class. Check out
-`CheeseListing`: it looks like `description` is usually serialized and so is `price`.
+`CheeseListing`: it looks like `description` is usually serialized and so is `price`:
+
+[[[ code('2704109b67') ]]]
 
 Copy the `title` property, paste, rename it to `description`... and remove the
-docs. Copy *this* and make one more property called `price`, which is an `int`.
+docs. Copy *this* and make one more property called `price`, which is an `int`:
+
+[[[ code('ebf5e2a801') ]]]
 
 Now that we've added these properties, we need to go into our data transformer
 and *set* them. So, `$output->description = $cheeseListing->getDescription()` and
-`$output->price = $cheeseListing->getPrice()`.
+`$output->price = $cheeseListing->getPrice()`:
+
+[[[ code('823f396559') ]]]
 
 These data transformer classes are *delightfully* boring.
 
 Before we try this, let's grab a couple other fields from `CheeseListing`. Search
-for `cheese:read`. But ignore `owner` for now: we'll come back to that in a minute.
+for `cheese:read`. But ignore `owner` for now: we'll come back to that in a minute:
+
+[[[ code('674ea7681f') ]]]
 
 Ok: we also output a `shortDescription` field via this `getShortDescription()`
-method. Copy that whole thing and, in `CheeseListingOutput` paste it at the bottom.
+method. Copy that whole thing and, in `CheeseListingOutput` paste it at the bottom:
+
+[[[ code('6f94ee3bf7') ]]]
 
 That will work *exactly* like before: it's referencing the `description` property
 and it has the group on it.
@@ -98,19 +118,25 @@ Back in `CheeseListing`, if you search again, there is *one* more field to move:
 `createdAtAgo`. Copy this method... then paste at the bottom. PhpStorm *politely*
 asks me if I want to import the Carbon `use` statement. I do!
 
-But, hmm: this method references a `createdAt` property... which we do *not*
+[[[ code('69c96503b4') ]]]
+
+But, hmm: this method references a `$createdAt` property... which we do *not*
 have inside this class. We need to add it. Add a `public $createdAt`, but I'm
 *not* going to put any groups above this because this *isn't* a field that we will
-expose in our API directly. We just need its data.
+expose in our API directly. We just need its data:
 
-Oh, and, by the way, we *could* simplify this by, instead, creating a `createdAtAgo`
+[[[ code('76e2aea214') ]]]
+
+Oh, and, by the way, we *could* simplify this by, instead, creating a `$createdAtAgo`
 property, exposing *that*, then setting the string onto that property from our
 data transformer. I won't do that now, but... it's a pretty great idea and shows
 off the power of data transformers: you can do the work *there* and then have
 *super* simple DTO classes.
 
 Anyways, back in the data transformer, set this property:
-`$output->createdAt = $cheeseListing->getCreatedAt()`.
+`$output->createdAt = $cheeseListing->getCreatedAt()`:
+
+[[[ code('bd697017dd') ]]]
 
 I think we're ready! Let's *first* refresh the documentation: open the item
 operation, go to schema and... yes! It *did* rebuild the cache that time and we
