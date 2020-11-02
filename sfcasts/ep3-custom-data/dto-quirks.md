@@ -1,20 +1,28 @@
 # DTO Quirks
 
-The last field that we're missing on `CheeseListingOutput` is `owner`.
+The last field that we're missing on `CheeseListingOutput` is `owner`:
+
+[[[ code('6a7fd7d2d7') ]]]
 
 No worries: in `CheeseListingOutput`, add `public $owner`. Then copy the
 PHPDoc from `price` and paste that here. We know that this will be a `User` object
-and we'll put it in the `cheese:read` group.
+and we'll put it in the `cheese:read` group:
+
+[[[ code('1202cdd97f') ]]]
 
 Over in the data transformer, populate that with
-`$output->owner = $cheeseListing->getOwner()`.
+`$output->owner = $cheeseListing->getOwner()`:
 
-Easy enough! Try it: find your browser, refresh and it works! The `owner` field
+[[[ code('6694bc9406') ]]]
+
+Easy enough! Try it: find your browser, refresh, and it works! The `owner` field
 is an embedded object because the `phoneNumber` field is being exposed.
 
 It turns out, this detail is important. Go into the `User` class and look at the
 `phoneNumber` property. This is actually in two groups: `owner:read` an
-`admin:read`.
+`admin:read`:
+
+[[[ code('bd4ab42d28') ]]]
 
 Right now, I'm logged in as an *admin*... and we created special code in the last
 tutorial to always add the `admin:read` group in this situation. *This* is the
@@ -27,17 +35,24 @@ homepage and click log out. Perfect.
 
 Now that we're anonymous, refresh the same endpoint. Error? Interesting:
 
-> The return value of UserNormalizer::normalize() - that's a class we created
-> in a previous tutorial - must be type array, string returned.
+> The return value of `UserNormalizer::normalize()` - that's a class we created
+> in a previous tutorial - must be type `array`, `string` returned.
 
 Let's go check that out: `src/Serializer/Normalizer/UserNormalizer.php`.
 The purpose of this is to add an extra `owner:read` group *if* the `User`
-that's being serialized is the currently-authenticated user.
+that's being serialized is the currently-authenticated user:
+
+[[[ code('8e32d7988f') ]]]
 
 The error says that this method is returning a string but it's *supposed* to return
 an array. And... it's right. Look at my `normalize()` method: I gave it an
-array return type. But apparently, when we call `$this->normalizer->normalize()`,
-this returns a string.
+`array` return type:
+
+[[[ code('db786d26fd') ]]]
+
+But apparently, when we call `$this->normalizer->normalize()`, this returns a string:
+
+[[[ code('e89baed2f3') ]]]
 
 And, hmm... that makes sense. Now that we're anonymous, the `phoneNumber` field
 will *not* be returned. And so, when the embedded `User` object is serialized,
@@ -45,7 +60,10 @@ instead of returning an array of fields, it is now *normalized* into its IRI
 *string*.
 
 Ok! So if you normalize a `User` object, sometimes it will be an object and
-sometimes it will be an IRI string. The fix is to remove the array return type.
+sometimes it will be an IRI string. The fix is to remove the array return type:
+
+[[[ code('75453da8dd') ]]]
+
 That was actually *never* needed... it's not on the `normalize()` method's
 interface. I added it simply because I *thought* this would always return an array.
 
@@ -59,11 +77,15 @@ with `UserNormalizer`? Why wasn't it a problem until now?
 
 Here's the answer, and it's *important*. When you use an output class like we're
 doing for `CheeseListing`, the object that's ultimately *serialized* is
-`CheeseListingOutput`. And because that class isn't *technically* an API Resource
-class, it's serialized in a *slightly* different way internally. For the serialization
-nerds out there, API resource classes are *usually* normalized using
-`ItemNormalizer` which extends `AbstractItemNormalizer`. But with a DTO object,
-it *instead* uses the simpler `ObjectNormalizer`.
+`CheeseListingOutput`:
+
+[[[ code('5677c66189') ]]]
+
+And because that class isn't *technically* an API Resource class, it's serialized
+in a *slightly* different way internally. For the serialization nerds out there,
+API resource classes are *usually* normalized using `ItemNormalizer` which extends
+`AbstractItemNormalizer`. But with a DTO object, it *instead* uses the simpler
+`ObjectNormalizer`.
 
 ## Where Did @type Go?
 
@@ -79,8 +101,12 @@ symfony php bin/phpunit
 
 Yep! One failure because one test is *looking* for `@type`. Let's open this test
 up: `tests/Functional/CheeseListingResourceTest.php` and then scroll down to
-`testGetCheeseListingCollection()`. Let's see... here it is: that `@type` is *no*
-longer being returned. For now, just delete it so that the tests will pass.
+`testGetCheeseListingCollection()`. Let's see... here it is:
+
+[[[ code('2a07a6070f') ]]]
+
+That `@type` is *no* longer being returned. For now, just delete it so that
+the tests will pass.
 
 But good news! Thanks to the API Platform team, this bug *has* been fixed and
 should be released in API Platform 2.5.8. But since that hasn't been released yet
