@@ -18,16 +18,21 @@ a DTO. I've actually *fixed* this bug... but I need to finish that
 [pull request](https://github.com/api-platform/core/pull/3696).
 
 Specifically, in the `User` class, if we search for `getPublishedCheeseListings()`,
-this is the method that gives us the `cheeseListings` property. But because
-`CheeseListing` uses a DTO, it doesn't calculate `readableLink` correctly. Remember:
-`readableLink` is calculated by checking to see if the embedded object -
-`CheeseListing` has any properties that are in the same normalization groups as
-`User`. But... since `CheeseListing` isn't *actually* the object that will
-ultimately be serialized... API Platform should *really* check to see if
-`CheeseListingOutput` has any fields in the `user:read` group.
+this is the method that gives us the `cheeseListings` property:
+
+[[[ code('a9e1905b0f') ]]]
+
+But because `CheeseListing` uses a DTO, it doesn't calculate `readableLink`
+correctly. Remember: `readableLink` is calculated by checking to see if the
+embedded object - `CheeseListing` has any properties that are in the same
+normalization groups as `User`. But... since `CheeseListing` isn't *actually*
+the object that will ultimately be serialized... API Platform should *really*
+check to see if `CheeseListingOutput` has any fields in the `user:read` group.
 
 *Anyways*, one way to fix this is just to force it. We can say `@ApiProperty`
-with `readableLink=false`.
+with `readableLink=false`:
+
+[[[ code('4e83fc9bce') ]]]
 
 Now, when we move over and refresh... that will force it to use IRI strings.
 So... this is another quirk to be aware of, but hopefully it will get fixed soon.
@@ -47,12 +52,18 @@ we started with all this output stuff, we *were* actually embedding the
 `CheeseListing` data in `User` because we *were* including a couple of fields.
 
 In `CheeseListing`, go down to the `title` property. We put this
-in the `user:read` group... and we did the same for `price`. We did that because
-we wanted these two fields to be embedded when serializing a `User`.
+in the `user:read` group... and we did the same for `price`:
+
+[[[ code('2ae5eb8a59') ]]]
+
+We did that because  we wanted these two fields to be embedded when serializing
+a `User`.
 
 The reason that wasn't happening *now* is... well... because I forgot to add these
 in `CheeseListingOutput`. Let's fix that: above `title`, add `user:read` and then
-also add `user:read` to `price`.
+also add `user:read` to `price`:
+
+[[[ code('29f7b6d7a2') ]]]
 
 Let's check it out! Refresh now. *That* is how it looked before.
 
@@ -62,7 +73,9 @@ So... hey! We switched to an output DTO! And we're now getting the *same* output
 had before! Yes, there *were* a few bumps along the way, but overall, it's
 a really clean process. This output class holds the fields that we actually want
 to serialize and the data transformer gives us a simple way to create that object
-from a `CheeseListing`
+from a `CheeseListing`:
+
+[[[ code('9b11ad4fe8') ]]]
 
 So let's celebrate! If you bring the pizza, *I'll* clean up the
 `CheeseListing` class. Because... it *no* longer needs *anything* related to
@@ -70,14 +83,20 @@ serializing.... because this object is *no* longer being serialized!
 
 Search for `:read` to find things we can delete. Remove `cheese:read` and `user:read`
 from `title`, but keep the `write` groups because we *are* still *deserializing*
-into this object when creating or updating cheese listings.
+into this object when creating or updating cheese listings:
 
-Then, down on `description`, remove `@Groups` entirely... for price, remove the two
-`read` groups, and also remove `cheese:read` above `owner`.
+[[[ code('ceadae9e4c') ]]]
+
+Then, down on `description`, remove `@Groups` entirely... for `price`, remove the two
+`read` groups, and also remove `cheese:read` above `owner`:
+
+[[[ code('3eaf2ce0ca') ]]]
 
 Finally, down on `getShortDescription()`, we can remove the method entirely! Well,
 if you're calling it from somewhere else in your app, keep it. But we're not. Also
-delete `getCreatedAtAgo()`.
+delete `getCreatedAtAgo()`:
+
+[[[ code('4e567dbf32') ]]]
 
 *This* is a nice benefit of DTO's: we can slim down our entity class and focus it
 on just being an entity that persists data. The serialization logic is somewhere else.
@@ -90,7 +109,9 @@ thinks that `User` and `CheeseListing` don't have any overlapping normalization
 groups... but in reality, `CheeseListingOutput` *does*.
 
 Re-add the `@ApiProperty` but this time say `readableLink=true` because we *do*
-want to force an embedded object.
+want to force an embedded object:
+
+[[[ code('98297fc9a5') ]]]
 
 When we refresh now... yes! It's back to an embedded object. Also try
 `/api/cheeses.jsonld`... that looks good, and let's run the tests one last time:
