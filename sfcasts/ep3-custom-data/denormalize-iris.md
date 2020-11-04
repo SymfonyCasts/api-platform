@@ -8,23 +8,32 @@ endpoint.
 
 ## supportsTransformation()
 
-In `supportsTransformation()`, we're dumping `$data`, `$to` and `$context`.
+In `supportsTransformation()`, we're dumping `$data`, `$to` and `$context`:
+
+[[[ code('c261076f33') ]]]
+
 When we look over at the profiler... it's *slightly* different than what we
 saw with our output transformer. This time, the data is an *array*: it's the
 decoded JSON that we sent. The `$to` is the *target* class - `CheeseListing` -
 and the `$context` is *also* interesting: it has an `input` key with class set
 to `CheeseListingInput`.
 
-Let's use this to fill in `supportsTransformation`. Start by checking if `$data`
+Let's use this to fill in `supportsTransformation()`. Start by checking if `$data`
 is an `instanceOf CheeseListing`, which in our dump, it is *not*. But if it *is*,
-then return `false`. This would mean that the object has *already* been transformed.
+then return `false`:
+
+[[[ code('5fbe889882') ]]]
+
+This would mean that the object has *already* been transformed.
 
 To be honest... I'm not sure if this is needed... but it's shown on the docs. There
 might be some case where a transformer is called multiple times.
 
 The *real* important part is the `return` down here: we support this transformation
 if `$to === CheeseListing::class` *and* `$context['input']['class']` - or `null` if
-it's not set - equals `CheeseListingInput::class`.
+it's not set - equals `CheeseListingInput::class`:
+
+[[[ code('d45facd1fa') ]]]
 
 The first part makes sense: we want to return true if we are converting *into* a
 `CheeseListing`. And the second part isn't needed in *our* app because we know
@@ -35,7 +44,9 @@ using that to double-check.
 
 Anyways, let's see if this is working! Dump all three arguments again inside of
 `transform()`. And, to avoid an error, return an empty `CheeseListing` object
-at the bottom.
+at the bottom:
+
+[[[ code('edbdaff198') ]]]
 
 Now spin over to the browser - I'll leave the profiler open - and hit "Execute"
 to try it again. Let's see:  it's the same 400 validation error as before...
@@ -43,10 +54,12 @@ which makes sense! We're returning a new, empty `CheeseListing`.
 
 Back on the profiler tab, hit "Latest", which should take us to the profiler for
 the *latest* request. Yep! This dump is coming from line 13, which *proves* our
-`supportsTransformation` is working!
+`supportsTransformation()` is working!
 
 Let's rename `$object` to `$input` and add some PHPDoc: we know this will be a
-`CheeseListingInput`: the result of deserializing the JSON.
+`CheeseListingInput`: the result of deserializing the JSON:
+
+[[[ code('32643671d0') ]]]
 
 So... now our job is simple, right? Take this `CheeseListingInput` object, move
 the data over onto a `CheeseListing` and return it. What could go wrong?
@@ -71,11 +84,16 @@ by calling the item data provider.
 
 So why isn't that happening here? Why isn't the IRI string being changed into a
 `User` object? Check out the `CheeseListingInput` class and look at the `owner`
-property. The deserializer has *no* idea that this property is *supposed* to
-hold a `User` object! And so, that `ItemNormalizer` doesn't know it should do
-its work!
+property:
 
-Let's help it: above this add `@var User`.
+[[[ code('1d7cc661c0') ]]]
+
+The deserializer has *no* idea that this property is *supposed* to  hold
+a `User` object! And so, that `ItemNormalizer` doesn't know it should do its work!
+
+Let's help it: above this add `@var User`:
+
+[[[ code('1fb4e91f09') ]]]
 
 Head back to the browser, hit Execute and... once that finishes, go to the
 Profiler, hit Latest and tada! The `owner` is now a `User` object! Adding proper
