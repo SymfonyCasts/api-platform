@@ -13,42 +13,65 @@ So... it's the *exact* same idea as the output, just... the other direction.
 Though, there will be a few interesting and tricky pieces.
 
 Let's get started! In the `src/Dto/` directory, create a new class called
-`CheeseListingInput`. This time, let's move *all* of the fields that we can
-currently *send* to create or update a `CheeseListing` - like `title` and `price`,
-into here.
+`CheeseListingInput`:
+
+[[[ code('91da4d499a') ]]]
+
+This time, let's move *all* of the fields that we can currently *send* to create
+or update a `CheeseListing` - like `title` and `price`,  into here.
 
 Start with `public $title` and put some PHPDoc on it. Then in `CheeseListing`,
 steal `@Groups`, delete it - we won't need any groups here anymore - and paste
-the `@Groups` on top of the new `title` property. Oh, but, I'll re-type the end
-of this and hit tab so that PhpStorm adds the `use` statement for me.
+the `@Groups` on top of the new `title` property:
+
+[[[ code('e188854af1') ]]]
+
+Oh, but, I'll re-type the end  of this and hit tab so that PhpStorm adds the
+`use` statement for me:
+
+[[[ code('85e80c2bfc') ]]]
 
 The other fields we need are `public $price`, `owner` and `isPublished`. Let's
 go steal *their* groups: find `price`, move its `@Groups` over, then for `owner`,
-do the same... and finally, grab the `@Groups` for `isPublished`.
+do the same... and finally, grab the `@Groups` for `isPublished`:
 
-There *is* one other field: search for `groups`. Yep, `setTextDescription()`.
+[[[ code('f10fdaffb9') ]]]
+
+There *is* one other field: search for `groups`. Yep, `setTextDescription()`:
+
+[[[ code('be02f08130') ]]]
+
 This allows the user to send a `description` field... but ultimately the
 deserialization process calls `setTextDescription()` and then *we* call `nl2br` on
 it. We want to do the *exact* same thing in the input class. So, copy this method,
 delete it, and paste it at the bottom of `CheeseListingInput`. Re-type the end
-of `@SerializedName` and auto-complete it to get the `use` statement.
+of `@SerializedName` and auto-complete it to get the `use` statement:
+
+[[[ code('b6132dba95') ]]]
 
 Of course, when the deserializer *calls* this method, we're storing the end result
 on a `description` property... which doesn't exist yet. Let's add it:
-`public $description`. But we're *not* going to put this in any groups because
-we *don't* want this field to be writable directly: it's just there to store
-data.
+`public $description`:
+
+[[[ code('6634fc372a') ]]]
+
+But we're *not* going to put this in any groups because we *don't* want this
+field to be writable directly: it's just there to store data.
 
 Ok! Back in `CheeseListing`, if we search for "Groups", cool! The gray means that
 both the `Groups` and `SerializedName` `use` statements are *not* needed anymore
-because we have moved *all* of this stuff. Delete both.
+because we have moved *all* of this stuff. Delete both:
+
+[[[ code('77593afa40') ]]]
 
 There is now *nothing* inside of `CheeseListing` about serializing or deserializing.
 
 Ok! Our `CheeseListingInput` is ready! To tell API Platform to *use* it, it's
 the same as `output`. On `CheeseListing,` add `input=`, remove the quotes, and
 say `CheeseListingInput::class`. Don't forget to add the `use` statement manually:
-`use CheeseListingInput`.
+`use CheeseListingInput`:
+
+[[[ code('22124444a4') ]]]
 
 ## How Deserializing Works
 
@@ -81,8 +104,14 @@ To fix this, we know the answer: we need a data transformer!
 
 Inside of the `DataTransformer` directory, create a new PHP class called
 `CheeseListingInputDataTransformer`. Make this implement, of course,
-`DataTransformerInterface` and then go to Code -> Generate - or Command + N on
-a Mac - to generate the two methods we need.
+`DataTransformerInterface`:
+
+[[[ code('3a2fec6b9f') ]]]
+
+And then go to "Code"->"Generate" - or `Command` + `N` on a Mac - to generate
+the two methods we need:
+
+[[[ code('8f17f67464') ]]]
 
 This time, the `supportsTransformation()` method will look a *little* bit different.
 Dump all three arguments... and actually use *dump()* instead of `dd()` because we're
@@ -91,7 +120,9 @@ response is ugly there. Using `dump()` will save the HTML to the *profiler* so
 we can easily look at it.
 
 Anyways, dump `$data`, `$to` and `$context`. And at the bottom return `false`
-so this method doesn't cause an error: it *needs* to return a boolean.
+so this method doesn't cause an error: it *needs* to return a boolean:
+
+[[[ code('55d09919b9') ]]]
 
 Ok: move over, hit "Execute" and... huh? It... actually *did* dump the variables
 right in the response... which is what I was trying to avoid! Normally, if you
