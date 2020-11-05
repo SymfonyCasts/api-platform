@@ -2,8 +2,12 @@
 
 Our `CheeseListingInput` DTO now works to create *new* listings, but it does *not*
 work for updates. The reason is simple: our data transformer always creates *new*
-`CheeseListing` objects. What we *really* need to do is query for an existing
-`CheeseListing` object from the database when the operation is an update.
+`CheeseListing` objects:
+
+[[[ code('f390d4800a') ]]]
+
+What we *really* need to do is query for an existing `CheeseListing` object
+from the database when the operation is an update.
 
 And... doing this is pretty easy! When we make a put request - or really, *any*
 item operation - API Platform *already* queries for the underlying `CheeseListing`
@@ -14,7 +18,9 @@ case - onto the *context*.
 ## Fetching the Entity from the Context
 
 Check it out: say if `isset($context[])` and look for a special key:
-`AbstractItemNormalizer::OBJECT_TO_POPULATE`. Let me fix my syntax.
+`AbstractItemNormalizer::OBJECT_TO_POPULATE`. Let me fix my syntax:
+
+[[[ code('3fd6990e64') ]]]
 
 This is relates to a feature that's part of *Symfony's* serializer. And... I'm
 being a bit lazy. The constant *actually* lives on one of AbstractItemNormalizer's
@@ -28,8 +34,13 @@ can tell the serializer to do that by passing that object on *this* key of the
 
 In the case of an input DTO, the `OBJECT_TO_POPULATE` is *actually* the underlying
 `CheeseListing` object. So we can say `$cheeseListing = ` and I'll copy that long
-`$context` and paste it here. Else, copy and move up the
-`$cheeseListing = new CheeseListing()` line.
+`$context` and paste it here:
+
+[[[ code('05c57ecb79') ]]]
+
+Else, copy and move up the `$cheeseListing = new CheeseListing()` line:
+
+[[[ code('90dd137917') ]]]
 
 That's it! Notice that this means the title *can't* be updated: if the user sent
 that field on a PUT request, we *can't* change it on the final `CheeseListing`
@@ -46,16 +57,20 @@ Anywho, let's try this. Back at the docs, I still have the POST endpoint open.
 Copy all the data we sent. And, let's see... this created a new cheese listing with
 id `53`. Close up this operation, open the put operation, hit "Try it out",
 enter 53 for the ID and, in the box, paste the fields. Let's change the price to
-be 5,000.
+be 5000.
 
 Hit Execute. And... ah! 500 error!
 
-> owner_id Cannot be null
+> `owner_id` cannot be `null`
 
 Figuring this out requires some digging. Look over at `CheeseListingInput`.
-The owner is in the `cheese:collection:post` group. Thanks to our denormalization
-groups, this means that it will *only* be used during deserialization on the
-create, POST operation. Yep, we're sending `owner`, but it's being ignored.
+The owner is in the `cheese:collection:post` group:
+
+[[[ code('70e8c2b793') ]]]
+
+Thanks to our denormalization groups, this means that it will *only* be used
+during deserialization on the  create, POST operation. Yep, we're sending `owner`,
+but it's being ignored.
 
 But... why is that a problem? That... *is* the behavior we want! The `owner` is
 meant to be set on create, then never changed.
@@ -74,9 +89,9 @@ And... that's important! If a field is *not* in the JSON for an update, it means
 the field should *not* be changed: we should use the value from the database.
 
 Ideally, this `CheeseListingInput` object would *first* be *initialized* using the
-data from the `CheeseListing` that's in the database. And *then* the
-JSON would be deserialized onto it. If we did this, any fields that were *not*
-sent in the JSON would *remain* at their original values.
+data from the `CheeseListing` that's in the database. And *then* the JSON would be
+deserialized onto it. If we did this, any fields that were *not* sent in the JSON
+would *remain* at their original values.
 
 But... that does *not* happen and it means that we don't have enough information
 in this function to figure out how to handle null fields.
