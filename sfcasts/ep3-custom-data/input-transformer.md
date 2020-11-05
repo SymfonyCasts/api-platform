@@ -19,11 +19,15 @@ noticed it!
 
 And... that's fine because we *do* want types on all of our properties. Back in
 the class, above `title`, add `@var string`, `@var int` for price and above
-`isPublished`, `@var bool`.
+`isPublished`, `@var bool`:
+
+[[[ code('8f00d56bcd') ]]]
 
 By the way, if you're wondering why `description` was *always* in the docs, remember
 that the `description` field comes from the `setTextDescription()` method, which
-*does* have metadata above it and an argument with a type-hint.
+*does* have metadata above it and an argument with a type-hint:
+
+[[[ code('507707d153') ]]]
 
 Let's check the docs now: refresh, go back to the POST endpoint, hit, "Try it out"
 and... yes! *Now* it sees all the fields.
@@ -32,28 +36,35 @@ and... yes! *Now* it sees all the fields.
 
 Ok: let's finish our data transformer. Instead of returning, say
 `$cheeseListing = new CheeseListing()` and pass the title as the first
-argument: `$input->title`. Then, some good, boring work:
-`$cheeseListing->setDescription($input->description)`,
+argument: `$input->title`:
+
+[[[ code('9e2150649d') ]]]
+
+Then, some good, boring work: `$cheeseListing->setDescription($input->description)`,
 `$cheeseListing->setPrice($input->price)`,
 `$cheeseListing->setOwner($input->owner)` - which is a `User` object - and
 `$cheeseListing->setIsPublished($input->isPublished)`. Return `$cheeseListing`
-at the bottom.
+at the bottom:
+
+[[[ code('27a0a54797') ]]]
 
 Okay: moment of truth. I'll close the extra tab, go back to the original
-documentation tab, hit Execute and... it fails
+documentation tab, hit "Execute" and... it fails:
 
-> Argument 1 passed to `CheeseListing::setPrice()` must be of type int, null given.
+> Argument 1 passed to `CheeseListing::setPrice()` must be of type `int`, `null` given.
 
 The problem is that I forgot to pass a `price` field up in the JSON, which causes
 the type error. We're going to talk more about this later when we chat about
 validation, but for now, be sure to pass every field we need, like `price: 2000`.
 
 Try it again. And... bah! I get the same error for the `setIsPublished() `method.
-I really meant to default `isPublished` to false in `CheeseListingInput`.
+I really meant to default `isPublished` to false in `CheeseListingInput`:
+
+[[[ code('bce7aef757') ]]]
 
 Ok, *one* more time. And... yes! A 201 status code. It worked!
 
-So using a DTO input is a 3 step process. First, API Platform deserializes
+So using a DTO input is a 3-step process. First, API Platform deserializes
 the JSON we send into a `CheeseListingInput` object. Second, *we* transform that
 `CheeseListingInput` into a `CheeseListing` in the data transformer. And
 third, the normal Doctrine data persister saves things. That's a really clean
