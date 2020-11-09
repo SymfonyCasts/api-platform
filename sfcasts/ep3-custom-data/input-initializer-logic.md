@@ -2,18 +2,25 @@
 
 The end goal is that this `$input` argument will be the `CheeseListingInput` object
 that we create in our denormalizer... which eventually will be pre-filled with
-data from the database.
+data from the database:
+
+[[[ code('13cac25d35') ]]]
 
 Let's `dump($input)` so that, once this ready, we can *see* if we've accomplished
-that.
+that:
+
+[[[ code('c26c4d8ba6') ]]]
 
 ## Calling the Core Denormalizer System
 
 As I mentioned earlier, as soon as we created this class and filled in
-`supportsDenormalization()`, we became 100% responsible for denormalizing
-`CheeseListingInput` objects... which means we actually *do* need to somehow
-take the array of data from the JSON, put it onto the `CheeseListingInput`
-and return it!
+`supportsDenormalization()`:
+
+[[[ code('0515a5908b') ]]]
+
+We became 100% responsible for denormalizing `CheeseListingInput` objects...
+which means we actually *do* need to somehow take the array of data from the JSON,
+put it onto the `CheeseListingInput` and return it!
 
 But... pfff. We don't *really* want to do all that hard work... because that's
 what the normal denormalizer system does. Nope, let's just *call* the normal
@@ -22,7 +29,9 @@ system, but pass in *our* modified `$context`.
 We actually had this same situation in an earlier tutorial with `UserNormalizer`
 and we handled it with a - kind of - elaborate solution that allowed us to inject
 the entire normalizer system, call `normalize()` again and use a flag on the
-`$context` to avoid recursion.
+`$context` to avoid recursion:
+
+[[[ code('3b279402d8') ]]]
 
 The *most* correct solution in `CheeseListingInputDenormalizer` would be to do
 that same thing. But... I'm going to cheat. Denormalization is a bit simpler
@@ -31,14 +40,22 @@ denormalizer that I know we need instead of injecting the *entire* denormalizer
 system and trying to avoid recursion.
 
 The denormalizer we need is called `ObjectNormalizer` and it's autowireable. On
-top, create public function `__construct()` with `ObjectNormalizer` - make sure
-you get the one from Symfony - `$objectNormalizer`. I'll hit Alt + Enter and
-go to "Initialize properties" to create that property and set it.
+top, create `public function __construct()` with `ObjectNormalizer` - make sure
+you get the one from Symfony - `$objectNormalizer`:
+
+[[[ code('1418f66f86') ]]]
+
+I'll hit `Alt`+`Enter` and go to "Initialize properties" to create that property and
+set it:
+
+[[[ code('a4cb63dc50') ]]]
 
 Now, down in our code, return `$this->objectNormalizer->denormalize()` and pass it
 the `$data` - because we still want to denormalize the same array of data - `$type`
 `$format`, but now pass our shiny *new* `$context` so that *when* it denormalizes,
-it will *update* our `$dto` instead of creating a new one.
+it will *update* our `$dto` instead of creating a new one:
+
+[[[ code('ff8dac7bc6') ]]]
 
 Ok, let's try it! Hit "Execute" again. We still get a 500 error... which makes sense
 because we haven't finished our job yet. What I want to see is if the dump worked:
@@ -48,7 +65,7 @@ is now being passed into the `transform()` method.
 Go over to the other profiler tab and hit "Latest". And... there it is! Oh, wait.
 Ryan, you dummy! I should have taken off the `title` field from the JSON
 so that we can see if the `title` that we're setting in the denormalizer is what
-we see in the dump(). Try it again... 500 error... hit Latest and... yes! *This*
+we see in the `dump()`. Try it again... 500 error... hit Latest and... yes! *This*
 is what we were looking for! It proves that *we* are now in control of creating
 the `CheeseListingInput` object. We create the object, then, when the deserializer
 does its job, it either leaves the property alone if we didn't send that field or
@@ -62,9 +79,16 @@ if a field was *not* sent in the JSON, it will match what's already in the datab
 ## OBJECT_TO_POPULATE, CheeseListing & CheeseListingInput
 
 By the way, if you're wondering why we can override `OBJECT_TO_POPULATE` to be a
-`CheeseListingInput` inside the denormalizer... but then `OBJECT_TO_POPULATE`
-is still apparently a `CheeseListing` object inside of our data transformer...
-that's... a good thing to wonder!
+`CheeseListingInput` inside the denormalizer:
+
+[[[ code('db6f302a76') ]]]
+
+But then `OBJECT_TO_POPULATE` is still apparently a `CheeseListing` object inside
+of our data transformer:
+
+[[[ code('dbb3e68263') ]]]
+
+That's... a good thing to wonder!
 
 In reality, denormalizing into the input object and calling the data transformer
 are two completely separate processes. The two `$context` arrays - while nearly
@@ -77,7 +101,13 @@ passed to the data transformer.
 Anyways, let's finish the denormalizer by populating the `CheeseListingInput`
 with the data from the database. And... since this is pretty boring, at the bottom,
 I'll paste a new private function. You can copy this from the code block on this
-page. Re-type the end of `CheeseListing` to get that `use` statement.
+page:
+
+[[[ code('5918b08ee7') ]]]
+
+Re-type the end of `CheeseListing` to get that `use` statement:
+
+[[[ code('14464b11d5') ]]]
 
 This checks the `object_to_populate` key - I should probably use the constant -
 to see if there is an *existing* entity, which would happen for an update
@@ -87,7 +117,9 @@ pre-populate all the fields on the DTO.
 
 Back up in `denormalize()`, delete the new DTO stuff and say
 `$context[AbstractNormalizer::OBJECT_TO_POPULATE]` equals `$this->createDto()`
-and pass `$context`.
+and pass `$context`:
+
+[[[ code('84c94ac7b9') ]]]
 
 Let's try it! Back at the browser, go to the docs tab... and hit Execute. Let's
 see... yes! It works! Price 5000!
