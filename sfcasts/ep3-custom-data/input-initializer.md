@@ -5,7 +5,9 @@ for the `CheeseListing` entity. Second, the JSON is deserialized into a new
 `CheeseListingInput` object. And third, our `transform()` method is called,
 where we *take* that `CheeseListingInput` object's data and move it onto the
 `CheeseListing`. To get the `CheeseListing` that was queried from the database,
-we grab it from the `$context`.
+we grab it from the `$context`:
+
+[[[ code('cb5ae284bb') ]]]
 
 The problem with this process is step 2. Because the deserializer always creates
 a *new* `CheeseListingInput` with no data before putting the JSON data onto it,
@@ -26,36 +28,54 @@ Since that's not released yet, we'll do it ourselves.
 ## Custom Normalizer for the Input Class
 
 How? We know that if you set the `OBJECT_TO_POPULATE` key on the `$context`, then
-the deserializer will use *that* object instead of creating a new one. By leveraging
-a custom denormalizer, we could hook into the denormalization process and set
-the `OBJECT_TO_POPULATE` key to a pre-populated `CheeseListingInput` object
+the deserializer will use *that* object instead of creating a new one:
+
+[[[ code('a38964beb0') ]]]
+
+By leveraging  a custom denormalizer, we could hook into the denormalization process
+and set  the `OBJECT_TO_POPULATE` key to a pre-populated `CheeseListingInput` object
 *right* before the JSON is deserialized.
 
 If... that doesn't make sense yet, it's okay. Let's step through it piece by piece.
 
 To start, in the `src/Serializer/Normalizer/` directory, create a new
-`CheeseListingInputDenormalizer` class. This will be responsible for
-*denormalizing* `CheeseListingInput` objects. Make it implement
-`DenormalizerInterface` and also `CacheableSupportsMethodInterface`, which is a
-performance thing. Then go to Code -> Generate - or Command + N a Mac - and select
-"Implement Methods" to generate the three methods we need. I'll move
-`hasCacheableSupportsMethod()` to the bottom because it's the least important.
+`CheeseListingInputDenormalizer` class:
+
+[[[ code('cd0224f183') ]]]
+
+This will be responsible for *denormalizing* `CheeseListingInput` objects. Make it
+implement `DenormalizerInterface` and also `CacheableSupportsMethodInterface`, which
+is a  performance thing:
+
+[[[ code('a8558774d5') ]]]
+
+Then go to "Code"->"Generate" - or `Command`+`N` a Mac - and select "Implement Methods"
+to generate the three methods we need. I'll move `hasCacheableSupportsMethod()` to the
+bottom because it's the least important:
+
+[[[ code('c5010548a4') ]]]
 
 As *soon* as we created this class, because it implements `DenormalizerInterface`,
 the serializer will call `supportsDenormalization()` on *every* single piece of
 data during denormalization. In `supportsDenormalization()`, we support
-denormalizing a piece of data if its `$type` equals `CheeseListingInput::class`.
+denormalizing a piece of data if its `$type` equals `CheeseListingInput::class`:
 
-Thanks to this, we are now 100% responsible for denormalizing `CheeseListingInput`.
+[[[ code('9279d64a30') ]]]
+
+Thanks to this, we are now 100% responsible for denormalizing `CheeseListingInput`
 objects. Down in `hasCacheableSupportsMethod()` return true, which you should do
 unless your `supportsDenormalization()` method uses the `$context` to make its
-decision.
+decision:
+
+[[[ code('f669d2c437') ]]]
 
 ## The OBJECT_TO_POPULATE during Input Denormalization
 
 Anyways, the serializer will now call `denormalize()` whenever it's trying to
 denormalize a `CheeseListingInput`. Let's `dump()` the `$context` - that's the
-last argument - so we can see what it looks like.
+last argument - so we can see what it looks like:
+
+[[[ code('438de56d21') ]]]
 
 This won't work yet, but let's see what that dump looks like. At the browser -
 this is the `put` operation - hit "Execute". And... error!
@@ -64,14 +84,16 @@ this is the `put` operation - hit "Execute". And... error!
 
 It's complaining because we're not returning anything from our `denormalize()`
 method yet... but we *can* check out the dump. In another tab, I already have my
-profiler open, click Latest. This takes me to the exception section. Go down
-and click to open the Debug section.
+profiler open, click "Latest". This takes me to the "Exceptions" section. Go down
+and click to open the "Debug" section.
 
 Nice! This is the `$context` that's being passed to `denormalize`. And check this
 out: it has an `object_to_populate` key set to the `CheeseListing` object. Well,
 really, that should be no surprise: we saw that a few minutes ago. Inside our
 data transformer, `OBJECT_TO_POPULATE` is set to the existing `CheeseListing`
-object.
+object:
+
+[[[ code('f3a61a6978') ]]]
 
 But... now that I think about it... the fact that this is set to a `CheeseListing`
 object is kind of odd... because this process will ultimately deserialize the JSON
@@ -81,16 +103,23 @@ Internally, the serializer has a sanity check: if the `OBJECT_TO_POPULATE` is
 *not* the same *type* as the object we're deserializing into, then it's ignored.
 That's what's happening now: API Platform sets the existing `CheeseListing` onto
 `OBJECT_TO_POPULATE`, but since we're not deserializing into that type of object,
-it's ignored and a new `CheeseListingInput` is created.
+it's ignored and a new `CheeseListingInput` is created:
+
+[[[ code('195fa4ecef') ]]]
 
 But... we could *change* that key.
 
 ## Setting OBJECT_TO_POPULATE to the Input DTO
 
 Inside the denormalizer, let's start with something simple:
-`$dto = new CheeseListingInput()` and `$dto->title =` some hardcoded title.
-Set *this* onto the context:
-`$context[AbstractItemNormalizer::OBJECT_TO_POPULATE]` equals `$dto`.
+`$dto = new CheeseListingInput()` and `$dto->title =` some hardcoded title:
+
+[[[ code('759f4412c6') ]]]
+
+Set *this* onto the context: `$context[AbstractItemNormalizer::OBJECT_TO_POPULATE]`
+equals `$dto`:
+
+[[[ code('be4edf9401') ]]]
 
 We're not done yet... but if we passed *this* `$context` into the denormalizer
 system, then it *should* deserialize the JSON onto our new object. And, whatever
