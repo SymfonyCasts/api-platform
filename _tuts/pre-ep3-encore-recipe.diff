@@ -45,7 +45,7 @@ index 1ad206b76..9191f4f46 100644
 +    # Put in config/packages/prod/webpack_encore.yaml
 +    # cache: true
 diff --git a/package.json b/package.json
-index 9fdf87293..681931991 100644
+index 52719d188..c3394bfe0 100644
 --- a/package.json
 +++ b/package.json
 @@ -1,6 +1,6 @@
