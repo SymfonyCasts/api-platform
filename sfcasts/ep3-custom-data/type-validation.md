@@ -1,16 +1,23 @@
 # Type Validation
 
 Let's talk about validation. Even outside of DTO's, there are two layers of validation.
-The first asks: is a piece of data even *settable* on a property. Like, is it a
-valid data *type* for that property? And the second asks, does it pass validation
-rules?
+The first asks:
+
+> Is a piece of data even *settable* on a property?
+
+Like, is it a  valid data *type* for that property? And the second asks:
+
+> Does it pass validation rules?
 
 ## Validation for Invalid Types
 
 Let's start with that *first* type. Before even thinking about validation, we need
 to ask: is it even possible for a piece of data to be *set* onto a property? For
 example, pretend for a minute that we *don't* have an input class. In that case,
-if a `price` field is sent in the JSON, it will be set via the `setPrice()` method.
+if a `price` field is sent in the JSON, it will be set via the `setPrice()` method:
+
+[[[ code('0b81b2db03') ]]]
+
 And since the `int` argument is *not* nullable, if you tried to send a `price`
 field set to `null` that value would *not* be legal to set on this property.
 
@@ -18,11 +25,14 @@ When this happens, API Platform returns a 400 error. It's not a validation error
 exactly... but it effectively means the same thing.
 
 Let's see a real example. Inside `CheeseListingInput`, all the properties are
-public... and we're not using PHP 7.4 property types. This means that, technically,
-we can set each property to *any* value. But, we *also* have this `@var`, which tells
-API Platform that the property is *supposed* to be an `int`. And while that
-documentation wouldn't *normally* make any difference in how our code behaves,
-it *does* cause something to happen in API Platform.
+public... and we're not using PHP 7.4 property types:
+
+[[[ code('6593e46816') ]]]
+
+This means that, technically, we can set each property to *any* value. But,
+we *also* have this `@var`, which tells API Platform that the property is *supposed*
+to be an `int`. And while that documentation wouldn't *normally* make any difference
+in how our code behaves, it *does* cause something to happen in API Platform.
 
 Move over and refresh the documentation. Go to the `POST` cheeses endpoint, click
 "Try it out", and just send a `price` field set to, how about, `apple`.
@@ -73,7 +83,11 @@ has our back in preventing insane data.
 ## Special Case for Input DTOs: Null Fields
 
 And if you're using an input DTO, you need to be even *more* aware of this
-question of: "can a field be set to a certain value?". Why?
+question of:
+
+> Can a field be set to a certain value?
+
+Why?
 
 Send a completely *empty* object to create a `CheeseListing`. This should return
 a 400 error. But which kind? A type error like we just saw? Or a true validation
@@ -89,10 +103,16 @@ But when we hit Execute... ah! 500 error! It says:
 
 > Argument 1 passed to `setDescription()` must be of type string, null given
 
-This is coming from `CheeseListingInput` on line 66. Ah: because the
-`description` field wasn't sent, `$this->description` is null... but then
-`setDescription()` on `CheeseListing` doesn't *allow* null. The result is a
-very *not* cool 500 error.
+This is coming from `CheeseListingInput` on line 66:
+
+[[[ code('51de94ea1c') ]]]
+
+Ah: because the `description` field wasn't sent, `$this->description` is null...
+but then `setDescription()` on `CheeseListing` doesn't *allow* null:
+
+[[[ code('903559fc02') ]]]
+
+The result is a very *not* cool 500 error.
 
 There are 2 solutions to this. First, you could add validation constraints to
 your input class to guarantee that certain properties are not null. We're going
@@ -100,7 +120,9 @@ to talk about that in a few minutes.
 
 Or, you can add some type-casting to avoid the errors. For example: we can cast
 the description to a `(string)`, cast the price to an `(int)` And then, up here,
-we can cast the title to a `(string)`.
+we can cast the title to a `(string)`:
+
+[[[ code('7bfe230eff') ]]]
 
 *That* should fix the error. Now, if you're thinking:
 

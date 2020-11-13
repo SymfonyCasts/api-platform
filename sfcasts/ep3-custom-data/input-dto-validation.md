@@ -11,12 +11,18 @@ These are coming from the `@Assert` rules on `CheeseListing`. `CheeseListing` is
 But... this isn't the *only* way that validation can work. One complaint that you'll
 sometimes here about Symfony's validator is that, for it to work, you need to allow
 your entity to get into an invalid state. Basically, even though `$title` should
-not be blank, we need to first *allow* a blank or null value to be set onto the
-property so that it can *then* be validated.
+not be blank:
+
+[[[ code('36f2f2b9c1') ]]]
+
+We need to first *allow* a blank or null value to be set onto the property so
+that it can *then* be validated.
 
 This was at the root of a problem we had a minute ago. In `CheeseListingInput`,
 we had to add some type-casting here to help us set invalid data onto `CheeseListing`
-without causing a PHP error... so that it could *then* be validated.
+without causing a PHP error... so that it could *then* be validated:
+
+[[[ code('3378bbef71') ]]]
 
 ## Moving the Constraints to the Input
 
@@ -25,26 +31,40 @@ If we did that, then when we set the data onto this `CheeseListing` object, we w
 *know* that the data is - in fact - valid.
 
 So let's try this. Undo the typecasting in `CheeseListingInput` because once
-we're done, we will know that the data *is* valid and this won't be necessary.
+we're done, we will know that the data *is* valid and this won't be necessary:
+
+[[[ code('fcebde3ced') ]]]
 
 Next in `CheeseListing`, I'm going to move *all* of the `@Assert` constraints onto
-our input. Copy the two off of `$title` and move those into `CheeseListingInput`.
+our input. Copy the two off of `$title` and move those into `CheeseListingInput`:
+
+[[[ code('7ca9e7051f') ]]]
+
 We *do* need a `use` statement... but let's worry about that in a minute.
 
-Copy the constraint from `$description`, move it, copy the one from
-`$price` delete it and... also delete the constraint from `$description`. We
-*could* also choose to *keep* these validation rules in our entity... which would
-make sense if we used this class outside of our API and it needed to be validated
-there.
+Copy the constraint from `$description`, move it:
+
+[[[ code('8074223161') ]]]
+
+Copy the one from `$price` delete it and... also delete the constraint from
+`$description`. We *could* also choose to *keep* these validation rules in our
+entity... which would make sense if we used this class outside of our API and
+it needed to be validated  there.
 
 Paste the constraint above `price` and... there's one more constraint above
-`owner`: `@IsValidOwner()`. Copy it, delete it, and move it into the input.
+`owner`: `@IsValidOwner()`:
+
+[[[ code('36e15085fe') ]]]
+
+Copy it, delete it, and move it into the input.
 
 That's it! To get the `use` statements, re-type the end of `NotBlank` and hit tab
 to auto-complete it - that added the `use` statement on top - and do the same
-for `IsValidOwner`.
+for `IsValidOwner`:
 
-Ok cool! All of the validation rules live here and we have *no* constraints
+[[[ code('72f05f0be9') ]]]
+
+Ok, cool! All of the validation rules live here and we have *no* constraints
 in `CheeseListing`.
 
 ## Validating the Input Class
@@ -59,17 +79,20 @@ Inside of our data transformer, before we start transferring data, *this* is whe
 validation should happen. To do that, we need the validator! Add a public function
 `__construct()` with a `ValidatorInterface` argument. But grab the one
 from `ApiPlatform\`, *not* `Symfony\`. I'll explain why in a second. Call that
-argument `$validator` and then I'll go to Alt + Enter and select "Initialize
-properties" to create that property and set it.
+argument `$validator` and then I'll go to `Alt`+`Enter` and select "Initialize
+properties" to create that property and set it:
+
+[[[ code('26eb39b6f4') ]]]
 
 Down in `transform()`, `$input` will be the object that contains the deserialized
-JSON that we want to validate. Do that with
-`$this->validator->validate($input)`.
+JSON that we want to validate. Do that with `$this->validator->validate($input)`:
+
+[[[ code('bacb2720ef') ]]]
 
 That's it! The validator from API platform is a wrapper around Symfony's validator.
 It wraps it so that it can *add* a few nice things. Let's check it out.
 
-Hit Shift + Shift, look for `Validator.php`, include non project items and open
+Hit `Shift`+`Shift`, look for `Validator.php`, include non-project items and open
 the Validator from API Platform. As I mentioned, this wraps Symfony's validator...
 which it does so that it can add the validation groups from API Platform's config.
 
@@ -85,6 +108,9 @@ So if you like this, do it! If you don't, leave your validation constraints on
 your entity.
 
 Next: it's time for our final topic! Right now, all of our resources use their
-auto-increment database id as the identifier in the API. But in many cases,
-you can make your life easier - or the life of a JavaScript developer who is *using*
-your API - by using UUID's instead.
+auto-increment database id as the identifier in the API:
+
+[[[ code('dabcab661c') ]]]
+
+But in many cases, you can make your life easier - or the life of a JavaScript
+developer who is *using* your API easier - by using UUID's instead.
