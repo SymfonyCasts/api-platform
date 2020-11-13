@@ -1,4 +1,4 @@
-# Uuid as a API Identifier
+# UUID as a API Identifier
 
 We have a `$uuid` property on `User` and it *is* being set. But it's completely
 *not* part of our API yet.
