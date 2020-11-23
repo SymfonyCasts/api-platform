@@ -6,12 +6,19 @@ able to send it in JSON, the field can't be called... `id`!
 ## Naming the Identifier "id"
 
 I know, that's sounds kinda strange, so let me show you. Find the `uuid` property
-and pretend that we want to call this `id` in the API. Literally, instead of sending
-a field called `uuid`, I want to send one called `id`.
+and pretend that we want to call this `id` in the API:
 
-The easiest way to make that happen is to add `@SerializedName("id")`.
+[[[ code('d7cfcd6370') ]]]
 
-Then over in the test, it's simple: change `uuid` to `id`.
+Literally, instead of sending a field called `uuid`, I want to send one called `id`.
+
+The easiest way to make that happen is to add `@SerializedName("id")`:
+
+[[[ code('7bb1e0a08d') ]]]
+
+Then over in the test, it's simple: change `uuid` to `id`:
+
+[[[ code('a744b08f7c') ]]]
 
 We've done this type of thing before. And until now, it's been working fine. If
 you're getting the feeling that it *won't* work this time... yea... you're right.
@@ -57,8 +64,11 @@ the same. But internally, this activates a different denormalizer that *avoids*
 the error.
 
 How do we tell API Platform what format the data we're sending is in? With the
-`Content-Type` header. In the test, add `headers` and set that to an array with `Content-Type` equals `application/ld+json`, which is the official "media type"
-or "mime type" for JSON-LD.
+`Content-Type` header. In the test, add `headers` and set that to an array with
+`Content-Type` equals `application/ld+json`, which is the official "media type"
+or "mime type" for JSON-LD:
+
+[[[ code('61902fe093') ]]]
 
 Let's try it!
 
@@ -85,14 +95,22 @@ So... if you want to prevent your API users from needing to override that and
 send `application/ld+json`, there is another - kind of more extreme - option:
 disable the JSON format and always force JSON-LD.
 
-Let's try this. Remove the header... and then go into
-`config/packages/api_platform.yaml`. Down here, comment-out the `json` format
-completely. This means that this is *no* longer a format that our API can read
-or output.
+Let's try this. Remove the header:
+
+[[[ code('67fa246a6e') ]]]
+
+And then go into `config/packages/api_platform.yaml`. Down here, comment-out the
+`json` format completely:
+
+[[[ code('fc57936138') ]]]
+
+This means that this is *no* longer a format that our API can read or output.
 
 There's one other spot I need to change to avoid an error. Open `CheeseListing`.
 In a previous tutorial, we set specific formats for this resource to allow a `csv`
-format. Remove `json` from this list.
+format. Remove `json` from this list:
+
+[[[ code('8dbbc770c5') ]]]
 
 Ok, let's see what happens! When we run the test...
 
@@ -102,14 +120,17 @@ symfony php bin/phpunit --filter=testCreateUserWithUuid
 
 It *still* fails. And the error is cool!
 
-> The content-type application/json is not supported
+> The content-type "application/json" is not supported
 
 The test client - realizing that we're sending JSON data - sent this header
 automatically *for* us. But now that our API doesn't support JSON, this fails!
 
 Back in `api_platform.yaml`, move that `application/json` line up under the
-`jsonld` mime type. This means that if the `Content-Type` header is `application/json`,
-use `jsonld`.
+`jsonld` mime type:
+
+[[[ code('46027d08d0') ]]]
+
+This means that if the `Content-Type` header is `application/json`, use `jsonld`.
 
 Try the test one more time.
 
@@ -119,8 +140,17 @@ symfony php bin/phpunit --filter=testCreateUserWithUuid
 
 And... got it! This solution is a bit odd... but if you're always using JSON-LD,
 it's one option. But I'm going to remove all of this and be happy to call the field
-`uuid`. So I'll put that formats back, re-add the `json` format and, over in the
-resource class, remove the `SerializedName`.
+`uuid`. So I'll put that formats back:
+
+[[[ code('2d3c82ed8c') ]]]
+
+Re-add the `json` format:
+
+[[[ code('4790dd1060') ]]]
+
+And, over in the resource class, remove the `SerializedName`:
+
+[[[ code('24270d3d78') ]]]
 
 Whoa! Friends! That's it! Congratulations on taking your API Platform skills up
 another *huge* level! You can now properly add custom fields in... about 10 different
