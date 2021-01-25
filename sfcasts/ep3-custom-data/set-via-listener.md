@@ -109,7 +109,7 @@ Down in `getIsMe()`, the `LogicException` is no longer needed:
 [[[ code('5d0884e5da') ]]]
 
 Testing time! At your browser, refresh the item endpoint and... got it! And
-if we go to `/api/cheeses.jsonld`... the first item has `isMe: true` and the
+if we go to `/api/users.jsonld`... the first item has `isMe: true` and the
 others are `isMe: false`. *Love* it!
 
 But... what if the object that we need to set the data on is *not* the `User`
