@@ -11,7 +11,7 @@ Normally if you don't set a `normalizationContext` - like we did in `User` with
 Then your object will be serialized with *no* serialization groups...
 which basically means that every property will be included.
 
-But... we are *not* see that at all! This is due to something we did in a previous
+But... we are *not* seeing that at all! This is due to something we did in a previous
 tutorial. In `src/Serializer/AdminGroupsContextBuilder.php`, we added code to
 give you *extra* groups if you're an admin:
 
