@@ -24,7 +24,7 @@ Pass this a message:
 
 [[[ code('2effa3e681') ]]]
 
-Cool! I know, I don't need this other if statement down here, but I'll leave.
+Cool! I know, I don't need this other if statement down here, but I'll leave it.
 
 Anyways, let's see what this looks like. Refresh with the bad date and... cool!
 A nice JSON error message with: "Invalid from date format" and a 400 status code.
