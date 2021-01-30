@@ -52,7 +52,7 @@ I'll walk you through them along the way.
 
 So how do we start? By creating a class that has the *exact* fields that should exist
 when a `CheeseListing` is *serialized*. In `src/`, create a new directory called
-`DTO/` and inside, a new PHP class called `CheeseListingOutput`:
+`Dto/` and inside, a new PHP class called `CheeseListingOutput`:
 
 [[[ code('50cafb26fc') ]]]
 
