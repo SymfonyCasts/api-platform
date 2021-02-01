@@ -14,7 +14,7 @@ filter object... and it's a pretty good guess that API Platform does it directly
 and uses the `arguments` option to figure out what arguments it should pass to
 the constructor.
 
-## Out Filter is a Service!
+## Our Filter is a Service!
 
 But actually, our filter is a service in the container! *We* didn't register it
 directly, *API Platform* did thanks to our annotation. Each time it sees an
