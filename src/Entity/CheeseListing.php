@@ -24,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
  *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"},
  *     attributes={
- *          "pagination_items_per_page"=10
+ *          "pagination_items_per_page"=10,
+ *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
  *     }
  * )
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
