@@ -4,9 +4,12 @@ namespace App\Tests\Functional;
 
 use App\ApiPlatform\Test\ApiTestCase;
 use App\Entity\User;
+use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
 class CheeseListingResourceTest extends ApiTestCase
 {
+    use ReloadDatabaseTrait;
+
     public function testCreateCheeseListing()
     {
         $client = self::createClient();
