@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     collectionOperations={
  *          "get",
- *          "post"
+ *          "post"={"access_control"="is_granted('ROLE_USER')"}
  *     },
  *     shortName="cheeses",
  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
