@@ -8,6 +8,9 @@ class CheeseListingResourceTest extends ApiTestCase
 {
     public function testCreateCheeseListing()
     {
-        $this->assertEquals(42, 42);
+        $client = self::createClient();
+
+        $client->request('POST', '/api/cheeses');
+        $this->assertResponseStatusCodeSame(401);
     }
 }
