@@ -111,6 +111,8 @@ class CheeseListing
     }
 
     /**
+     * How long ago in text that this cheese listing was added.
+     *
      * @Groups("cheese_listing:read")
      */
     public function getCreatedAtAgo(): string
