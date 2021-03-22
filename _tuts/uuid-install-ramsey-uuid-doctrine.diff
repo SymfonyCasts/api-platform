@@ -1,31 +1,31 @@
 diff --git a/composer.json b/composer.json
-index 3cd81ea5d..0b85761ab 100644
+index e74791478..ddeeef8df 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -14,6 +14,7 @@
          "nelmio/cors-bundle": "^2.1",
          "nesbot/carbon": "^2.17",
-         "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
+         "phpdocumentor/reflection-docblock": "^3.0 || ^4.0 || ^5.0",
 +        "ramsey/uuid-doctrine": "^1.6",
          "symfony/asset": "5.1.*",
          "symfony/console": "5.1.*",
          "symfony/debug-bundle": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index f26ce1fbb..066d66560 100644
+index b733e8bc7..801ad75fc 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "8cc0964386175ecb2422216ca62de119",
-+    "content-hash": "27a3bfbecea2c60acd0d571b36d42935",
+-    "content-hash": "a127a0720fd5f63dd0d6cd63ce4e2e9e",
++    "content-hash": "64bae8cecc9c9444b67b21b273cf0e43",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -155,6 +155,58 @@
+@@ -162,6 +162,62 @@
              ],
-             "time": "2020-08-28T16:23:13+00:00"
+             "time": "2021-01-22T10:36:37+00:00"
          },
 +        {
 +            "name": "brick/math",
@@ -71,6 +71,10 @@ index f26ce1fbb..066d66560 100644
 +                "brick",
 +                "math"
 +            ],
++            "support": {
++                "issues": "https://github.com/brick/math/issues",
++                "source": "https://github.com/brick/math/tree/master"
++            },
 +            "funding": [
 +                {
 +                    "url": "https://tidelift.com/funding/github/packagist/brick/math",
@@ -82,8 +86,8 @@ index f26ce1fbb..066d66560 100644
          {
              "name": "composer/package-versions-deprecated",
              "version": "1.11.99",
-@@ -2360,6 +2412,208 @@
-             ],
+@@ -2559,6 +2615,223 @@
+             },
              "time": "2020-03-23T09:12:05+00:00"
          },
 +        {
@@ -147,6 +151,10 @@ index f26ce1fbb..066d66560 100644
 +                "queue",
 +                "set"
 +            ],
++            "support": {
++                "issues": "https://github.com/ramsey/collection/issues",
++                "source": "https://github.com/ramsey/collection/tree/1.1.0"
++            },
 +            "funding": [
 +                {
 +                    "url": "https://github.com/ramsey",
@@ -234,6 +242,11 @@ index f26ce1fbb..066d66560 100644
 +                "identifier",
 +                "uuid"
 +            ],
++            "support": {
++                "issues": "https://github.com/ramsey/uuid/issues",
++                "rss": "https://github.com/ramsey/uuid/releases.atom",
++                "source": "https://github.com/ramsey/uuid"
++            },
 +            "funding": [
 +                {
 +                    "url": "https://github.com/ramsey",
@@ -286,6 +299,12 @@ index f26ce1fbb..066d66560 100644
 +                "identifier",
 +                "uuid"
 +            ],
++            "support": {
++                "issues": "https://github.com/ramsey/uuid-doctrine/issues",
++                "rss": "https://github.com/ramsey/uuid-doctrine/releases.atom",
++                "source": "https://github.com/ramsey/uuid-doctrine",
++                "wiki": "https://github.com/ramsey/uuid/wiki"
++            },
 +            "time": "2020-01-27T05:09:17+00:00"
 +        },
          {
@@ -302,7 +321,7 @@ index 000000000..cfc3036f9
 +        types:
 +            uuid: 'Ramsey\Uuid\Doctrine\UuidType'
 diff --git a/symfony.lock b/symfony.lock
-index a58ca463d..b514baa84 100644
+index 04114537e..e5fa84086 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -13,6 +13,9 @@
@@ -315,7 +334,7 @@ index a58ca463d..b514baa84 100644
      "composer/package-versions-deprecated": {
          "version": "1.11.99"
      },
-@@ -173,6 +176,24 @@
+@@ -179,6 +182,24 @@
      "psr/simple-cache": {
          "version": "1.0.1"
      },
