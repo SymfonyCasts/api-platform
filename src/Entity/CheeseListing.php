@@ -35,7 +35,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(SearchFilter::class, properties={
  *     "title": "partial",
  *     "description": "partial",
- *     "owner": "exact"
+ *     "owner": "exact",
+ *     "owner.username": "partial"
  * })
  * @ApiFilter(RangeFilter::class, properties={"price"})
  * @ApiFilter(PropertyFilter::class)
