@@ -10,7 +10,8 @@ class CheeseListingResourceTest extends ApiTestCase
     {
         $client = self::createClient();
         $client->request('POST', '/api/cheeses', [
-            'headers' => ['Content-Type' => 'application/json']
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => [],
         ]);
         $this->assertResponseStatusCodeSame(401);
     }
