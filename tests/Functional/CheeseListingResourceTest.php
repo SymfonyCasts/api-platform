@@ -19,7 +19,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
         ]);
         $this->assertResponseStatusCodeSame(401);
 
-        $this->createUser('cheeseplease@example.com', '$argon2id$v=19$m=65536,t=6,p=1$AIC3IESQ64NgHfpVQZqviw$1c7M56xyiaQFBjlUBc7T0s53/PzZCjV56lbHnhOUXx8');
+        $this->createUser('cheeseplease@example.com', 'foo');;
         $this->logIn($client, 'cheeseplease@example.com', 'foo');
     }
 }
