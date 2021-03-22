@@ -2,11 +2,11 @@
 
 namespace App\Tests\Functional;
 
-use App\ApiPlatform\Test\ApiTestCase;
 use App\Entity\User;
+use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class CheeseListingResourceTest extends ApiTestCase
+class CheeseListingResourceTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 
@@ -19,22 +19,7 @@ class CheeseListingResourceTest extends ApiTestCase
         ]);
         $this->assertResponseStatusCodeSame(401);
 
-        $user = new User();
-        $user->setEmail('cheeseplease@example.com');
-        $user->setUsername('cheeseplease');
-        $user->setPassword('$argon2id$v=19$m=65536,t=6,p=1$AIC3IESQ64NgHfpVQZqviw$1c7M56xyiaQFBjlUBc7T0s53/PzZCjV56lbHnhOUXx8');
-
-        $em = self::$container->get('doctrine')->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        $client->request('POST', '/login', [
-            'headers' => ['Content-Type' => 'application/json'],
-            'json' => [
-                'email' => 'cheeseplease@example.com',
-                'password' => 'foo'
-            ],
-        ]);
-        $this->assertResponseStatusCodeSame(204);
+        $this->createUser('cheeseplease@example.com', '$argon2id$v=19$m=65536,t=6,p=1$AIC3IESQ64NgHfpVQZqviw$1c7M56xyiaQFBjlUBc7T0s53/PzZCjV56lbHnhOUXx8');
+        $this->logIn($client, 'cheeseplease@example.com', 'foo');
     }
 }
