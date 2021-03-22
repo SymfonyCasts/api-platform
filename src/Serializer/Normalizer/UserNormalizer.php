@@ -3,6 +3,7 @@
 namespace App\Serializer\Normalizer;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
@@ -13,6 +14,13 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
     use NormalizerAwareTrait;
 
     private const ALREADY_CALLED = 'USER_NORMALIZER_ALREADY_CALLED';
+
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     /**
      * @param User $object
@@ -44,7 +52,14 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
 
     private function userIsOwner(User $user): bool
     {
-        return mt_rand(0, 10) > 5;
+        /** @var User|null $authenticatedUser */
+        $authenticatedUser = $this->security->getUser();
+
+        if (!$authenticatedUser) {
+            return false;
+        }
+
+        return $authenticatedUser->getEmail() === $user->getEmail();
     }
 
     public function hasCacheableSupportsMethod(): bool
