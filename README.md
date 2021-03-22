@@ -35,6 +35,7 @@ the database & tables!
 
 ```
 php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
 ```
 
 If you get an error that the database exists, that should
