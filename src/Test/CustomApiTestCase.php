@@ -36,4 +36,13 @@ class CustomApiTestCase extends ApiTestCase
         ]);
         $this->assertResponseStatusCodeSame(204);
     }
+
+    protected function createUserAndLogIn(Client $client, string $email, string $password): User
+    {
+        $user = $this->createUser($email, $password);
+
+        $this->logIn($client, $email, $password);
+
+        return $user;
+    }
 }
