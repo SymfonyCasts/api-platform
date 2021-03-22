@@ -88,6 +88,18 @@ class CheeseListing
         return $this->description;
     }
 
+    /**
+     * @Groups("cheese_listing:read")
+     */
+    public function getShortDescription(): ?string
+    {
+        if (strlen($this->description) < 40) {
+            return $this->description;
+        }
+
+        return substr($this->description, 0, 40).'...';
+    }
+
     public function setDescription(string $description): self
     {
         $this->description = $description;
