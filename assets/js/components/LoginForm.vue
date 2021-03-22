@@ -45,7 +45,7 @@
                         password: this.password
                     })
                     .then(response => {
-                        console.log(response.data);
+                        console.log(response.headers);
 
                         //this.$emit('user-authenticated', userUri);
                         //this.email = '';
