@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <script>
+        window.user = {{ user|raw }};
+    </script>
+
     <div id="cheese-app">
         <cheese-whiz-app
             entrypoint="{{ path('api_entrypoint') }}"
