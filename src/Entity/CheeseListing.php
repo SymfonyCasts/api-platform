@@ -86,6 +86,11 @@ class CheeseListing
         return $this->description;
     }
 
+    /**
+     * The description of the cheese as raw text.
+     *
+     * @Groups("cheese_listing:write")
+     */
     public function setTextDescription(string $description): self
     {
         $this->description = nl2br($description);
