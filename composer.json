@@ -8,6 +8,7 @@
         "api-platform/api-pack": "^1.2",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/doctrine-migrations-bundle": "^2.0",
+        "nesbot/carbon": "^2.17",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
         "symfony/flex": "^1.1",
