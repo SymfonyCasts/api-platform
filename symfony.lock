@@ -244,6 +244,9 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v4.3.3"
+    },
     "symfony/http-foundation": {
         "version": "v4.2.8"
     },
