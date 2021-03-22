@@ -13,7 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  *          "get"={},
  *          "put"
  *     },
- *     shortName="cheeses"
+ *     shortName="cheeses",
+ *     normalizationContext={"groups"={"cheese_listing:read"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  */
