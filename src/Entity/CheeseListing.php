@@ -34,7 +34,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
  * @ApiFilter(SearchFilter::class, properties={
  *     "title": "partial",
- *     "description": "partial"
+ *     "description": "partial",
+ *     "owner": "exact"
  * })
  * @ApiFilter(RangeFilter::class, properties={"price"})
  * @ApiFilter(PropertyFilter::class)
