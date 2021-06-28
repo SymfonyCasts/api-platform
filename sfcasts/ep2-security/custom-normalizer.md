@@ -123,7 +123,16 @@ a collection of users. Because of our random logic, I'd expect *some* results to
 show the `phoneNumber` and some not. Execute and... hey! The first user has a
 `phoneNumber` field! It's null... because apparently we didn't set a `phoneNumber`
 for that user, but the field *is* there. And, thanks to the randomness, there
-is *no* `phoneNumber` for the second and third users. If you try the operation
+is *no* `phoneNumber` for the second and third users.
+
+***TIP
+If you start a new API Platform project, instead of seeing `phoneNumber: null`, the
+field is missing. This is due to a change in API Platform 2.5: if your resource supports the
+`PATCH` operation (which is on by default in 2.5), then null fields are "omitted". It's
+no big deal - just don't let it surprise you!
+***
+
+If you try the operation
 again... yes! This time the first *and* second users have that field, but not
 the third. Hey! We're now dynamically adding the `owner:read` group on an
 object-by-object basis! Normalizers rock!
