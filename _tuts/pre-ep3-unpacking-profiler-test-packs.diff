@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 02ce14f98..db5a1c941 100644
+index 02ce14f..db5a1c9 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -30,9 +30,13 @@
@@ -19,7 +19,7 @@ index 02ce14f98..db5a1c941 100644
      "config": {
          "preferred-install": {
 diff --git a/composer.lock b/composer.lock
-index f4cf183f6..592387f9f 100644
+index f4cf183..592387f 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -95,7 +95,7 @@ index f4cf183f6..592387f9f 100644
              "name": "symfony/var-dumper",
              "version": "v4.3.2",
 diff --git a/symfony.lock b/symfony.lock
-index bc07b3c86..8b924b45f 100644
+index bc07b3c..8b924b4 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -361,9 +361,6 @@

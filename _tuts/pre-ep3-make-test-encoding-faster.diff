@@ -1,6 +1,6 @@
 diff --git a/config/packages/test/security.yaml b/config/packages/test/security.yaml
 new file mode 100644
-index 000000000..5f68df4d7
+index 0000000..5f68df4
 --- /dev/null
 +++ b/config/packages/test/security.yaml
 @@ -0,0 +1,8 @@

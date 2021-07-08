@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 7ec095a8f..222ccc763 100644
+index 7ec095a..222ccc7 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -20,7 +20,10 @@ use Symfony\Component\Validator\Constraints as Assert;
@@ -15,7 +15,7 @@ index 7ec095a8f..222ccc763 100644
   *     },
   *     collectionOperations={
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 938b82f29..df1b9b930 100644
+index 938b82f..df1b9b9 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -47,6 +47,7 @@ class CheeseListingResourceTest extends CustomApiTestCase

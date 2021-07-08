@@ -1,5 +1,5 @@
 diff --git a/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php b/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php
-index 0a2047002..33a37f30b 100644
+index 0a20470..33a37f3 100644
 --- a/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php
 +++ b/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php
 @@ -18,7 +18,6 @@ class SetIsMeOnCurrentUserSubscriber implements EventSubscriberInterface

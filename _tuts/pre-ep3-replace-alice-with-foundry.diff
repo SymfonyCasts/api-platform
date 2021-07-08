@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 7d0b70262..bfe3c7844 100644
+index 7d0b702..bfe3c78 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -30,7 +30,6 @@
@@ -11,7 +11,7 @@ index 7d0b70262..bfe3c7844 100644
          "symfony/css-selector": "5.1.*",
          "symfony/maker-bundle": "^1.11",
 diff --git a/composer.lock b/composer.lock
-index 7b94ce85c..c8b3421dc 100644
+index 7b94ce8..c8b3421 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -578,7 +578,7 @@ index 7b94ce85c..c8b3421dc 100644
              "name": "zenstruck/foundry",
              "version": "v1.1.2",
 diff --git a/config/bundles.php b/config/bundles.php
-index d271f9f66..ba1203afb 100644
+index d271f9f6..ba1203a 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -11,9 +11,6 @@ return [
@@ -593,7 +593,7 @@ index d271f9f66..ba1203afb 100644
      Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['all' => true],
 diff --git a/config/packages/dev/hautelook_alice.yaml b/config/packages/dev/hautelook_alice.yaml
 deleted file mode 100644
-index b685db172..000000000
+index b685db1..0000000
 --- a/config/packages/dev/hautelook_alice.yaml
 +++ /dev/null
 @@ -1,2 +0,0 @@
@@ -601,7 +601,7 @@ index b685db172..000000000
 -    fixtures_path: fixtures
 diff --git a/config/packages/dev/nelmio_alice.yaml b/config/packages/dev/nelmio_alice.yaml
 deleted file mode 100644
-index 4cb9065c0..000000000
+index 4cb9065..0000000
 --- a/config/packages/dev/nelmio_alice.yaml
 +++ /dev/null
 @@ -1,9 +0,0 @@
@@ -616,7 +616,7 @@ index 4cb9065c0..000000000
 -        - 'sha1'
 diff --git a/config/packages/test/hautelook_alice.yaml b/config/packages/test/hautelook_alice.yaml
 deleted file mode 100644
-index 7b7177419..000000000
+index 7b71774..0000000
 --- a/config/packages/test/hautelook_alice.yaml
 +++ /dev/null
 @@ -1,2 +0,0 @@
@@ -624,14 +624,14 @@ index 7b7177419..000000000
 -    - { resource: ../dev/hautelook_alice.yaml }
 diff --git a/config/packages/test/nelmio_alice.yaml b/config/packages/test/nelmio_alice.yaml
 deleted file mode 100644
-index caec543de..000000000
+index caec543..0000000
 --- a/config/packages/test/nelmio_alice.yaml
 +++ /dev/null
 @@ -1,2 +0,0 @@
 -imports:
 -    - { resource: ../dev/nelmio_alice.yaml }
 diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
-index c361d431c..d44a69567 100644
+index c361d43..d44a695 100644
 --- a/src/Test/CustomApiTestCase.php
 +++ b/src/Test/CustomApiTestCase.php
 @@ -9,10 +9,12 @@ use App\Factory\UserFactory;
@@ -648,7 +648,7 @@ index c361d431c..d44a69567 100644
      protected function createUser(string $email, string $password): User
      {
 diff --git a/symfony.lock b/symfony.lock
-index 1dd441d16..08a47d2d8 100644
+index 1dd441d..08a47d2 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -116,39 +116,9 @@
@@ -727,7 +727,7 @@ index 1dd441d16..08a47d2d8 100644
          "version": "v2.9.0"
      },
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index b8ef0c7be..a834a677f 100644
+index b8ef0c7..a834a67 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -6,12 +6,9 @@ use App\Entity\CheeseListing;
@@ -744,7 +744,7 @@ index b8ef0c7be..a834a677f 100644
      {
          $client = self::createClient();
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index 047a1cb5a..5557d868f 100644
+index 047a1cb..5557d86 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -5,12 +5,9 @@ namespace App\Tests\Functional;

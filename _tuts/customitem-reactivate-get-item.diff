@@ -1,5 +1,5 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index 804e81df6..aa7153d6d 100644
+index 804e81d..aa7153d 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -11,12 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;

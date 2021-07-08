@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
-index 247e0c74d..626254973 100644
+index 247e0c7..6262549 100644
 --- a/src/DataProvider/DailyStatsProvider.php
 +++ b/src/DataProvider/DailyStatsProvider.php
 @@ -8,6 +8,7 @@ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;

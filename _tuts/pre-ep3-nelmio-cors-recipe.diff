@@ -1,5 +1,5 @@
 diff --git a/.env b/.env
-index 77af318ca..7df7e82d8 100644
+index 77af318..7df7e82 100644
 --- a/.env
 +++ b/.env
 @@ -21,7 +21,7 @@ APP_SECRET=1c78f3e5e06eb3c88a52819fbccdba6e
@@ -12,7 +12,7 @@ index 77af318ca..7df7e82d8 100644
  
  ###> doctrine/doctrine-bundle ###
 diff --git a/config/packages/nelmio_cors.yaml b/config/packages/nelmio_cors.yaml
-index 6f202c264..c7665081f 100644
+index 6f202c2..c766508 100644
 --- a/config/packages/nelmio_cors.yaml
 +++ b/config/packages/nelmio_cors.yaml
 @@ -7,4 +7,4 @@ nelmio_cors:
@@ -22,7 +22,7 @@ index 6f202c264..c7665081f 100644
 -        '^/': ~
 +        '^/': null
 diff --git a/symfony.lock b/symfony.lock
-index 8d75e7155..42e075273 100644
+index 8d75e71..42e0752 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -143,7 +143,7 @@

@@ -1,6 +1,6 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
 new file mode 100644
-index 000000000..e37edc1fd
+index 0000000..e37edc1
 --- /dev/null
 +++ b/src/Entity/DailyStats.php
 @@ -0,0 +1,17 @@

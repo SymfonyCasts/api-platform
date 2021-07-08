@@ -1,5 +1,5 @@
 diff --git a/bin/console b/bin/console
-index 19c2f6c3c..8fe9d4948 100755
+index 19c2f6c..8fe9d49 100755
 --- a/bin/console
 +++ b/bin/console
 @@ -4,18 +4,19 @@
@@ -37,7 +37,7 @@ index 19c2f6c3c..8fe9d4948 100755
  if ($_SERVER['APP_DEBUG']) {
      umask(0000);
 diff --git a/symfony.lock b/symfony.lock
-index 4c68b6f86..61bf0488e 100644
+index 4c68b6f..61bf048 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -219,16 +219,15 @@

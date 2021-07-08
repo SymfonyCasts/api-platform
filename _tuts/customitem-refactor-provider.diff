@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
-index 6b4a0b98f..b4fce5181 100644
+index 6b4a0b9..b4fce51 100644
 --- a/src/DataProvider/DailyStatsProvider.php
 +++ b/src/DataProvider/DailyStatsProvider.php
 @@ -8,34 +8,20 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
@@ -44,7 +44,7 @@ index 6b4a0b98f..b4fce5181 100644
      public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
 diff --git a/src/Service/StatsHelper.php b/src/Service/StatsHelper.php
 new file mode 100644
-index 000000000..46188f694
+index 0000000..46188f6
 --- /dev/null
 +++ b/src/Service/StatsHelper.php
 @@ -0,0 +1,112 @@
@@ -162,7 +162,7 @@ index 000000000..46188f694
 +}
 diff --git a/src/Service/fake_stats.json b/src/Service/fake_stats.json
 new file mode 100644
-index 000000000..f55d8aa21
+index 0000000..f55d8aa
 --- /dev/null
 +++ b/src/Service/fake_stats.json
 @@ -0,0 +1,124 @@

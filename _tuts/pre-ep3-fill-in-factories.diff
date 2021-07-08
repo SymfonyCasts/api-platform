@@ -1,5 +1,5 @@
 diff --git a/src/Factory/CheeseListingFactory.php b/src/Factory/CheeseListingFactory.php
-index ddd64f588..26e907104 100644
+index ddd64f5..26e9071 100644
 --- a/src/Factory/CheeseListingFactory.php
 +++ b/src/Factory/CheeseListingFactory.php
 @@ -19,10 +19,26 @@ use Zenstruck\Foundry\Proxy;
@@ -31,7 +31,7 @@ index ddd64f588..26e907104 100644
      }
  
 diff --git a/src/Factory/UserFactory.php b/src/Factory/UserFactory.php
-index 0ac763953..0e83359aa 100644
+index 0ac7639..0e83359 100644
 --- a/src/Factory/UserFactory.php
 +++ b/src/Factory/UserFactory.php
 @@ -22,7 +22,11 @@ final class UserFactory extends ModelFactory

@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 649f23643..02ce14f98 100644
+index 649f236..02ce14f 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -5,16 +5,26 @@
@@ -31,7 +31,7 @@ index 649f23643..02ce14f98 100644
          "symfony/yaml": "4.3.*"
      },
 diff --git a/composer.lock b/composer.lock
-index 216db0b87..f4cf183f6 100644
+index 216db0b..f4cf183 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,44 +4,8 @@
@@ -81,7 +81,7 @@ index 216db0b87..f4cf183f6 100644
              "name": "api-platform/core",
              "version": "v2.4.5",
 diff --git a/symfony.lock b/symfony.lock
-index 42d55f662..bc07b3c86 100644
+index 42d55f6..bc07b3c 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -1,7 +1,4 @@

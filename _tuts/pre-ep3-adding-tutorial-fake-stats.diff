@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index bfe3c7844..a0fe95dfa 100644
+index bfe3c78..a0fe95d 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -2,7 +2,7 @@
@@ -30,7 +30,7 @@ index bfe3c7844..a0fe95dfa 100644
      },
      "autoload": {
 diff --git a/composer.lock b/composer.lock
-index c8b3421dc..60cbd9ed5 100644
+index c8b3421..60cbd9e 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,20 +4,20 @@
@@ -2504,7 +2504,7 @@ index c8b3421dc..60cbd9ed5 100644
      "plugin-api-version": "2.0.0"
  }
 diff --git a/symfony.lock b/symfony.lock
-index 08a47d2d8..39c45af76 100644
+index 08a47d2..39c45af 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -104,17 +104,26 @@
@@ -2565,7 +2565,7 @@ index 08a47d2d8..39c45af76 100644
          "version": "v1.1.1"
 diff --git a/tutorial/StatsHelper.php b/tutorial/StatsHelper.php
 new file mode 100644
-index 000000000..57df59a76
+index 0000000..57df59a
 --- /dev/null
 +++ b/tutorial/StatsHelper.php
 @@ -0,0 +1,112 @@
@@ -2683,7 +2683,7 @@ index 000000000..57df59a76
 +}
 diff --git a/tutorial/fake_stats.json b/tutorial/fake_stats.json
 new file mode 100644
-index 000000000..f55d8aa21
+index 0000000..f55d8aa
 --- /dev/null
 +++ b/tutorial/fake_stats.json
 @@ -0,0 +1,124 @@

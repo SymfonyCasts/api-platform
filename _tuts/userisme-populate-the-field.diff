@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
-index 8eb0966c5..8e9180aad 100644
+index 8eb0966..8e9180a 100644
 --- a/src/DataProvider/UserDataProvider.php
 +++ b/src/DataProvider/UserDataProvider.php
 @@ -18,8 +18,12 @@ class UserDataProvider implements ContextAwareCollectionDataProviderInterface, R

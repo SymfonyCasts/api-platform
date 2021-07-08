@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 2e7780c28..f3d9a95dc 100644
+index 2e7780c..f3d9a95 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -63,6 +63,7 @@
@@ -12,7 +12,7 @@ index 2e7780c28..f3d9a95dc 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index b78cc24b5..e9eb7462e 100644
+index b78cc24..e9eb746 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -202,7 +202,7 @@ index b78cc24b5..e9eb7462e 100644
      ],
      "aliases": [],
 diff --git a/config/bundles.php b/config/bundles.php
-index 1f5fdfcce..ba81f95dc 100644
+index 1f5fdfc..ba81f95 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -10,4 +10,5 @@ return [
@@ -213,7 +213,7 @@ index 1f5fdfcce..ba81f95dc 100644
  ];
 diff --git a/config/packages/dev/web_profiler.yaml b/config/packages/dev/web_profiler.yaml
 new file mode 100644
-index 000000000..e92166a7f
+index 0000000..e92166a
 --- /dev/null
 +++ b/config/packages/dev/web_profiler.yaml
 @@ -0,0 +1,6 @@
@@ -225,7 +225,7 @@ index 000000000..e92166a7f
 +    profiler: { only_exceptions: false }
 diff --git a/config/packages/test/web_profiler.yaml b/config/packages/test/web_profiler.yaml
 new file mode 100644
-index 000000000..03752de21
+index 0000000..03752de
 --- /dev/null
 +++ b/config/packages/test/web_profiler.yaml
 @@ -0,0 +1,6 @@
@@ -237,7 +237,7 @@ index 000000000..03752de21
 +    profiler: { collect: false }
 diff --git a/config/routes/dev/web_profiler.yaml b/config/routes/dev/web_profiler.yaml
 new file mode 100644
-index 000000000..c82beff2f
+index 0000000..c82beff
 --- /dev/null
 +++ b/config/routes/dev/web_profiler.yaml
 @@ -0,0 +1,7 @@
@@ -249,7 +249,7 @@ index 000000000..c82beff2f
 +    resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
 +    prefix: /_profiler
 diff --git a/symfony.lock b/symfony.lock
-index ac561cf60..7ccea0415 100644
+index ac561cf..7ccea04 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -259,6 +259,12 @@

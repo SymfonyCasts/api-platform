@@ -1,5 +1,5 @@
 diff --git a/config/packages/security.yaml b/config/packages/security.yaml
-index fb4c593ef..03e6d1f5e 100644
+index fb4c593..03e6d1f 100644
 --- a/config/packages/security.yaml
 +++ b/config/packages/security.yaml
 @@ -1,7 +1,15 @@
@@ -21,7 +21,7 @@ index fb4c593ef..03e6d1f5e 100644
              pattern: ^/(_(profiler|wdt)|css|images|js)/
 diff --git a/src/Entity/User.php b/src/Entity/User.php
 new file mode 100644
-index 000000000..fe4a5659f
+index 0000000..fe4a565
 --- /dev/null
 +++ b/src/Entity/User.php
 @@ -0,0 +1,113 @@
@@ -140,7 +140,7 @@ index 000000000..fe4a5659f
 +}
 diff --git a/src/Repository/UserRepository.php b/src/Repository/UserRepository.php
 new file mode 100644
-index 000000000..8e8220239
+index 0000000..8e82202
 --- /dev/null
 +++ b/src/Repository/UserRepository.php
 @@ -0,0 +1,50 @@

@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
-index adf2152e2..f6a5da64e 100644
+index adf2152..f6a5da6 100644
 --- a/src/ApiPlatform/CheeseSearchFilter.php
 +++ b/src/ApiPlatform/CheeseSearchFilter.php
 @@ -12,9 +12,9 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;

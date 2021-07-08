@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index d34166f5f..ca3ee685a 100644
+index d34166f..ca3ee68 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -60,5 +60,8 @@
@@ -12,7 +12,7 @@ index d34166f5f..ca3ee685a 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index b1bf4c5d1..0e70cf992 100644
+index b1bf4c5..0e70cf9 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -152,7 +152,7 @@ index b1bf4c5d1..0e70cf992 100644
      "minimum-stability": "stable",
      "stability-flags": [],
 diff --git a/config/bundles.php b/config/bundles.php
-index 1edaed6d0..b55f43b2a 100644
+index 1edaed6..b55f43b 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -8,4 +8,5 @@ return [
@@ -162,7 +162,7 @@ index 1edaed6d0..b55f43b2a 100644
 +    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
  ];
 diff --git a/symfony.lock b/symfony.lock
-index 50b24c634..4b3f7af7b 100644
+index 50b24c6..4b3f7af 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -97,6 +97,9 @@

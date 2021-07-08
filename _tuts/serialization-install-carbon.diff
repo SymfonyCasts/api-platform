@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index f3d9a95dc..bba428074 100644
+index f3d9a95..bba4280 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -8,6 +8,7 @@
@@ -11,7 +11,7 @@ index f3d9a95dc..bba428074 100644
          "symfony/dotenv": "4.2.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index e9eb7462e..9a38659dd 100644
+index e9eb746..9a38659 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -174,7 +174,7 @@ index e9eb7462e..9a38659dd 100644
              "version": "v4.2.9",
 diff --git a/config/packages/translation.yaml b/config/packages/translation.yaml
 new file mode 100644
-index 000000000..e6b1cd667
+index 0000000..e6b1cd6
 --- /dev/null
 +++ b/config/packages/translation.yaml
 @@ -0,0 +1,6 @@
@@ -185,7 +185,7 @@ index 000000000..e6b1cd667
 +        fallbacks:
 +            - '%locale%'
 diff --git a/config/services.yaml b/config/services.yaml
-index 5c4b41757..10bca7de3 100644
+index 5c4b417..10bca7d 100644
 --- a/config/services.yaml
 +++ b/config/services.yaml
 @@ -4,6 +4,7 @@
@@ -197,7 +197,7 @@ index 5c4b41757..10bca7de3 100644
  services:
      # default configuration for services in *this* file
 diff --git a/symfony.lock b/symfony.lock
-index 7ccea0415..e21af1acd 100644
+index 7ccea04..e21af1a 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -113,6 +113,9 @@
@@ -232,4 +232,4 @@ index 7ccea0415..e21af1acd 100644
      },
 diff --git a/translations/.gitignore b/translations/.gitignore
 new file mode 100644
-index 000000000..e69de29bb
+index 0000000..e69de29

@@ -1,6 +1,6 @@
 diff --git a/migrations/Version20200909145236.php b/migrations/Version20200909145236.php
 new file mode 100644
-index 000000000..8f39b3b6e
+index 0000000..8f39b3b
 --- /dev/null
 +++ b/migrations/Version20200909145236.php
 @@ -0,0 +1,33 @@
@@ -38,7 +38,7 @@ index 000000000..8f39b3b6e
 +    }
 +}
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 5f5f8dd9a..4c07a81a0 100644
+index 5f5f8dd..4c07a81 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -49,6 +49,11 @@ class User implements UserInterface

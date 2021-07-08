@@ -1,6 +1,6 @@
 diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
 new file mode 100644
-index 000000000..d116e9ad2
+index 0000000..d116e9a
 --- /dev/null
 +++ b/src/Test/CustomApiTestCase.php
 @@ -0,0 +1,36 @@
@@ -42,7 +42,7 @@ index 000000000..d116e9ad2
 +}
 \ No newline at end of file
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 8604af52f..dbd88df68 100644
+index 8604af5..dbd88df 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -2,11 +2,11 @@

@@ -1,5 +1,5 @@
 diff --git a/src/Validator/ValidIsPublished.php b/src/Validator/ValidIsPublished.php
-index 6dcfcd6bd..9b81101e4 100644
+index 6dcfcd6..9b81101 100644
 --- a/src/Validator/ValidIsPublished.php
 +++ b/src/Validator/ValidIsPublished.php
 @@ -2,10 +2,12 @@
