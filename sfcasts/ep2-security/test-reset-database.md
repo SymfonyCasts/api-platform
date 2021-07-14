@@ -87,11 +87,11 @@ This installs Monolog. When it finishes... try running the tests again:
 php bin/phpunit
 ```
 
-And... no more output! *Now* the logs are stored in `var/logs/test.log`. If you
+And... no more output! *Now* the logs are stored in `var/log/test.log`. If you
 tail that file...
 
 ```terminal-silent
-tail var/logs/test.log
+tail -f var/log/test.log
 ```
 
 there it is!
