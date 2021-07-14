@@ -91,7 +91,7 @@ And... no more output! *Now* the logs are stored in `var/log/test.log`. If you
 tail that file...
 
 ```terminal-silent
-tail var/log/test.log
+tail -f var/log/test.log
 ```
 
 there it is!
