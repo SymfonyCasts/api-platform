@@ -77,7 +77,7 @@ php bin/console make:migration
 Oh! Migrations isn't installed yet! No problem, follow the recommendation:
 
 ```terminal
-composer require migrations
+composer require migrations:3.0.3
 ```
 
 But before we try generating it again, I need to make sure my database exists:
