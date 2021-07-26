@@ -81,7 +81,7 @@ Now that we have our empty Symfony app, how can we install API Platform? Oh,
 it's so awesome. Find your terminal and run:
 
 ```terminal
-composer require api
+composer require api:1.2.0
 ```
 
 That's it. You'll notice that this is installing something called
