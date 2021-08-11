@@ -7,7 +7,7 @@ time to take a few minutes to get a nice functional testing system set up.
 Spin over to your terminal and run:
 
 ```terminal
-composer require test --dev
+composer require "test:1.0.6" "symfony/phpunit-bridge:4.3.3" --dev
 ```
 
 This will download Symfony's test-pack, which most importantly comes with the
