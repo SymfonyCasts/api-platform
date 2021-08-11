@@ -78,7 +78,7 @@ printed to the screen from the command line.
 Let's install a *real* logger:
 
 ```terminal
-composer require logger
+composer require "logger:3.4.0"
 ```
 
 This installs Monolog. When it finishes... try running the tests again:
