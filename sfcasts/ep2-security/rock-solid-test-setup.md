@@ -120,6 +120,10 @@ and so this will fail validation: a 400 error. If you wanted to make this a bit
 more useful, you could pass *real* data here - like a `title`, `description`,
 etc - and test that we get back a 201 successful status code.
 
+***TIP
+Starting in API Platform 2.6, validation errors will trigger a 422 status code instead of 400.
+***
+
 [[[ code('cffe4d3b2f') ]]]
 
 Let's try this!
