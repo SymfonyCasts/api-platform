@@ -52,6 +52,11 @@ the posted data. There's also another option called `security_post_denormalize`
 if you want to run a security check *after* deserialization. In that case, the
 `object` variable is the *updated* object.
 
+***TIP
+If you use `security_post_denormalize`, its message can be customized with the
+`security_post_denormalize_message` option.
+***
+
 Phew! For us on API Platform 2.4, as soon as we change to `previous_object`...
 it should work! Try the test:
 
