@@ -11,7 +11,7 @@ index 3418f38..534b099 100644
          "symfony/profiler-pack": "^1.0",
          "symfony/test-pack": "^1.0"
 diff --git a/composer.lock b/composer.lock
-index 1d42e35..40ef938 100644
+index 1d42e35..e6d7404 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index 1d42e35..40ef938 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -5324,6 +5324,312 @@
+@@ -5324,6 +5324,321 @@
          }
      ],
      "packages-dev": [
@@ -139,33 +139,33 @@ index 1d42e35..40ef938 100644
 +        },
 +        {
 +            "name": "hautelook/alice-bundle",
-+            "version": "v2.5.1",
++            "version": "2.7.3",
 +            "source": {
 +                "type": "git",
-+                "url": "https://github.com/hautelook/AliceBundle.git",
-+                "reference": "a4d25ba319b551d14082cd7e9916f5ddcd8bc0f2"
++                "url": "https://github.com/theofidry/AliceBundle.git",
++                "reference": "0fb5cefc3efc3a120be0458ac68b974fa124bfb3"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/hautelook/AliceBundle/zipball/a4d25ba319b551d14082cd7e9916f5ddcd8bc0f2",
-+                "reference": "a4d25ba319b551d14082cd7e9916f5ddcd8bc0f2",
++                "url": "https://api.github.com/repos/theofidry/AliceBundle/zipball/0fb5cefc3efc3a120be0458ac68b974fa124bfb3",
++                "reference": "0fb5cefc3efc3a120be0458ac68b974fa124bfb3",
 +                "shasum": ""
 +            },
 +            "require": {
 +                "doctrine/data-fixtures": "^1.2",
-+                "doctrine/doctrine-bundle": "^1.8",
++                "doctrine/doctrine-bundle": "^1.8 || ^2.0",
 +                "doctrine/orm": "^2.5.11",
-+                "php": "^7.1",
++                "doctrine/persistence": "^1.3.4",
++                "php": "^7.2",
 +                "psr/log": "^1.0",
-+                "symfony/finder": "^3.4 || ^4.0",
-+                "symfony/framework-bundle": "^3.4 || ^4.0",
++                "symfony/finder": "^3.4 || ^4.0 || ^5.0",
++                "symfony/framework-bundle": "^3.4.24 || ^4.0 || ^5.0",
 +                "theofidry/alice-data-fixtures": "^1.0"
 +            },
 +            "require-dev": {
-+                "doctrine/persistence": "^1.0",
 +                "phpspec/prophecy": "^1.7",
-+                "phpunit/phpunit": "^7.0",
-+                "symfony/phpunit-bridge": "^3.4 || ^4.0"
++                "phpunit/phpunit": "^8.5",
++                "symfony/phpunit-bridge": "^3.4.31 || ^4.0 || ^5.0"
 +            },
 +            "type": "symfony-bundle",
 +            "extra": {
@@ -203,7 +203,16 @@ index 1d42e35..40ef938 100644
 +                "orm",
 +                "symfony"
 +            ],
-+            "time": "2019-08-04T18:39:27+00:00"
++            "support": {
++                "source": "https://github.com/theofidry/AliceBundle/tree/2.7.3"
++            },
++            "funding": [
++                {
++                    "url": "https://github.com/theofidry",
++                    "type": "github"
++                }
++            ],
++            "time": "2020-09-24T20:52:16+00:00"
 +        },
 +        {
 +            "name": "myclabs/deep-copy",
@@ -336,7 +345,7 @@ index 1d42e35..40ef938 100644
          {
              "name": "nikic/php-parser",
              "version": "v4.2.2",
-@@ -5375,6 +5681,246 @@
+@@ -5375,6 +5690,246 @@
              ],
              "time": "2019-05-25T20:07:01+00:00"
          },
@@ -583,7 +592,7 @@ index 1d42e35..40ef938 100644
          {
              "name": "symfony/browser-kit",
              "version": "v4.3.3",
-@@ -5878,6 +6424,85 @@
+@@ -5878,6 +6433,85 @@
              "description": "Symfony WebProfilerBundle",
              "homepage": "https://symfony.com",
              "time": "2019-05-30T16:10:05+00:00"
@@ -669,6 +678,13 @@ index 1d42e35..40ef938 100644
          }
      ],
      "aliases": [],
+@@ -5894,5 +6528,5 @@
+     "platform-overrides": {
+         "php": "7.2.0"
+     },
+-    "plugin-api-version": "2.0.0"
++    "plugin-api-version": "2.1.0"
+ }
 diff --git a/config/bundles.php b/config/bundles.php
 index 6c2bb11..8939eef 100644
 --- a/config/bundles.php

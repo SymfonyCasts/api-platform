@@ -19,7 +19,7 @@ index 02ce14f..db5a1c9 100644
      "config": {
          "preferred-install": {
 diff --git a/composer.lock b/composer.lock
-index f4cf183..592387f 100644
+index dd42adb..6d023be 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -31,7 +31,7 @@ index f4cf183..592387f 100644
      "packages": [
          {
              "name": "api-platform/core",
-@@ -6398,62 +6398,6 @@
+@@ -6407,62 +6407,6 @@
              "homepage": "https://symfony.com",
              "time": "2019-07-18T13:23:37+00:00"
          },

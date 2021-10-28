@@ -11,7 +11,7 @@ index e747914..ddeeef8 100644
          "symfony/console": "5.1.*",
          "symfony/debug-bundle": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index b733e8b..801ad75 100644
+index 3048124..a00186e 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
