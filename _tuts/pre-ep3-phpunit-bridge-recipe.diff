@@ -39,7 +39,7 @@ index d45120b..ae0173d 100644
      </filter>
  
 diff --git a/symfony.lock b/symfony.lock
-index f5c9df3..9468a72 100644
+index 3a66e39..8c584b8 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -342,14 +342,13 @@

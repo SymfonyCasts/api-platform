@@ -1,61 +1,34 @@
 diff --git a/composer.json b/composer.json
-index 2e7780c..f3d9a95 100644
+index 3bb227e..957593b 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -63,6 +63,7 @@
+@@ -73,6 +73,8 @@
          }
      },
      "require-dev": {
 -        "symfony/maker-bundle": "^1.11"
 +        "symfony/maker-bundle": "^1.11",
-+        "symfony/profiler-pack": "^1.0"
++        "symfony/stopwatch": "4.2.*|4.3.*",
++        "symfony/web-profiler-bundle": "4.2.*|4.3.*"
      }
  }
 diff --git a/composer.lock b/composer.lock
-index b78cc24..e9eb746 100644
+index f8b60d4..99af35a 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "db3dbbbf08580a5dbce8c65aa3cd3d5b",
-+    "content-hash": "c966c47949e062d568fb94b2515a1c7d",
+-    "content-hash": "662a7f96dadb5c486ccd9b1730c87fb3",
++    "content-hash": "78e3802f82ce277cb606bae7d7937b6d",
      "packages": [
          {
-             "name": "api-platform/api-pack",
-@@ -5154,6 +5154,176 @@
-                 "scaffolding"
-             ],
+             "name": "api-platform/core",
+@@ -5865,6 +5865,154 @@
+                 "source": "https://github.com/symfony/maker-bundle/tree/v1.11.6"
+             },
              "time": "2019-04-19T17:26:45+00:00"
-+        },
-+        {
-+            "name": "symfony/profiler-pack",
-+            "version": "v1.0.4",
-+            "source": {
-+                "type": "git",
-+                "url": "https://github.com/symfony/profiler-pack.git",
-+                "reference": "99c4370632c2a59bb0444852f92140074ef02209"
-+            },
-+            "dist": {
-+                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/profiler-pack/zipball/99c4370632c2a59bb0444852f92140074ef02209",
-+                "reference": "99c4370632c2a59bb0444852f92140074ef02209",
-+                "shasum": ""
-+            },
-+            "require": {
-+                "php": "^7.0",
-+                "symfony/stopwatch": "*",
-+                "symfony/twig-bundle": "*",
-+                "symfony/web-profiler-bundle": "*"
-+            },
-+            "type": "symfony-pack",
-+            "notification-url": "https://packagist.org/downloads/",
-+            "license": [
-+                "MIT"
-+            ],
-+            "description": "A pack for the Symfony web profiler",
-+            "time": "2018-12-10T12:11:44+00:00"
 +        },
 +        {
 +            "name": "symfony/var-dumper",
@@ -131,6 +104,9 @@ index b78cc24..e9eb746 100644
 +                "debug",
 +                "dump"
 +            ],
++            "support": {
++                "source": "https://github.com/symfony/var-dumper/tree/v4.2.9"
++            },
 +            "time": "2019-05-01T12:55:36+00:00"
 +        },
 +        {
@@ -197,6 +173,9 @@ index b78cc24..e9eb746 100644
 +            ],
 +            "description": "Symfony WebProfilerBundle",
 +            "homepage": "https://symfony.com",
++            "support": {
++                "source": "https://github.com/symfony/web-profiler-bundle/tree/4.2"
++            },
 +            "time": "2019-05-26T20:47:34+00:00"
          }
      ],
@@ -249,23 +228,26 @@ index 0000000..c82beff
 +    resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
 +    prefix: /_profiler
 diff --git a/symfony.lock b/symfony.lock
-index ac561cf..7ccea04 100644
+index 960b06e..47562c8 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -259,6 +259,12 @@
-     "symfony/polyfill-mbstring": {
-         "version": "v1.11.0"
-     },
-+    "symfony/polyfill-php72": {
-+        "version": "v1.11.0"
-+    },
-+    "symfony/profiler-pack": {
-+        "version": "v1.0.4"
-+    },
-     "symfony/property-access": {
+@@ -316,12 +316,12 @@
+     "symfony/serializer": {
          "version": "v4.2.8"
      },
-@@ -343,12 +349,29 @@
+-    "symfony/stopwatch": {
+-        "version": "v4.2.8"
+-    },
+     "symfony/service-contracts": {
+         "version": "v1.1.9"
+     },
++    "symfony/stopwatch": {
++        "version": "v4.2.8"
++    },
+     "symfony/translation-contracts": {
+         "version": "v1.1.10"
+     },
+@@ -355,12 +355,29 @@
              "config/packages/validator.yaml"
          ]
      },

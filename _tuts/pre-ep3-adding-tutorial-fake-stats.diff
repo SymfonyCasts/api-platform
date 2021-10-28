@@ -2504,7 +2504,7 @@ index c8b3421..60cbd9e 100644
      "plugin-api-version": "2.0.0"
  }
 diff --git a/symfony.lock b/symfony.lock
-index 08a47d2..39c45af 100644
+index 7720098..723f70c 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -104,17 +104,26 @@
@@ -2549,7 +2549,7 @@ index 08a47d2..39c45af 100644
      "php": {
          "version": "7.2.5"
      },
-@@ -492,11 +498,8 @@
+@@ -501,11 +507,8 @@
      "willdurand/negotiation": {
          "version": "v2.3.1"
      },

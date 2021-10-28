@@ -1,30 +1,30 @@
 diff --git a/composer.json b/composer.json
-index ca3ee68..2e7780c 100644
+index c54db00..3bb227e 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -7,6 +7,7 @@
-         "ext-iconv": "*",
-         "api-platform/api-pack": "^1.2",
+@@ -9,6 +9,7 @@
          "composer/package-versions-deprecated": "^1.11",
-+        "doctrine/doctrine-migrations-bundle": "^2.0",
-         "symfony/console": "4.2.*",
-         "symfony/dotenv": "4.2.*",
-         "symfony/flex": "^1.1",
+         "doctrine/annotations": "^1.0",
+         "doctrine/doctrine-bundle": "^1.6",
++	"doctrine/doctrine-migrations-bundle": "^2.0",
+         "doctrine/orm": "^2.4.5",
+         "nelmio/cors-bundle": "^1.5",
+         "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
 diff --git a/composer.lock b/composer.lock
-index 0e70cf9..b78cc24 100644
+index 066e9f9..f8b60d4 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "d34362c9675ecdee5e4585eec0819392",
-+    "content-hash": "db3dbbbf08580a5dbce8c65aa3cd3d5b",
+-    "content-hash": "29844edd683b6c191c98edad0f78c677",
++    "content-hash": "662a7f96dadb5c486ccd9b1730c87fb3",
      "packages": [
          {
-             "name": "api-platform/api-pack",
-@@ -846,6 +846,71 @@
-             ],
+             "name": "api-platform/core",
+@@ -843,6 +843,75 @@
+             "abandoned": true,
              "time": "2018-11-09T06:25:35+00:00"
          },
 +        {
@@ -90,13 +90,17 @@ index 0e70cf9..b78cc24 100644
 +                "migrations",
 +                "schema"
 +            ],
++            "support": {
++                "issues": "https://github.com/doctrine/DoctrineMigrationsBundle/issues",
++                "source": "https://github.com/doctrine/DoctrineMigrationsBundle/tree/master"
++            },
 +            "time": "2019-01-09T18:49:50+00:00"
 +        },
          {
              "name": "doctrine/event-manager",
              "version": "1.1.0",
-@@ -1107,6 +1172,88 @@
-             ],
+@@ -1120,6 +1189,92 @@
+             },
              "time": "2019-10-30T14:39:59+00:00"
          },
 +        {
@@ -179,13 +183,17 @@ index 0e70cf9..b78cc24 100644
 +                "migrations",
 +                "php"
 +            ],
++            "support": {
++                "issues": "https://github.com/doctrine/migrations/issues",
++                "source": "https://github.com/doctrine/migrations/tree/master"
++            },
 +            "time": "2019-06-06T15:47:41+00:00"
 +        },
          {
              "name": "doctrine/orm",
              "version": "v2.7.2",
-@@ -1542,6 +1689,76 @@
-             ],
+@@ -1583,6 +1738,80 @@
+             },
              "time": "2019-02-27T13:13:15+00:00"
          },
 +        {
@@ -256,14 +264,18 @@ index 0e70cf9..b78cc24 100644
 +                "proxy pattern",
 +                "service proxies"
 +            ],
++            "support": {
++                "issues": "https://github.com/Ocramius/ProxyManager/issues",
++                "source": "https://github.com/Ocramius/ProxyManager/tree/2.2.x"
++            },
 +            "time": "2018-09-27T13:45:01+00:00"
 +        },
          {
              "name": "phpdocumentor/reflection-common",
              "version": "1.0.1",
-@@ -4043,6 +4260,56 @@
-             "homepage": "https://symfony.com",
-             "time": "2019-05-20T16:15:26+00:00"
+@@ -4599,6 +4828,59 @@
+             ],
+             "time": "2020-07-06T13:19:58+00:00"
          },
 +        {
 +            "name": "symfony/stopwatch",
@@ -313,14 +325,17 @@ index 0e70cf9..b78cc24 100644
 +            ],
 +            "description": "Symfony Stopwatch Component",
 +            "homepage": "https://symfony.com",
++            "support": {
++                "source": "https://github.com/symfony/stopwatch/tree/v4.2.5"
++            },
 +            "time": "2019-01-16T20:31:39+00:00"
 +        },
          {
-             "name": "symfony/twig-bridge",
-             "version": "v4.2.9",
-@@ -4659,6 +4926,115 @@
-                 "negotiation"
-             ],
+             "name": "symfony/translation-contracts",
+             "version": "v1.1.10",
+@@ -5339,6 +5621,123 @@
+                 "source": "https://github.com/willdurand/Negotiation/tree/2.x"
+             },
              "time": "2017-05-14T17:21:12+00:00"
 +        },
 +        {
@@ -374,6 +389,10 @@ index 0e70cf9..b78cc24 100644
 +                "code",
 +                "zf2"
 +            ],
++            "support": {
++                "issues": "https://github.com/zendframework/zend-code/issues",
++                "source": "https://github.com/zendframework/zend-code/tree/master"
++            },
 +            "abandoned": "laminas/laminas-code",
 +            "time": "2018-08-13T20:36:59+00:00"
 +        },
@@ -429,6 +448,10 @@ index 0e70cf9..b78cc24 100644
 +                "events",
 +                "zf2"
 +            ],
++            "support": {
++                "issues": "https://github.com/zendframework/zend-eventmanager/issues",
++                "source": "https://github.com/zendframework/zend-eventmanager/tree/master"
++            },
 +            "abandoned": "laminas/laminas-eventmanager",
 +            "time": "2018-04-25T15:33:34+00:00"
          }
@@ -459,7 +482,7 @@ diff --git a/src/Migrations/.gitignore b/src/Migrations/.gitignore
 new file mode 100644
 index 0000000..e69de29
 diff --git a/symfony.lock b/symfony.lock
-index 4b3f7af..ac561cf 100644
+index d143886..960b06e 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,6 +58,19 @@
@@ -502,19 +525,19 @@ index 4b3f7af..ac561cf 100644
 +    "ocramius/proxy-manager": {
 +        "version": "2.2.2"
      },
-     "phpdocumentor/reflection-common": {
-         "version": "1.0.1"
-@@ -291,6 +310,9 @@
+     "php": {
+         "version": "7.2.0"
+@@ -297,6 +316,9 @@
      "symfony/serializer": {
          "version": "v4.2.8"
      },
 +    "symfony/stopwatch": {
 +        "version": "v4.2.8"
 +    },
-     "symfony/twig-bridge": {
-         "version": "v4.2.8"
+     "symfony/service-contracts": {
+         "version": "v1.1.9"
      },
-@@ -338,5 +360,11 @@
+@@ -350,5 +372,11 @@
      },
      "willdurand/negotiation": {
          "version": "v2.3.1"

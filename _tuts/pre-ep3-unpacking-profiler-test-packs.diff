@@ -95,20 +95,10 @@ index f4cf183..592387f 100644
              "name": "symfony/var-dumper",
              "version": "v4.3.2",
 diff --git a/symfony.lock b/symfony.lock
-index bc07b3c..8b924b4 100644
+index 7564bb7..4035929 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -361,9 +361,6 @@
-     "symfony/polyfill-php72": {
-         "version": "v1.11.0"
-     },
--    "symfony/profiler-pack": {
--        "version": "v1.0.4"
--    },
-     "symfony/property-access": {
-         "version": "v4.2.8"
-     },
-@@ -415,9 +412,6 @@
+@@ -430,9 +430,6 @@
      "symfony/stopwatch": {
          "version": "v4.2.8"
      },

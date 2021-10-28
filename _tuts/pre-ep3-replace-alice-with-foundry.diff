@@ -648,7 +648,7 @@ index c361d43..d44a695 100644
      protected function createUser(string $email, string $password): User
      {
 diff --git a/symfony.lock b/symfony.lock
-index 1dd441d..08a47d2 100644
+index da5f515..7720098 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -116,39 +116,9 @@
@@ -710,7 +710,7 @@ index 1dd441d..08a47d2 100644
      "symfony/asset": {
          "version": "v4.2.8"
      },
-@@ -525,15 +483,6 @@
+@@ -534,15 +492,6 @@
      "symfony/yaml": {
          "version": "v4.2.8"
      },

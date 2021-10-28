@@ -724,10 +724,10 @@ diff --git a/fixtures/.gitignore b/fixtures/.gitignore
 new file mode 100644
 index 0000000..e69de29
 diff --git a/symfony.lock b/symfony.lock
-index 248525f..9187255 100644
+index 74a620a..83e77fb 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -37,6 +37,9 @@
+@@ -40,6 +40,9 @@
      "doctrine/common": {
          "version": "v2.10.0"
      },
@@ -737,7 +737,7 @@ index 248525f..9187255 100644
      "doctrine/dbal": {
          "version": "v2.9.2"
      },
-@@ -98,9 +101,42 @@
+@@ -101,9 +104,42 @@
      "fig/link-util": {
          "version": "1.0.0"
      },
@@ -799,7 +799,7 @@ index 248525f..9187255 100644
      "symfony/asset": {
          "version": "v4.2.8"
      },
-@@ -440,6 +488,15 @@
+@@ -455,6 +503,15 @@
      "symfony/yaml": {
          "version": "v4.2.8"
      },

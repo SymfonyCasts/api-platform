@@ -134,7 +134,7 @@ index 0000000..26d4e53
 +    # See the "server:dump" command to start a new server.
 +    dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
 diff --git a/symfony.lock b/symfony.lock
-index 39c45af..0411453 100644
+index 723f70c..a067328 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -209,6 +209,18 @@

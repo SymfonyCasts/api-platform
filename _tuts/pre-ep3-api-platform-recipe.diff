@@ -14,7 +14,7 @@ index ae73e69..63c1135 100644
          jsonld:
              mime_types:
 diff --git a/symfony.lock b/symfony.lock
-index 35b58d6..52014e2 100644
+index 0165024..487bb07 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -1,11 +1,11 @@

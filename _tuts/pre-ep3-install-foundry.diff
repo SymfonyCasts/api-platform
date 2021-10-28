@@ -108,10 +108,10 @@ index 1cbd4d8..d271f9f6 100644
 +    Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['all' => true],
  ];
 diff --git a/symfony.lock b/symfony.lock
-index 044f84f..1dd441d 100644
+index 2f8ff5d..da5f515 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -548,5 +548,8 @@
+@@ -557,5 +557,8 @@
      },
      "zendframework/zend-eventmanager": {
          "version": "3.2.1"

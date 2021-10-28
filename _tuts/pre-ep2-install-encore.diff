@@ -227,10 +227,10 @@ index 0000000..56f4b19
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index e21af1a..48340e5 100644
+index 21412b9..97d8685 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -388,6 +388,24 @@
+@@ -403,6 +403,24 @@
              "config/routes/dev/web_profiler.yaml"
          ]
      },

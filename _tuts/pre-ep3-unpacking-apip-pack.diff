@@ -81,7 +81,7 @@ index 216db0b..f4cf183 100644
              "name": "api-platform/core",
              "version": "v2.4.5",
 diff --git a/symfony.lock b/symfony.lock
-index 42d55f6..bc07b3c 100644
+index fef8940..7564bb7 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -1,7 +1,4 @@
@@ -92,40 +92,7 @@ index 42d55f6..bc07b3c 100644
      "api-platform/core": {
          "version": "2.1",
          "recipe": {
-@@ -16,6 +13,9 @@
-             "src/Entity/.gitignore"
-         ]
-     },
-+    "composer/package-versions-deprecated": {
-+        "version": "1.11.99"
-+    },
-     "doctrine/annotations": {
-         "version": "1.0",
-         "recipe": {
-@@ -164,6 +164,9 @@
-     "ocramius/proxy-manager": {
-         "version": "2.2.2"
-     },
-+    "php": {
-+        "version": "7.2.0"
-+    },
-     "phpdocumentor/reflection-common": {
-         "version": "1.0.1"
-     },
-@@ -173,12 +176,6 @@
-     "phpdocumentor/type-resolver": {
-         "version": "0.4.0"
-     },
--    "composer/package-versions-deprecated": {
--        "version": "1.11.99"
--    },
--    "php": {
--        "version": "7.2.0"
--    },
-     "psr/cache": {
-         "version": "1.0.1"
-     },
-@@ -316,6 +313,9 @@
+@@ -322,6 +319,9 @@
              "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
          }
      },
@@ -135,7 +102,7 @@ index 42d55f6..bc07b3c 100644
      "symfony/monolog-bridge": {
          "version": "v4.3.3"
      },
-@@ -349,8 +349,8 @@
+@@ -355,8 +355,8 @@
              "tests/.gitignore"
          ]
      },
@@ -146,13 +113,3 @@ index 42d55f6..bc07b3c 100644
      },
      "symfony/polyfill-intl-idn": {
          "version": "v1.11.0"
-@@ -370,9 +370,6 @@
-     "symfony/property-info": {
-         "version": "v4.2.8"
-     },
--    "symfony/polyfill-php72": {
--        "version": "v1.11.0"
--    },
-     "symfony/routing": {
-         "version": "4.2",
-         "recipe": {

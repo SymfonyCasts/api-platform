@@ -399,7 +399,7 @@ index 0000000..00eda56
 +    </listeners>
 +</phpunit>
 diff --git a/symfony.lock b/symfony.lock
-index 48340e5..ed724cd 100644
+index 97d8685..6447b3c 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -158,6 +158,9 @@
@@ -412,7 +412,7 @@ index 48340e5..ed724cd 100644
      "symfony/cache": {
          "version": "v4.2.8"
      },
-@@ -180,6 +183,9 @@
+@@ -183,6 +186,9 @@
      "symfony/contracts": {
          "version": "v1.0.2"
      },
@@ -422,7 +422,7 @@ index 48340e5..ed724cd 100644
      "symfony/debug": {
          "version": "v4.2.8"
      },
-@@ -189,6 +195,9 @@
+@@ -192,6 +198,9 @@
      "symfony/doctrine-bridge": {
          "version": "v4.2.8"
      },
@@ -432,7 +432,7 @@ index 48340e5..ed724cd 100644
      "symfony/dotenv": {
          "version": "v4.2.8"
      },
-@@ -253,6 +262,22 @@
+@@ -259,6 +268,22 @@
              "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
          }
      },
@@ -455,7 +455,7 @@ index 48340e5..ed724cd 100644
      "symfony/mime": {
          "version": "v4.3.1"
      },
-@@ -322,6 +347,9 @@
+@@ -334,6 +359,9 @@
      "symfony/stopwatch": {
          "version": "v4.2.8"
      },

@@ -1,30 +1,30 @@
 diff --git a/composer.json b/composer.json
-index f3d9a95..bba4280 100644
+index 957593b..5d2ebcb 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -8,6 +8,7 @@
-         "api-platform/api-pack": "^1.2",
-         "composer/package-versions-deprecated": "^1.11",
-         "doctrine/doctrine-migrations-bundle": "^2.0",
-+        "nesbot/carbon": "^2.17",
+@@ -12,6 +12,7 @@
+ 	"doctrine/doctrine-migrations-bundle": "^2.0",
+         "doctrine/orm": "^2.4.5",
+         "nelmio/cors-bundle": "^1.5",
++	"nesbot/carbon": "^2.17",
+         "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
+         "symfony/asset": "4.2.*|4.3.*|4.4.*",
          "symfony/console": "4.2.*",
-         "symfony/dotenv": "4.2.*",
-         "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index e9eb746..9a38659 100644
+index 99af35a..0536368 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "c966c47949e062d568fb94b2515a1c7d",
-+    "content-hash": "243404ae364a7475e3df6d86a2916757",
+-    "content-hash": "78e3802f82ce277cb606bae7d7937b6d",
++    "content-hash": "e02229b9d030c78a5caa6f65a05d2365",
      "packages": [
          {
-             "name": "api-platform/api-pack",
-@@ -1689,6 +1689,66 @@
-             ],
+             "name": "api-platform/core",
+@@ -1738,6 +1738,66 @@
+             },
              "time": "2019-02-27T13:13:15+00:00"
          },
 +        {
@@ -90,28 +90,28 @@ index e9eb746..9a38659 100644
          {
              "name": "ocramius/proxy-manager",
              "version": "2.2.2",
-@@ -4310,6 +4370,81 @@
-             "homepage": "https://symfony.com",
+@@ -4881,6 +4941,85 @@
+             },
              "time": "2019-01-16T20:31:39+00:00"
          },
 +        {
 +            "name": "symfony/translation",
-+            "version": "v4.2.9",
++            "version": "v4.3.11",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/symfony/translation.git",
-+                "reference": "5fe4ec5ecc04fa43c34f8df033bf60e3729bfaee"
++                "reference": "46e462be71935ae15eab531e4d491d801857f24c"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/translation/zipball/5fe4ec5ecc04fa43c34f8df033bf60e3729bfaee",
-+                "reference": "5fe4ec5ecc04fa43c34f8df033bf60e3729bfaee",
++                "url": "https://api.github.com/repos/symfony/translation/zipball/46e462be71935ae15eab531e4d491d801857f24c",
++                "reference": "46e462be71935ae15eab531e4d491d801857f24c",
 +                "shasum": ""
 +            },
 +            "require": {
 +                "php": "^7.1.3",
-+                "symfony/contracts": "^1.1.1",
-+                "symfony/polyfill-mbstring": "~1.0"
++                "symfony/polyfill-mbstring": "~1.0",
++                "symfony/translation-contracts": "^1.1.6"
 +            },
 +            "conflict": {
 +                "symfony/config": "<3.4",
@@ -129,6 +129,7 @@ index e9eb746..9a38659 100644
 +                "symfony/finder": "~2.8|~3.0|~4.0",
 +                "symfony/http-kernel": "~3.4|~4.0",
 +                "symfony/intl": "~3.4|~4.0",
++                "symfony/service-contracts": "^1.1.2",
 +                "symfony/var-dumper": "~3.4|~4.0",
 +                "symfony/yaml": "~3.4|~4.0"
 +            },
@@ -140,7 +141,7 @@ index e9eb746..9a38659 100644
 +            "type": "library",
 +            "extra": {
 +                "branch-alias": {
-+                    "dev-master": "4.2-dev"
++                    "dev-master": "4.3-dev"
 +                }
 +            },
 +            "autoload": {
@@ -167,11 +168,14 @@ index e9eb746..9a38659 100644
 +            ],
 +            "description": "Symfony Translation Component",
 +            "homepage": "https://symfony.com",
-+            "time": "2019-05-28T09:07:12+00:00"
++            "support": {
++                "source": "https://github.com/symfony/translation/tree/4.3"
++            },
++            "time": "2020-01-04T12:24:57+00:00"
 +        },
          {
-             "name": "symfony/twig-bridge",
-             "version": "v4.2.9",
+             "name": "symfony/translation-contracts",
+             "version": "v1.1.10",
 diff --git a/config/packages/translation.yaml b/config/packages/translation.yaml
 new file mode 100644
 index 0000000..e6b1cd6
@@ -197,7 +201,7 @@ index 5c4b417..10bca7d 100644
  services:
      # default configuration for services in *this* file
 diff --git a/symfony.lock b/symfony.lock
-index 7ccea04..e21af1a 100644
+index 47562c8..4955694 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -113,6 +113,9 @@
@@ -210,7 +214,17 @@ index 7ccea04..e21af1a 100644
      "nikic/php-parser": {
          "version": "v4.2.1"
      },
-@@ -319,6 +322,19 @@
+@@ -268,6 +271,9 @@
+     "symfony/polyfill-php72": {
+         "version": "v1.11.0"
+     },
++    "symfony/polyfill-php73": {
++        "version": "v1.23.0"
++    },
+     "symfony/property-access": {
+         "version": "v4.2.8"
+     },
+@@ -322,6 +328,19 @@
      "symfony/stopwatch": {
          "version": "v4.2.8"
      },
@@ -227,8 +241,8 @@ index 7ccea04..e21af1a 100644
 +            "translations/.gitignore"
 +        ]
 +    },
-     "symfony/twig-bridge": {
-         "version": "v4.2.8"
+     "symfony/translation-contracts": {
+         "version": "v1.1.10"
      },
 diff --git a/translations/.gitignore b/translations/.gitignore
 new file mode 100644
