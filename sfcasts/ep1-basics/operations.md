@@ -18,6 +18,22 @@ The *first* thing we can customize is which operations we actually want! Above
 `CheeseListing`, inside the annotation, add `collectionOperations={}` with
 `"get"` and `"post"` inside. Then `itemOperations` with `{"get", "put", "delete"}`.
 
+***TIP
+Starting in ApiPlatform 2.5, there is also a `patch` operations. It works like the `put` operation
+and is recommended over `put` when you only want to change some fields (which is most of the time).
+To allow the `patch` operation, add this config:
+
+``` yaml
+// config/packages/api_platform.yaml
+api_platform:
+    patch_formats:
+        json: ['application/merge-patch+json']
+```
+
+Then, when making a `PATCH` request, set the `Content-Type` header to `application/merge-patch+json`.
+Check the interactive documentation, you'll see an example there ;).
+***
+
 [[[ code('4eafb7ea76') ]]]
 
 *A lot* of mastering API Platform comes down to learning about what options
