@@ -19,7 +19,7 @@ The *first* thing we can customize is which operations we actually want! Above
 `"get"` and `"post"` inside. Then `itemOperations` with `{"get", "put", "delete"}`.
 
 ***TIP
-Starting in ApiPlatform 2.5, there is also a `patch` operations. It works like the `put` operation
+Starting in ApiPlatform 2.5, there is also a `patch` operation. It works like the `put` operation
 and is recommended over `put` when you only want to change some fields (which is most of the time).
 To allow the `patch` operation, add this config:
 
