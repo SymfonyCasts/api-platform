@@ -14,7 +14,7 @@ index 71c2b75..0ebbe5b 100644
  
  ###> nelmio/cors-bundle ###
 diff --git a/.gitignore b/.gitignore
-index 428f6fc..347db2d 100644
+index dac309a..dc9a284 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -2,6 +2,7 @@
@@ -78,15 +78,6 @@ index 0000000..bcbbf13
 +_errors:
 +    resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
 +    prefix: /_error
-diff --git a/config/routes/dev/twig.yaml b/config/routes/dev/twig.yaml
-deleted file mode 100644
-index f4ee839..0000000
---- a/config/routes/dev/twig.yaml
-+++ /dev/null
-@@ -1,3 +0,0 @@
--_errors:
--    resource: '@TwigBundle/Resources/config/routing/errors.xml'
--    prefix: /_error
 diff --git a/config/services.yaml b/config/services.yaml
 index 95444ae..1966d26 100644
 --- a/config/services.yaml
@@ -230,7 +221,7 @@ index 785b0be..b016861 100644
      }
  }
 diff --git a/symfony.lock b/symfony.lock
-index 0de8577..816ed2f 100644
+index 0e99a78..0d564a4 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -280,18 +280,18 @@

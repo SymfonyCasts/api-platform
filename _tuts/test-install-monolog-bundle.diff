@@ -1,29 +1,29 @@
 diff --git a/composer.json b/composer.json
-index 534b099..030445f 100644
+index f4fd259..bb63988 100755
 --- a/composer.json
 +++ b/composer.json
-@@ -14,6 +14,7 @@
+@@ -21,6 +21,7 @@
          "symfony/flex": "^1.1",
          "symfony/framework-bundle": "4.3.*",
          "symfony/http-client": "4.3.*",
 +        "symfony/monolog-bundle": "^3.4",
          "symfony/webpack-encore-bundle": "^1.6",
-         "symfony/yaml": "4.3.*"
-     },
+         "symfony/security-bundle": "4.3.*",
+         "symfony/twig-bundle": "^4.3",
 diff --git a/composer.lock b/composer.lock
-index e6d7404..140fabf 100644
+index 821722f..2320261 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "d2c5f603e145f203defd8689e8f5603c",
-+    "content-hash": "074fc66f9096dcaf797928cf72464113",
+-    "content-hash": "6b875ac7778d3d931bb8df9d5ba7dc1c",
++    "content-hash": "ee89593e21655844374af10e6aac692a",
      "packages": [
          {
-             "name": "api-platform/api-pack",
-@@ -1636,6 +1636,84 @@
+             "name": "api-platform/core",
+@@ -1600,6 +1600,84 @@
              ],
              "time": "2014-01-12T16:20:24+00:00"
          },
@@ -108,7 +108,7 @@ index e6d7404..140fabf 100644
          {
              "name": "nelmio/cors-bundle",
              "version": "1.5.6",
-@@ -3535,6 +3613,135 @@
+@@ -3497,6 +3575,135 @@
              ],
              "time": "2019-06-04T09:22:54+00:00"
          },
@@ -322,7 +322,7 @@ index 0000000..2762653
 +            level: debug
 +            channels: ["!event"]
 diff --git a/symfony.lock b/symfony.lock
-index 83e77fb..fef8940 100644
+index a1e9057..fef8940 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -124,6 +124,9 @@
@@ -335,10 +335,12 @@ index 83e77fb..fef8940 100644
      "myclabs/deep-copy": {
          "version": "1.9.1"
      },
-@@ -319,6 +322,23 @@
+@@ -319,8 +322,22 @@
              "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
          }
      },
+-    "symfony/mime": {
+-        "version": "v4.3.1"
 +    "symfony/monolog-bridge": {
 +        "version": "v4.3.3"
 +    },
@@ -355,7 +357,16 @@ index 83e77fb..fef8940 100644
 +            "config/packages/prod/monolog.yaml",
 +            "config/packages/test/monolog.yaml"
 +        ]
-+    },
+     },
      "symfony/phpunit-bridge": {
          "version": "4.3",
-         "recipe": {
+@@ -338,6 +355,9 @@
+             "tests/.gitignore"
+         ]
+     },
++    "symfony/mime": {
++        "version": "v4.3.1"
++    },
+     "symfony/polyfill-intl-idn": {
+         "version": "v1.11.0"
+     },

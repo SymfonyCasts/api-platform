@@ -1,29 +1,29 @@
 diff --git a/composer.json b/composer.json
-index 3418f38..534b099 100644
+index 4acf35d..f4fd259 100755
 --- a/composer.json
 +++ b/composer.json
-@@ -66,6 +66,7 @@
+@@ -76,6 +76,7 @@
          }
      },
      "require-dev": {
 +        "hautelook/alice-bundle": "^2.5",
+         "symfony/browser-kit": "^4.3",
+         "symfony/css-selector": "^4.3",
          "symfony/maker-bundle": "^1.11",
-         "symfony/profiler-pack": "^1.0",
-         "symfony/test-pack": "^1.0"
 diff --git a/composer.lock b/composer.lock
-index 1d42e35..e6d7404 100644
+index d894412..821722f 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "8eb02842a8fedcb56ca0e429598d7884",
-+    "content-hash": "d2c5f603e145f203defd8689e8f5603c",
+-    "content-hash": "0c03a15dc8ece40dd9e4a25a0ca2592f",
++    "content-hash": "6b875ac7778d3d931bb8df9d5ba7dc1c",
      "packages": [
          {
-             "name": "api-platform/api-pack",
-@@ -5324,6 +5324,321 @@
+             "name": "api-platform/core",
+@@ -5286,6 +5286,321 @@
          }
      ],
      "packages-dev": [
@@ -345,7 +345,7 @@ index 1d42e35..e6d7404 100644
          {
              "name": "nikic/php-parser",
              "version": "v4.2.2",
-@@ -5375,6 +5690,246 @@
+@@ -5337,6 +5652,246 @@
              ],
              "time": "2019-05-25T20:07:01+00:00"
          },
@@ -592,7 +592,7 @@ index 1d42e35..e6d7404 100644
          {
              "name": "symfony/browser-kit",
              "version": "v4.3.3",
-@@ -5878,6 +6433,85 @@
+@@ -5784,6 +6339,85 @@
              "description": "Symfony WebProfilerBundle",
              "homepage": "https://symfony.com",
              "time": "2019-05-30T16:10:05+00:00"
@@ -678,13 +678,6 @@ index 1d42e35..e6d7404 100644
          }
      ],
      "aliases": [],
-@@ -5894,5 +6528,5 @@
-     "platform-overrides": {
-         "php": "7.2.0"
-     },
--    "plugin-api-version": "2.0.0"
-+    "plugin-api-version": "2.1.0"
- }
 diff --git a/config/bundles.php b/config/bundles.php
 index 6c2bb11..8939eef 100644
 --- a/config/bundles.php
@@ -740,7 +733,7 @@ diff --git a/fixtures/.gitignore b/fixtures/.gitignore
 new file mode 100644
 index 0000000..e69de29
 diff --git a/symfony.lock b/symfony.lock
-index 74a620a..83e77fb 100644
+index 5c82b0d..a1e9057 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -40,6 +40,9 @@

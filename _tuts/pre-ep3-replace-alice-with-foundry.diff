@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 7d0b702..bfe3c78 100644
+index 7d0b702..bfe3c78 100755
 --- a/composer.json
 +++ b/composer.json
 @@ -30,7 +30,6 @@
@@ -11,7 +11,7 @@ index 7d0b702..bfe3c78 100644
          "symfony/css-selector": "5.1.*",
          "symfony/maker-bundle": "^1.11",
 diff --git a/composer.lock b/composer.lock
-index eb96d42..3d4b649 100644
+index d2566aa..4b8c954 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index eb96d42..3d4b649 100644
      "packages": [
          {
              "name": "api-platform/core",
-@@ -7079,217 +7079,6 @@
+@@ -7077,217 +7077,6 @@
              ],
              "time": "2019-12-12T13:22:17+00:00"
          },
@@ -241,7 +241,7 @@ index eb96d42..3d4b649 100644
          {
              "name": "nikic/php-parser",
              "version": "v4.9.1",
-@@ -7342,246 +7131,6 @@
+@@ -7340,246 +7129,6 @@
              ],
              "time": "2020-08-30T16:15:20+00:00"
          },
@@ -488,7 +488,7 @@ index eb96d42..3d4b649 100644
          {
              "name": "symfony/browser-kit",
              "version": "v5.1.5",
-@@ -8039,91 +7588,6 @@
+@@ -8037,91 +7586,6 @@
              ],
              "time": "2020-08-10T08:03:57+00:00"
          },

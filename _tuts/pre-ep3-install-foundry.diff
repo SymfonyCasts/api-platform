@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 71222bc..7d0b702 100644
+index 71222bc..7d0b702 100755
 --- a/composer.json
 +++ b/composer.json
 @@ -37,7 +37,8 @@
@@ -13,7 +13,7 @@ index 71222bc..7d0b702 100644
      "config": {
          "preferred-install": {
 diff --git a/composer.lock b/composer.lock
-index b26bc5e..eb96d42 100644
+index 9ecf718..d2566aa 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -25,7 +25,7 @@ index b26bc5e..eb96d42 100644
      "packages": [
          {
              "name": "api-platform/core",
-@@ -8123,6 +8123,71 @@
+@@ -8121,6 +8121,71 @@
                  }
              ],
              "time": "2020-07-30T22:54:19+00:00"

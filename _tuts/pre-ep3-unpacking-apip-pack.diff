@@ -1,26 +1,8 @@
 diff --git a/composer.json b/composer.json
-index 649f236..02ce14f 100644
+index 9fe7d5e..b865b2c 100755
 --- a/composer.json
 +++ b/composer.json
-@@ -5,16 +5,26 @@
-         "php": "^7.2.5",
-         "ext-ctype": "*",
-         "ext-iconv": "*",
--        "api-platform/api-pack": "^1.2",
-+        "api-platform/core": "^2.1",
-         "composer/package-versions-deprecated": "^1.11",
-+        "doctrine/annotations": "^1.0",
-+        "doctrine/doctrine-bundle": "^1.6",
-         "doctrine/doctrine-migrations-bundle": "^2.0",
-+        "doctrine/orm": "^2.4.5",
-+        "nelmio/cors-bundle": "^1.5",
-         "nesbot/carbon": "^2.17",
-+        "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
-+        "symfony/asset": "4.3.*",
-         "symfony/console": "4.3.*",
-         "symfony/dotenv": "4.3.*",
-+        "symfony/expression-language": "4.3.*",
-         "symfony/flex": "^1.1",
+@@ -22,6 +22,9 @@
          "symfony/framework-bundle": "4.3.*",
          "symfony/http-client": "4.3.*",
          "symfony/monolog-bundle": "^3.4",
@@ -28,60 +10,23 @@ index 649f236..02ce14f 100644
 +        "symfony/twig-bundle": "4.3.*",
 +        "symfony/validator": "4.3.*",
          "symfony/webpack-encore-bundle": "^1.6",
-         "symfony/yaml": "4.3.*"
-     },
+         "symfony/security-bundle": "4.3.*",
+         "symfony/twig-bundle": "^4.3",
 diff --git a/composer.lock b/composer.lock
-index 140fabf..dd42adb 100644
+index 00d641f..8f1510c 100644
 --- a/composer.lock
 +++ b/composer.lock
-@@ -4,44 +4,8 @@
+@@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "074fc66f9096dcaf797928cf72464113",
-+    "content-hash": "7fbb3b00c84e1e4127137acc44adeb59",
+-    "content-hash": "968b598f52d6504a52b4521f4d892b18",
++    "content-hash": "720ddb38f4f92892bc90760659980414",
      "packages": [
--        {
--            "name": "api-platform/api-pack",
--            "version": "v1.2.0",
--            "source": {
--                "type": "git",
--                "url": "https://github.com/api-platform/api-pack.git",
--                "reference": "9e3e7421415c747e676778f211434674324dcfa9"
--            },
--            "dist": {
--                "type": "zip",
--                "url": "https://api.github.com/repos/api-platform/api-pack/zipball/9e3e7421415c747e676778f211434674324dcfa9",
--                "reference": "9e3e7421415c747e676778f211434674324dcfa9",
--                "shasum": ""
--            },
--            "require": {
--                "api-platform/core": "^2.1",
--                "doctrine/annotations": "^1.0",
--                "doctrine/doctrine-bundle": "^1.6",
--                "doctrine/orm": "^2.4.5",
--                "nelmio/cors-bundle": "^1.5",
--                "php": "^7.0",
--                "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
--                "symfony/asset": "*",
--                "symfony/expression-language": "*",
--                "symfony/security-bundle": "*",
--                "symfony/twig-bundle": "*",
--                "symfony/validator": "*"
--            },
--            "type": "symfony-pack",
--            "notification-url": "https://packagist.org/downloads/",
--            "license": [
--                "MIT"
--            ],
--            "description": "A pack for API Platform",
--            "time": "2019-01-12T11:48:48+00:00"
--        },
          {
              "name": "api-platform/core",
-             "version": "v2.4.5",
 diff --git a/symfony.lock b/symfony.lock
-index fef8940..7564bb7 100644
+index 78fca8a..7564bb7 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -1,7 +1,4 @@
@@ -92,24 +37,137 @@ index fef8940..7564bb7 100644
      "api-platform/core": {
          "version": "2.1",
          "recipe": {
-@@ -322,6 +319,9 @@
-             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
-         }
+@@ -167,12 +164,6 @@
+     "ocramius/proxy-manager": {
+         "version": "2.2.2"
      },
-+    "symfony/mime": {
-+        "version": "v4.3.1"
-+    },
-     "symfony/monolog-bridge": {
-         "version": "v4.3.3"
+-    "phar-io/manifest": {
+-        "version": "1.0.3"
+-    },
+-    "phar-io/version": {
+-        "version": "2.0.1"
+-    },
+     "php": {
+         "version": "7.2.0"
      },
-@@ -355,8 +355,8 @@
-             "tests/.gitignore"
+@@ -185,38 +176,6 @@
+     "phpdocumentor/type-resolver": {
+         "version": "0.4.0"
+     },
+-    "phpspec/prophecy": {
+-        "version": "v1.10.3"
+-    },
+-    "phpunit/php-code-coverage": {
+-        "version": "7.0.15"
+-    },
+-    "phpunit/php-file-iterator": {
+-        "version": "2.0.4"
+-    },
+-    "phpunit/php-text-template": {
+-        "version": "1.2.1"
+-    },
+-    "phpunit/php-timer": {
+-        "version": "2.1.3"
+-    },
+-    "phpunit/php-token-stream": {
+-        "version": "3.1.3"
+-    },
+-    "phpunit/phpunit": {
+-        "version": "8.3",
+-        "recipe": {
+-            "repo": "github.com/symfony/recipes",
+-            "branch": "master",
+-            "version": "4.7",
+-            "ref": "b5b34fa22319ac1f7f6c180b30e160841c154a1e"
+-        },
+-        "files": [
+-            ".env.test",
+-            "phpunit.xml.dist",
+-            "tests/bootstrap.php"
+-        ]
+-    },
+     "psr/cache": {
+         "version": "1.0.1"
+     },
+@@ -232,42 +191,18 @@
+     "psr/simple-cache": {
+         "version": "1.0.1"
+     },
+-    "sebastian/code-unit-reverse-lookup": {
+-        "version": "1.0.2"
+-    },
+     "sebastian/comparator": {
+         "version": "3.0.2"
+     },
+     "sebastian/diff": {
+         "version": "3.0.2"
+     },
+-    "sebastian/environment": {
+-        "version": "4.2.4"
+-    },
+     "sebastian/exporter": {
+         "version": "3.1.0"
+     },
+-    "sebastian/global-state": {
+-        "version": "3.0.1"
+-    },
+-    "sebastian/object-enumerator": {
+-        "version": "3.0.4"
+-    },
+-    "sebastian/object-reflector": {
+-        "version": "1.1.2"
+-    },
+     "sebastian/recursion-context": {
+         "version": "3.0.0"
+     },
+-    "sebastian/resource-operations": {
+-        "version": "2.0.2"
+-    },
+-    "sebastian/type": {
+-        "version": "1.1.4"
+-    },
+-    "sebastian/version": {
+-        "version": "2.0.1"
+-    },
+     "symfony/asset": {
+         "version": "v4.2.8"
+     },
+@@ -421,7 +356,7 @@
          ]
      },
--    "symfony/mime": {
--        "version": "v4.3.1"
-+    "symfony/polyfill-ctype": {
+     "symfony/polyfill-ctype": {
+-        "version": "v1.23.0"
 +        "version": "v1.20.0"
      },
      "symfony/polyfill-intl-idn": {
          "version": "v1.11.0"
+@@ -438,6 +373,9 @@
+     "symfony/polyfill-php73": {
+         "version": "v1.23.0"
+     },
++    "symfony/profiler-pack": {
++        "version": "v1.0.4"
++    },
+     "symfony/property-access": {
+         "version": "v4.2.8"
+     },
+@@ -492,6 +430,9 @@
+     "symfony/stopwatch": {
+         "version": "v4.2.8"
+     },
++    "symfony/test-pack": {
++        "version": "v1.0.6"
++    },
+     "symfony/translation": {
+         "version": "3.3",
+         "recipe": {
+@@ -591,9 +532,6 @@
+             "ref": "fe5a50faf580eb58f08ada2abe8afbd2d4941e05"
+         }
+     },
+-    "theseer/tokenizer": {
+-        "version": "1.2.1"
+-    },
+     "twig/twig": {
+         "version": "v2.9.0"
+     },

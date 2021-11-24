@@ -12,10 +12,10 @@ index e6b1cd6..05a2b3d 100644
 -            - '%locale%'
 +            - en
 diff --git a/symfony.lock b/symfony.lock
-index 56961ca..e4f8ed3 100644
+index f381c99..195b307 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -437,7 +437,7 @@
+@@ -434,7 +434,7 @@
              "repo": "github.com/symfony/recipes",
              "branch": "master",
              "version": "3.3",
