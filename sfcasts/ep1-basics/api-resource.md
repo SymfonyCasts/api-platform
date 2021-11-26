@@ -31,7 +31,7 @@ commit it as the default.
 Cool! Next, at your terminal, run
 
 ```terminal
-composer require maker --dev
+composer require maker:1.11 --dev
 ```
 
 to get Symfony's MakerBundle... so we can be lazy and generate our entity.
