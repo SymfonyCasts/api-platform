@@ -155,6 +155,11 @@ The only difference is that `getCollection()` now has an extra
 
 [[[ code('63fd4f0b59') ]]]
 
+***TIP
+You should also pass `$context` as the 3rd argument to `$this->pagination->getPagination()`.
+This is used to correctly calculate the current page.
+***
+
 To start, let's `dd($context)` and see if the filter info is there:
 
 [[[ code('fc3688cdb1') ]]]
