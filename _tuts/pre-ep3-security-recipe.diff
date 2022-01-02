@@ -11,10 +11,10 @@ index e1a12f3..768f8a8 100644
              json_login:
                  check_path: app_login
 diff --git a/symfony.lock b/symfony.lock
-index 4382b0e..f381c99 100644
+index 8c584b8..56961ca 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -393,12 +393,12 @@
+@@ -396,12 +396,12 @@
          ]
      },
      "symfony/security-bundle": {

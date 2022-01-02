@@ -69,33 +69,31 @@ index 0000000..0648e87
 +
 +console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 diff --git a/composer.json b/composer.json
-old mode 100644
-new mode 100755
-index 3d02341..634de06
+index d8c32a3..1445e3d 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -20,6 +20,7 @@
-         "symfony/expression-language": "4.3.*",
+@@ -13,6 +13,7 @@
+         "symfony/dotenv": "4.3.*",
          "symfony/flex": "^1.1",
          "symfony/framework-bundle": "4.3.*",
 +        "symfony/webpack-encore-bundle": "^1.6",
-         "symfony/security-bundle": "4.3.*",
-         "symfony/twig-bundle": "^4.3",
-         "symfony/validator": "4.3.*",
+         "symfony/yaml": "4.3.*"
+     },
+     "config": {
 diff --git a/composer.lock b/composer.lock
-index c571d10..74507d5 100644
+index 86bf47f..11c2be7 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "d8f0d5af655b7ca019565eb120d957bf",
-+    "content-hash": "a20aad2cf1bc379b4ce557601438aadd",
+-    "content-hash": "c41b5fd377406a5df57005edafb57504",
++    "content-hash": "a254384648747e8bdf1b285b6327a7c1",
      "packages": [
          {
-             "name": "api-platform/core",
-@@ -4828,6 +4828,62 @@
+             "name": "api-platform/api-pack",
+@@ -4866,6 +4866,62 @@
              ],
              "time": "2019-03-14T07:32:46+00:00"
          },
@@ -229,28 +227,10 @@ index 0000000..56f4b19
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index 4955694..97d8685 100644
+index 21412b9..97d8685 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -1,4 +1,7 @@
- {
-+    "api-platform/api-pack": {
-+        "version": "v1.2.0"
-+    },
-     "api-platform/core": {
-         "version": "2.1",
-         "recipe": {
-@@ -274,6 +277,9 @@
-     "symfony/polyfill-php73": {
-         "version": "v1.23.0"
-     },
-+    "symfony/profiler-pack": {
-+        "version": "v1.0.4"
-+    },
-     "symfony/property-access": {
-         "version": "v4.2.8"
-     },
-@@ -397,6 +403,24 @@
+@@ -403,6 +403,24 @@
              "config/routes/dev/web_profiler.yaml"
          ]
      },

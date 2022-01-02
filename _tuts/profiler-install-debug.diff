@@ -13,7 +13,7 @@ index 3bb227e..957593b 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 48f627f..24494d6 100644
+index f8b60d4..99af35a 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -25,7 +25,7 @@ index 48f627f..24494d6 100644
      "packages": [
          {
              "name": "api-platform/core",
-@@ -5862,6 +5862,154 @@
+@@ -5865,6 +5865,154 @@
                  "source": "https://github.com/symfony/maker-bundle/tree/v1.11.6"
              },
              "time": "2019-04-19T17:26:45+00:00"

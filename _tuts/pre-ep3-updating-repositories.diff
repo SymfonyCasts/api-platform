@@ -1,0 +1,44 @@
+diff --git a/src/Repository/CheeseListingRepository.php b/src/Repository/CheeseListingRepository.php
+index 8f3cdda..5871a28 100644
+--- a/src/Repository/CheeseListingRepository.php
++++ b/src/Repository/CheeseListingRepository.php
+@@ -4,7 +4,7 @@ namespace App\Repository;
+ 
+ use App\Entity\CheeseListing;
+ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+-use Symfony\Bridge\Doctrine\RegistryInterface;
++use Doctrine\Persistence\ManagerRegistry;
+ 
+ /**
+  * @method CheeseListing|null find($id, $lockMode = null, $lockVersion = null)
+@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
+  */
+ class CheeseListingRepository extends ServiceEntityRepository
+ {
+-    public function __construct(RegistryInterface $registry)
++    public function __construct(ManagerRegistry $registry)
+     {
+         parent::__construct($registry, CheeseListing::class);
+     }
+diff --git a/src/Repository/UserRepository.php b/src/Repository/UserRepository.php
+index 8e82202..2ebc111 100644
+--- a/src/Repository/UserRepository.php
++++ b/src/Repository/UserRepository.php
+@@ -4,7 +4,7 @@ namespace App\Repository;
+ 
+ use App\Entity\User;
+ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+-use Symfony\Bridge\Doctrine\RegistryInterface;
++use Doctrine\Persistence\ManagerRegistry;
+ 
+ /**
+  * @method User|null find($id, $lockMode = null, $lockVersion = null)
+@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
+  */
+ class UserRepository extends ServiceEntityRepository
+ {
+-    public function __construct(RegistryInterface $registry)
++    public function __construct(ManagerRegistry $registry)
+     {
+         parent::__construct($registry, User::class);
+     }

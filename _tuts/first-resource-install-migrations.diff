@@ -11,7 +11,7 @@ index c54db00..3bb227e 100644
          "nelmio/cors-bundle": "^1.5",
          "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
 diff --git a/composer.lock b/composer.lock
-index 93b0a80..48f627f 100644
+index 066e9f9..f8b60d4 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -273,7 +273,7 @@ index 93b0a80..48f627f 100644
          {
              "name": "phpdocumentor/reflection-common",
              "version": "1.0.1",
-@@ -4596,6 +4825,59 @@
+@@ -4599,6 +4828,59 @@
              ],
              "time": "2020-07-06T13:19:58+00:00"
          },
@@ -333,7 +333,7 @@ index 93b0a80..48f627f 100644
          {
              "name": "symfony/translation-contracts",
              "version": "v1.1.10",
-@@ -5336,6 +5618,123 @@
+@@ -5339,6 +5621,123 @@
                  "source": "https://github.com/willdurand/Negotiation/tree/2.x"
              },
              "time": "2017-05-14T17:21:12+00:00"

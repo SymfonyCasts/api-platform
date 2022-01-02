@@ -11,7 +11,7 @@ index 957593b..5d2ebcb 100644
          "symfony/asset": "4.2.*|4.3.*|4.4.*",
          "symfony/console": "4.2.*",
 diff --git a/composer.lock b/composer.lock
-index 24494d6..dc323a1 100644
+index 99af35a..0536368 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -90,7 +90,7 @@ index 24494d6..dc323a1 100644
          {
              "name": "ocramius/proxy-manager",
              "version": "2.2.2",
-@@ -4878,6 +4938,85 @@
+@@ -4881,6 +4941,85 @@
              },
              "time": "2019-01-16T20:31:39+00:00"
          },

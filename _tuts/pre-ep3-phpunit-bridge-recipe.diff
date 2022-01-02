@@ -39,7 +39,7 @@ index d45120b..ae0173d 100644
      </filter>
  
 diff --git a/symfony.lock b/symfony.lock
-index c82e683..4382b0e 100644
+index 3a66e39..8c584b8 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -342,14 +342,13 @@
@@ -59,3 +59,20 @@ index c82e683..4382b0e 100644
          ]
      },
      "symfony/polyfill-ctype": {
+diff --git a/tests/bootstrap.php b/tests/bootstrap.php
+new file mode 100644
+index 0000000..469dcce
+--- /dev/null
++++ b/tests/bootstrap.php
+@@ -0,0 +1,11 @@
++<?php
++
++use Symfony\Component\Dotenv\Dotenv;
++
++require dirname(__DIR__).'/vendor/autoload.php';
++
++if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
++    require dirname(__DIR__).'/config/bootstrap.php';
++} elseif (method_exists(Dotenv::class, 'bootEnv')) {
++    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
++}

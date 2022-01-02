@@ -1,29 +1,29 @@
 diff --git a/composer.json b/composer.json
-index 65cd05c..4acf35d 100755
+index b3557cb..3418f38 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -20,6 +20,7 @@
-         "symfony/expression-language": "4.3.*",
+@@ -13,6 +13,7 @@
+         "symfony/dotenv": "4.3.*",
          "symfony/flex": "^1.1",
          "symfony/framework-bundle": "4.3.*",
 +        "symfony/http-client": "4.3.*",
          "symfony/webpack-encore-bundle": "^1.6",
-         "symfony/security-bundle": "4.3.*",
-         "symfony/twig-bundle": "^4.3",
+         "symfony/yaml": "4.3.*"
+     },
 diff --git a/composer.lock b/composer.lock
-index cbed1b4..d894412 100644
+index 573aca4..1d42e35 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "2bc9ccdea1df393a8b7c812c6d5a22e5",
-+    "content-hash": "0c03a15dc8ece40dd9e4a25a0ca2592f",
+-    "content-hash": "bfa08bf2f9ddb6388f1c014f31675232",
++    "content-hash": "8eb02842a8fedcb56ca0e429598d7884",
      "packages": [
          {
-             "name": "api-platform/core",
-@@ -3171,6 +3171,68 @@
+             "name": "api-platform/api-pack",
+@@ -3209,6 +3209,68 @@
              "homepage": "https://symfony.com",
              "time": "2019-06-26T06:50:02+00:00"
          },
@@ -93,7 +93,7 @@ index cbed1b4..d894412 100644
              "name": "symfony/http-foundation",
              "version": "v4.3.2",
 diff --git a/symfony.lock b/symfony.lock
-index 7690eb9..5c82b0d 100644
+index 6447b3c..74a620a 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -250,6 +250,9 @@
@@ -106,23 +106,3 @@ index 7690eb9..5c82b0d 100644
      "symfony/http-foundation": {
          "version": "v4.2.8"
      },
-@@ -302,6 +305,9 @@
-     "symfony/polyfill-php73": {
-         "version": "v1.23.0"
-     },
-+    "symfony/profiler-pack": {
-+        "version": "v1.0.4"
-+    },
-     "symfony/property-access": {
-         "version": "v4.2.8"
-     },
-@@ -356,6 +362,9 @@
-     "symfony/stopwatch": {
-         "version": "v4.2.8"
-     },
-+    "symfony/test-pack": {
-+        "version": "v1.0.6"
-+    },
-     "symfony/translation": {
-         "version": "3.3",
-         "recipe": {
