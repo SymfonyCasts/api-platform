@@ -1,5 +1,5 @@
 diff --git a/src/DataTransformer/CheeseListingInputDataTransformer.php b/src/DataTransformer/CheeseListingInputDataTransformer.php
-index 5f1d0d3..21fab55 100644
+index 5f1d0d321..21fab55fa 100644
 --- a/src/DataTransformer/CheeseListingInputDataTransformer.php
 +++ b/src/DataTransformer/CheeseListingInputDataTransformer.php
 @@ -14,6 +14,7 @@ class CheeseListingInputDataTransformer implements DataTransformerInterface
@@ -11,7 +11,7 @@ index 5f1d0d3..21fab55 100644
              $cheeseListing = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE];
          } else {
 diff --git a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
-index 0c35a4b..2d57b42 100644
+index 0c35a4bde..2d57b42cc 100644
 --- a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 +++ b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 @@ -3,6 +3,7 @@

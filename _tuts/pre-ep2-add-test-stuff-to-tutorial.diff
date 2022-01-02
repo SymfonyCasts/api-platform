@@ -1,6 +1,6 @@
 diff --git a/tutorial/Test/ApiTestAssertionsTrait.php b/tutorial/Test/ApiTestAssertionsTrait.php
 new file mode 100644
-index 0000000..fbdf7f7
+index 000000000..fbdf7f71d
 --- /dev/null
 +++ b/tutorial/Test/ApiTestAssertionsTrait.php
 @@ -0,0 +1,161 @@
@@ -168,7 +168,7 @@ index 0000000..fbdf7f7
 \ No newline at end of file
 diff --git a/tutorial/Test/ApiTestCase.php b/tutorial/Test/ApiTestCase.php
 new file mode 100644
-index 0000000..5bfced6
+index 000000000..5bfced694
 --- /dev/null
 +++ b/tutorial/Test/ApiTestCase.php
 @@ -0,0 +1,102 @@
@@ -277,7 +277,7 @@ index 0000000..5bfced6
 \ No newline at end of file
 diff --git a/tutorial/Test/BrowserKitAssertionsTrait.php b/tutorial/Test/BrowserKitAssertionsTrait.php
 new file mode 100644
-index 0000000..2aec96f
+index 000000000..2aec96ff8
 --- /dev/null
 +++ b/tutorial/Test/BrowserKitAssertionsTrait.php
 @@ -0,0 +1,170 @@
@@ -454,7 +454,7 @@ index 0000000..2aec96f
 \ No newline at end of file
 diff --git a/tutorial/Test/Client.php b/tutorial/Test/Client.php
 new file mode 100644
-index 0000000..aba32d2
+index 000000000..aba32d2ef
 --- /dev/null
 +++ b/tutorial/Test/Client.php
 @@ -0,0 +1,239 @@
@@ -700,7 +700,7 @@ index 0000000..aba32d2
 \ No newline at end of file
 diff --git a/tutorial/Test/Constraint/ArraySubset.php b/tutorial/Test/Constraint/ArraySubset.php
 new file mode 100644
-index 0000000..9c68e44
+index 000000000..9c68e4423
 --- /dev/null
 +++ b/tutorial/Test/Constraint/ArraySubset.php
 @@ -0,0 +1,129 @@
@@ -836,7 +836,7 @@ index 0000000..9c68e44
 \ No newline at end of file
 diff --git a/tutorial/Test/Constraint/MatchesJsonSchema.php b/tutorial/Test/Constraint/MatchesJsonSchema.php
 new file mode 100644
-index 0000000..19f012d
+index 000000000..19f012d98
 --- /dev/null
 +++ b/tutorial/Test/Constraint/MatchesJsonSchema.php
 @@ -0,0 +1,114 @@
@@ -957,7 +957,7 @@ index 0000000..19f012d
 \ No newline at end of file
 diff --git a/tutorial/Test/README.md b/tutorial/Test/README.md
 new file mode 100644
-index 0000000..5f4de12
+index 000000000..5f4de123d
 --- /dev/null
 +++ b/tutorial/Test/README.md
 @@ -0,0 +1,7 @@
@@ -970,7 +970,7 @@ index 0000000..5f4de12
 +so we can use them in our project and see how they work!
 diff --git a/tutorial/Test/Response.php b/tutorial/Test/Response.php
 new file mode 100644
-index 0000000..e78bbbe
+index 000000000..e78bbbe1e
 --- /dev/null
 +++ b/tutorial/Test/Response.php
 @@ -0,0 +1,187 @@

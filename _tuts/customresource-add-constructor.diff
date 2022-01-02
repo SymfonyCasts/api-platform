@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
-index 0e4ea1a..e304226 100644
+index 0e4ea1a3d..e30422631 100644
 --- a/src/DataProvider/DailyStatsProvider.php
 +++ b/src/DataProvider/DailyStatsProvider.php
 @@ -10,9 +10,11 @@ class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedD
@@ -18,7 +18,7 @@ index 0e4ea1a..e304226 100644
          return [$stats];
      }
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index 2e0c158..3e52f50 100644
+index 2e0c1586a..3e52f500d 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -38,6 +38,16 @@ class DailyStats

@@ -1,5 +1,5 @@
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index 8771a53..3970778 100644
+index 8771a531f..3970778bb 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -43,7 +43,6 @@ class UserResourceTest extends CustomApiTestCase

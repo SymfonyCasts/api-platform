@@ -1,5 +1,5 @@
 diff --git a/.env b/.env
-index 58b6d22..77af318 100644
+index 58b6d22aa..77af318ca 100644
 --- a/.env
 +++ b/.env
 @@ -25,8 +25,9 @@ CORS_ALLOW_ORIGIN=^https?://localhost(:[0-9]+)?$
@@ -15,7 +15,7 @@ index 58b6d22..77af318 100644
  DATABASE_URL=mysql://root:@127.0.0.1:3306/cheese_whiz
  ###< doctrine/doctrine-bundle ###
 diff --git a/config/packages/doctrine.yaml b/config/packages/doctrine.yaml
-index 9521fad..616c640 100644
+index 9521fad7d..616c64070 100644
 --- a/config/packages/doctrine.yaml
 +++ b/config/packages/doctrine.yaml
 @@ -1,24 +1,13 @@
@@ -49,7 +49,7 @@ index 9521fad..616c640 100644
          mappings:
              App:
 diff --git a/config/packages/prod/doctrine.yaml b/config/packages/prod/doctrine.yaml
-index 0a7c53b..084f59a 100644
+index 0a7c53b44..084f59a05 100644
 --- a/config/packages/prod/doctrine.yaml
 +++ b/config/packages/prod/doctrine.yaml
 @@ -2,26 +2,14 @@ doctrine:
@@ -86,7 +86,7 @@ index 0a7c53b..084f59a 100644
  framework:
      cache:
 diff --git a/symfony.lock b/symfony.lock
-index 1dc4779..6b43dd2 100644
+index 7e27b0ac2..bc54b9d5e 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -44,12 +44,12 @@

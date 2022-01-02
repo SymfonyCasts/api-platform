@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 779bc69..168ac73 100644
+index 779bc699f..168ac7314 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -18,7 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +14,7 @@ index 779bc69..168ac73 100644
   *     },
   *     shortName="cheeses",
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index cf99d11..e88b803 100644
+index cf99d11ce..e88b8036b 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -51,7 +51,7 @@ class User implements UserInterface

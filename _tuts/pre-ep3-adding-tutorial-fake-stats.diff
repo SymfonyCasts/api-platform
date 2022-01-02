@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index bfe3c78..a0fe95d 100644
+index bfe3c7844..a0fe95dfa 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -2,7 +2,7 @@
@@ -30,7 +30,7 @@ index bfe3c78..a0fe95d 100644
      },
      "autoload": {
 diff --git a/composer.lock b/composer.lock
-index 3d4b649..4175bf3 100644
+index 47080057f..d96d7ffda 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,20 +4,20 @@
@@ -1597,7 +1597,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3737,6 +3981,9 @@
+@@ -3735,6 +3979,9 @@
              ],
              "description": "Symfony FrameworkBundle",
              "homepage": "https://symfony.com",
@@ -1607,7 +1607,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3823,6 +4070,9 @@
+@@ -3821,6 +4068,9 @@
              ],
              "description": "Symfony HttpClient component",
              "homepage": "https://symfony.com",
@@ -1617,7 +1617,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3898,6 +4148,9 @@
+@@ -3896,6 +4146,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1627,7 +1627,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3973,6 +4226,9 @@
+@@ -3971,6 +4224,9 @@
              ],
              "description": "Symfony HttpFoundation Component",
              "homepage": "https://symfony.com",
@@ -1637,7 +1637,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4086,6 +4342,9 @@
+@@ -4084,6 +4340,9 @@
              ],
              "description": "Symfony HttpKernel Component",
              "homepage": "https://symfony.com",
@@ -1647,7 +1647,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4169,6 +4428,9 @@
+@@ -4167,6 +4426,9 @@
              ],
              "description": "Symfony Monolog Bridge",
              "homepage": "https://symfony.com",
@@ -1657,7 +1657,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4246,6 +4508,10 @@
+@@ -4244,6 +4506,10 @@
                  "log",
                  "logging"
              ],
@@ -1668,7 +1668,7 @@ index 3d4b649..4175bf3 100644
              "time": "2019-11-13T13:11:14+00:00"
          },
          {
-@@ -4308,6 +4574,9 @@
+@@ -4306,6 +4572,9 @@
                  "polyfill",
                  "portable"
              ],
@@ -1678,7 +1678,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4386,6 +4655,9 @@
+@@ -4384,6 +4653,9 @@
                  "portable",
                  "shim"
              ],
@@ -1688,7 +1688,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4467,6 +4739,9 @@
+@@ -4465,6 +4737,9 @@
                  "portable",
                  "shim"
              ],
@@ -1698,7 +1698,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4544,6 +4819,9 @@
+@@ -4542,6 +4817,9 @@
                  "portable",
                  "shim"
              ],
@@ -1708,7 +1708,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4620,6 +4898,9 @@
+@@ -4618,6 +4896,9 @@
                  "portable",
                  "shim"
              ],
@@ -1718,7 +1718,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4700,6 +4981,9 @@
+@@ -4698,6 +4979,9 @@
                  "portable",
                  "shim"
              ],
@@ -1728,7 +1728,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4782,6 +5066,9 @@
+@@ -4780,6 +5064,9 @@
                  "property path",
                  "reflection"
              ],
@@ -1738,7 +1738,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4873,6 +5160,9 @@
+@@ -4871,6 +5158,9 @@
                  "type",
                  "validator"
              ],
@@ -1748,7 +1748,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4965,6 +5255,9 @@
+@@ -4963,6 +5253,9 @@
                  "uri",
                  "url"
              ],
@@ -1758,7 +1758,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5064,6 +5357,9 @@
+@@ -5062,6 +5355,9 @@
              ],
              "description": "Symfony SecurityBundle",
              "homepage": "https://symfony.com",
@@ -1768,7 +1768,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5153,6 +5449,9 @@
+@@ -5151,6 +5447,9 @@
              ],
              "description": "Symfony Security Component - Core Library",
              "homepage": "https://symfony.com",
@@ -1778,7 +1778,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5226,6 +5525,9 @@
+@@ -5224,6 +5523,9 @@
              ],
              "description": "Symfony Security Component - CSRF Library",
              "homepage": "https://symfony.com",
@@ -1788,7 +1788,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5295,6 +5597,9 @@
+@@ -5293,6 +5595,9 @@
              ],
              "description": "Symfony Security Component - Guard",
              "homepage": "https://symfony.com",
@@ -1798,7 +1798,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5377,6 +5682,9 @@
+@@ -5375,6 +5680,9 @@
              ],
              "description": "Symfony Security Component - HTTP Integration",
              "homepage": "https://symfony.com",
@@ -1808,7 +1808,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5474,6 +5782,9 @@
+@@ -5472,6 +5780,9 @@
              ],
              "description": "Symfony Serializer Component",
              "homepage": "https://symfony.com",
@@ -1818,7 +1818,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5550,6 +5861,9 @@
+@@ -5548,6 +5859,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1828,7 +1828,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5614,6 +5928,9 @@
+@@ -5612,6 +5926,9 @@
              ],
              "description": "Symfony Stopwatch Component",
              "homepage": "https://symfony.com",
@@ -1838,7 +1838,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5699,6 +6016,9 @@
+@@ -5697,6 +6014,9 @@
                  "utf-8",
                  "utf8"
              ],
@@ -1848,7 +1848,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5791,6 +6111,9 @@
+@@ -5789,6 +6109,9 @@
              ],
              "description": "Symfony Translation Component",
              "homepage": "https://symfony.com",
@@ -1858,7 +1858,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5866,6 +6189,9 @@
+@@ -5864,6 +6187,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1868,7 +1868,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5982,6 +6308,9 @@
+@@ -5980,6 +6306,9 @@
              ],
              "description": "Symfony Twig Bridge",
              "homepage": "https://symfony.com",
@@ -1878,7 +1878,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6071,6 +6400,9 @@
+@@ -6069,6 +6398,9 @@
              ],
              "description": "Symfony TwigBundle",
              "homepage": "https://symfony.com",
@@ -1888,7 +1888,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6182,6 +6514,9 @@
+@@ -6180,6 +6512,9 @@
              ],
              "description": "Symfony Validator Component",
              "homepage": "https://symfony.com",
@@ -1898,7 +1898,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6272,6 +6607,9 @@
+@@ -6270,6 +6605,9 @@
                  "debug",
                  "dump"
              ],
@@ -1908,7 +1908,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6347,6 +6685,9 @@
+@@ -6345,6 +6683,9 @@
                  "instantiate",
                  "serialize"
              ],
@@ -1918,7 +1918,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6436,6 +6777,9 @@
+@@ -6434,6 +6775,9 @@
                  "psr13",
                  "push"
              ],
@@ -1928,7 +1928,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6454,20 +6798,20 @@
+@@ -6452,20 +6796,20 @@
          },
          {
              "name": "symfony/webpack-encore-bundle",
@@ -1954,7 +1954,7 @@ index 3d4b649..4175bf3 100644
                  "symfony/asset": "^3.4 || ^4.0 || ^5.0",
                  "symfony/config": "^3.4 || ^4.0 || ^5.0",
                  "symfony/dependency-injection": "^3.4 || ^4.0 || ^5.0",
-@@ -6503,7 +6847,25 @@
+@@ -6501,7 +6845,25 @@
                  }
              ],
              "description": "Integration with your Symfony app & Webpack Encore!",
@@ -1981,7 +1981,7 @@ index 3d4b649..4175bf3 100644
          },
          {
              "name": "symfony/yaml",
-@@ -6566,6 +6928,9 @@
+@@ -6564,6 +6926,9 @@
              ],
              "description": "Symfony Yaml Component",
              "homepage": "https://symfony.com",
@@ -1991,7 +1991,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6642,6 +7007,10 @@
+@@ -6640,6 +7005,10 @@
              "keywords": [
                  "templating"
              ],
@@ -2002,7 +2002,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://github.com/fabpot",
-@@ -6659,12 +7028,12 @@
+@@ -6657,12 +7026,12 @@
              "version": "1.9.1",
              "source": {
                  "type": "git",
@@ -2017,7 +2017,7 @@ index 3d4b649..4175bf3 100644
                  "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                  "shasum": ""
              },
-@@ -6701,32 +7070,36 @@
+@@ -6699,32 +7068,36 @@
                  "check",
                  "validate"
              ],
@@ -2061,7 +2061,7 @@ index 3d4b649..4175bf3 100644
                  }
              },
              "autoload": {
-@@ -6753,120 +7126,11 @@
+@@ -6751,120 +7124,11 @@
                  "header",
                  "negotiation"
              ],
@@ -2186,7 +2186,7 @@ index 3d4b649..4175bf3 100644
          }
      ],
      "packages-dev": [
-@@ -6931,6 +7195,10 @@
+@@ -6929,6 +7193,10 @@
              "keywords": [
                  "database"
              ],
@@ -2197,7 +2197,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://www.doctrine-project.org/sponsorship.html",
-@@ -7013,6 +7281,10 @@
+@@ -7011,6 +7279,10 @@
                  "Fixture",
                  "persistence"
              ],
@@ -2208,7 +2208,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://www.doctrine-project.org/sponsorship.html",
-@@ -7030,33 +7302,31 @@
+@@ -7028,33 +7300,31 @@
              "time": "2020-09-01T07:06:14+00:00"
          },
          {
@@ -2254,7 +2254,7 @@ index 3d4b649..4175bf3 100644
              "autoload": {
                  "psr-4": {
                      "Faker\\": "src/Faker/"
-@@ -7077,7 +7347,11 @@
+@@ -7075,7 +7345,11 @@
                  "faker",
                  "fixtures"
              ],
@@ -2267,7 +2267,7 @@ index 3d4b649..4175bf3 100644
          },
          {
              "name": "nikic/php-parser",
-@@ -7129,6 +7403,10 @@
+@@ -7127,6 +7401,10 @@
                  "parser",
                  "php"
              ],
@@ -2278,7 +2278,7 @@ index 3d4b649..4175bf3 100644
              "time": "2020-08-30T16:15:20+00:00"
          },
          {
-@@ -7188,6 +7466,9 @@
+@@ -7186,6 +7464,9 @@
              ],
              "description": "Symfony BrowserKit Component",
              "homepage": "https://symfony.com",
@@ -2288,7 +2288,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7255,6 +7536,9 @@
+@@ -7253,6 +7534,9 @@
              ],
              "description": "Symfony CssSelector Component",
              "homepage": "https://symfony.com",
@@ -2298,7 +2298,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7331,6 +7615,9 @@
+@@ -7329,6 +7613,9 @@
              ],
              "description": "Symfony DomCrawler Component",
              "homepage": "https://symfony.com",
@@ -2308,7 +2308,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7349,22 +7636,22 @@
+@@ -7347,22 +7634,22 @@
          },
          {
              "name": "symfony/maker-bundle",
@@ -2336,7 +2336,7 @@ index 3d4b649..4175bf3 100644
                  "symfony/config": "^3.4|^4.0|^5.0",
                  "symfony/console": "^3.4|^4.0|^5.0",
                  "symfony/dependency-injection": "^3.4|^4.0|^5.0",
-@@ -7414,6 +7701,10 @@
+@@ -7412,6 +7699,10 @@
                  "scaffold",
                  "scaffolding"
              ],
@@ -2347,7 +2347,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7428,7 +7719,7 @@
+@@ -7426,7 +7717,7 @@
                      "type": "tidelift"
                  }
              ],
@@ -2356,7 +2356,7 @@ index 3d4b649..4175bf3 100644
          },
          {
              "name": "symfony/phpunit-bridge",
-@@ -7493,6 +7784,9 @@
+@@ -7491,6 +7782,9 @@
              ],
              "description": "Symfony PHPUnit Bridge",
              "homepage": "https://symfony.com",
@@ -2366,7 +2366,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7572,6 +7866,9 @@
+@@ -7570,6 +7864,9 @@
              ],
              "description": "Symfony WebProfilerBundle",
              "homepage": "https://symfony.com",
@@ -2376,7 +2376,7 @@ index 3d4b649..4175bf3 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7588,34 +7885,88 @@
+@@ -7586,34 +7883,88 @@
              ],
              "time": "2020-08-10T08:03:57+00:00"
          },
@@ -2474,7 +2474,7 @@ index 3d4b649..4175bf3 100644
              },
              "type": "library",
              "extra": {
-@@ -7651,7 +8002,11 @@
+@@ -7649,7 +8000,11 @@
                  "symfony",
                  "test"
              ],
@@ -2487,7 +2487,7 @@ index 3d4b649..4175bf3 100644
          }
      ],
      "aliases": [],
-@@ -7660,13 +8015,13 @@
+@@ -7658,13 +8013,13 @@
      "prefer-stable": false,
      "prefer-lowest": false,
      "platform": {
@@ -2501,10 +2501,10 @@ index 3d4b649..4175bf3 100644
 -        "php": "7.2.5"
 +        "php": "7.4.0"
      },
-     "plugin-api-version": "2.1.0"
+     "plugin-api-version": "2.2.0"
  }
 diff --git a/symfony.lock b/symfony.lock
-index 7720098..723f70c 100644
+index 646e06f1a..11ed4e5ca 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -104,17 +104,26 @@
@@ -2565,7 +2565,7 @@ index 7720098..723f70c 100644
          "version": "v1.1.1"
 diff --git a/tutorial/StatsHelper.php b/tutorial/StatsHelper.php
 new file mode 100644
-index 0000000..57df59a
+index 000000000..57df59a76
 --- /dev/null
 +++ b/tutorial/StatsHelper.php
 @@ -0,0 +1,112 @@
@@ -2683,7 +2683,7 @@ index 0000000..57df59a
 +}
 diff --git a/tutorial/fake_stats.json b/tutorial/fake_stats.json
 new file mode 100644
-index 0000000..f55d8aa
+index 000000000..f55d8aa21
 --- /dev/null
 +++ b/tutorial/fake_stats.json
 @@ -0,0 +1,124 @@

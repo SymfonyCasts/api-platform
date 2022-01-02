@@ -1,5 +1,5 @@
 diff --git a/.env b/.env
-index 62b8545..58b6d22 100644
+index 62b8545ab..58b6d22aa 100644
 --- a/.env
 +++ b/.env
 @@ -28,5 +28,5 @@ CORS_ALLOW_ORIGIN=^https?://localhost(:[0-9]+)?$
@@ -10,7 +10,7 @@ index 62b8545..58b6d22 100644
 +DATABASE_URL=mysql://root:@127.0.0.1:3306/cheese_whiz
  ###< doctrine/doctrine-bundle ###
 diff --git a/README.md b/README.md
-index dd3dbae..d178a74 100644
+index dd3dbaef9..d178a740e 100644
 --- a/README.md
 +++ b/README.md
 @@ -21,6 +21,26 @@ composer install

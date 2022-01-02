@@ -1,5 +1,5 @@
 diff --git a/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php b/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php
-index 44dde3c..33a37f3 100644
+index 44dde3cff..33a37f30b 100644
 --- a/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php
 +++ b/src/EventSubscriber/SetIsMeOnCurrentUserSubscriber.php
 @@ -2,14 +2,33 @@

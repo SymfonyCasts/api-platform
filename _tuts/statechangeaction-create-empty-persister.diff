@@ -1,6 +1,6 @@
 diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
 new file mode 100644
-index 0000000..926aacf
+index 000000000..926aacf67
 --- /dev/null
 +++ b/src/DataPersister/CheeseListingDataPersister.php
 @@ -0,0 +1,20 @@

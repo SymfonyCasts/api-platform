@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 3418f38..534b099 100644
+index 3418f3817..534b09985 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -66,6 +66,7 @@
@@ -11,7 +11,7 @@ index 3418f38..534b099 100644
          "symfony/profiler-pack": "^1.0",
          "symfony/test-pack": "^1.0"
 diff --git a/composer.lock b/composer.lock
-index 1d42e35..e6d7404 100644
+index 814cd868e..efc28ec24 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -23,7 +23,7 @@ index 1d42e35..e6d7404 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -5324,6 +5324,321 @@
+@@ -5322,6 +5322,321 @@
          }
      ],
      "packages-dev": [
@@ -345,7 +345,7 @@ index 1d42e35..e6d7404 100644
          {
              "name": "nikic/php-parser",
              "version": "v4.2.2",
-@@ -5375,6 +5690,246 @@
+@@ -5373,6 +5688,246 @@
              ],
              "time": "2019-05-25T20:07:01+00:00"
          },
@@ -592,7 +592,7 @@ index 1d42e35..e6d7404 100644
          {
              "name": "symfony/browser-kit",
              "version": "v4.3.3",
-@@ -5878,6 +6433,85 @@
+@@ -5876,6 +6431,85 @@
              "description": "Symfony WebProfilerBundle",
              "homepage": "https://symfony.com",
              "time": "2019-05-30T16:10:05+00:00"
@@ -678,15 +678,8 @@ index 1d42e35..e6d7404 100644
          }
      ],
      "aliases": [],
-@@ -5894,5 +6528,5 @@
-     "platform-overrides": {
-         "php": "7.2.0"
-     },
--    "plugin-api-version": "2.0.0"
-+    "plugin-api-version": "2.1.0"
- }
 diff --git a/config/bundles.php b/config/bundles.php
-index 6c2bb11..8939eef 100644
+index 6c2bb114b..8939eefca 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -12,4 +12,7 @@ return [
@@ -699,7 +692,7 @@ index 6c2bb11..8939eef 100644
  ];
 diff --git a/config/packages/dev/hautelook_alice.yaml b/config/packages/dev/hautelook_alice.yaml
 new file mode 100644
-index 0000000..b685db1
+index 000000000..b685db172
 --- /dev/null
 +++ b/config/packages/dev/hautelook_alice.yaml
 @@ -0,0 +1,2 @@
@@ -707,7 +700,7 @@ index 0000000..b685db1
 +    fixtures_path: fixtures
 diff --git a/config/packages/dev/nelmio_alice.yaml b/config/packages/dev/nelmio_alice.yaml
 new file mode 100644
-index 0000000..4cb9065
+index 000000000..4cb9065c0
 --- /dev/null
 +++ b/config/packages/dev/nelmio_alice.yaml
 @@ -0,0 +1,9 @@
@@ -722,7 +715,7 @@ index 0000000..4cb9065
 +        - 'sha1'
 diff --git a/config/packages/test/hautelook_alice.yaml b/config/packages/test/hautelook_alice.yaml
 new file mode 100644
-index 0000000..7b71774
+index 000000000..7b7177419
 --- /dev/null
 +++ b/config/packages/test/hautelook_alice.yaml
 @@ -0,0 +1,2 @@
@@ -730,7 +723,7 @@ index 0000000..7b71774
 +    - { resource: ../dev/hautelook_alice.yaml }
 diff --git a/config/packages/test/nelmio_alice.yaml b/config/packages/test/nelmio_alice.yaml
 new file mode 100644
-index 0000000..caec543
+index 000000000..caec543de
 --- /dev/null
 +++ b/config/packages/test/nelmio_alice.yaml
 @@ -0,0 +1,2 @@
@@ -738,9 +731,9 @@ index 0000000..caec543
 +    - { resource: ../dev/nelmio_alice.yaml }
 diff --git a/fixtures/.gitignore b/fixtures/.gitignore
 new file mode 100644
-index 0000000..e69de29
+index 000000000..e69de29bb
 diff --git a/symfony.lock b/symfony.lock
-index 74a620a..83e77fb 100644
+index f165f1d91..05604c99a 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -40,6 +40,9 @@

@@ -1,9 +1,9 @@
 diff --git a/fixtures/.gitignore b/fixtures/.gitignore
 deleted file mode 100644
-index e69de29..0000000
+index e69de29bb..000000000
 diff --git a/tutorial/Test/ApiTestAssertionsTrait.php b/tutorial/Test/ApiTestAssertionsTrait.php
 deleted file mode 100644
-index b1d3999..0000000
+index b1d3999d1..000000000
 --- a/tutorial/Test/ApiTestAssertionsTrait.php
 +++ /dev/null
 @@ -1,161 +0,0 @@
@@ -171,7 +171,7 @@ index b1d3999..0000000
 \ No newline at end of file
 diff --git a/tutorial/Test/ApiTestCase.php b/tutorial/Test/ApiTestCase.php
 deleted file mode 100644
-index 3534178..0000000
+index 353417853..000000000
 --- a/tutorial/Test/ApiTestCase.php
 +++ /dev/null
 @@ -1,102 +0,0 @@
@@ -280,7 +280,7 @@ index 3534178..0000000
 \ No newline at end of file
 diff --git a/tutorial/Test/BrowserKitAssertionsTrait.php b/tutorial/Test/BrowserKitAssertionsTrait.php
 deleted file mode 100644
-index 3fecdaf..0000000
+index 3fecdaf9e..000000000
 --- a/tutorial/Test/BrowserKitAssertionsTrait.php
 +++ /dev/null
 @@ -1,170 +0,0 @@
@@ -457,7 +457,7 @@ index 3fecdaf..0000000
 \ No newline at end of file
 diff --git a/tutorial/Test/Client.php b/tutorial/Test/Client.php
 deleted file mode 100644
-index aa9438e..0000000
+index aa9438e69..000000000
 --- a/tutorial/Test/Client.php
 +++ /dev/null
 @@ -1,239 +0,0 @@
@@ -703,7 +703,7 @@ index aa9438e..0000000
 \ No newline at end of file
 diff --git a/tutorial/Test/Constraint/ArraySubset.php b/tutorial/Test/Constraint/ArraySubset.php
 deleted file mode 100644
-index 980427a..0000000
+index 980427ac4..000000000
 --- a/tutorial/Test/Constraint/ArraySubset.php
 +++ /dev/null
 @@ -1,129 +0,0 @@
@@ -839,7 +839,7 @@ index 980427a..0000000
 \ No newline at end of file
 diff --git a/tutorial/Test/Constraint/MatchesJsonSchema.php b/tutorial/Test/Constraint/MatchesJsonSchema.php
 deleted file mode 100644
-index 3d98f69..0000000
+index 3d98f6901..000000000
 --- a/tutorial/Test/Constraint/MatchesJsonSchema.php
 +++ /dev/null
 @@ -1,114 +0,0 @@
@@ -960,7 +960,7 @@ index 3d98f69..0000000
 \ No newline at end of file
 diff --git a/tutorial/Test/README.md b/tutorial/Test/README.md
 deleted file mode 100644
-index 5f4de12..0000000
+index 5f4de123d..000000000
 --- a/tutorial/Test/README.md
 +++ /dev/null
 @@ -1,7 +0,0 @@
@@ -973,7 +973,7 @@ index 5f4de12..0000000
 -so we can use them in our project and see how they work!
 diff --git a/tutorial/Test/Response.php b/tutorial/Test/Response.php
 deleted file mode 100644
-index f2dee2d..0000000
+index f2dee2d0e..000000000
 --- a/tutorial/Test/Response.php
 +++ /dev/null
 @@ -1,187 +0,0 @@

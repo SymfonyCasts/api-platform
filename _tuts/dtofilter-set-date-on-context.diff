@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
-index ae38657..0c11287 100644
+index ae386574c..0c11287a1 100644
 --- a/src/ApiPlatform/DailyStatsDateFilter.php
 +++ b/src/ApiPlatform/DailyStatsDateFilter.php
 @@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;

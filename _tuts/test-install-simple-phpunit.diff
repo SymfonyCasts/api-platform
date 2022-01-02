@@ -1,6 +1,6 @@
 diff --git a/.env.test b/.env.test
 new file mode 100644
-index 0000000..24a43c0
+index 000000000..24a43c03b
 --- /dev/null
 +++ b/.env.test
 @@ -0,0 +1,4 @@
@@ -9,7 +9,7 @@ index 0000000..24a43c0
 +APP_SECRET='$ecretf0rt3st'
 +SYMFONY_DEPRECATIONS_HELPER=999999
 diff --git a/.gitignore b/.gitignore
-index e9a690c..428f6fc 100644
+index e9a690c72..428f6fc23 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -1,4 +1,3 @@
@@ -29,7 +29,7 @@ index e9a690c..428f6fc 100644
 +###< symfony/phpunit-bridge ###
 diff --git a/bin/phpunit b/bin/phpunit
 new file mode 100644
-index 0000000..4d1ed05
+index 000000000..4d1ed05d3
 --- /dev/null
 +++ b/bin/phpunit
 @@ -0,0 +1,13 @@
@@ -47,7 +47,7 @@ index 0000000..4d1ed05
 +
 +require dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php';
 diff --git a/composer.json b/composer.json
-index 1445e3d..b3557cb 100644
+index 1445e3d29..b3557cb9a 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -66,6 +66,7 @@
@@ -60,7 +60,7 @@ index 1445e3d..b3557cb 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 11c2be7..573aca4 100644
+index 36380af5a..54b4a6f31 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -72,7 +72,7 @@ index 11c2be7..573aca4 100644
      "packages": [
          {
              "name": "api-platform/api-pack",
-@@ -5313,6 +5313,179 @@
+@@ -5311,6 +5311,179 @@
              ],
              "time": "2019-05-25T20:07:01+00:00"
          },
@@ -252,7 +252,7 @@ index 11c2be7..573aca4 100644
          {
              "name": "symfony/maker-bundle",
              "version": "v1.12.0",
-@@ -5381,6 +5554,71 @@
+@@ -5379,6 +5552,71 @@
              ],
              "time": "2019-07-09T22:19:18+00:00"
          },
@@ -324,7 +324,7 @@ index 11c2be7..573aca4 100644
          {
              "name": "symfony/profiler-pack",
              "version": "v1.0.4",
-@@ -5409,6 +5647,34 @@
+@@ -5407,6 +5645,34 @@
              "description": "A pack for the Symfony web profiler",
              "time": "2018-12-10T12:11:44+00:00"
          },
@@ -361,7 +361,7 @@ index 11c2be7..573aca4 100644
              "version": "v4.3.2",
 diff --git a/phpunit.xml.dist b/phpunit.xml.dist
 new file mode 100644
-index 0000000..00eda56
+index 000000000..00eda563f
 --- /dev/null
 +++ b/phpunit.xml.dist
 @@ -0,0 +1,33 @@
@@ -399,7 +399,7 @@ index 0000000..00eda56
 +    </listeners>
 +</phpunit>
 diff --git a/symfony.lock b/symfony.lock
-index 97d8685..6447b3c 100644
+index 27608dbfb..c4efa298e 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -158,6 +158,9 @@
@@ -467,4 +467,4 @@ index 97d8685..6447b3c 100644
          "recipe": {
 diff --git a/tests/.gitignore b/tests/.gitignore
 new file mode 100644
-index 0000000..e69de29
+index 000000000..e69de29bb

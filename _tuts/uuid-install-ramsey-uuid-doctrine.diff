@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index e747914..ddeeef8 100644
+index e74791478..ddeeef8df 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -14,6 +14,7 @@
@@ -11,7 +11,7 @@ index e747914..ddeeef8 100644
          "symfony/console": "5.1.*",
          "symfony/debug-bundle": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index 3048124..a00186e 100644
+index 028dd816a..025b6fc67 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -312,7 +312,7 @@ index 3048124..a00186e 100644
              "version": "v5.1.5",
 diff --git a/config/packages/ramsey_uuid_doctrine.yaml b/config/packages/ramsey_uuid_doctrine.yaml
 new file mode 100644
-index 0000000..cfc3036
+index 000000000..cfc3036f9
 --- /dev/null
 +++ b/config/packages/ramsey_uuid_doctrine.yaml
 @@ -0,0 +1,4 @@
@@ -321,7 +321,7 @@ index 0000000..cfc3036
 +        types:
 +            uuid: 'Ramsey\Uuid\Doctrine\UuidType'
 diff --git a/symfony.lock b/symfony.lock
-index a067328..8e2ad28 100644
+index 602227e8f..2a5e0935b 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -13,6 +13,9 @@

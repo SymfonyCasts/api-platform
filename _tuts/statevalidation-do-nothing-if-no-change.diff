@@ -1,5 +1,5 @@
 diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
-index e2b7604..2328e6d 100644
+index e2b76042f..2328e6d38 100644
 --- a/src/Validator/ValidIsPublishedValidator.php
 +++ b/src/Validator/ValidIsPublishedValidator.php
 @@ -27,9 +27,11 @@ class ValidIsPublishedValidator extends ConstraintValidator

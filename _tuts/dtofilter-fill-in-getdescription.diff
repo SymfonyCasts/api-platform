@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/DailyStatsDateFilter.php b/src/ApiPlatform/DailyStatsDateFilter.php
-index e79a08f..430239e 100644
+index e79a08f90..430239e14 100644
 --- a/src/ApiPlatform/DailyStatsDateFilter.php
 +++ b/src/ApiPlatform/DailyStatsDateFilter.php
 @@ -13,5 +13,15 @@ class DailyStatsDateFilter implements FilterInterface

@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
-index e304226..03c20fa 100644
+index e30422631..03c20faa8 100644
 --- a/src/DataProvider/DailyStatsProvider.php
 +++ b/src/DataProvider/DailyStatsProvider.php
 @@ -16,7 +16,13 @@ class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedD

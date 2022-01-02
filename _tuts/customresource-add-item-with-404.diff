@@ -1,5 +1,5 @@
 diff --git a/src/Entity/DailyStats.php b/src/Entity/DailyStats.php
-index accd546..e94dc8e 100644
+index accd546d0..e94dc8e1b 100644
 --- a/src/Entity/DailyStats.php
 +++ b/src/Entity/DailyStats.php
 @@ -3,10 +3,18 @@

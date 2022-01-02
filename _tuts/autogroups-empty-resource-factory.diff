@@ -1,5 +1,5 @@
 diff --git a/config/services.yaml b/config/services.yaml
-index e942033..577fcf3 100644
+index e94203381..577fcf361 100644
 --- a/config/services.yaml
 +++ b/config/services.yaml
 @@ -30,3 +30,7 @@ services:
@@ -12,7 +12,7 @@ index e942033..577fcf3 100644
 +        arguments: ['@App\ApiPlatform\AutoGroupResourceMetadataFactory.inner']
 diff --git a/src/ApiPlatform/AutoGroupResourceMetadataFactory.php b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
 new file mode 100644
-index 0000000..9f1dde6
+index 000000000..9f1dde6d0
 --- /dev/null
 +++ b/src/ApiPlatform/AutoGroupResourceMetadataFactory.php
 @@ -0,0 +1,23 @@

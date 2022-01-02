@@ -1,5 +1,5 @@
 diff --git a/src/DataPersister/CheeseListingDataPersister.php b/src/DataPersister/CheeseListingDataPersister.php
-index 6c04f1b..c5f7e38 100644
+index 6c04f1b0c..c5f7e3834 100644
 --- a/src/DataPersister/CheeseListingDataPersister.php
 +++ b/src/DataPersister/CheeseListingDataPersister.php
 @@ -19,6 +19,9 @@ class CheeseListingDataPersister implements DataPersisterInterface

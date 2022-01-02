@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index 03fed02..32da404 100644
+index 03fed02a1..32da40431 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;

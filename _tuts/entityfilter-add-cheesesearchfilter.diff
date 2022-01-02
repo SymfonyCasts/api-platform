@@ -1,6 +1,6 @@
 diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
 new file mode 100644
-index 0000000..72103fa
+index 000000000..72103fa27
 --- /dev/null
 +++ b/src/ApiPlatform/CheeseSearchFilter.php
 @@ -0,0 +1,18 @@

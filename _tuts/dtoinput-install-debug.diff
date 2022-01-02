@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index a0fe95d..e747914 100644
+index a0fe95dfa..e74791478 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -16,6 +16,7 @@
@@ -11,7 +11,7 @@ index a0fe95d..e747914 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 4175bf3..3048124 100644
+index d96d7ffda..028dd816a 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -114,7 +114,7 @@ index 4175bf3..3048124 100644
              "name": "symfony/dependency-injection",
              "version": "v5.1.5",
 diff --git a/config/bundles.php b/config/bundles.php
-index ba1203a..a279eab 100644
+index ba1203afb..a279eab91 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -14,4 +14,5 @@ return [
@@ -125,7 +125,7 @@ index ba1203a..a279eab 100644
  ];
 diff --git a/config/packages/dev/debug.yaml b/config/packages/dev/debug.yaml
 new file mode 100644
-index 0000000..26d4e53
+index 000000000..26d4e53d2
 --- /dev/null
 +++ b/config/packages/dev/debug.yaml
 @@ -0,0 +1,4 @@
@@ -134,7 +134,7 @@ index 0000000..26d4e53
 +    # See the "server:dump" command to start a new server.
 +    dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
 diff --git a/symfony.lock b/symfony.lock
-index 723f70c..a067328 100644
+index 11ed4e5ca..602227e8f 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -209,6 +209,18 @@

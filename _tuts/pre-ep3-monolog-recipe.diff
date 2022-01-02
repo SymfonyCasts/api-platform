@@ -1,6 +1,6 @@
 diff --git a/config/packages/prod/deprecations.yaml b/config/packages/prod/deprecations.yaml
 new file mode 100644
-index 0000000..920a061
+index 000000000..920a06197
 --- /dev/null
 +++ b/config/packages/prod/deprecations.yaml
 @@ -0,0 +1,8 @@
@@ -13,7 +13,7 @@ index 0000000..920a061
 +#            channels: [deprecation]
 +#            path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
 diff --git a/config/packages/prod/monolog.yaml b/config/packages/prod/monolog.yaml
-index 5bcdf06..bfe69c0 100644
+index 5bcdf06ea..bfe69c015 100644
 --- a/config/packages/prod/monolog.yaml
 +++ b/config/packages/prod/monolog.yaml
 @@ -5,6 +5,7 @@ monolog:
@@ -37,7 +37,7 @@ index 5bcdf06..bfe69c0 100644
 -            max_level: info
 -            channels: ["php"]
 diff --git a/config/packages/test/monolog.yaml b/config/packages/test/monolog.yaml
-index 2762653..fc40641 100644
+index 2762653c8..fc40641dc 100644
 --- a/config/packages/test/monolog.yaml
 +++ b/config/packages/test/monolog.yaml
 @@ -1,7 +1,12 @@
@@ -55,7 +55,7 @@ index 2762653..fc40641 100644
              level: debug
 -            channels: ["!event"]
 diff --git a/symfony.lock b/symfony.lock
-index b67db75..3a66e39 100644
+index 4a677046f..ef591cb9f 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -327,10 +327,11 @@

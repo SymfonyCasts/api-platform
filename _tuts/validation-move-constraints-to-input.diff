@@ -1,5 +1,5 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 24d466d..40dd80c 100644
+index 24d466df4..40dd80cfc 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -4,26 +4,36 @@ namespace App\Dto;
@@ -50,7 +50,7 @@ index 24d466d..40dd80c 100644
  
      public static function createFromEntity(?CheeseListing $cheeseListing): self
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index ff2d4e8..57d33f4 100644
+index ff2d4e808..57d33f461 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -11,12 +11,10 @@ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;

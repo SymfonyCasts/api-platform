@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 364abd2..71222bc 100644
+index 364abd272..71222bc2e 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -29,6 +29,7 @@
@@ -11,7 +11,7 @@ index 364abd2..71222bc 100644
          "symfony/browser-kit": "5.1.*",
          "symfony/css-selector": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index 5945f13..b26bc5e 100644
+index f4b3d7668..48e325db7 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -101,7 +101,7 @@ index 5945f13..b26bc5e 100644
          },
          {
              "name": "symfony/expression-language",
-@@ -5492,16 +5492,16 @@
+@@ -5490,16 +5490,16 @@
          },
          {
              "name": "symfony/service-contracts",
@@ -122,7 +122,7 @@ index 5945f13..b26bc5e 100644
                  "shasum": ""
              },
              "require": {
-@@ -5514,7 +5514,7 @@
+@@ -5512,7 +5512,7 @@
              "type": "library",
              "extra": {
                  "branch-alias": {
@@ -131,7 +131,7 @@ index 5945f13..b26bc5e 100644
                  },
                  "thanks": {
                      "name": "symfony/contracts",
-@@ -5564,7 +5564,7 @@
+@@ -5562,7 +5562,7 @@
                      "type": "tidelift"
                  }
              ],
@@ -140,7 +140,7 @@ index 5945f13..b26bc5e 100644
          },
          {
              "name": "symfony/stopwatch",
-@@ -6947,6 +6947,88 @@
+@@ -6945,6 +6945,88 @@
              ],
              "time": "2020-09-01T07:13:28+00:00"
          },
@@ -230,7 +230,7 @@ index 5945f13..b26bc5e 100644
              "name": "fzaninotto/faker",
              "version": "v1.9.1",
 diff --git a/config/bundles.php b/config/bundles.php
-index 03399bd..1cbd4d8 100644
+index 03399bd9b..1cbd4d830 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -15,4 +15,5 @@ return [
@@ -241,7 +241,7 @@ index 03399bd..1cbd4d8 100644
  ];
 diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
 new file mode 100644
-index 0000000..6c20526
+index 000000000..6c20526f4
 --- /dev/null
 +++ b/src/DataFixtures/AppFixtures.php
 @@ -0,0 +1,17 @@
@@ -263,7 +263,7 @@ index 0000000..6c20526
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index 6d4a1c5..2f8ff5d 100644
+index 162912171..12994adbe 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,6 +58,18 @@

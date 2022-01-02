@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseListingIsPublishedExtension.php b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
-index 335d3f6..f11c0cb 100644
+index 335d3f689..f11c0cb9b 100644
 --- a/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 +++ b/src/ApiPlatform/CheeseListingIsPublishedExtension.php
 @@ -6,15 +6,27 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInter

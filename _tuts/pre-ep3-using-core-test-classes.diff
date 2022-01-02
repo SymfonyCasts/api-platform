@@ -1,6 +1,6 @@
 diff --git a/config/services_test.yaml b/config/services_test.yaml
 deleted file mode 100644
-index 200a1a6..0000000
+index 200a1a6a8..000000000
 --- a/config/services_test.yaml
 +++ /dev/null
 @@ -1,7 +0,0 @@
@@ -13,7 +13,7 @@ index 200a1a6..0000000
 -        public: true
 diff --git a/src/ApiPlatform/Test/ApiTestAssertionsTrait.php b/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
 deleted file mode 100644
-index b1d3999..0000000
+index b1d3999d1..000000000
 --- a/src/ApiPlatform/Test/ApiTestAssertionsTrait.php
 +++ /dev/null
 @@ -1,161 +0,0 @@
@@ -181,7 +181,7 @@ index b1d3999..0000000
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/ApiTestCase.php b/src/ApiPlatform/Test/ApiTestCase.php
 deleted file mode 100644
-index 3534178..0000000
+index 353417853..000000000
 --- a/src/ApiPlatform/Test/ApiTestCase.php
 +++ /dev/null
 @@ -1,102 +0,0 @@
@@ -290,7 +290,7 @@ index 3534178..0000000
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php b/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
 deleted file mode 100644
-index 3fecdaf..0000000
+index 3fecdaf9e..000000000
 --- a/src/ApiPlatform/Test/BrowserKitAssertionsTrait.php
 +++ /dev/null
 @@ -1,170 +0,0 @@
@@ -467,7 +467,7 @@ index 3fecdaf..0000000
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Client.php b/src/ApiPlatform/Test/Client.php
 deleted file mode 100644
-index aa9438e..0000000
+index aa9438e69..000000000
 --- a/src/ApiPlatform/Test/Client.php
 +++ /dev/null
 @@ -1,239 +0,0 @@
@@ -713,7 +713,7 @@ index aa9438e..0000000
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Constraint/ArraySubset.php b/src/ApiPlatform/Test/Constraint/ArraySubset.php
 deleted file mode 100644
-index 980427a..0000000
+index 980427ac4..000000000
 --- a/src/ApiPlatform/Test/Constraint/ArraySubset.php
 +++ /dev/null
 @@ -1,129 +0,0 @@
@@ -849,7 +849,7 @@ index 980427a..0000000
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php b/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
 deleted file mode 100644
-index 3d98f69..0000000
+index 3d98f6901..000000000
 --- a/src/ApiPlatform/Test/Constraint/MatchesJsonSchema.php
 +++ /dev/null
 @@ -1,114 +0,0 @@
@@ -970,7 +970,7 @@ index 3d98f69..0000000
 \ No newline at end of file
 diff --git a/src/ApiPlatform/Test/Response.php b/src/ApiPlatform/Test/Response.php
 deleted file mode 100644
-index f2dee2d..0000000
+index f2dee2d0e..000000000
 --- a/src/ApiPlatform/Test/Response.php
 +++ /dev/null
 @@ -1,187 +0,0 @@
@@ -1163,7 +1163,7 @@ index f2dee2d..0000000
 -}
 \ No newline at end of file
 diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
-index 0fb2bee..c427dd2 100644
+index 0fb2beee8..c427dd2fc 100644
 --- a/src/Test/CustomApiTestCase.php
 +++ b/src/Test/CustomApiTestCase.php
 @@ -2,8 +2,8 @@
@@ -1185,7 +1185,7 @@ index 0fb2bee..c427dd2 100644
 \ No newline at end of file
 +}
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index ede8d29..2cdb065 100644
+index ede8d297c..2cdb0657e 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -3,7 +3,6 @@

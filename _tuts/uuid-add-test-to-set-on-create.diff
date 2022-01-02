@@ -1,5 +1,5 @@
 diff --git a/tests/Functional/UserResourceTest.php b/tests/Functional/UserResourceTest.php
-index 999448e..78b71c0 100644
+index 999448e4f..78b71c029 100644
 --- a/tests/Functional/UserResourceTest.php
 +++ b/tests/Functional/UserResourceTest.php
 @@ -5,6 +5,7 @@ namespace App\Tests\Functional;

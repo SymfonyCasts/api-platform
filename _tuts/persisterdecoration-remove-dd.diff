@@ -1,5 +1,5 @@
 diff --git a/src/DataPersister/UserDataPersister.php b/src/DataPersister/UserDataPersister.php
-index 58916fc..f010e52 100644
+index 58916fce2..f010e52dc 100644
 --- a/src/DataPersister/UserDataPersister.php
 +++ b/src/DataPersister/UserDataPersister.php
 @@ -31,7 +31,9 @@ class UserDataPersister implements ContextAwareDataPersisterInterface

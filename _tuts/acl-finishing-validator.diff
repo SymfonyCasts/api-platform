@@ -1,5 +1,5 @@
 diff --git a/src/Validator/IsValidOwner.php b/src/Validator/IsValidOwner.php
-index f003a37..9aea431 100644
+index f003a3733..9aea431a8 100644
 --- a/src/Validator/IsValidOwner.php
 +++ b/src/Validator/IsValidOwner.php
 @@ -14,4 +14,6 @@ class IsValidOwner extends Constraint
@@ -10,7 +10,7 @@ index f003a37..9aea431 100644
 +    public $anonymousMessage = 'Cannot set owner unless you are authenticated';
  }
 diff --git a/src/Validator/IsValidOwnerValidator.php b/src/Validator/IsValidOwnerValidator.php
-index 71a121a..79a51ae 100644
+index 71a121a9a..79a51aec2 100644
 --- a/src/Validator/IsValidOwnerValidator.php
 +++ b/src/Validator/IsValidOwnerValidator.php
 @@ -2,11 +2,20 @@

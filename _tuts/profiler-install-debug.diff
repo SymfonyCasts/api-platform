@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 3bb227e..957593b 100644
+index 3bb227e11..957593b0a 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -73,6 +73,8 @@
@@ -13,7 +13,7 @@ index 3bb227e..957593b 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index f8b60d4..99af35a 100644
+index c41166901..f8af638bb 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -25,7 +25,7 @@ index f8b60d4..99af35a 100644
      "packages": [
          {
              "name": "api-platform/core",
-@@ -5865,6 +5865,154 @@
+@@ -5862,6 +5862,154 @@
                  "source": "https://github.com/symfony/maker-bundle/tree/v1.11.6"
              },
              "time": "2019-04-19T17:26:45+00:00"
@@ -181,7 +181,7 @@ index f8b60d4..99af35a 100644
      ],
      "aliases": [],
 diff --git a/config/bundles.php b/config/bundles.php
-index 1f5fdfc..ba81f95 100644
+index 1f5fdfcce..ba81f95dc 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -10,4 +10,5 @@ return [
@@ -192,7 +192,7 @@ index 1f5fdfc..ba81f95 100644
  ];
 diff --git a/config/packages/dev/web_profiler.yaml b/config/packages/dev/web_profiler.yaml
 new file mode 100644
-index 0000000..e92166a
+index 000000000..e92166a7f
 --- /dev/null
 +++ b/config/packages/dev/web_profiler.yaml
 @@ -0,0 +1,6 @@
@@ -204,7 +204,7 @@ index 0000000..e92166a
 +    profiler: { only_exceptions: false }
 diff --git a/config/packages/test/web_profiler.yaml b/config/packages/test/web_profiler.yaml
 new file mode 100644
-index 0000000..03752de
+index 000000000..03752de21
 --- /dev/null
 +++ b/config/packages/test/web_profiler.yaml
 @@ -0,0 +1,6 @@
@@ -216,7 +216,7 @@ index 0000000..03752de
 +    profiler: { collect: false }
 diff --git a/config/routes/dev/web_profiler.yaml b/config/routes/dev/web_profiler.yaml
 new file mode 100644
-index 0000000..c82beff
+index 000000000..c82beff2f
 --- /dev/null
 +++ b/config/routes/dev/web_profiler.yaml
 @@ -0,0 +1,7 @@
@@ -228,10 +228,10 @@ index 0000000..c82beff
 +    resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
 +    prefix: /_profiler
 diff --git a/symfony.lock b/symfony.lock
-index 960b06e..47562c8 100644
+index d8cfca773..d023155c2 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -316,12 +316,12 @@
+@@ -322,12 +322,12 @@
      "symfony/serializer": {
          "version": "v4.2.8"
      },
@@ -247,7 +247,7 @@ index 960b06e..47562c8 100644
      "symfony/translation-contracts": {
          "version": "v1.1.10"
      },
-@@ -355,12 +355,29 @@
+@@ -361,12 +361,29 @@
              "config/packages/validator.yaml"
          ]
      },
