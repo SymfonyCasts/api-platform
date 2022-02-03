@@ -17,7 +17,8 @@ with a *bunch* of them built-in!
 ## Filtering by Published/Unpublished
 
 Let's start by making it possible to *only* return *published* cheese listings.
-Well, in a future tutorial, we're going to make it possible to *automatically*
+Well, in a [future tutorial](https://symfonycasts.com/screencast/api-platform-security/query-extension),
+we're going to make it possible to *automatically*
 hide unpublished listings from the collection. But, for now, our cheese
 listing collection returns *everything*. So let's *at least* make it possible
 for an API client to *ask* for only the published ones.
