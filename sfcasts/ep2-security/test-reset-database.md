@@ -22,7 +22,7 @@ but one common one you'll see in the API Platform world is called Alice. Find
 your terminal and install it with:
 
 ```terminal
-composer require "alice:^2.9" --dev
+composer require "alice:^2.7" --dev
 ```
 
 This will install `hautelook/alice-bundle`. What does that bundle actually do?
@@ -78,7 +78,7 @@ printed to the screen from the command line.
 Let's install a *real* logger:
 
 ```terminal
-composer require "logger:^3.4.0"
+composer require "logger:^3.4"
 ```
 
 This installs Monolog. When it finishes... try running the tests again:
