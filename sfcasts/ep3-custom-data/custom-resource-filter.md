@@ -50,6 +50,11 @@ and paste it here. This time the query parameter will be called
 `from`, keep `'property' => null`, type `string` is good, required `false` is
 good, but tweak the `description`:
 
+***TIP
+In Api Platform 2.6 and higher, the `description` key doesn't live under `openapi`: it lives
+on the same level as the other options.
+***
+
 > From date e.g. 2020-09-01
 
 [[[ code('06a84cd9cb') ]]]
