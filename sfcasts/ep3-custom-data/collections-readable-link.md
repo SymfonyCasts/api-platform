@@ -66,7 +66,7 @@ this is an array of `CheeseListing` objects thanks to the *Doctrine* annotations
 But it does *not* know that `getPublishedCheeseListings()` returns a collection
 of `CheeseListing` objects:
 
-[[[ code('47488e519e') ]]]
+[[[ code('fa9ef3ea52') ]]]
 
 It *does* know that its a `Collection`... but not what's *inside* that `Collection`.
 
