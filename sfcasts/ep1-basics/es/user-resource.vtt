@@ -1,0 +1,344 @@
+WEBVTT
+
+00:00:01.016 --> 00:00:04.796 align:middle
+Quiero exponer nuestra nueva entidad
+User como un recurso de la API.
+
+00:00:05.496 --> 00:00:06.856 align:middle
+¡Y ya sabemos cómo hacerlo!
+
+00:00:07.396 --> 00:00:09.856 align:middle
+Añade... @ApiResource!
+
+00:00:14.126 --> 00:00:14.976 align:middle
+¡Así de fácil!
+
+00:00:15.586 --> 00:00:22.526 align:middle
+¡Sí! Nuestra documentación de la API muestra un
+nuevo recurso con cinco nuevas rutas, u operaciones.
+
+00:00:23.256 --> 00:00:26.186 align:middle
+Y en la parte inferior,
+está el nuevo modelo User.
+
+00:00:26.996 --> 00:00:32.246 align:middle
+Hmm, pero es un poco extraño:
+tanto el campo password con hash
+
+00:00:32.516 --> 00:00:35.096 align:middle
+como el array roles forman parte de la API.
+
+00:00:36.036 --> 00:00:38.886 align:middle
+Sí, ¡podríamos crear un
+nuevo usuario ahora mismo
+
+00:00:38.886 --> 00:00:42.366 align:middle
+y pasarle los roles que creamos que debe tener!
+
+00:00:43.026 --> 00:00:47.536 align:middle
+Eso podría estar bien para un usuario
+administrador, pero no para cualquiera.
+
+00:00:48.156 --> 00:00:49.856 align:middle
+Tomemos el control de las cosas.
+
+00:00:50.796 --> 00:00:54.126 align:middle
+Ah, una cosa que quiero que
+notes es que, hasta ahora,
+
+00:00:54.396 --> 00:00:59.196 align:middle
+la clave primaria se utiliza
+siempre como "id" en nuestra API.
+
+00:01:00.396 --> 00:01:03.656 align:middle
+Esto es algo que es flexible
+en la Plataforma API.
+
+00:01:04.256 --> 00:01:10.156 align:middle
+De hecho, en lugar de utilizar un id
+autoincrementado, una opción es utilizar un UUID.
+
+00:01:10.156 --> 00:01:13.136 align:middle
+No vamos a utilizarlos en este tutorial,
+
+00:01:13.456 --> 00:01:19.606 align:middle
+pero usar un UUID como identificador es algo
+que admiten Doctrine y la Plataforma API.
+
+00:01:20.336 --> 00:01:25.916 align:middle
+Los UUIDs funcionan con cualquier base de datos, pero
+se almacenan de forma más eficiente en PostgreSQL
+
+00:01:25.916 --> 00:01:31.476 align:middle
+que en MySQL, aunque utilizamos algunos UUIDs
+en MySQL en algunas partes de SymfonyCasts.
+
+00:01:32.236 --> 00:01:35.886 align:middle
+Pero... ¿por qué te hablo de UUID's?
+
+00:01:36.216 --> 00:01:38.356 align:middle
+¿Qué hay de malo en autoincrementar los ids?
+
+00:01:39.176 --> 00:01:39.776 align:middle
+Nada...
+
+00:01:40.336 --> 00:01:45.026 align:middle
+pero.... Los UUID's pueden ayudar a
+simplificar tu código JavaScript.
+
+00:01:45.896 --> 00:01:49.556 align:middle
+Supongamos que escribimos un JavaScript
+para crear un nuevo CheeseListing.
+
+00:01:50.326 --> 00:01:57.446 align:middle
+Con los ids de autoincremento, el proceso se parece
+a esto: hacer una petición POST a /api/cheeses,
+
+00:01:57.846 --> 00:02:03.676 align:middle
+esperar la respuesta, luego leer el @id de
+la respuesta y almacenarlo en algún sitio...
+
+00:02:04.046 --> 00:02:07.826 align:middle
+porque normalmente necesitarás saber
+el id de cada listado de quesos.
+
+00:02:08.936 --> 00:02:15.086 align:middle
+Con los UUID, el proceso es así:
+genera un UUID en JavaScript
+
+00:02:15.566 --> 00:02:19.106 align:middle
+-eso es totalmente legal-
+envía la petición POST y...
+
+00:02:19.456 --> 00:02:20.826 align:middle
+¡ya está!
+
+00:02:20.826 --> 00:02:26.686 align:middle
+Con los UUID's, no tienes que esperar a que
+la llamada AJAX termine para poder leer el id:
+
+00:02:27.496 --> 00:02:31.746 align:middle
+has creado el UUID en JavaScript,
+así que ya lo conoces.
+
+00:02:32.356 --> 00:02:35.556 align:middle
+Por eso los UUID's pueden
+ser a menudo muy agradables.
+
+00:02:36.876 --> 00:02:40.816 align:middle
+Para que todo esto funcione, tendrás que
+configurar tu entidad para que utilice un UUID
+
+00:02:41.066 --> 00:02:46.726 align:middle
+y añadir un método setId() para que sea
+posible que la Plataforma API lo establezca.
+
+00:02:47.306 --> 00:02:53.146 align:middle
+O puedes crear el id de autoincremento y
+añadir una propiedad UUID independiente.
+
+00:02:53.936 --> 00:02:58.076 align:middle
+La Plataforma API tiene una anotación para
+marcar un campo como "identificador". De
+
+00:02:59.366 --> 00:03:05.166 align:middle
+todos modos, vamos a tomar el control del proceso de
+serialización para poder eliminar cualquier campo extraño,
+
+00:03:05.456 --> 00:03:08.196 align:middle
+como que se devuelva la contraseña codificada.
+
+00:03:08.866 --> 00:03:11.736 align:middle
+Haremos exactamente lo mismo
+que hicimos en CheeseListing:
+
+00:03:12.276 --> 00:03:16.076 align:middle
+añadir grupos de normalización
+y desnormalización.
+
+00:03:16.926 --> 00:03:21.196 align:middle
+Copia las dos líneas de
+contexto, abre User y pégalas.
+
+00:03:25.436 --> 00:03:29.356 align:middle
+Voy a eliminar la parte de swagger_definition_name:
+realmente no la necesitamos.
+
+00:03:29.356 --> 00:03:36.486 align:middle
+Para la normalización, utiliza user:read
+y para la desnormalización, user:write.
+
+00:03:37.226 --> 00:03:39.516 align:middle
+Seguimos el mismo patrón
+que hemos estado utilizando.
+
+00:03:40.696 --> 00:03:45.406 align:middle
+Ahora... pensemos: ¿qué
+campos necesitamos exponer?
+
+00:03:45.406 --> 00:03:54.796 align:middle
+Para $email, añade @Groups({})
+con "user:read", "user:write":
+
+00:03:55.996 --> 00:03:58.806 align:middle
+este es un campo legible y escribible.
+
+00:04:00.086 --> 00:04:04.706 align:middle
+Cópialo, pégalo encima de password
+y hazlo sólo con user:write.
+
+00:04:06.396 --> 00:04:09.586 align:middle
+Esto... no tiene mucho sentido todavía.
+
+00:04:10.056 --> 00:04:14.756 align:middle
+Es decir, ya no es legible,
+lo que tiene mucho sentido.
+
+00:04:15.166 --> 00:04:20.696 align:middle
+Pero esto acabará almacenando la
+contraseña codificada, que no es algo
+
+00:04:20.696 --> 00:04:23.096 align:middle
+que un cliente de la API vaya
+a establecer directamente.
+
+00:04:23.856 --> 00:04:28.826 align:middle
+Pero... nos preocuparemos de todo
+eso en nuestro tutorial de seguridad.
+
+00:04:28.826 --> 00:04:33.386 align:middle
+Por ahora, como la contraseña es un campo
+obligatorio en la base de datos, vamos a hacerla
+
+00:04:33.716 --> 00:04:37.116 align:middle
+temporalmente escribible
+para que no nos estorbe.
+
+00:04:37.116 --> 00:04:41.636 align:middle
+Por último, haz que username sea
+legible y también escribible.
+
+00:04:41.636 --> 00:04:43.456 align:middle
+¡Vamos a probarlo!
+
+00:04:43.456 --> 00:04:45.006 align:middle
+Actualiza los documentos. Al
+
+00:04:46.936 --> 00:04:53.876 align:middle
+igual que con CheeseListing, ahora tenemos
+dos modelos: podemos leer email y username
+
+00:04:54.266 --> 00:04:57.996 align:middle
+y podemos escribir email, password y username.
+
+00:04:57.996 --> 00:05:04.716 align:middle
+Lo único que nos falta para que sea un recurso
+de la API totalmente funcional es la validación.
+
+00:05:04.716 --> 00:05:09.376 align:middle
+Para empezar, tanto $email como
+$username deben ser únicos. En la
+
+00:05:10.586 --> 00:05:15.906 align:middle
+parte superior de la clase, añade
+@UniqueEntity() con fields={"username"},
+
+00:05:16.746 --> 00:05:20.576 align:middle
+y otro @UniqueEntity() con fields={"email"}.
+
+00:05:21.396 --> 00:05:28.286 align:middle
+Entonces, veamos, $email debe ser
+@Assert\NotBlank() y @Assert\Email(),
+
+00:05:28.286 --> 00:05:33.476 align:middle
+y $username necesita ser @Assert\NotBlank().
+
+00:05:34.536 --> 00:05:36.896 align:middle
+No me preocuparé todavía de
+la contraseña, eso hay que
+
+00:05:36.896 --> 00:05:39.966 align:middle
+arreglarlo bien de todos modos
+en el tutorial de seguridad.
+
+00:05:40.026 --> 00:05:42.136 align:middle
+Así que, ¡creo que estamos bien!
+
+00:05:42.136 --> 00:05:46.456 align:middle
+¡Refresca la documentación
+y empecemos a crear usuarios!
+
+00:05:49.926 --> 00:05:50.746 align:middle
+Haz clic en "Probar".
+
+00:05:51.836 --> 00:05:57.406 align:middle
+Utilizaré mi dirección de correo electrónico
+personal de la vida real: cheeselover1@example.com.
+
+00:05:57.406 --> 00:06:01.376 align:middle
+La contraseña no importa...
+
+00:06:02.386 --> 00:06:06.076 align:middle
+y hagamos que el nombre de usuario coincida
+con el correo electrónico sin el dominio...
+
+00:06:06.076 --> 00:06:07.986 align:middle
+para no confundirme.
+
+00:06:09.396 --> 00:06:11.756 align:middle
+¡Ejecuta! ¡Woohoo!
+
+00:06:11.756 --> 00:06:14.206 align:middle
+¡201 éxito!
+
+00:06:14.836 --> 00:06:16.606 align:middle
+Vamos a crear un usuario más...
+
+00:06:16.946 --> 00:06:25.586 align:middle
+para tener mejores datos con los que jugar.
+
+00:06:25.586 --> 00:06:27.716 align:middle
+Ah, ¿y si enviamos un JSON vacío?
+
+00:06:28.266 --> 00:06:30.336 align:middle
+Pruébalo. ¡Sí!
+
+00:06:30.936 --> 00:06:32.656 align:middle
+código de estado 400.
+
+00:06:33.296 --> 00:06:34.606 align:middle
+Bien... ¡hemos terminado!
+
+00:06:35.296 --> 00:06:41.746 align:middle
+Tenemos 1 nuevo recurso, cinco nuevas operaciones,
+control sobre los campos de entrada y salida,
+
+00:06:41.856 --> 00:06:46.056 align:middle
+validación, paginación y podríamos
+añadir fácilmente el filtrado.
+
+00:06:46.596 --> 00:06:48.736 align:middle
+Um... ¡eso es increíble!
+
+00:06:49.396 --> 00:06:51.536 align:middle
+Este es el poder de la Plataforma API.
+
+00:06:52.026 --> 00:06:56.066 align:middle
+Y a medida que vayas mejorando en su
+uso, desarrollarás aún más rápido.
+
+00:06:56.736 --> 00:07:03.396 align:middle
+Pero en última instancia, creamos el nuevo recurso
+API User no sólo porque crear usuarios es divertido:
+
+00:07:04.036 --> 00:07:10.486 align:middle
+lo hicimos para poder relacionar cada
+CheeseListing con el User que lo "posee".
+
+00:07:11.566 --> 00:07:14.916 align:middle
+En una API, las relaciones
+son un concepto clave.
+
+00:07:15.296 --> 00:07:18.536 align:middle
+Y te va a encantar cómo
+funcionan en la Plataforma API
