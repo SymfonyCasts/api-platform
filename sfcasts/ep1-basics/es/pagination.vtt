@@ -1,0 +1,233 @@
+WEBVTT
+
+00:00:01.096 --> 00:00:04.346 align:middle
+Si tenemos un millón, o mil... ¡
+
+00:00:04.346 --> 00:00:09.196 align:middle
+o incluso cien listados de quesos,
+no podemos devolverlos todos
+
+00:00:09.316 --> 00:00:12.936 align:middle
+cuando alguien hace una
+petición GET a /api/cheeses!
+
+00:00:13.446 --> 00:00:18.456 align:middle
+La forma de resolver esto en una API es realmente
+la misma que en la web: ¡la paginación!
+
+00:00:18.816 --> 00:00:20.226 align:middle
+Y en la Plataforma API...
+
+00:00:20.516 --> 00:00:22.886 align:middle
+ah, es tan aburrido...
+
+00:00:23.026 --> 00:00:26.616 align:middle
+obtienes un sistema de
+paginación potente y flexible...
+
+00:00:26.756 --> 00:00:27.936 align:middle
+sin hacer...
+
+00:00:28.126 --> 00:00:32.656 align:middle
+nada. Vayamos a la operación POST y
+creemos unos cuantos listados más de queso.
+
+00:00:32.656 --> 00:00:35.666 align:middle
+Pondré algunos datos sencillos...
+
+00:00:36.016 --> 00:00:38.546 align:middle
+y ejecutaré un montón de veces..
+
+00:00:38.656 --> 00:00:39.616 align:middle
+en avance rápido.
+
+00:00:40.686 --> 00:00:44.966 align:middle
+En un proyecto real, utilizaría accesorios de datos
+para ayudarme a obtener datos ficticios útiles.
+
+00:00:46.206 --> 00:00:49.006 align:middle
+Deberíamos tener unos 10 más o menos
+gracias a los 4 con los que empezamos.
+
+00:00:50.076 --> 00:00:52.976 align:middle
+Ahora, dirígete a la
+operación de recogida GET...
+
+00:00:53.306 --> 00:00:54.776 align:middle
+y pulsa Ejecutar.
+
+00:00:55.786 --> 00:00:58.286 align:middle
+Seguimos viendo todos los resultados.
+
+00:00:58.746 --> 00:01:03.306 align:middle
+Eso es porque la Plataforma API muestra
+30 resultados por página, por defecto.
+
+00:01:03.916 --> 00:01:07.286 align:middle
+Como no me apetece añadir 20 más manualmente,
+
+00:01:07.516 --> 00:01:10.306 align:middle
+¡este es un buen momento
+para aprender a cambiarlo!
+
+00:01:10.306 --> 00:01:17.236 align:middle
+En primer lugar, esto se puede cambiar globalmente
+en tu archivo config/packages/api_platform.yaml.
+
+00:01:17.236 --> 00:01:21.366 align:middle
+No lo mostraré ahora, pero
+recuerda siempre que puedes ejecutar
+
+00:01:21.366 --> 00:01:27.946 align:middle
+php bin/console debug:config api_platform para ver
+una lista de todas las configuraciones válidas
+
+00:01:27.946 --> 00:01:30.446 align:middle
+para ese archivo y sus valores actuales.
+
+00:01:31.086 --> 00:01:36.326 align:middle
+Eso revelaría una sección de collection.pagination
+que está llena de configuraciones.
+
+00:01:36.946 --> 00:01:42.106 align:middle
+Pero también podemos controlar el número de
+elementos por página en función de cada recurso.
+
+00:01:43.096 --> 00:01:48.846 align:middle
+Dentro de la anotación
+@ApiResource, añade attributes={}...
+
+00:01:49.426 --> 00:01:54.326 align:middle
+que es una clave que contiene una variedad de
+configuración aleatoria para la Plataforma API.
+
+00:01:54.946 --> 00:01:58.136 align:middle
+Y luego, "pagination_items_per_page": 10.
+
+00:02:01.006 --> 00:02:06.446 align:middle
+He mencionado antes que gran parte de la Plataforma API
+consiste en aprender exactamente qué puedes configurar
+
+00:02:06.446 --> 00:02:08.226 align:middle
+dentro de esta anotación y cómo.
+
+00:02:08.806 --> 00:02:10.536 align:middle
+Este es un ejemplo perfecto.
+
+00:02:10.536 --> 00:02:14.066 align:middle
+Vuelve a la documentación, no
+hace falta que la actualices.
+
+00:02:14.326 --> 00:02:15.836 align:middle
+Simplemente pulsa Ejecutar.
+
+00:02:21.636 --> 00:02:22.246 align:middle
+Veamos...
+
+00:02:22.436 --> 00:02:24.656 align:middle
+el total de elementos es de 11...
+
+00:02:25.016 --> 00:02:29.076 align:middle
+pero si cuentas, ¡sólo
+aparecen 10 resultados!
+
+00:02:29.456 --> 00:02:30.846 align:middle
+¡Hola paginación!
+
+00:02:32.146 --> 00:02:35.096 align:middle
+También tenemos una nueva
+propiedad hydra:view.
+
+00:02:35.746 --> 00:02:41.556 align:middle
+Esto anuncia que la paginación está ocurriendo
+y que podemos "navegar" por las otras páginas:
+
+00:02:42.266 --> 00:02:45.796 align:middle
+podemos seguir hydra:first,
+hydra:last y hydra:next
+
+00:02:45.936 --> 00:02:48.406 align:middle
+para ir a la primera,
+última o siguiente página.
+
+00:02:49.276 --> 00:02:55.826 align:middle
+Las URLs son exactamente como yo quiero:
+?page=1, ?page=2 y así sucesivamente.
+
+00:02:57.096 --> 00:03:01.706 align:middle
+Abre una nueva pestaña y
+vuelve a /api/cheeses.jsonld.
+
+00:03:01.706 --> 00:03:04.726 align:middle
+Sí, los 10 primeros resultados.
+
+00:03:06.136 --> 00:03:08.446 align:middle
+Ahora añade ?page=2...
+
+00:03:08.446 --> 00:03:10.666 align:middle
+para ver el único y último resultado.
+
+00:03:10.816 --> 00:03:13.636 align:middle
+El filtrado también sigue funcionando.
+
+00:03:14.606 --> 00:03:18.206 align:middle
+Prueba con .jsonld?title=cheese.
+
+00:03:19.536 --> 00:03:20.806 align:middle
+Eso devuelve...
+
+00:03:20.806 --> 00:03:22.096 align:middle
+sólo 10 resultados...
+
+00:03:22.096 --> 00:03:23.366 align:middle
+así que no hay paginación
+
+00:03:23.986 --> 00:03:24.936 align:middle
+Eso no es divertido.
+
+00:03:26.506 --> 00:03:30.626 align:middle
+Volvamos a los documentos, abramos la
+ruta POST y añadamos algunas más.
+
+00:03:32.636 --> 00:03:36.766 align:middle
+Pero asegurémonos de añadir
+uno con "queso" en el título.
+
+00:03:42.036 --> 00:03:43.646 align:middle
+Pulsa Ejecutar unas cuantas veces.
+
+00:03:45.206 --> 00:03:50.686 align:middle
+Ahora ve a refrescar la operación
+de recogida GET con ?title=cheese.
+
+00:03:51.936 --> 00:03:56.566 align:middle
+¡Qué bien! Tenemos 13 resultados en
+total y esto muestra los 10 primeros.
+
+00:03:57.716 --> 00:04:02.446 align:middle
+¡Lo que está muy bien es que los
+enlaces de paginación incluyen el filtro!
+
+00:04:02.946 --> 00:04:08.726 align:middle
+Esto es súper útil en JavaScript: no tienes
+que intentar piratear la URL manualmente
+
+00:04:08.876 --> 00:04:14.286 align:middle
+combinando la información de page y del filtro:
+basta con leer los enlaces de hydra y utilizarlos.
+
+00:04:15.546 --> 00:04:20.756 align:middle
+A continuación, sabemos que nuestra
+API puede devolver JSON-LD, JSON y HTML.
+
+00:04:21.046 --> 00:04:23.666 align:middle
+Y... eso es probablemente todo
+lo que necesitamos, ¿verdad?
+
+00:04:24.446 --> 00:04:27.636 align:middle
+Vamos a ver lo fácil que
+es añadir más formatos...
+
+00:04:27.986 --> 00:04:32.286 align:middle
+incluso hacer que nuestros listados
+de quesos se puedan descargar como CSV
