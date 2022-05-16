@@ -1,0 +1,466 @@
+WEBVTT
+
+00:00:00.036 --> 00:00:05.706 align:middle
+Si la única forma de controlar la entrada y la
+salida de nuestra API fuera controlar los getters
+
+00:00:05.706 --> 00:00:10.116 align:middle
+y setters de nuestra entidad,
+no sería tan flexible...
+
+00:00:10.306 --> 00:00:12.126 align:middle
+y podría ser un poco peligroso. ¡
+
+00:00:12.966 --> 00:00:17.946 align:middle
+Podrías añadir un nuevo método getter o
+setter para algo interno y no darte cuenta
+
+00:00:17.946 --> 00:00:20.536 align:middle
+de que estabas exponiendo
+nuevos datos en tu API!
+
+00:00:21.666 --> 00:00:25.006 align:middle
+La solución para esto -y la forma
+en que recomiendo hacer las cosas
+
+00:00:25.006 --> 00:00:29.126 align:middle
+en todos los casos- es utilizar
+grupos de serialización.
+
+00:00:31.226 --> 00:00:34.616 align:middle
+En la anotación, añade normalizationContext.
+
+00:00:35.426 --> 00:00:40.476 align:middle
+Recuerda que la normalización se produce
+cuando pasas de tu objeto a un array.
+
+00:00:40.516 --> 00:00:45.496 align:middle
+Así que esta opción está relacionada con el
+momento en que estás leyendo datos de tu API.
+
+00:00:46.716 --> 00:00:50.746 align:middle
+El contexto es básicamente
+"opciones" que pasas a ese proceso.
+
+00:00:51.626 --> 00:00:56.606 align:middle
+La opción más común, con diferencia, se
+llama "groups", que se establece en otro array.
+
+00:00:57.836 --> 00:01:01.876 align:middle
+Añade una cadena aquí:
+cheese_listing:read. Gracias
+
+00:01:03.316 --> 00:01:05.976 align:middle
+a esto, cuando se serialice un objeto,
+
+00:01:06.366 --> 00:01:13.646 align:middle
+el serializador sólo incluirá los campos que
+estén en este grupo cheese_listing:read, porque,
+
+00:01:13.906 --> 00:01:17.876 align:middle
+en un segundo, vamos a empezar a
+añadir grupos a cada propiedad.
+
+00:01:18.746 --> 00:01:22.426 align:middle
+Pero ahora mismo, no hemos
+añadido ningún grupo a nada.
+
+00:01:22.946 --> 00:01:26.996 align:middle
+Y así, si vas e intentas tu
+operación de colección get...
+
+00:01:27.536 --> 00:01:30.536 align:middle
+¡oh! ¡Ah! ¡Un gran error!
+
+00:01:31.396 --> 00:01:35.756 align:middle
+¡Hagamos... como si lo hubiera hecho
+a propósito y veamos cómo depurarlo!
+
+00:01:37.026 --> 00:01:40.086 align:middle
+El problema es que el
+gigantesco error HTML es...
+
+00:01:40.326 --> 00:01:41.806 align:middle
+un poco difícil de leer.
+
+00:01:43.036 --> 00:01:46.106 align:middle
+Una forma de ver el error es
+utilizar nuestro truco de antes
+
+00:01:46.856 --> 00:01:51.876 align:middle
+ir a https://localhost:8000/_profiler/.
+
+00:01:51.876 --> 00:01:58.706 align:middle
+¡Woh! Vale, hay dos tipos de errores: los errores de
+ejecución, en los que algo ha ido mal específicamente
+
+00:01:58.706 --> 00:02:05.846 align:middle
+en esa petición , y los errores de compilación, en los que alguna
+configuración no válida está matando todas las páginas. La
+
+00:02:06.436 --> 00:02:11.336 align:middle
+mayoría de las veces, si ves una excepción,
+todavía hay un perfilador que puedes encontrar
+
+00:02:11.336 --> 00:02:17.236 align:middle
+para esa petición utilizando el truco de ir a
+esta URL, encontrar esa petición en la lista -
+
+00:02:17.326 --> 00:02:21.606 align:middle
+normalmente justo en la parte superior -
+y hacer clic en el sha en su perfilador.
+
+00:02:22.536 --> 00:02:25.516 align:middle
+Una vez allí, puedes hacer clic en la
+pestaña "Excepción " de la izquierda
+
+00:02:25.746 --> 00:02:28.506 align:middle
+para ver la gran y hermosa excepción normal.
+
+00:02:28.506 --> 00:02:33.486 align:middle
+Si obtienes un error de compilación que
+mata todas las páginas, es aún más fácil:
+
+00:02:34.046 --> 00:02:36.166 align:middle
+lo verás cuando intentes
+acceder a cualquier cosa.
+
+00:02:37.216 --> 00:02:40.396 align:middle
+De todos modos, el problema aquí
+es con mi sintaxis de anotación.
+
+00:02:40.896 --> 00:02:46.176 align:middle
+Lo hago a menudo, lo cual no es un gran problema
+siempre que sepas cómo depurar el error.
+
+00:02:46.646 --> 00:02:49.526 align:middle
+Y, ¡sí! He olvidado una coma al final.
+
+00:02:50.926 --> 00:02:51.696 align:middle
+¡Actualiza de nuevo!
+
+00:02:54.296 --> 00:02:58.416 align:middle
+El perfilador funciona, así que ahora
+podemos volver y pulsar ejecutar de nuevo.
+
+00:03:00.456 --> 00:03:04.776 align:middle
+Fíjate: tenemos @id y @type de JSON-LD... ¡
+
+00:03:05.066 --> 00:03:10.476 align:middle
+pero no contiene ningún campo
+real porque ninguno de ellos está
+
+00:03:10.476 --> 00:03:13.326 align:middle
+en el nuevo grupo cheese_listing:read !
+
+00:03:14.146 --> 00:03:16.596 align:middle
+Copia el nombre del grupo cheese_listing:read.
+
+00:03:17.606 --> 00:03:23.096 align:middle
+Para añadir campos a éste, por encima del
+título, utiliza @Groups(), {""} y pégalo.
+
+00:03:23.096 --> 00:03:29.106 align:middle
+Pongamos también esto por
+encima de description...
+
+00:03:29.576 --> 00:03:30.526 align:middle
+y price.
+
+00:03:34.716 --> 00:03:36.256 align:middle
+Dale la vuelta y vuelve a intentarlo.
+
+00:03:39.726 --> 00:03:40.686 align:middle
+¡Estupendo!
+
+00:03:41.076 --> 00:03:43.926 align:middle
+Obtenemos esos tres campos exactos.
+
+00:03:44.506 --> 00:03:46.066 align:middle
+Me encanta este control.
+
+00:03:46.736 --> 00:03:50.886 align:middle
+Por cierto, el nombre cheese_listing:read...
+
+00:03:50.886 --> 00:03:53.706 align:middle
+Me lo acabo de inventar,
+puedes usar cualquier cosa.
+
+00:03:54.306 --> 00:03:59.706 align:middle
+Pero, voy a seguir una convención de
+nomenclatura de grupos que recomiendo.
+
+00:04:00.266 --> 00:04:02.936 align:middle
+Te dará flexibilidad, pero
+mantendrá las cosas organizadas.
+
+00:04:03.926 --> 00:04:06.246 align:middle
+Ahora podemos hacer lo mismo
+con los datos de entrada.
+
+00:04:07.136 --> 00:04:14.776 align:middle
+Copia normalizationContext, pégalo, y añade
+de delante para hacer denormalizationContext.
+
+00:04:15.656 --> 00:04:21.146 align:middle
+Esta vez, utiliza el grupo:
+cheese_listing:write Copia esto y...
+
+00:04:21.146 --> 00:04:22.176 align:middle
+veamos...
+
+00:04:22.556 --> 00:04:25.506 align:middle
+añade esto a title y price por ahora.
+
+00:04:26.086 --> 00:04:28.566 align:middle
+En realidad no queremos
+añadirlo a description.
+
+00:04:28.566 --> 00:04:34.766 align:middle
+En su lugar, hablaremos de cómo añadir este
+grupo al falso textDescription en un minuto.
+
+00:04:36.396 --> 00:04:37.926 align:middle
+Muévete y actualiza de nuevo.
+
+00:04:40.026 --> 00:04:41.546 align:middle
+Abre el punto final POST....
+
+00:04:42.466 --> 00:04:46.936 align:middle
+¡sí - los únicos campos que
+podemos pasar ahora son title y price!
+
+00:04:47.806 --> 00:04:49.806 align:middle
+Así que normalizationContext
+
+00:04:49.806 --> 00:04:55.986 align:middle
+y denormalizationContext son dos configuraciones
+totalmente separadas para las dos direcciones:
+
+00:04:56.446 --> 00:05:02.176 align:middle
+leer nuestros datos - normalización - y escribir
+nuestros datos - desnormalización. En la
+
+00:05:03.306 --> 00:05:09.586 align:middle
+parte inferior de los documentos, también te darás cuenta de
+que ahora tenemos dos modelos: el modelo de lectura - que es
+
+00:05:09.756 --> 00:05:13.676 align:middle
+el contexto de normalización
+con title, description y price,
+
+00:05:14.316 --> 00:05:17.086 align:middle
+y el modelo de escritura con title y price.
+
+00:05:17.886 --> 00:05:22.066 align:middle
+Y, no es realmente importante, pero
+puedes controlar estos nombres si quieres.
+
+00:05:22.566 --> 00:05:27.146 align:middle
+Añade otra opción: swagger_definition_name
+ajustada a "Lectura".
+
+00:05:27.146 --> 00:05:31.826 align:middle
+Y a continuación lo mismo...
+
+00:05:32.166 --> 00:05:33.416 align:middle
+configurado en "Escribir".
+
+00:05:33.416 --> 00:05:39.466 align:middle
+Normalmente no me importa esto, pero
+si quieres controlarlo, puedes hacerlo.
+
+00:05:40.296 --> 00:05:42.606 align:middle
+Pero, ¡nos faltan algunos campos!
+
+00:05:43.336 --> 00:05:47.396 align:middle
+Cuando leemos los datos, recuperamos
+title, description y price.
+
+00:05:48.016 --> 00:05:54.076 align:middle
+¿Pero qué pasa con nuestro campo createdAt
+o nuestro campo personalizado createdAtAgo?
+
+00:05:54.876 --> 00:05:58.216 align:middle
+Imaginemos que sólo queremos
+exponer createdAtAgo.
+
+00:05:58.896 --> 00:05:59.566 align:middle
+¡No hay problema!
+
+00:05:59.996 --> 00:06:03.476 align:middle
+Basta con añadir la anotación
+@Groups a esa propiedad...
+
+00:06:03.986 --> 00:06:05.036 align:middle
+oh, espera...
+
+00:06:05.386 --> 00:06:07.966 align:middle
+no hay ninguna propiedad createdAtAgo.
+
+00:06:08.566 --> 00:06:13.016 align:middle
+Ah, es igual de fácil: busca el
+getter y pon la anotación allí:
+
+00:06:15.296 --> 00:06:19.076 align:middle
+@Groups({"cheese_listing:read"}).
+
+00:06:19.076 --> 00:06:24.316 align:middle
+Y ya que estamos aquí, añadiré
+algo de documentación a ese método:
+
+00:06:24.866 --> 00:06:28.556 align:middle
+Hace cuánto tiempo en texto que
+se añadió este listado de quesos.
+
+00:06:30.626 --> 00:06:31.156 align:middle
+¡Vamos a probarlo!
+
+00:06:31.156 --> 00:06:32.596 align:middle
+Actualiza la documentación.
+
+00:06:34.096 --> 00:06:35.706 align:middle
+Abajo, en la sección de modelos...
+
+00:06:36.076 --> 00:06:40.746 align:middle
+¡qué bien! Ahí está nuestro nuevo
+campo createdAtAgo de sólo lectura.
+
+00:06:41.416 --> 00:06:44.516 align:middle
+Y la documentación que
+hemos añadido aparece aquí.
+
+00:06:44.886 --> 00:06:47.996 align:middle
+¡Muy bien! No es de extrañar
+que cuando lo probamos...
+
+00:06:50.496 --> 00:06:51.756 align:middle
+el campo aparezca.
+
+00:06:51.756 --> 00:06:59.286 align:middle
+Para la desnormalización -para el envío de datos- tenemos
+que volver a añadir nuestro campo falso textDescription.
+
+00:07:00.586 --> 00:07:03.246 align:middle
+Busca el método setTextDescription().
+
+00:07:04.566 --> 00:07:08.986 align:middle
+Para evitar que los clientes de la API nos
+envíen directamente el campo description,
+
+00:07:09.266 --> 00:07:11.636 align:middle
+eliminamos el método setDescription().
+
+00:07:12.496 --> 00:07:17.996 align:middle
+Por encima de setTextDescription(),
+añade @Groups({"cheese_listing:write"}).
+
+00:07:19.576 --> 00:07:22.026 align:middle
+Y de nuevo, vamos a darle a esto un poco
+de documentación adicional. Esta vez
+
+00:07:24.996 --> 00:07:32.956 align:middle
+, cuando refresquemos los docs, podrás verlo
+en el modelo de escritura y, por supuesto,
+
+00:07:33.376 --> 00:07:36.206 align:middle
+en los datos que podemos
+enviar a la operación POST.
+
+00:07:36.846 --> 00:07:39.716 align:middle
+Y... ¡esto nos lleva a una gran noticia!
+
+00:07:40.436 --> 00:07:44.906 align:middle
+Si decidimos que algo internamente
+en nuestra aplicación
+
+00:07:44.906 --> 00:07:49.336 align:middle
+necesita establecer la propiedad descripción
+directamente, ahora es perfectamente posible
+
+00:07:49.336 --> 00:07:52.556 align:middle
+volver a añadir el método
+original setDescription().
+
+00:07:53.016 --> 00:07:55.006 align:middle
+Eso no formará parte de nuestra API.
+
+00:07:55.006 --> 00:07:58.826 align:middle
+Vamos a probar todo esto.
+
+00:07:58.826 --> 00:08:00.666 align:middle
+Actualiza la página de documentos.
+
+00:08:02.636 --> 00:08:09.716 align:middle
+Creemos un nuevo listado: Delicioso
+chèvre -perdón por mi francés-
+
+00:08:09.716 --> 00:08:16.356 align:middle
+por 25$ y una descripción
+con algunos saltos de línea.
+
+00:08:17.756 --> 00:08:21.306 align:middle
+¡Ejecuta! ¡Woh!
+
+00:08:21.306 --> 00:08:22.616 align:middle
+¡Un error 500!
+
+00:08:23.326 --> 00:08:27.746 align:middle
+Podría ir a mirar esta excepción en el
+perfilador, pero ésta es bastante fácil de leer
+
+00:08:28.106 --> 00:08:31.796 align:middle
+una excepción en nuestra consulta:
+is_published no puede ser nulo.
+
+00:08:32.626 --> 00:08:37.556 align:middle
+Oh, eso tiene sentido: el usuario
+no está enviando is_published...
+
+00:08:37.656 --> 00:08:39.786 align:middle
+por lo que nadie lo está configurando.
+
+00:08:40.306 --> 00:08:42.646 align:middle
+Y está establecido como no
+nulo en la base de datos.
+
+00:08:43.576 --> 00:08:46.496 align:middle
+No te preocupes: pon la propiedad
+por defecto en false. Por
+
+00:08:47.576 --> 00:08:52.366 align:middle
+cierto, si utilizas Symfony 4.3,
+en lugar de un error de Doctrine,
+
+00:08:52.566 --> 00:08:55.156 align:middle
+puede que hayas obtenido un
+error de validación. Esto se
+
+00:08:55.836 --> 00:09:01.386 align:middle
+debe a una nueva función en la que las restricciones de la
+base de datos Doctrine pueden utilizarse automáticamente
+
+00:09:01.386 --> 00:09:02.666 align:middle
+para añadir validación.
+
+00:09:02.666 --> 00:09:05.476 align:middle
+Así que, si ves un error
+de validación, ¡genial!
+
+00:09:06.136 --> 00:09:08.656 align:middle
+De todos modos, intenta ejecutarlo de nuevo.
+
+00:09:11.166 --> 00:09:17.426 align:middle
+¡Funciona! Tenemos exactamente los
+campos de entrada y salida que queremos.
+
+00:09:18.126 --> 00:09:24.146 align:middle
+El campo isPublished no está expuesto en absoluto en
+nuestra API, pero se está configurando en segundo plano.
+
+00:09:25.256 --> 00:09:30.726 align:middle
+A continuación, vamos a aprender algunos trucos más
+de serialización, como el control del nombre del campo
+
+00:09:30.726 --> 00:09:32.916 align:middle
+y el manejo de los argumentos del constructor
