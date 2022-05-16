@@ -1,0 +1,177 @@
+WEBVTT
+
+00:00:01.036 --> 00:00:02.426 align:middle
+Depurar una API...
+
+00:00:02.426 --> 00:00:03.236 align:middle
+puede ser difícil...
+
+00:00:03.236 --> 00:00:08.426 align:middle
+porque no ves los resultados -o los
+errores- como grandes páginas HTML.
+
+00:00:09.136 --> 00:00:14.106 align:middle
+Así que, para ayudarnos en el camino, ¡vamos a
+subir de nivel nuestra capacidad de depuración!
+
+00:00:15.276 --> 00:00:19.526 align:middle
+En una aplicación Symfony tradicional, una de las mejores
+características es la barra de herramientas de depuración web...
+
+00:00:19.946 --> 00:00:23.166 align:middle
+que ahora mismo no vemos aquí abajo
+porque aún no está instalada.
+
+00:00:23.546 --> 00:00:25.426 align:middle
+Pero... ¿deberíamos siquiera molestarnos?
+
+00:00:26.236 --> 00:00:32.756 align:middle
+Quiero decir, no es que podamos ver la barra de herramientas
+de depuración web en una respuesta de la API JSON, ¿verdad?
+
+00:00:33.266 --> 00:00:34.756 align:middle
+¡Claro que podemos!
+
+00:00:35.016 --> 00:00:35.876 align:middle
+Bueno, más o menos.
+
+00:00:36.636 --> 00:00:41.186 align:middle
+Busca tu terminal y consigue instalar el
+perfilador con: composer require profiler
+
+00:00:41.666 --> 00:00:48.546 align:middle
+--dev También puedes ejecutar composer require debug
+--dev para instalar algunas herramientas adicionales.
+
+00:00:51.776 --> 00:00:54.946 align:middle
+Esto instala el WebProfilerBundle,
+que añade un par
+
+00:00:54.946 --> 00:00:57.806 align:middle
+de archivos de configuración
+para ayudarle a hacer su magia.
+
+00:00:59.736 --> 00:01:01.886 align:middle
+Gracias a ellos, cuando refresquemos...
+
+00:01:02.986 --> 00:01:04.026 align:middle
+¡ahí está!
+
+00:01:04.146 --> 00:01:06.706 align:middle
+La barra de herramientas de depuración
+web flotando en la parte inferior.
+
+00:01:07.346 --> 00:01:12.366 align:middle
+Esto es literalmente la barra de herramientas de
+depuración web de esta página de documentación...
+
+00:01:12.366 --> 00:01:14.756 align:middle
+que probablemente no sea tan interesante.
+
+00:01:15.366 --> 00:01:17.336 align:middle
+Pero si empezamos a hacer peticiones...
+
+00:01:17.666 --> 00:01:18.386 align:middle
+compruébalo.
+
+00:01:18.966 --> 00:01:24.756 align:middle
+Cuando ejecutamos una operación a través de Swagger,
+hace una petición AJAX para completar la operación.
+
+00:01:24.756 --> 00:01:28.376 align:middle
+Y la barra de herramientas de depuración web de
+Symfony tiene una pequeña y genial función en
+
+00:01:28.376 --> 00:01:32.796 align:middle
+la que rastrea esas peticiones
+AJAX y las añade a una lista
+
+00:01:33.596 --> 00:01:35.986 align:middle
+Cada vez que pulso ejecutar,
+¡obtengo una nueva! ¡
+
+00:01:36.836 --> 00:01:40.256 align:middle
+La verdadera magia es que puedes hacer
+clic en el pequeño enlace "sha "
+
+00:01:40.256 --> 00:01:43.066 align:middle
+para ver el perfil de esa petición de la API!
+
+00:01:43.856 --> 00:01:44.486 align:middle
+Así que... ¡sí!
+
+00:01:44.826 --> 00:01:48.856 align:middle
+No puedes ver la barra de herramientas de
+depuración web para una respuesta que devuelva JSON,
+
+00:01:49.066 --> 00:01:54.916 align:middle
+pero sí puedes ver el perfil,
+que contiene muchos más datos,
+
+00:01:55.106 --> 00:02:00.776 align:middle
+como los parámetros POST, las cabeceras de la petición,
+el contenido de la petición -que es realmente importante
+
+00:02:00.906 --> 00:02:05.966 align:middle
+cuando envías JSON- y todas las cosas que
+esperas: caché, rendimiento, seguridad, Doctrine
+
+00:02:05.966 --> 00:02:12.126 align:middle
+, etc. Además del pequeño rastreador AJAX de
+la barra de depuración web que acabamos de ver,
+
+00:02:12.396 --> 00:02:16.676 align:middle
+hay algunas otras formas de encontrar el
+perfilador de una petición específica de la API.
+
+00:02:17.776 --> 00:02:24.696 align:middle
+En primer lugar, cada respuesta tiene una cabecera
+x-debug-token-link con una URL a su página del perfilador,
+
+00:02:25.116 --> 00:02:26.866 align:middle
+que puedes leer para saber a dónde ir.
+
+00:02:27.616 --> 00:02:33.316 align:middle
+O bien, puedes ir a /_profiler para ver
+una lista de las peticiones más recientes.
+
+00:02:34.326 --> 00:02:37.306 align:middle
+Aquí está la de /api/cheese_listings.
+
+00:02:38.106 --> 00:02:40.356 align:middle
+Haz clic en el token para
+saltar a su perfilador.
+
+00:02:41.246 --> 00:02:46.166 align:middle
+Ah, y la Plataforma API añade su propio panel
+del perfilador, que es una buena manera de ver
+
+00:02:46.166 --> 00:02:50.876 align:middle
+en qué recurso operaba esta
+petición y los metadatos de la misma,
+
+00:02:51.216 --> 00:02:54.426 align:middle
+incluyendo esta operación del
+elemento y la operación de recogida
+
+00:02:55.216 --> 00:02:57.016 align:middle
+-hablaremos de ellas muy pronto-.
+
+00:02:58.146 --> 00:03:01.916 align:middle
+También muestra información sobre los "proveedores
+de datos" y los "perseguidores de datos",
+
+00:03:02.536 --> 00:03:04.686 align:middle
+dos conceptos importantes de los
+que hablaremos más adelante.
+
+00:03:05.786 --> 00:03:08.826 align:middle
+Pero antes de llegar allí, de vuelta
+a la página de documentación,
+
+00:03:09.046 --> 00:03:11.946 align:middle
+tenemos que hablar de estas cinco rutas
+
+00:03:12.246 --> 00:03:15.706 align:middle
+-llamadas operaciones- y de
+cómo podemos personalizarlas
