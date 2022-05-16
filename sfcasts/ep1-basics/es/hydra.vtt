@@ -1,0 +1,275 @@
+WEBVTT
+
+00:00:01.086 --> 00:00:06.596 align:middle
+Así que, al menos a alto nivel, entendemos
+que cada recurso tendrá una clave @type
+
+00:00:06.976 --> 00:00:12.196 align:middle
+y que esta página -a través de las
+claves supportedClass y supportedProperty -
+
+00:00:12.196 --> 00:00:17.786 align:middle
+define lo que significa ese tipo, qué propiedades
+tiene y mucha información sobre cada propiedad.
+
+00:00:18.656 --> 00:00:25.936 align:middle
+Ahora mismo, sólo tenemos un recurso API, por lo que
+sólo tenemos una entrada en supportedClass, ¿verdad?
+
+00:00:26.446 --> 00:00:29.406 align:middle
+¡Pues sorpresa! ¡Hay otra llamada Entrypoint!
+
+00:00:29.816 --> 00:00:35.646 align:middle
+Y otra llamada ConstraintViolation,
+que define el recurso que se devuelve
+
+00:00:35.646 --> 00:00:38.066 align:middle
+cuando nuestra API tiene
+un error de validación.
+
+00:00:38.866 --> 00:00:42.796 align:middle
+Hablemos de esta clase Entrypoint:
+es una idea bastante bonita.
+
+00:00:43.826 --> 00:00:51.086 align:middle
+Ya sabemos que cuando vamos a /api, obtenemos, más o menos,
+la versión HTML de una "página de inicio" de la API.
+
+00:00:51.916 --> 00:00:55.876 align:middle
+Pues bien, ¡también hay una
+versión JSON-LD de esta página!
+
+00:00:56.766 --> 00:01:00.716 align:middle
+Hay un enlace para verla al final de esta página,
+pero vamos a llegar a ella de otra manera.
+
+00:01:01.506 --> 00:01:06.106 align:middle
+Busca tu terminal: podemos utilizar curl para
+ver el aspecto de la "página principal "
+
+00:01:06.106 --> 00:01:17.986 align:middle
+para el formato JSON-LD: curl -X GET
+'https://localhost:8000/api' -H "accept:
+
+00:01:18.136 --> 00:01:25.116 align:middle
+application/ld+json" En otras
+palabras: haz una petición GET a /api,
+
+00:01:25.736 --> 00:01:30.456 align:middle
+pero anuncia que quieres que te
+devuelvan el formato JSON-LD.
+
+00:01:31.176 --> 00:01:35.906 align:middle
+También enviaré eso a jq - una utilidad
+que hace que JSON tenga un aspecto bonito -
+
+00:01:36.806 --> 00:01:38.506 align:middle
+simplemente sáltate eso
+si no lo tienes instalado.
+
+00:01:39.306 --> 00:01:40.916 align:middle
+Y... ¡boom!
+
+00:01:41.506 --> 00:01:44.056 align:middle
+¡Saluda a la página de inicio de tu API!
+
+00:01:44.636 --> 00:01:51.226 align:middle
+Como cada URL representa un recurso único,
+incluso esta página es un recurso: es...
+
+00:01:51.516 --> 00:01:53.286 align:middle
+un recurso "Punto de entrada".
+
+00:01:53.886 --> 00:02:00.786 align:middle
+Tiene los mismos @context, @id y @type, con
+una "propiedad" real llamada cheeseListing.
+
+00:02:01.716 --> 00:02:06.206 align:middle
+Esa propiedad es el IRI del recurso
+de colección del listado de quesos.
+
+00:02:07.626 --> 00:02:11.186 align:middle
+Por cierto, ¡esto se describe
+en nuestro documento JSON-LD!
+
+00:02:12.006 --> 00:02:14.196 align:middle
+La clase Entrypoint tiene una propiedad
+
+00:02:14.696 --> 00:02:19.506 align:middle
+cheeseListing con el tipo
+hydra:Link - que es interesante.
+
+00:02:20.306 --> 00:02:26.766 align:middle
+Y es bastante feo, pero la parte rdfs:range
+es aparentemente una forma de describir
+
+00:02:26.886 --> 00:02:31.336 align:middle
+que el recurso al que se refiere
+esta propiedad es una " colección"
+
+00:02:31.546 --> 00:02:36.246 align:middle
+que tendrá una propiedad
+hydra:member, que será una matriz
+
+00:02:36.366 --> 00:02:39.276 align:middle
+en la que cada elemento
+es de tipo CheeseListing.
+
+00:02:40.116 --> 00:02:45.966 align:middle
+¡Woh! Así que JSON-LD consiste en añadir
+más contexto a tus datos especificando
+
+00:02:45.966 --> 00:02:51.346 align:middle
+que nuestros recursos contendrán claves
+especiales como @context, @id y @type.
+
+00:02:52.296 --> 00:02:57.316 align:middle
+Sigue siendo JSON normal, pero si un
+cliente entiende J SON-LD, va a poder
+
+00:02:57.316 --> 00:03:00.876 align:middle
+obtener mucha más información
+sobre tu API, automáticamente.
+
+00:03:01.506 --> 00:03:04.986 align:middle
+Pero en la Plataforma API,
+hay otra cosa que vas a
+
+00:03:04.986 --> 00:03:08.716 align:middle
+ver todo el tiempo, ¡y ya la estamos viendo!
+
+00:03:09.176 --> 00:03:14.516 align:middle
+La Hidra, que es algo más que un monstruo
+acuático de muchas cabezas de la mitología griega.
+
+00:03:15.346 --> 00:03:18.366 align:middle
+Vuelve a /api/docs.jsonld. De la misma manera
+
+00:03:19.796 --> 00:03:24.236 align:middle
+que esto apunta al documento
+externo xmls para que
+
+00:03:24.456 --> 00:03:29.966 align:middle
+podamos referenciar cosas como
+xmls:integer, también estamos apuntando
+
+00:03:29.966 --> 00:03:36.706 align:middle
+a un documento externo llamado hydra que define
+más "tipos" o "vocabulario" que podemos utilizar.
+
+00:03:37.666 --> 00:03:44.166 align:middle
+Esta es la idea: JSON-LD nos proporcionó el
+sistema para decir que este dato es de este tipo
+
+00:03:44.526 --> 00:03:46.776 align:middle
+y este otro tipo.
+
+00:03:47.896 --> 00:03:52.376 align:middle
+Hydra es una extensión de JSON-LD
+que añade nuevo vocabulario.
+
+00:03:53.056 --> 00:03:54.686 align:middle
+Dice: Espera un segundo.
+
+00:03:55.036 --> 00:03:59.536 align:middle
+JSON-LD es genial y divertido y
+un excelente invitado a la cena.
+
+00:03:59.886 --> 00:04:06.186 align:middle
+Pero para que un cliente y un servidor puedan comunicarse
+realmente, ¡necesitamos más lenguaje compartido!
+
+00:04:06.676 --> 00:04:12.916 align:middle
+Necesitamos una forma de definir las "clases" dentro
+de mi API, las propiedades de esas clases y si
+
+00:04:12.916 --> 00:04:15.026 align:middle
+cada una es legible y escribible.
+
+00:04:15.686 --> 00:04:20.926 align:middle
+Ah, y también necesitamos poder comunicar
+las operaciones que admite un recurso:
+
+00:04:21.756 --> 00:04:24.596 align:middle
+¿puedo hacer una petición DELETE
+a este recurso para eliminarlo?
+
+00:04:24.846 --> 00:04:26.816 align:middle
+¿Puedo hacer una petición
+PUT para actualizarlo?
+
+00:04:27.286 --> 00:04:30.156 align:middle
+¿Qué formato de datos debo
+esperar de cada operación?
+
+00:04:30.566 --> 00:04:33.296 align:middle
+¿Y cuál es la verdadera identidad de Batman?
+
+00:04:34.026 --> 00:04:39.106 align:middle
+Hydra tomó el sistema JSON-LD y añadió una
+nueva "terminología" -llamada "vocabulario"-
+
+00:04:39.496 --> 00:04:44.346 align:middle
+que permite definir completamente
+cada aspecto de tu API.
+
+00:04:44.346 --> 00:04:50.846 align:middle
+Llegados a este punto, casi seguro que estás
+pensando: Pero espera, esto suena en serio, es
+
+00:04:50.846 --> 00:04:55.536 align:middle
+exactamente lo mismo que obtuvimos
+de nuestro documento JSON de OpenAPI.
+
+00:04:55.976 --> 00:04:57.416 align:middle
+Y...
+
+00:04:57.566 --> 00:05:02.666 align:middle
+¡sí! Cambia la URL a /api/docs.json.
+
+00:05:03.726 --> 00:05:06.146 align:middle
+Es la especificación de OpenAPI.
+
+00:05:06.706 --> 00:05:14.066 align:middle
+Y si lo cambiamos a .jsonld, de repente
+tenemos la especificación JSON-LD con Hydra.
+
+00:05:14.686 --> 00:05:16.356 align:middle
+Entonces, ¿por qué tenemos ambos?
+
+00:05:17.376 --> 00:05:21.616 align:middle
+En primer lugar, sí, estos dos
+documentos hacen básicamente lo mismo:
+
+00:05:21.966 --> 00:05:24.946 align:middle
+describen tu API en un formato
+legible por la máquina.
+
+00:05:25.886 --> 00:05:30.746 align:middle
+El formato JSON-LD e Hydra es un
+poco más potente que OpenAPI:
+
+00:05:31.576 --> 00:05:34.866 align:middle
+es capaz de describir algunas
+cosas que OpenAPI no puede.
+
+00:05:35.636 --> 00:05:39.236 align:middle
+Pero OpenAPI es más común y tiene más
+herramientas construidas a su alrededor.
+
+00:05:39.726 --> 00:05:44.106 align:middle
+Así que, en algunos casos, tener una
+especificación OpenAPI será útil
+
+00:05:44.386 --> 00:05:50.006 align:middle
+-como usar Swagger- y otras veces, el
+documento JSON-LD Hydra será útil.
+
+00:05:51.046 --> 00:05:53.186 align:middle
+Con la Plataforma API, tienes ambas cosas.
+
+00:05:53.976 --> 00:05:56.586 align:middle
+¡Ufff! Bien, ¡basta de teoría!
+
+00:05:56.876 --> 00:05:59.436 align:middle
+Volvamos a construir y personalizar nuestra API
