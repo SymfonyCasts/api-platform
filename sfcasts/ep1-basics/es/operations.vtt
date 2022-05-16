@@ -1,0 +1,257 @@
+WEBVTT
+
+00:00:01.026 --> 00:00:03.156 align:middle
+Pongamos manos a la obra para
+personalizar nuestra API.
+
+00:00:04.256 --> 00:00:07.746 align:middle
+Una API RESTful se basa en los recursos.
+
+00:00:08.296 --> 00:00:12.586 align:middle
+Tenemos un recurso -nuestro CheeseListing
+- y, por defecto, la Plataforma API ha
+
+00:00:12.966 --> 00:00:16.136 align:middle
+generado 5 rutas para él.
+
+00:00:16.766 --> 00:00:18.966 align:middle
+Estos se llaman "operaciones".
+
+00:00:19.876 --> 00:00:22.436 align:middle
+Las operaciones se dividen en dos categorías.
+
+00:00:22.786 --> 00:00:24.936 align:middle
+En primer lugar, las
+operaciones de "colección".
+
+00:00:25.566 --> 00:00:31.556 align:middle
+Estas son las URL que no incluyen {id} y en
+las que el "recurso " sobre el que operas
+
+00:00:31.556 --> 00:00:35.856 align:middle
+es técnicamente la "colección
+de listados de quesos".
+
+00:00:35.856 --> 00:00:42.606 align:middle
+Por ejemplo, estás "obteniendo" la colección
+o estás "añadiendo" a la colección con POST.
+
+00:00:43.356 --> 00:00:45.426 align:middle
+Y en segundo lugar, las
+operaciones de "artículos".
+
+00:00:46.056 --> 00:00:51.126 align:middle
+Estas son las URL que tienen la
+parte {id}, cuando estás "operando"
+
+00:00:51.246 --> 00:00:53.826 align:middle
+sobre un único recurso del listado de quesos.
+
+00:00:55.396 --> 00:00:59.646 align:middle
+Lo primero que podemos personalizar
+es qué operaciones queremos realmente
+
+00:01:00.496 --> 00:01:02.976 align:middle
+Por encima de CheeseListing,
+dentro de la anotación,
+
+00:01:03.186 --> 00:01:08.286 align:middle
+añade collectionOperations={}
+con "get" y "post" dentro.
+
+00:01:09.666 --> 00:01:12.996 align:middle
+Luego itemOperations con
+{"get", "put", "delete"}.
+
+00:01:15.896 --> 00:01:19.096 align:middle
+Gran parte del dominio de la
+Plataforma API se reduce a aprender
+
+00:01:19.096 --> 00:01:22.386 align:middle
+qué opciones puedes pasar
+dentro de esta anotación.
+
+00:01:23.066 --> 00:01:28.746 align:middle
+Esta es básicamente la configuración por
+defecto: queremos las cinco operaciones.
+
+00:01:29.516 --> 00:01:34.546 align:middle
+Así que no es de extrañar que, cuando
+actualizamos, no veamos ningún cambio.
+
+00:01:34.546 --> 00:01:39.026 align:middle
+Pero, ¿qué pasa si no queremos permitir a
+los usuarios eliminar un listado de quesos?
+
+00:01:39.846 --> 00:01:43.736 align:middle
+Tal vez, en su lugar, en el futuro,
+añadamos una forma de "archivarlos".
+
+00:01:44.436 --> 00:01:45.496 align:middle
+Eliminar "delete".
+
+00:01:48.526 --> 00:01:49.726 align:middle
+En cuanto hagamos eso...
+
+00:01:50.946 --> 00:01:53.796 align:middle
+¡boom! Desaparece de nuestra documentación.
+
+00:01:54.236 --> 00:01:55.216 align:middle
+Sencillo, ¿verdad?
+
+00:01:55.726 --> 00:01:58.496 align:middle
+Sí, pero acaban de ocurrir
+un montón de cosas geniales.
+
+00:01:59.396 --> 00:02:06.216 align:middle
+Recuerda que, entre bastidores, la interfaz de usuario de Swagger se
+construye a partir de un documento de especificaciones de la API abierta,
+
+00:02:06.706 --> 00:02:10.076 align:middle
+que puedes ver en /api/docs.json.
+
+00:02:11.226 --> 00:02:16.046 align:middle
+La razón por la que el punto final "eliminar"
+desapareció de Swagger es que desapareció de aquí.
+
+00:02:16.956 --> 00:02:20.156 align:middle
+La Plataforma API mantiene actualizado
+nuestro documento de "especificaciones".
+
+00:02:20.156 --> 00:02:25.306 align:middle
+Si miraras el documento de
+especificaciones JSON-LD, verías lo mismo.
+
+00:02:26.176 --> 00:02:31.256 align:middle
+Y, por supuesto, también ha eliminado por
+completo la ruta -puedes comprobarlo ejecutando:
+
+00:02:31.256 --> 00:02:38.046 align:middle
+php bin/console debug:router
+Sí, sólo GET, POST, GET y PUT.
+
+00:02:39.236 --> 00:02:44.916 align:middle
+Hmm, ahora que lo miro, no me gusta la
+parte cheese_listings de las URLs...
+
+00:02:45.966 --> 00:02:48.336 align:middle
+La Plataforma API lo genera a
+partir del nombre de la clase.
+
+00:02:48.836 --> 00:02:53.796 align:middle
+Y realmente, en una API, no deberías
+obsesionarte con el aspecto de tus URLs,
+
+00:02:54.156 --> 00:02:57.706 align:middle
+no es importante, especialmente -como verás-
+
+00:02:58.036 --> 00:03:01.726 align:middle
+cuando tus respuestas a la API
+incluyen enlaces a otros recursos.
+
+00:03:02.466 --> 00:03:04.726 align:middle
+Pero... podemos controlar esto.
+
+00:03:05.676 --> 00:03:11.946 align:middle
+Vuelve a dar la vuelta y añade otra
+opción: shortName ajustada a cheeses.
+
+00:03:13.056 --> 00:03:17.946 align:middle
+Ahora ejecuta de nuevo debug:router: ¡Oye!
+
+00:03:18.036 --> 00:03:19.996 align:middle
+/api/cheeses¡!
+
+00:03:20.346 --> 00:03:21.366 align:middle
+¡Mucho mejor!
+
+00:03:21.436 --> 00:03:27.136 align:middle
+Y ahora vemos lo mismo en
+nuestros documentos de la API.
+
+00:03:28.246 --> 00:03:32.196 align:middle
+Vale: así podemos controlar qué
+operaciones queremos en un recurso.
+
+00:03:32.516 --> 00:03:36.166 align:middle
+Y más adelante aprenderemos a
+añadir operaciones personalizadas.
+
+00:03:36.696 --> 00:03:41.326 align:middle
+Pero también podemos controlar bastante
+sobre las operaciones individuales.
+
+00:03:41.996 --> 00:03:44.596 align:middle
+Sabemos que cada operación genera una ruta,
+
+00:03:44.856 --> 00:03:48.746 align:middle
+y la Plataforma API te da un control
+total sobre el aspecto de esa ruta.
+
+00:03:49.676 --> 00:03:53.286 align:middle
+Compruébalo: divide
+itemOperations en varias líneas.
+
+00:03:54.856 --> 00:04:03.426 align:middle
+Entonces, en lugar de decir simplemente "get", podemos
+decir "get"={} y pasar esta configuración extra.
+
+00:04:04.126 --> 00:04:10.316 align:middle
+Prueba a poner "path"= en, no sé,
+"/i❤️️cheeses/{id}". Ve a
+
+00:04:10.356 --> 00:04:16.496 align:middle
+ver los documentos ¡Ja!
+
+00:04:18.256 --> 00:04:20.126 align:middle
+¡Eso funciona! ¿Qué
+
+00:04:20.886 --> 00:04:22.236 align:middle
+más puedes poner aquí?
+
+00:04:22.706 --> 00:04:23.456 align:middle
+Muchas cosas Para
+
+00:04:24.366 --> 00:04:28.416 align:middle
+empezar, cualquier cosa que se pueda definir
+en una ruta, se puede añadir aquí - como
+
+00:04:28.536 --> 00:04:32.096 align:middle
+method, hosts, etc. ¿Qué más? Bueno, a lo
+
+00:04:32.826 --> 00:04:38.156 align:middle
+largo del camino, aprenderemos sobre otras
+cosas específicas de la plataforma API que
+
+00:04:38.156 --> 00:04:42.886 align:middle
+puedes poner aquí, como access_control
+para la seguridad y formas de
+
+00:04:42.886 --> 00:04:45.516 align:middle
+controlar el proceso de serialización. De
+
+00:04:46.426 --> 00:04:49.006 align:middle
+hecho, ¡vamos a aprender sobre
+ese proceso ahora mismo! ¿Cómo
+
+00:04:49.426 --> 00:04:52.956 align:middle
+transforma la Plataforma API
+nuestro objeto CheeseListing -con
+
+00:04:53.176 --> 00:04:58.946 align:middle
+todas estas propiedades privadas- en
+el JSON que hemos estado viendo? Y
+
+00:04:58.946 --> 00:05:03.276 align:middle
+cuando creamos un nuevo CheeseListing,
+¿cómo convierte nuestro JSON
+
+00:05:05.826 --> 00:05:10.416 align:middle
+de entrada en un objeto CheeseListing? Entender
+
+00:05:11.226 --> 00:05:16.136 align:middle
+el proceso de serialización puede
+ser la pieza más importante para
+
+00:05:16.136 --> 00:05:17.906 align:middle
+desbloquear la Plataforma API
