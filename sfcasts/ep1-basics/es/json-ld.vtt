@@ -1,0 +1,514 @@
+WEBVTT
+
+00:00:01.046 --> 00:00:03.186 align:middle
+Una API típica devuelve JSON.
+
+00:00:04.076 --> 00:00:07.536 align:middle
+Visita /api/cheese_listings/2.json.
+
+00:00:08.656 --> 00:00:13.056 align:middle
+Cuando pienso en una API, esto es lo que
+tradicionalmente imagino en mi cabeza.
+
+00:00:13.506 --> 00:00:16.456 align:middle
+Pero, ¿qué significado tienen estos campos?
+
+00:00:16.976 --> 00:00:21.076 align:middle
+¿Qué significan exactamente
+los campos title o description?
+
+00:00:21.336 --> 00:00:22.876 align:middle
+¿Son texto plano?
+
+00:00:23.506 --> 00:00:24.906 align:middle
+¿Pueden contener HTML?
+
+00:00:25.466 --> 00:00:30.926 align:middle
+¿La descripción describe este tipo
+de queso en general, o es específica
+
+00:00:31.006 --> 00:00:34.456 align:middle
+de la condición del queso
+exacto que estoy vendiendo?
+
+00:00:35.426 --> 00:00:36.026 align:middle
+¿Y el precio?
+
+00:00:36.526 --> 00:00:38.406 align:middle
+¿Es una cadena, un
+flotador, un número entero?
+
+00:00:39.036 --> 00:00:40.456 align:middle
+¿Está en dólares estadounidenses?
+
+00:00:40.776 --> 00:00:42.856 align:middle
+¿En euros? ¿Se mide en céntimos?
+
+00:00:43.936 --> 00:00:45.106 align:middle
+Si eres un humano...
+
+00:00:45.446 --> 00:00:47.176 align:middle
+eres un humano, ¿verdad?
+
+00:00:47.926 --> 00:00:52.286 align:middle
+Un humano suele poder "inferir" algún
+significado a partir de los nombres de los campos
+
+00:00:52.626 --> 00:00:58.286 align:middle
+o encontrar alguna documentación legible por humanos que
+le ayude a saber qué representa exactamente cada campo.
+
+00:00:59.206 --> 00:01:03.096 align:middle
+Pero no hay forma de que una
+máquina entienda nada de
+
+00:01:03.186 --> 00:01:06.066 align:middle
+lo que significan estos campos o sus tipos.
+
+00:01:06.886 --> 00:01:08.936 align:middle
+¡Incluso un algoritmo
+inteligente podría confundirse!
+
+00:01:09.486 --> 00:01:13.846 align:middle
+Un campo llamado title podría ser el
+"título" de algo -como el título de un libro-
+
+00:01:14.316 --> 00:01:21.606 align:middle
+o podría ser el título de una persona -Sr., Sra.,
+etc. Esto es lo que pretende resolver JSON-LD.
+
+00:01:22.356 --> 00:01:29.626 align:middle
+Vale, sinceramente, hoy en día hay mucho que hacer
+con este problema de: ¿Cómo damos a los datos
+
+00:01:29.696 --> 00:01:34.146 align:middle
+en la web un contexto o significado
+que los ordenadores puedan entender?
+
+00:01:34.766 --> 00:01:36.036 align:middle
+Así que vamos a tocar algunos
+puntos básicos. Existe
+
+00:01:36.976 --> 00:01:42.846 align:middle
+una cosa llamada RDF (Resource Description
+Framework), que es una especie de
+
+00:01:43.076 --> 00:01:47.496 align:middle
+conjunto de reglas sobre cómo podemos
+"describir" el significado de los datos.
+
+00:01:48.286 --> 00:01:53.726 align:middle
+Es un poco abstracto, pero es una guía sobre
+cómo puedes decir que un dato tiene este "tipo"
+
+00:01:54.296 --> 00:01:57.876 align:middle
+o que un recurso es una
+"subclase" de otro "tipo".
+
+00:01:58.966 --> 00:02:04.196 align:middle
+En HTML, puedes añadir atributos a tus
+elementos para añadir metadatos RDF,
+
+00:02:04.806 --> 00:02:09.696 align:middle
+diciendo que algún div describe a una Persona
+y que los name y telephone de esta Persona
+
+00:02:09.876 --> 00:02:12.346 align:middle
+son estos otros datos:
+
+00:02:13.426 --> 00:02:17.416 align:middle
+Esto hace que tu HTML no estructurado
+sea comprensible para las máquinas. Es
+
+00:02:18.256 --> 00:02:25.186 align:middle
+aún más comprensible si 2 sitios diferentes utilizan
+exactamente la misma definición de "Person a",
+
+00:02:25.676 --> 00:02:28.916 align:middle
+por lo que los "tipos" son
+URLs y los sitios intentan
+
+00:02:28.916 --> 00:02:32.156 align:middle
+reutilizar los tipos existentes
+en lugar de inventar otros nuevos.
+
+00:02:32.946 --> 00:02:33.406 align:middle
+¡Es genial!
+
+00:02:34.146 --> 00:02:37.896 align:middle
+JSON-LD nos permite hacer esto mismo para JSON.
+
+00:02:38.526 --> 00:02:42.196 align:middle
+Cambia la URL de .json a .jsonld.
+
+00:02:42.326 --> 00:02:49.776 align:middle
+Esto tiene los mismos datos, pero con algunos
+campos adicionales: @context, @id y @type.
+
+00:02:50.446 --> 00:02:55.256 align:middle
+JSON-LD no es más que un "estándar"
+que describe unos cuantos campos extra
+
+00:02:55.316 --> 00:03:01.226 align:middle
+que puede tener tu JSON -todos ellos empiezan por @ -
+que ayudan a las máquinas a saber más sobre tu API.
+
+00:03:02.466 --> 00:03:04.266 align:middle
+Así que, primero: @id.
+
+00:03:05.056 --> 00:03:09.146 align:middle
+En una API RESTful, cada
+URL representa un recurso
+
+00:03:09.436 --> 00:03:12.226 align:middle
+y debe tener su propio identificador único.
+
+00:03:12.986 --> 00:03:18.976 align:middle
+JSON-LD hace esto oficial diciendo que
+cada recurso debe tener un campo @id...
+
+00:03:19.386 --> 00:03:22.106 align:middle
+lo que puede parecer
+redundante en este momento...
+
+00:03:22.366 --> 00:03:22.696 align:middle
+porque...
+
+00:03:23.016 --> 00:03:25.786 align:middle
+también estamos emitiendo
+nuestro propio campo id.
+
+00:03:26.196 --> 00:03:28.606 align:middle
+Pero hay dos cosas especiales sobre @id.
+
+00:03:29.326 --> 00:03:36.956 align:middle
+En primer lugar, cualquier persona, o cualquier
+cliente HTTP, que entienda JSON-LD sabrá buscar @id.
+
+00:03:37.456 --> 00:03:40.096 align:middle
+Es la "clave" oficial del identificador único.
+
+00:03:41.066 --> 00:03:44.296 align:middle
+Nuestra columna id es algo
+específico de nuestra API.
+
+00:03:45.416 --> 00:03:49.496 align:middle
+En segundo lugar, en JSON-LD,
+todo se hace con URLs.
+
+00:03:50.526 --> 00:03:53.336 align:middle
+Decir que el id es 2 está bien...
+
+00:03:53.766 --> 00:04:00.496 align:middle
+¡pero decir que el id es /api/cheese_listing/2
+es infinitamente más útil!
+
+00:04:01.316 --> 00:04:05.096 align:middle
+¡Es una URL que alguien podría utilizar
+para obtener detalles sobre este recurso!
+
+00:04:06.186 --> 00:04:09.406 align:middle
+También es única dentro
+de toda nuestra API...
+
+00:04:10.076 --> 00:04:10.906 align:middle
+o realmente...
+
+00:04:11.206 --> 00:04:14.926 align:middle
+si incluyes nuestro nombre de
+dominio, ¡es un identificador único
+
+00:04:14.986 --> 00:04:17.796 align:middle
+para ese recurso en toda la web!
+
+00:04:18.876 --> 00:04:24.976 align:middle
+Esta URL se llama en realidad un IRI:
+Identificador de Recursos Internacionalizado.
+
+00:04:25.646 --> 00:04:29.976 align:middle
+Vamos a utilizar los IRI en todas partes,
+en lugar de los identificadores enteros.
+
+00:04:31.026 --> 00:04:35.976 align:middle
+Las otras dos claves JSON-LD -
+@context y @type - funcionan juntas. La
+
+00:04:37.166 --> 00:04:42.496 align:middle
+idea es realmente genial: si añadimos
+una clave @type a cada recurso
+
+00:04:42.836 --> 00:04:49.066 align:middle
+y luego definimos los campos exactos de ese tipo
+en alguna parte, eso nos da dos superpoderes.
+
+00:04:50.046 --> 00:04:53.766 align:middle
+En primer lugar, sabremos al instante
+si dos estructuras JSON diferentes
+
+00:04:53.936 --> 00:04:56.646 align:middle
+describen en realidad un listado de quesos...
+
+00:04:56.886 --> 00:05:01.226 align:middle
+o si sólo se parecen y en realidad
+están describiendo cosas diferentes.
+
+00:05:02.276 --> 00:05:06.266 align:middle
+Y en segundo lugar, podemos consultar
+la definición de este tipo para saber
+
+00:05:07.006 --> 00:05:11.006 align:middle
+qué propiedades tiene e incluso
+el tipo de cada propiedad.
+
+00:05:11.546 --> 00:05:13.116 align:middle
+Caramba, ¡esto no es nada nuevo!
+
+00:05:13.446 --> 00:05:16.776 align:middle
+¡Lo hacemos todo el tiempo en PHP!
+
+00:05:16.776 --> 00:05:22.026 align:middle
+Cuando creamos una clase en lugar de un simple
+array, estamos dando a nuestros datos un "tipo".
+
+00:05:22.846 --> 00:05:27.926 align:middle
+Esto nos permite saber exactamente con qué tipo
+de datos estamos tratando y podemos mirar la clase
+
+00:05:28.326 --> 00:05:29.716 align:middle
+para saber más sobre sus propiedades.
+
+00:05:30.946 --> 00:05:37.046 align:middle
+Así que... sí, el campo @type transforma
+los datos de una matriz sin estructura
+
+00:05:37.356 --> 00:05:39.816 align:middle
+en una clase concreta que podemos entender
+
+00:05:40.366 --> 00:05:43.366 align:middle
+Pero... ¿dónde se define
+este tipo CheeseListing?
+
+00:05:44.016 --> 00:05:48.816 align:middle
+Ahí es donde entra @context:
+básicamente dice: ¡Oye!
+
+00:05:49.206 --> 00:05:55.056 align:middle
+Para obtener más detalles, o "contexto" sobre los
+campos utilizados en estos datos, ve a esta otra URL.
+
+00:05:55.056 --> 00:06:01.936 align:middle
+Para que esto tenga sentido, tenemos que pensar como
+una máquina: una máquina que quiere desesperadamente
+
+00:06:01.966 --> 00:06:06.596 align:middle
+aprender todo lo posible sobre nuestra
+API, sus campos y lo que significan.
+
+00:06:07.906 --> 00:06:11.516 align:middle
+Cuando una máquina ve ese @context, lo sigue.
+
+00:06:12.526 --> 00:06:18.866 align:middle
+Sí, pongamos literalmente esa URL en el
+navegador: /api/contexts/CheeseListing.
+
+00:06:20.276 --> 00:06:21.696 align:middle
+Y... interesante.
+
+00:06:22.156 --> 00:06:23.686 align:middle
+Es otro @context.
+
+00:06:24.636 --> 00:06:29.276 align:middle
+Sin entrar en demasiados detalles
+locos, @context nos permite utilizar
+
+00:06:29.406 --> 00:06:32.056 align:middle
+nombres de propiedades
+"abreviados", llamados "términos".
+
+00:06:33.106 --> 00:06:37.186 align:middle
+Nuestra respuesta JSON real incluye
+campos como title y description.
+
+00:06:37.886 --> 00:06:43.446 align:middle
+Pero en lo que respecta a JSON-LD,
+si se tiene en cuenta el @context, es
+
+00:06:43.866 --> 00:06:51.016 align:middle
+como si la respuesta tuviera un aspecto similar al
+siguiente: La idea es que sabemos que, en general,
+
+00:06:51.426 --> 00:06:55.706 align:middle
+este recurso es del tipo CheeseListing,
+y cuando encontremos su documentación,
+
+00:06:56.206 --> 00:07:01.646 align:middle
+deberíamos encontrar información también sobre el
+significado y los tipos de las propiedades CheeseListing/title
+
+00:07:02.146 --> 00:07:04.536 align:middle
+o CheeseListing/price.
+
+00:07:05.516 --> 00:07:06.726 align:middle
+¿Dónde está esa documentación?
+
+00:07:07.316 --> 00:07:13.396 align:middle
+Sigue el enlace @vocab a /api/docs.jsonld.
+
+00:07:15.126 --> 00:07:18.836 align:middle
+Es una descripción completa
+de nuestra API en JSON-LD.
+
+00:07:19.506 --> 00:07:20.026 align:middle
+Y, compruébalo. ¡
+
+00:07:20.486 --> 00:07:25.136 align:middle
+Tiene una sección llamada supportedClasses,
+con una clase CheeseListing
+
+00:07:25.376 --> 00:07:27.346 align:middle
+y todas las diferentes
+propiedades debajo de ella!
+
+00:07:28.596 --> 00:07:33.796 align:middle
+Así es como una máquina puede entender lo
+que significa la propiedad CheeseListing/title:
+
+00:07:34.556 --> 00:07:39.226 align:middle
+tiene una etiqueta, detalles sobre si
+es necesaria o no, si es legible o no
+
+00:07:39.456 --> 00:07:41.226 align:middle
+y si es escribible o no.
+
+00:07:42.106 --> 00:07:46.456 align:middle
+En el caso de CheeseListing/price, ya
+sabe que se trata de un número entero.
+
+00:07:47.306 --> 00:07:49.946 align:middle
+¡Esta es una información
+poderosa para una máquina!
+
+00:07:49.946 --> 00:07:52.896 align:middle
+Y si estás pensando ¡Espera un momento!
+
+00:07:53.296 --> 00:07:57.436 align:middle
+¿No es exactamente la misma información
+que nos daba la especificación OpenAPI?
+
+00:07:58.566 --> 00:07:59.936 align:middle
+Pues no te equivocas.
+
+00:08:00.086 --> 00:08:02.006 align:middle
+Pero hablaremos de ello dentro de un rato.
+
+00:08:03.026 --> 00:08:07.896 align:middle
+En cualquier caso, lo más interesante es
+que la Plataforma API obtiene todos los datos
+
+00:08:07.966 --> 00:08:10.956 align:middle
+sobre nuestra clase y sus
+propiedades de nuestro código
+
+00:08:11.956 --> 00:08:16.646 align:middle
+Por ejemplo, mira la propiedad
+CheeseListing/price: tiene un título, el
+
+00:08:17.156 --> 00:08:20.386 align:middle
+tipo de xmls:integer y algunos datos.
+
+00:08:21.526 --> 00:08:26.436 align:middle
+Por cierto, incluso ese tipo xmls:integer
+proviene de otro documento. No
+
+00:08:27.396 --> 00:08:31.906 align:middle
+lo he mostrado, pero al principio de esta
+página, hacemos referencia a otro documento
+
+00:08:32.096 --> 00:08:36.656 align:middle
+que define más tipos, incluido lo
+que significa el " tipo" xmls:integer
+
+00:08:36.706 --> 00:08:39.406 align:middle
+en un formato legible por la máquina.
+
+00:08:40.856 --> 00:08:44.796 align:middle
+De todos modos, de vuelta a nuestro código,
+por encima del precio, añade algo de phpdoc:
+
+00:08:45.766 --> 00:08:48.736 align:middle
+El precio de este delicioso queso en céntimos.
+
+00:08:53.436 --> 00:08:58.376 align:middle
+Actualiza ahora nuestro documento JSON-LD.
+
+00:08:58.376 --> 00:09:02.656 align:middle
+Y ¡boom! ¡De repente tenemos
+un campo hydra:description!
+
+00:09:03.376 --> 00:09:05.566 align:middle
+A continuación vamos a
+hablar de lo que es "Hydra".
+
+00:09:06.726 --> 00:09:11.856 align:middle
+Lo sé, lo sé, todo esto es un poco
+confuso, bueno, al menos para mí.
+
+00:09:12.646 --> 00:09:15.266 align:middle
+Pero, intenta imaginarte qué
+aspecto tiene esto para una máquina.
+
+00:09:16.426 --> 00:09:21.596 align:middle
+Vuelve al JSON original:
+decía @type: "CheeseListing".
+
+00:09:22.276 --> 00:09:28.166 align:middle
+Al "seguir" la URL @context, y luego
+seguir @vocab -casi de la misma manera
+
+00:09:28.166 --> 00:09:33.086 align:middle
+que seguimos los enlaces dentro de un navegador-
+¡podemos encontrar eventualmente detalles
+
+00:09:33.266 --> 00:09:35.916 align:middle
+sobre lo que ese "tipo" significa realmente!
+
+00:09:36.636 --> 00:09:42.686 align:middle
+Y haciendo referencia a documentos externos en @context,
+podemos, en cierto modo, "importar" más tipos.
+
+00:09:44.006 --> 00:09:50.106 align:middle
+Cuando una máquina ve xmls:integer,
+sabe que puede seguir este enlace xmls
+
+00:09:50.346 --> 00:09:52.076 align:middle
+para saber más sobre ese tipo.
+
+00:09:52.756 --> 00:09:58.686 align:middle
+Y si todas las APIs utilizaran este mismo identificador
+para los tipos enteros, bueno, de repente,
+
+00:09:59.036 --> 00:10:02.326 align:middle
+las APIs serían súper
+comprensibles para las máquinas.
+
+00:10:03.336 --> 00:10:08.256 align:middle
+De todos modos, no es necesario que puedas leer
+estos documentos y que tengan un sentido perfecto.
+
+00:10:09.066 --> 00:10:12.206 align:middle
+Mientras entiendas lo que
+todos estos "datos enlazados"
+
+00:10:12.416 --> 00:10:15.436 align:middle
+y los "tipos" compartidos, estarás bien.
+
+00:10:16.576 --> 00:10:20.646 align:middle
+Vale, ya casi hemos terminado con
+todo este rollo teórico, lo prometo.
+
+00:10:21.226 --> 00:10:26.216 align:middle
+Pero antes, tenemos que hablar de lo que es
+"Hydra", y ver algunas otras entradas geniales
+
+00:10:26.316 --> 00:10:29.166 align:middle
+que ya están en hydra:supportedClass
