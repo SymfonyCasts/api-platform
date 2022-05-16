@@ -1,0 +1,237 @@
+WEBVTT
+
+00:00:01.126 --> 00:00:05.026 align:middle
+No vamos a hablar específicamente
+de la seguridad en este tutorial:
+
+00:00:05.586 --> 00:00:08.436 align:middle
+lo haremos en nuestro próximo curso
+y le prestaremos la debida atención.
+
+00:00:08.906 --> 00:00:14.826 align:middle
+Pero, incluso olvidando la seguridad y el inicio
+de sesión y todo eso, es muy probable que
+
+00:00:14.826 --> 00:00:19.126 align:middle
+tu API tenga algún concepto de "usuarios".
+
+00:00:20.036 --> 00:00:24.546 align:middle
+En nuestro caso, un "usuario" publicará un listado
+de quesos y se convertirá en su "propietario".
+
+00:00:25.296 --> 00:00:32.476 align:middle
+Y puede que después, para comprar un listado de
+quesos, un usuario envíe un mensaje a otro usuario.
+
+00:00:33.376 --> 00:00:37.056 align:middle
+Es hora de llevar nuestra aplicación
+al siguiente nivel creando esa entidad.
+
+00:00:37.436 --> 00:00:40.846 align:middle
+Y aunque te diga que no
+pienses en la seguridad,
+
+00:00:41.156 --> 00:00:45.286 align:middle
+en lugar de crear la entidad de usuario con
+make:entity como haría normalmente, voy a
+
+00:00:45.736 --> 00:00:52.796 align:middle
+utilizar make:user, Sí, esto configurará
+algunas cosas relacionadas con la seguridad...
+
+00:00:52.796 --> 00:00:54.896 align:middle
+pero nada que vayamos a utilizar todavía.
+
+00:00:55.766 --> 00:00:59.386 align:middle
+Mira la parte 2 de esta serie
+para ver todas esas cosas.
+
+00:00:59.466 --> 00:01:05.286 align:middle
+De todos modos, llamaré a la clase User, y
+quiero almacenar los usuarios en la base de datos.
+
+00:01:05.286 --> 00:01:11.626 align:middle
+Para el nombre único de visualización, voy a hacer que los usuarios
+se registren a través del correo electrónico, así que utiliza eso.
+
+00:01:12.516 --> 00:01:17.316 align:middle
+Y entonces: ¿Esta aplicación necesita hacer un
+hash o comprobar las contraseñas de los usuarios?
+
+00:01:18.126 --> 00:01:20.156 align:middle
+Hablaremos más de esto en
+el tutorial de seguridad.
+
+00:01:20.606 --> 00:01:28.346 align:middle
+Pero si los usuarios van a tener que iniciar sesión en tu sitio a
+través de una contraseña y tu aplicación va a ser la responsable
+
+00:01:28.346 --> 00:01:32.886 align:middle
+de comprobar si esa contraseña es válida
+-no te limitas a enviar la contraseña
+
+00:01:32.886 --> 00:01:37.266 align:middle
+a algún otro servicio para que la
+verifique-, entonces responde que sí. No
+
+00:01:38.246 --> 00:01:42.196 align:middle
+importa si el usuario va a introducir la contraseña
+a través de una aplicación de iPhone que habla
+
+00:01:42.196 --> 00:01:46.256 align:middle
+con tu API o a través de un formulario
+de inicio de sesión: responde que sí
+
+00:01:46.456 --> 00:01:50.116 align:middle
+si tu aplicación es responsable de
+gestionar las contraseñas de los usuarios.
+
+00:01:51.256 --> 00:01:53.456 align:middle
+Utilizaré el hashtag de contraseñas Argon2i.
+
+00:01:53.916 --> 00:01:57.446 align:middle
+Pero si no ves esta pregunta, ¡no pasa nada!
+
+00:01:57.906 --> 00:02:02.636 align:middle
+A partir de Symfony 4.3, no necesitas elegir
+un algoritmo de hashing de contraseñas
+
+00:02:02.976 --> 00:02:06.476 align:middle
+porque Symfony puede elegir el
+mejor disponible automáticamente.
+
+00:02:07.006 --> 00:02:08.636 align:middle
+Una cosa realmente genial.
+
+00:02:08.746 --> 00:02:10.616 align:middle
+¡Vamos a ver qué hace esto!
+
+00:02:10.616 --> 00:02:11.726 align:middle
+Me alegra decir que...
+
+00:02:11.986 --> 00:02:16.166 align:middle
+¡no mucho! En primer lugar,
+ahora tenemos una entidad User.
+
+00:02:16.576 --> 00:02:23.396 align:middle
+Y... no tiene nada de especial: tiene algunos
+métodos extra relacionados con la seguridad,
+
+00:02:23.446 --> 00:02:28.416 align:middle
+como getRoles(), getPassword(),
+getSalt() y eraseCredentials(),
+
+00:02:29.266 --> 00:02:31.346 align:middle
+pero no afectarán a lo que estamos haciendo.
+
+00:02:31.996 --> 00:02:40.886 align:middle
+En su mayor parte, tenemos una entidad normal y aburrida con
+$id, $email, una propiedad de matriz $roles, y $password,
+
+00:02:41.366 --> 00:02:44.426 align:middle
+que finalmente almacenará
+la contraseña con hash.
+
+00:02:45.696 --> 00:02:51.866 align:middle
+Esto también creó la entidad normal UserRepository
+e hizo un par de cambios en security.yaml:
+
+00:02:52.756 --> 00:02:56.516 align:middle
+configuró encoders - esto podría
+decir auto para ti, gracias a
+
+00:02:56.676 --> 00:03:00.466 align:middle
+la nueva característica de Symfony
+4.3 - y el proveedor de usuarios.
+
+00:03:00.906 --> 00:03:03.206 align:middle
+Cosas de las que hablaremos más adelante.
+
+00:03:03.776 --> 00:03:06.826 align:middle
+Así que... olvida que están
+aquí y en su lugar di...
+
+00:03:07.096 --> 00:03:09.536 align:middle
+¡vaya! ¡Tenemos una entidad User!
+
+00:03:10.426 --> 00:03:13.436 align:middle
+Gracias al comando, la entidad
+tiene una propiedad email,
+
+00:03:13.786 --> 00:03:16.836 align:middle
+y pienso hacer que los usuarios
+se registren utilizando eso.
+
+00:03:17.396 --> 00:03:23.046 align:middle
+Pero también quiero que cada usuario tenga un
+"nombre de usuario" que podamos mostrar públicamente.
+
+00:03:23.606 --> 00:03:30.436 align:middle
+Vamos a añadirlo: busca tu terminal y ejecuta
+php bin/console make:entity Actualiza User
+
+00:03:30.966 --> 00:03:39.176 align:middle
+y añade username como string, 255, no anulable
+en la base de datos, y pulsa intro para terminar.
+
+00:03:40.696 --> 00:03:42.466 align:middle
+Ahora abre User...
+
+00:03:42.856 --> 00:03:45.226 align:middle
+y desplázate hasta getUsername().
+
+00:03:46.636 --> 00:03:51.416 align:middle
+El comando make:user generó esto
+y devolvió $this->email...
+
+00:03:51.906 --> 00:03:56.206 align:middle
+porque eso es lo que elegí como
+nombre "para mostrar" por seguridad.
+
+00:03:57.346 --> 00:04:01.546 align:middle
+Ahora que realmente tenemos un campo de nombre
+de usuario, devuelve $this->username.
+
+00:04:02.846 --> 00:04:08.726 align:middle
+Ah, y mientras hacemos esta clase, simplemente,
+increíble, el comando make:user sabía
+
+00:04:08.726 --> 00:04:12.256 align:middle
+que email debía ser único,
+así que añadió unique=true.
+
+00:04:12.766 --> 00:04:17.326 align:middle
+Añadamos también eso a username: unique=true.
+
+00:04:18.366 --> 00:04:19.996 align:middle
+¡Esa es una bonita entidad!
+
+00:04:21.106 --> 00:04:27.736 align:middle
+Vamos a sincronizar nuestra base de datos ejecutando
+php bin/console make:migration Muévete...
+
+00:04:27.796 --> 00:04:33.506 align:middle
+y volvamos a comprobar el SQL:
+CREATE TABLE user - ¡se ve bien!
+
+00:04:34.866 --> 00:04:42.016 align:middle
+Ejecútalo con: php bin/console
+doctrine:migration:migrate ¡Perfecto!
+
+00:04:42.536 --> 00:04:45.456 align:middle
+Tenemos una nueva y
+preciosa entidad Doctrine...
+
+00:04:45.846 --> 00:04:54.216 align:middle
+pero en lo que respecta a la Plataforma API, seguimos
+teniendo sólo un recurso API: CheeseListing.
+
+00:04:55.756 --> 00:05:02.236 align:middle
+Lo siguiente: vamos a exponer User como un Recurso
+API y a utilizar todos nuestros nuevos conocimientos
+
+00:05:02.236 --> 00:05:05.216 align:middle
+para perfeccionar ese nuevo recurso en...
+
+00:05:05.466 --> 00:05:06.516 align:middle
+unos 5 minutos
