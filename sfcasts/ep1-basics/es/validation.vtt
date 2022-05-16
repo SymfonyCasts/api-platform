@@ -1,0 +1,307 @@
+WEBVTT
+
+00:00:01.036 --> 00:00:05.316 align:middle
+Hay un montón de formas diferentes en las que un
+cliente de la API puede enviar datos erróneos:
+
+00:00:06.166 --> 00:00:07.876 align:middle
+pueden enviar JSON mal formado...
+
+00:00:08.266 --> 00:00:10.496 align:middle
+o enviar un campo title en blanco...
+
+00:00:11.066 --> 00:00:14.436 align:middle
+tal vez porque un usuario se olvidó
+de rellenar un campo en el frontend. El
+
+00:00:15.236 --> 00:00:21.886 align:middle
+trabajo de nuestra API es responder a todas estas
+situaciones de forma informativa y coherente , de
+
+00:00:22.036 --> 00:00:27.006 align:middle
+modo que los errores puedan ser fácilmente
+comprendidos, analizados y comunicados a los humanos.
+
+00:00:27.966 --> 00:00:32.176 align:middle
+Ésta es una de las áreas en las que
+la Plataforma API realmente destaca.
+
+00:00:33.166 --> 00:00:38.146 align:middle
+Hagamos algunos experimentos: ¿qué ocurre si
+enviamos accidentalmente un JSON no válido?
+
+00:00:39.056 --> 00:00:40.626 align:middle
+Elimina la última llave.
+
+00:00:42.096 --> 00:00:46.736 align:middle
+¡Pruébalo! ¡Woh!
+
+00:00:46.736 --> 00:00:53.476 align:middle
+¡Qué bien! Esto nos devuelve un nuevo
+"tipo" de recurso: un hydra:error.
+
+00:00:54.346 --> 00:00:57.686 align:middle
+Si un cliente de la API entiende
+a Hydra, sabrá al instante
+
+00:00:57.686 --> 00:01:00.096 align:middle
+que esta respuesta contiene detalles del error.
+
+00:01:00.836 --> 00:01:05.716 align:middle
+E incluso si alguien no ha oído hablar nunca
+de Hydra, ésta es una respuesta súper clara.
+
+00:01:06.166 --> 00:01:10.276 align:middle
+Y, lo más importante, todos los
+errores tienen la misma estructura.
+
+00:01:11.036 --> 00:01:15.666 align:middle
+El código de estado también es 400 -lo que significa
+que el cliente ha cometido un error en la petición-
+
+00:01:16.066 --> 00:01:18.426 align:middle
+y hydra:description dice "Error de sintaxis".
+
+00:01:19.726 --> 00:01:23.896 align:middle
+Sin hacer nada, la Plataforma API
+ya está gestionando este caso.
+
+00:01:24.326 --> 00:01:28.526 align:middle
+Ah, y el trace, aunque quizá sea útil
+ahora mismo durante el desarrollo,
+
+00:01:28.736 --> 00:01:31.286 align:middle
+no aparecerá en el entorno de producción.
+
+00:01:32.406 --> 00:01:35.966 align:middle
+¿Qué pasa si simplemente borramos
+todo y enviamos una petición vacía?
+
+00:01:37.696 --> 00:01:40.626 align:middle
+Ah... eso sigue siendo
+técnicamente un JSON no válido.
+
+00:01:41.996 --> 00:01:44.136 align:middle
+Prueba sólo con {}. Ah...
+
+00:01:46.256 --> 00:01:52.976 align:middle
+esta vez obtenemos un error 500:
+la base de datos está explotando
+
+00:01:53.176 --> 00:01:55.216 align:middle
+porque algunas de las columnas
+no pueden ser nulas. Ah
+
+00:01:55.926 --> 00:01:59.706 align:middle
+, y como he mencionado antes,
+si utilizas Symfony 4.3,
+
+00:01:59.866 --> 00:02:05.416 align:middle
+es posible que ya veas un error de validación en lugar
+de un error de base de datos debido a una nueva función
+
+00:02:05.416 --> 00:02:10.236 align:middle
+en la que las reglas de validación se añaden automáticamente
+al leer las reglas de la base de datos de Doctrine.
+
+00:02:10.756 --> 00:02:16.586 align:middle
+Pero, tanto si ves un error 500, como si
+Symfony añade al menos una validación básica
+
+00:02:16.586 --> 00:02:21.026 align:middle
+por ti, los datos de entrada que se
+permiten es algo que queremos controlar:
+
+00:02:21.576 --> 00:02:24.596 align:middle
+Quiero decidir las reglas
+exactas para cada campo.
+
+00:02:25.806 --> 00:02:27.376 align:middle
+Añadir reglas de validación es...
+
+00:02:27.766 --> 00:02:29.836 align:middle
+muy bonito.
+
+00:02:30.416 --> 00:02:35.146 align:middle
+Y, a menos que seas nuevo en Symfony,
+esto parecerá deliciosamente aburrido.
+
+00:02:36.186 --> 00:02:40.736 align:middle
+Por encima de title, para que sea
+obligatorio, añade @Assert\NotBlank().
+
+00:02:42.026 --> 00:02:48.776 align:middle
+Añadamos también aquí @Assert\Length()
+con, qué tal, min=2 y max=50.
+
+00:02:49.596 --> 00:02:56.626 align:middle
+Incluso establezcamos que maxMessage describa
+tu queso en 50 caracteres o menos ¿Qué más?
+
+00:02:58.126 --> 00:03:01.096 align:middle
+Por encima de description,
+añadamos @Assert\NotBlank.
+
+00:03:03.026 --> 00:03:06.216 align:middle
+Y para el precio, @Assert\NotBlank().
+
+00:03:07.296 --> 00:03:11.916 align:middle
+También podrías añadir una restricción GreaterThan
+para asegurarte de que está por encima de cero.
+
+00:03:12.996 --> 00:03:16.936 align:middle
+Bien, vuelve a cambiar y prueba
+a no enviar datos de nuevo.
+
+00:03:19.426 --> 00:03:21.436 align:middle
+¡Woh! ¡Es increíble!
+
+00:03:21.936 --> 00:03:25.266 align:middle
+¡El @type es ConstraintViolationList!
+
+00:03:25.896 --> 00:03:30.606 align:middle
+¡Es uno de los tipos descritos
+por nuestra documentación JSON-LD!
+
+00:03:31.826 --> 00:03:34.916 align:middle
+Ve a /api/docs.jsonld.
+
+00:03:35.656 --> 00:03:41.506 align:middle
+Debajo de supportedClasses, está EntryPoint
+y aquí están ConstraintViolation
+
+00:03:41.726 --> 00:03:47.286 align:middle
+y ConstraintViolationList, que describen
+el aspecto de cada uno de estos tipos.
+
+00:03:47.376 --> 00:03:51.806 align:middle
+Y los datos de la respuesta son realmente
+útiles: una matriz violations en
+
+00:03:52.016 --> 00:03:55.726 align:middle
+la que cada error tiene un propertyPath
+-para que sepamos de qué campo procede
+
+00:03:55.726 --> 00:03:58.226 align:middle
+ese error- y message.
+
+00:03:58.896 --> 00:04:00.586 align:middle
+Así que... todo funciona...
+
+00:04:00.666 --> 00:04:05.946 align:middle
+¡funciona! Y si intentas pasar un
+title de más de 50 caracteres...
+
+00:04:06.706 --> 00:04:11.706 align:middle
+y ejecuta, ahí está nuestro
+mensaje personalizado.
+
+00:04:12.416 --> 00:04:13.756 align:middle
+¡Perfecto! ¡Ya hemos terminado!
+
+00:04:14.276 --> 00:04:15.536 align:middle
+Pero espera...
+
+00:04:15.816 --> 00:04:18.576 align:middle
+¿no nos falta un poco de
+validación en el campo price?
+
+00:04:19.406 --> 00:04:21.396 align:middle
+Tenemos @NotBlank...
+
+00:04:21.666 --> 00:04:25.656 align:middle
+¿pero qué nos impide enviar
+el texto de este campo?
+
+00:04:25.656 --> 00:04:28.396 align:middle
+¿Algo? ¡Vamos a intentarlo!
+
+00:04:29.036 --> 00:04:33.756 align:middle
+Establece el precio en apple, y ejecuta.
+
+00:04:35.756 --> 00:04:39.506 align:middle
+¡Ja! ¡Falla con un código de estado 400!
+
+00:04:40.006 --> 00:04:41.376 align:middle
+¡Es increíble!
+
+00:04:42.156 --> 00:04:49.196 align:middle
+Dice: El tipo del atributo precio debe ser int,
+cadena dada Si te fijas bien, está fallando
+
+00:04:49.446 --> 00:04:52.466 align:middle
+durante el proceso de deserialización.
+
+00:04:53.056 --> 00:04:57.676 align:middle
+Técnicamente no es un error de
+validación, es un error de serialización.
+
+00:04:58.256 --> 00:05:01.196 align:middle
+Pero para el cliente de la
+API, parece casi lo mismo,
+
+00:05:01.696 --> 00:05:06.796 align:middle
+excepto que esto devuelve un tipo de Error
+en lugar de un ConstraintViolationList...
+
+00:05:07.166 --> 00:05:11.536 align:middle
+lo que probablemente tiene sentido: si algún
+JavaScript está haciendo esta petición,
+
+00:05:11.936 --> 00:05:17.626 align:middle
+ese JavaScript probablemente debería tener algunas reglas
+de validación incorporadas para evitar que el usuario
+
+00:05:17.696 --> 00:05:20.176 align:middle
+añada texto al campo del precio.
+
+00:05:21.196 --> 00:05:27.826 align:middle
+La cuestión es: La Plataforma API, bueno, en realidad,
+el serializador, conoce los tipos de tus campos
+
+00:05:27.826 --> 00:05:31.746 align:middle
+y se asegurará de que no se pase nada insano.
+
+00:05:31.746 --> 00:05:35.936 align:middle
+En realidad, sabe que el precio es un
+número entero a partir de dos fuentes
+
+00:05:36.396 --> 00:05:44.006 align:middle
+los metadatos de Doctrine @ORM\Column sobre el campo
+y la sugerencia de tipo de argumento en setPrice().
+
+00:05:44.006 --> 00:05:49.486 align:middle
+Lo único de lo que tenemos que preocuparnos realmente
+es de añadir la validación de las "reglas de negocio":
+
+00:05:50.106 --> 00:05:54.086 align:middle
+añadir las restricciones de validación de
+@Assert para decir que este campo es obligatorio,
+
+00:05:54.456 --> 00:06:01.606 align:middle
+que ese campo tiene una longitud mínima, etc. Básicamente,
+la validación en la Plataforma API funciona exactamente
+
+00:06:01.856 --> 00:06:04.356 align:middle
+igual que la validación en
+cualquier aplicación Symfony.
+
+00:06:05.186 --> 00:06:11.306 align:middle
+Y la Plataforma API se encarga del aburrido trabajo
+de asignar los fallos de serialización y valid ación
+
+00:06:11.416 --> 00:06:16.356 align:middle
+a un código de estado 400 y a respuestas
+de error descriptivas y coherentes.
+
+00:06:17.376 --> 00:06:20.496 align:middle
+A continuación, ¡creemos
+un segundo Recurso API!
+
+00:06:20.896 --> 00:06:24.456 align:middle
+¡Un usuario! Porque las cosas se
+pondrán realmente interesantes
+
+00:06:24.736 --> 00:06:27.916 align:middle
+cuando empecemos a crear
+relaciones entre recursos
