@@ -1,0 +1,384 @@
+WEBVTT
+
+00:00:02.036 --> 00:00:06.236 align:middle
+Cuando leemos un recurso CheeseListing,
+obtenemos un campo description.
+
+00:00:06.236 --> 00:00:09.916 align:middle
+Pero cuando enviamos datos,
+se llama textDescription.
+
+00:00:10.366 --> 00:00:15.716 align:middle
+Y... eso está técnicamente bien: nuestros campos de
+entrada no tienen por qué coincidir con los de salida.
+
+00:00:16.626 --> 00:00:22.486 align:middle
+Pero... si pudiéramos hacer que fuesen iguales, eso
+facilitaría la vida a cualquiera que utilice nuestra API.
+
+00:00:23.616 --> 00:00:26.676 align:middle
+Es bastante fácil adivinar
+cómo se crean estas propiedades
+
+00:00:27.606 --> 00:00:32.786 align:middle
+las claves dentro del JSON coinciden literalmente con
+los nombres de las propiedades dentro de nuestra clase.
+
+00:00:33.216 --> 00:00:39.386 align:middle
+Y en el caso de una propiedad falsa como
+textDescription, la Plataforma API elimina la
+
+00:00:39.536 --> 00:00:42.696 align:middle
+parte "set" y la convierte en minúscula. Por
+
+00:00:43.676 --> 00:00:48.516 align:middle
+cierto, como todo en la Plataforma API,
+la forma en que los campos se transforman
+
+00:00:48.516 --> 00:00:54.316 align:middle
+en claves es algo que puedes controlar a nivel
+global: se llama "convertidor de nombres".
+
+00:00:55.566 --> 00:01:00.616 align:middle
+De todos modos, estaría bien que el campo de
+entrada se llamara simplemente description.
+
+00:01:00.816 --> 00:01:03.476 align:middle
+Tendríamos la entrada
+description, la salida description.
+
+00:01:04.316 --> 00:01:09.696 align:middle
+Claro que, internamente, sabríamos que se
+llama setTextDescription() en la entrada
+
+00:01:10.376 --> 00:01:15.026 align:middle
+y getDescription() en la salida, pero el usuario
+no tendría que preocuparse ni ocuparse de esto.
+
+00:01:16.326 --> 00:01:17.456 align:middle
+Y... ¡sí!
+
+00:01:17.646 --> 00:01:21.696 align:middle
+Puedes controlar totalmente esto
+con una anotación súper útil.
+
+00:01:22.596 --> 00:01:27.976 align:middle
+Por encima de setTextDescription(),
+añade @SerializedName() con description.
+
+00:01:29.526 --> 00:01:30.426 align:middle
+¡Actualiza la documentación!
+
+00:01:31.596 --> 00:01:33.406 align:middle
+Si probamos la operación GET...
+
+00:01:34.406 --> 00:01:36.706 align:middle
+no ha cambiado: sigue siendo description.
+
+00:01:37.616 --> 00:01:39.436 align:middle
+Pero para la operación POST...
+
+00:01:39.846 --> 00:01:42.866 align:middle
+¡sí! El campo se llama ahora description,
+
+00:01:43.436 --> 00:01:46.876 align:middle
+pero el serializador llamará
+internamente a setTextDescription().
+
+00:01:48.176 --> 00:01:52.896 align:middle
+Vale, ya sabemos que al serializador le gusta
+trabajar llamando a métodos getter y setter...
+
+00:01:53.366 --> 00:01:59.376 align:middle
+o utilizando propiedades públicas o algunas
+otras cosas como los métodos hasser o isser.
+
+00:02:00.346 --> 00:02:03.136 align:middle
+¿Pero qué pasa si quiero
+dar a mi clase un constructor?
+
+00:02:03.626 --> 00:02:08.676 align:middle
+Bueno, ahora mismo tenemos un constructor,
+pero no tiene ningún argumento necesario.
+
+00:02:09.576 --> 00:02:14.066 align:middle
+Eso significa que el serializador no
+tiene problemas para instanciar esta clase
+
+00:02:14.266 --> 00:02:16.236 align:middle
+cuando enviamos un nuevo CheeseListing.
+
+00:02:17.506 --> 00:02:18.806 align:middle
+Pero... ¿sabes qué?
+
+00:02:19.326 --> 00:02:21.806 align:middle
+Como todo CheeseListing necesita un título,
+
+00:02:21.966 --> 00:02:25.216 align:middle
+me gustaría darle a éste un nuevo
+argumento obligatorio llamado $title.
+
+00:02:26.086 --> 00:02:30.326 align:middle
+Definitivamente no es necesario que hagas
+esto, pero para mucha gente tiene sentido:
+
+00:02:30.776 --> 00:02:35.096 align:middle
+si una clase tiene propiedades requeridas:
+¡obliga a pasarlas a través del constructor! ¡
+
+00:02:36.176 --> 00:02:40.566 align:middle
+Y ahora que tenemos esto, también
+puedes decidir que no quieres
+
+00:02:40.566 --> 00:02:42.676 align:middle
+tener un método setTitle()!
+
+00:02:43.566 --> 00:02:48.106 align:middle
+Desde una perspectiva orientada a objetos,
+esto hace que la propiedad title sea inmutable:
+
+00:02:48.746 --> 00:02:52.796 align:middle
+sólo puedes establecerla una
+vez al crear el CheeseListing.
+
+00:02:53.636 --> 00:02:55.186 align:middle
+Es un ejemplo un poco tonto.
+
+00:02:55.576 --> 00:02:59.366 align:middle
+En el mundo real, probablemente querríamos
+que el título fuera modificable.
+
+00:03:00.086 --> 00:03:05.786 align:middle
+Pero, desde una perspectiva orientada a objetos, hay
+situaciones en las que quieres hacer exactamente esto.
+
+00:03:05.836 --> 00:03:13.496 align:middle
+Ah, y no olvides decir $this->title
+= $title en el constructor.
+
+00:03:14.596 --> 00:03:15.896 align:middle
+La pregunta ahora es...
+
+00:03:16.226 --> 00:03:19.076 align:middle
+¿podrá el serializador trabajar con esto?
+
+00:03:19.746 --> 00:03:23.176 align:middle
+¿Se va a enfadar mucho porque
+hemos eliminado setTitle()?
+
+00:03:24.156 --> 00:03:26.046 align:middle
+Y cuando pongamos un nuevo POST, ¿podrá
+
+00:03:26.286 --> 00:03:31.726 align:middle
+instanciar el CheeseListing
+aunque tenga un arg requerido?
+
+00:03:32.786 --> 00:03:33.826 align:middle
+¡Vaya! ¡Vamos a probarlo!
+
+00:03:34.366 --> 00:03:36.816 align:middle
+¿Qué tal unas migas de queso azul...
+
+00:03:37.166 --> 00:03:43.156 align:middle
+por 5$. Ejecuta y...
+
+00:03:43.836 --> 00:03:44.786 align:middle
+¡funciona!
+
+00:03:45.146 --> 00:03:46.726 align:middle
+¡El título es correcto!
+
+00:03:47.326 --> 00:03:49.546 align:middle
+Um... ¿cómo diablos ha funcionado?
+
+00:03:50.836 --> 00:03:53.996 align:middle
+Como la única forma de establecer el
+título es a través del constructor,
+
+00:03:54.366 --> 00:03:57.286 align:middle
+parece que sabía pasar la
+clave del título allí?
+
+00:03:57.696 --> 00:03:59.926 align:middle
+¿Cómo? La respuesta es...
+
+00:04:00.236 --> 00:04:01.826 align:middle
+¡magia! ¡Es una broma!
+
+00:04:02.376 --> 00:04:03.366 align:middle
+La respuesta es...
+
+00:04:03.606 --> 00:04:05.296 align:middle
+¡por pura suerte!
+
+00:04:05.646 --> 00:04:07.076 align:middle
+No, sigo mintiendo totalmente.
+
+00:04:07.426 --> 00:04:10.686 align:middle
+La respuesta se debe al nombre del argumento.
+
+00:04:11.376 --> 00:04:15.796 align:middle
+Comprueba esto: cambia el argumento por
+$name, y actualiza el código de abajo.
+
+00:04:16.636 --> 00:04:20.306 align:middle
+Desde una perspectiva orientada a
+objetos, eso no debería cambiar nada.
+
+00:04:20.866 --> 00:04:22.616 align:middle
+Pero vuelve a pulsar ejecutar.
+
+00:04:24.856 --> 00:04:26.066 align:middle
+¡Un gran error!
+
+00:04:26.436 --> 00:04:31.946 align:middle
+Un código de estado 400: No se puede crear una
+instancia de CheeseListing a partir de datos serializados
+
+00:04:32.356 --> 00:04:36.066 align:middle
+porque su constructor requiere que el
+parámetro "nombre" esté presente.
+
+00:04:36.886 --> 00:04:40.616 align:middle
+Mis felicitaciones al creador de ese
+mensaje de error: ¡es impresionante!
+
+00:04:41.476 --> 00:04:44.056 align:middle
+Cuando el serializador ve un
+argumento del constructor llamado...
+
+00:04:44.246 --> 00:04:48.746 align:middle
+$namebusca una clave name en
+el JSON que estamos enviando.
+
+00:04:50.046 --> 00:04:52.006 align:middle
+Si no existe, ¡boom!
+
+00:04:52.346 --> 00:04:57.416 align:middle
+¡Error! Así que mientras llamemos al
+argumento $title, todo funciona bien.
+
+00:05:01.126 --> 00:05:02.896 align:middle
+Pero hay un caso límite.
+
+00:05:03.476 --> 00:05:08.466 align:middle
+Imagina que estamos creando un nuevo CheeseListing y que
+nos olvidamos de enviar el campo title por completo, es
+
+00:05:09.366 --> 00:05:11.536 align:middle
+decir, que tenemos un error
+en nuestro código JavaScript.
+
+00:05:11.956 --> 00:05:13.096 align:middle
+Pulsa Ejecutar.
+
+00:05:15.626 --> 00:05:18.486 align:middle
+Nos devuelve un error 400...
+
+00:05:18.726 --> 00:05:23.646 align:middle
+lo cual es perfecto: significa que la persona
+que hace la petición tiene algún problema
+
+00:05:23.646 --> 00:05:24.356 align:middle
+con su petición.
+
+00:05:25.326 --> 00:05:31.046 align:middle
+Pero, el hydra:title no es muy claro:
+Se ha producido un error ¡Fascinante!
+
+00:05:32.066 --> 00:05:35.386 align:middle
+El hydra:description es
+mucho más descriptivo...
+
+00:05:35.386 --> 00:05:40.686 align:middle
+en realidad un poco demasiado descriptivo:
+muestra algunas cosas internas de nuestra API...
+
+00:05:40.816 --> 00:05:43.266 align:middle
+que quizá no quiera hacer públicas.
+
+00:05:44.036 --> 00:05:46.456 align:middle
+Al menos el trace no aparecerá en producción.
+
+00:05:47.526 --> 00:05:51.226 align:middle
+Puede que mostrar estos detalles dentro
+de hydra:description te parezca bien...
+
+00:05:51.866 --> 00:05:55.266 align:middle
+Pero si quieres evitar esto, tienes
+que recurrir a la validación,
+
+00:05:55.846 --> 00:05:58.526 align:middle
+que es un tema del que
+hablaremos en unos minutos.
+
+00:05:59.106 --> 00:06:01.866 align:middle
+Pero lo que debes saber ahora es
+
+00:06:01.866 --> 00:06:05.776 align:middle
+que la validación no puede producirse
+a menos que el serializador sea capaz
+
+00:06:05.776 --> 00:06:08.686 align:middle
+de crear con éxito el objeto CheeseListing.
+
+00:06:09.086 --> 00:06:14.296 align:middle
+En otras palabras, tienes que ayudar al serializador
+haciendo que este argumento sea opcional.
+
+00:06:14.296 --> 00:06:16.996 align:middle
+Si lo intentas de nuevo...
+
+00:06:19.256 --> 00:06:21.496 align:middle
+¡ja! ¡Un error 500!
+
+00:06:22.016 --> 00:06:24.976 align:middle
+Sí crea el objeto CheeseListing con éxito...
+
+00:06:25.566 --> 00:06:29.216 align:middle
+y luego explota cuando intenta añadir
+un título nulo en la base de datos.
+
+00:06:29.866 --> 00:06:35.336 align:middle
+Pero, eso es exactamente lo que queremos, porque
+permitirá que la validación haga su trabajo...
+
+00:06:35.596 --> 00:06:37.536 align:middle
+cuando lo añadamos dentro de unos minutos.
+
+00:06:38.326 --> 00:06:42.936 align:middle
+Ah, y si estás usando Symfony 4.3, ¡puede
+que ya veas un error de validación!
+
+00:06:43.686 --> 00:06:48.016 align:middle
+Eso se debe a una nueva función que puede convertir
+automáticamente tus reglas de base de datos
+
+00:06:48.556 --> 00:06:51.696 align:middle
+-el hecho de que le hayamos dicho
+a Doctrine que title es necesario
+
+00:06:51.696 --> 00:06:54.526 align:middle
+en la base de datos- en reglas de validación.
+
+00:06:55.136 --> 00:06:59.126 align:middle
+Como dato curioso, esta función fue
+aportada a Symfony por Kèvin Dunglas,
+
+00:06:59.476 --> 00:07:01.416 align:middle
+el desarrollador principal
+de la Plataforma API.
+
+00:07:01.816 --> 00:07:02.806 align:middle
+¡Caramba, Kèvin!
+
+00:07:02.926 --> 00:07:04.086 align:middle
+¡Tómate un descanso de vez en cuando!
+
+00:07:05.486 --> 00:07:11.976 align:middle
+A continuación: vamos a explorar los filtros: un potente
+sistema para permitir a tus clientes de la API buscar
+
+00:07:11.976 --> 00:07:14.646 align:middle
+y filtrar a través de
+nuestros recursos CheeseListing
