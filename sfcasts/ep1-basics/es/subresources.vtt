@@ -1,0 +1,179 @@
+WEBVTT
+
+00:00:01.096 --> 00:00:02.956 align:middle
+En algún momento, un cliente de la API...
+
+00:00:03.116 --> 00:00:07.966 align:middle
+que podría ser nuestro JavaScript, probablemente
+querrá obtener una lista de todos los
+
+00:00:07.966 --> 00:00:09.926 align:middle
+cheeseListings para un User específico.
+
+00:00:10.386 --> 00:00:14.016 align:middle
+Y... ya podemos hacer esto
+de dos maneras diferentes
+
+00:00:14.766 --> 00:00:17.796 align:middle
+buscar un propietario específico
+aquí a través de nuestro filtro...
+
+00:00:18.146 --> 00:00:22.106 align:middle
+o bien obtener el User específico
+y mirar su propiedad cheeseListings.
+
+00:00:22.106 --> 00:00:28.616 align:middle
+Si lo piensas, un CheeseListing
+es casi como un recurso "hijo"
+
+00:00:28.616 --> 00:00:32.606 align:middle
+de un User: los listados de
+queso pertenecen a los usuarios.
+
+00:00:32.606 --> 00:00:38.376 align:middle
+Y por esa razón, a algunas personas les gustaría
+poder obtener los listados de queso de un usuario
+
+00:00:38.646 --> 00:00:45.776 align:middle
+yendo a una URL como ésta:
+/api/users/4/cheeses...
+
+00:00:45.996 --> 00:00:47.226 align:middle
+o algo similar.
+
+00:00:49.296 --> 00:00:51.376 align:middle
+Pero... eso no funciona.
+
+00:00:51.996 --> 00:00:54.286 align:middle
+Esta idea se llama "subrecursos".
+
+00:00:55.106 --> 00:01:03.796 align:middle
+Ahora mismo, cada recurso tiene su propia,
+especie de, URL base: /api/cheeses y /api/users.
+
+00:01:04.036 --> 00:01:09.506 align:middle
+Pero es posible, más o menos,
+"mover" los quesos bajo los usuarios.
+
+00:01:10.436 --> 00:01:17.866 align:middle
+He aquí cómo: en User, busca la propiedad
+$cheeseListings y añade @ApiSubresource.
+
+00:01:18.996 --> 00:01:20.456 align:middle
+¡Vamos a refrescar los documentos!
+
+00:01:22.766 --> 00:01:25.136 align:middle
+¡Woh! ¡Tenemos una nueva ruta!
+
+00:01:25.536 --> 00:01:31.146 align:middle
+/api/users/{id}/cheese_listings.
+
+00:01:32.006 --> 00:01:34.186 align:middle
+Aparece en dos lugares...
+
+00:01:34.186 --> 00:01:37.286 align:middle
+porque está algo relacionado
+con los usuarios...
+
+00:01:37.286 --> 00:01:39.976 align:middle
+y algo relacionado con los listados de quesos.
+
+00:01:40.646 --> 00:01:45.416 align:middle
+La URL es cheese_listings por
+defecto, pero se puede personalizar.
+
+00:01:46.266 --> 00:01:47.606 align:middle
+Así que... ¡probemos!
+
+00:01:48.096 --> 00:01:51.136 align:middle
+Cambia la URL a /cheese_listings.
+
+00:01:52.596 --> 00:01:55.236 align:middle
+Ah, y añade el .jsonld al final.
+
+00:01:56.256 --> 00:01:57.036 align:middle
+¡Ya está!
+
+00:01:57.366 --> 00:02:02.156 align:middle
+El recurso de la colección de todos
+los quesos que pertenecen a este User.
+
+00:02:03.396 --> 00:02:05.016 align:middle
+¡Los sub-recursos son bastante chulos!
+
+00:02:05.246 --> 00:02:10.326 align:middle
+Pero... también son un poco innecesarios: ya hemos
+añadido una forma de obtener la colección de
+
+00:02:10.326 --> 00:02:14.266 align:middle
+listados de quesos de un usuario a
+través de SearchFilter en CheeseListing.
+
+00:02:14.646 --> 00:02:19.156 align:middle
+Y el uso de subrecursos significa que
+tienes más rutas que controlar y,
+
+00:02:19.256 --> 00:02:24.656 align:middle
+cuando llegamos a la seguridad, más rutas
+significan más control de acceso en el que pensar.
+
+00:02:25.256 --> 00:02:30.826 align:middle
+Así que, utiliza subrecursos si quieres, pero no
+recomiendo añadirlos en todas partes, ya que hay un
+
+00:02:31.206 --> 00:02:33.826 align:middle
+coste por la complejidad añadida.
+
+00:02:34.786 --> 00:02:40.286 align:middle
+Ah, y por cierto, hay un montón de cosas
+que puedes personalizar en los subrecursos,
+
+00:02:40.616 --> 00:02:47.456 align:middle
+como los grupos de normalización, la URL, etc.
+Todo está en los documentos y es bastante similar
+
+00:02:47.456 --> 00:02:50.116 align:middle
+a los tipos de personalización
+que hemos visto hasta ahora.
+
+00:02:50.226 --> 00:02:55.646 align:middle
+En el caso de nuestra aplicación, voy a eliminar
+el subrecurso para simplificar las cosas.
+
+00:02:57.036 --> 00:02:59.066 align:middle
+Y... ¡hemos terminado!
+
+00:02:59.436 --> 00:03:04.056 align:middle
+Bueno, hay muchas más cosas interesantes
+que cubrir - ¡incluyendo la seguridad!
+
+00:03:04.766 --> 00:03:07.486 align:middle
+Ese es el tema del próximo
+tutorial de esta serie.
+
+00:03:07.976 --> 00:03:09.866 align:middle
+Pero ¡déjate llevar por
+el salto y choca los cinco!
+
+00:03:10.236 --> 00:03:12.976 align:middle
+¡Ya hemos desbloqueado
+una gran cantidad de poder!
+
+00:03:13.496 --> 00:03:17.946 align:middle
+Podemos exponer entidades como recursos
+de la API, personalizar las operaciones,
+
+00:03:18.136 --> 00:03:23.886 align:middle
+tomar el control total del serializador de un
+montón de maneras diferentes y un montón más.
+
+00:03:24.466 --> 00:03:30.586 align:middle
+Así que empieza a construir tu magnífica nueva API,
+cuéntanoslo y, como siempre, si tienes preguntas,
+
+00:03:30.776 --> 00:03:32.416 align:middle
+puedes encontrarnos en la
+sección de comentarios.
+
+00:03:33.506 --> 00:03:35.036 align:middle
+Muy bien amigos, ¡hasta la próxima!
