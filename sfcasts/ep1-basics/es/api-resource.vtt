@@ -1,0 +1,264 @@
+WEBVTT
+
+00:00:02.236 --> 00:00:08.206 align:middle
+Pregunta: ¿has ido alguna vez a la tienda y
+has comprado accidentalmente demasiado queso?
+
+00:00:08.206 --> 00:00:10.506 align:middle
+Es la historia de mi vida.
+
+00:00:11.246 --> 00:00:14.446 align:middle
+O tal vez tengas el problema contrario:
+¡estás organizando una gran fiesta
+
+00:00:14.446 --> 00:00:16.716 align:middle
+y no tienes suficiente queso!
+
+00:00:17.276 --> 00:00:22.656 align:middle
+Esta es nuestra nueva idea del billón de dólares:
+una plataforma en la que puedes vender ese trozo extra
+
+00:00:22.656 --> 00:00:27.776 align:middle
+de Brie que nunca te acabaste o comprar
+un camión lleno de camembert a alguien
+
+00:00:27.776 --> 00:00:30.496 align:middle
+que va demasiado excitado al mercado del queso.
+
+00:00:30.846 --> 00:00:36.056 align:middle
+Sí, es lo que el mundo está pidiendo:
+un mercado de queso entre iguales.
+
+00:00:36.346 --> 00:00:38.426 align:middle
+Lo llamamos: Cheese Whiz.
+
+00:00:38.676 --> 00:00:44.746 align:middle
+Para el sitio, tal vez lo hagamos una aplicación
+de una sola página construida en React o Vue...
+
+00:00:45.416 --> 00:00:49.976 align:middle
+o tal vez sea un poco más tradicional:
+una mezcla de páginas HTML
+
+00:00:49.976 --> 00:00:52.506 align:middle
+y JavaScript que haga peticiones AJAX.
+
+00:00:52.876 --> 00:00:54.686 align:middle
+Y tal vez incluso tengamos
+una aplicación móvil.
+
+00:00:54.756 --> 00:00:59.846 align:middle
+En realidad no importa, porque todas estas
+opciones significan que tenemos que ser capaces de
+
+00:00:59.846 --> 00:01:03.416 align:middle
+exponer nuestra funcionalidad
+principal a través de una API.
+
+00:01:04.536 --> 00:01:10.706 align:middle
+Pero para empezar: olvídate de la API y haz como
+si este fuera un proyecto Symfony normal y aburrido.
+
+00:01:11.386 --> 00:01:12.386 align:middle
+El paso 1 es...
+
+00:01:12.616 --> 00:01:16.086 align:middle
+hmm, probablemente crear algunas
+entidades de la base de datos.
+
+00:01:17.336 --> 00:01:21.176 align:middle
+Abramos nuestro archivo .env y
+modifiquemos el DATABASE_URL.
+
+00:01:21.516 --> 00:01:24.116 align:middle
+Mi ordenador utiliza root sin contraseña...
+
+00:01:24.686 --> 00:01:28.606 align:middle
+y qué tal cheese_whiz para el
+nombre de la base d e datos.
+
+00:01:29.576 --> 00:01:34.846 align:middle
+También puedes crear un archivo
+.env.local y anular allí DATABASE_URL.
+
+00:01:35.456 --> 00:01:38.656 align:middle
+Usar root y sin contraseña es bastante
+estándar, así que me gusta añadir esto
+
+00:01:38.656 --> 00:01:41.076 align:middle
+a .env y confirmarlo como predeterminado.
+
+00:01:42.776 --> 00:01:47.266 align:middle
+¡Genial! A continuación, en tu terminal,
+ejecuta composer require maker:1.11
+
+00:01:47.266 --> 00:01:50.786 align:middle
+--dev para obtener el MakerBundle de Symfony...
+
+00:01:51.106 --> 00:01:54.306 align:middle
+para que podamos ser perezosos
+y generar nuestra entidad.
+
+00:01:54.306 --> 00:02:00.936 align:middle
+Cuando termine, ejecuta: php bin/console
+make:entity Llama a la primera entidad:
+
+00:02:01.016 --> 00:02:06.356 align:middle
+CheeseListing, que representará cada
+"queso" que esté a la venta en el sitio.
+
+00:02:07.136 --> 00:02:08.146 align:middle
+Pulsa enter y...
+
+00:02:08.516 --> 00:02:13.986 align:middle
+¡oh! Te pregunta: ¿Marcar esta clase
+como un recurso de la Plataforma API?
+
+00:02:14.986 --> 00:02:19.326 align:middle
+MakerBundle pregunta esto porque se ha dado
+cuenta de que la Plataforma API está instalada.
+
+00:02:19.706 --> 00:02:20.836 align:middle
+Di "sí".
+
+00:02:21.666 --> 00:02:25.396 align:middle
+Y antes de añadir ningún campo,
+¡vamos a ver qué ha hecho!
+
+00:02:26.746 --> 00:02:28.156 align:middle
+En mi editor, ¡sí!
+
+00:02:28.396 --> 00:02:32.346 align:middle
+Esto creó los habituales CheeseListing
+y CheeseListingRepository.
+
+00:02:32.616 --> 00:02:33.726 align:middle
+No hay nada especial.
+
+00:02:34.596 --> 00:02:38.066 align:middle
+Ahora mismo, la única propiedad
+que tiene la entidad es id.
+
+00:02:38.876 --> 00:02:43.496 align:middle
+Entonces, ¿qué nos dio la respuesta afirmativa a
+la pregunta sobre el recurso de la Plataforma API?
+
+00:02:43.996 --> 00:02:49.046 align:middle
+Esta pequeña anotación
+de aquí: @ApiResource.
+
+00:02:49.046 --> 00:02:53.636 align:middle
+La verdadera pregunta es: ¿qué activa eso?
+
+00:02:54.206 --> 00:02:55.086 align:middle
+Lo veremos pronto.
+
+00:02:55.756 --> 00:02:57.576 align:middle
+Pero primero, vamos a añadir algunos campos.
+
+00:02:58.286 --> 00:03:06.556 align:middle
+Veamos, cada listado de quesos probablemente necesite
+un title, string, 255, no anulable, un description,
+
+00:03:07.226 --> 00:03:14.586 align:middle
+que será un gran campo de texto, price,
+que haré un integer -este será el precio
+
+00:03:14.586 --> 00:03:28.456 align:middle
+en céntimos- por lo que 10 dólares serían 1000,
+createdAt como datetime y un isPublished booleano.
+
+00:03:29.706 --> 00:03:30.836 align:middle
+Bien: ¡buen comienzo!
+
+00:03:30.976 --> 00:03:32.086 align:middle
+Pulsa enter para terminar.
+
+00:03:33.316 --> 00:03:34.376 align:middle
+¡Enhorabuena!
+
+00:03:34.506 --> 00:03:41.206 align:middle
+Tenemos una clase CheeseEntity perfectamente
+aburrida: 7 propiedades con getters y setters.
+
+00:03:41.966 --> 00:03:48.216 align:middle
+A continuación, genera la migración
+con: php bin/console make:migration ¡Oh!
+
+00:03:48.386 --> 00:03:50.186 align:middle
+¡Migraciones no está instalado todavía!
+
+00:03:50.716 --> 00:03:55.046 align:middle
+No hay problema, sigue la recomendación:
+composer require migrations:2.0.0
+
+00:03:58.756 --> 00:04:03.046 align:middle
+Pero antes de intentar generarla de nuevo,
+necesito asegurarme de que mi base de datos existe:
+
+00:04:03.046 --> 00:04:13.436 align:middle
+php bin/console doctrine:database:create Y ahora
+ejecuta make:migration: Vamos a comprobarlo
+
+00:04:13.436 --> 00:04:18.986 align:middle
+para asegurarnos de que no hay ninguna
+sorpresa: CREATE TABLE cheese_listing...
+
+00:04:19.296 --> 00:04:20.636 align:middle
+¡Sí! ¡Tiene buena pinta!
+
+00:04:22.636 --> 00:04:29.626 align:middle
+Cierra eso y ejecuta: php bin/console
+doctrine:migrations:migrate ¡Brillante! Llegados
+
+00:04:30.066 --> 00:04:36.026 align:middle
+a este punto, tenemos una entidad
+Doctrine completamente tradicional
+
+00:04:36.146 --> 00:04:39.316 align:middle
+, salvo por ésta, la
+anotación @ApiResource().
+
+00:04:40.346 --> 00:04:43.036 align:middle
+Pero esto lo cambia todo.
+
+00:04:43.976 --> 00:04:49.616 align:middle
+Esto indica a la Plataforma API que
+quieres exponer esta clase como una API.
+
+00:04:50.946 --> 00:04:53.616 align:middle
+Compruébalo: actualiza la página /api.
+
+00:04:54.246 --> 00:05:00.946 align:middle
+¡Vaya! ¡De repente esto dice que tenemos
+cinco nuevas rutas, u "operaciones"!
+
+00:05:01.256 --> 00:05:05.236 align:middle
+Una operación GET para recuperar
+una colección de CheeseListings,
+
+00:05:05.606 --> 00:05:11.766 align:middle
+una operación POST para crear una nueva, GET para
+recuperar una sola CheeseListing, DELETE para...
+
+00:05:12.036 --> 00:05:12.516 align:middle
+ya sabes...
+
+00:05:12.516 --> 00:05:16.956 align:middle
+borrar y PUT para actualizar
+un CheeseListing existente.
+
+00:05:17.706 --> 00:05:20.686 align:middle
+¡Eso es un CRUD completo, basado en la API!
+
+00:05:20.686 --> 00:05:26.256 align:middle
+Y esto no es sólo documentación:
+estas nuevas rutas ya funcionan. Vamos a
+
+00:05:26.986 --> 00:05:32.516 align:middle
+comprobarlos a continuación, a saludar a
+algo llamado JSON-LD y a aprender un poco
+
+00:05:32.516 --> 00:05:35.386 align:middle
+sobre cómo funciona esta
+magia entre bastidores
