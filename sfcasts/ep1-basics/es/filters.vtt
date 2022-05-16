@@ -1,0 +1,322 @@
+WEBVTT
+
+00:00:01.016 --> 00:00:02.066 align:middle
+¡Lo estamos haciendo muy bien!
+
+00:00:02.626 --> 00:00:05.856 align:middle
+Entendemos cómo exponer una
+clase como recurso de la API,
+
+00:00:06.076 --> 00:00:11.406 align:middle
+podemos elegir qué operaciones queremos, y tenemos
+un control total sobre los campos de entrada y salida,
+
+00:00:11.796 --> 00:00:14.456 align:middle
+incluidos algunos campos
+"falsos" como textDescription.
+
+00:00:15.296 --> 00:00:17.636 align:middle
+Hay mucho más que saber,
+¡pero lo estamos haciendo bien!
+
+00:00:18.286 --> 00:00:20.436 align:middle
+Entonces, ¿qué más necesita toda API?
+
+00:00:20.986 --> 00:00:24.416 align:middle
+Se me ocurren algunas cosas, como
+la paginación y la validación.
+
+00:00:24.916 --> 00:00:26.376 align:middle
+Pronto hablaremos de ambas cosas.
+
+00:00:26.946 --> 00:00:28.356 align:middle
+¿Pero qué hay del filtrado?
+
+00:00:28.956 --> 00:00:34.666 align:middle
+Tu cliente de la API, que podría ser simplemente
+tu código JavaScript, no siempre va a
+
+00:00:34.666 --> 00:00:37.726 align:middle
+querer obtener cada uno de
+los CheeseListing del sistema.
+
+00:00:38.436 --> 00:00:41.496 align:middle
+¿Y si necesitas la posibilidad de
+ver sólo los listados publicados?
+
+00:00:41.876 --> 00:00:45.156 align:middle
+¿O qué pasa si tienes una búsqueda en el
+front-end y necesitas encontrar por título?
+
+00:00:45.716 --> 00:00:52.076 align:middle
+Esto se llama "filtros": formas de ver un "subconjunto"
+de una colección en función de algún criterio.
+
+00:00:52.676 --> 00:00:56.026 align:middle
+¡Y la Plataforma API viene con
+un montón de ellos incorporados!
+
+00:00:56.876 --> 00:01:01.056 align:middle
+Empecemos por hacer posible que sólo se
+devuelvan los listados de quesos publicados.
+
+00:01:01.646 --> 00:01:04.586 align:middle
+En un futuro tutorial, haremos posible
+
+00:01:04.586 --> 00:01:08.516 align:middle
+ocultar automáticamente los listados
+no publicados de la colección.
+
+00:01:08.976 --> 00:01:12.706 align:middle
+Pero, por ahora, nuestra colección de
+listados de quesos lo devuelve todo.
+
+00:01:12.976 --> 00:01:19.016 align:middle
+Así que, al menos, hagamos posible que un
+cliente de la API pida sólo los publicados.
+
+00:01:20.356 --> 00:01:25.116 align:middle
+En la parte superior de CheeseListing, activa
+nuestro primer filtro con @ApiFilter().
+
+00:01:25.706 --> 00:01:31.786 align:middle
+Luego, elige el filtro específico por su
+nombre de clase: BooleanFilter::class...
+
+00:01:32.056 --> 00:01:34.816 align:middle
+porque estamos filtrando
+sobre una propiedad booleana.
+
+00:01:34.816 --> 00:01:41.706 align:middle
+Termina pasando la opción
+properties={} a "isPublished".
+
+00:01:43.036 --> 00:01:44.826 align:middle
+¡Genial! ¡Vamos a ver qué ha hecho esto!
+
+00:01:45.736 --> 00:01:48.126 align:middle
+¡Refrescar! Oh...
+
+00:01:48.176 --> 00:01:50.716 align:middle
+¡lo que hizo fue romper nuestra aplicación!
+
+00:01:51.496 --> 00:01:55.516 align:middle
+La clase de filtro BooleanFilter
+no implementa FilterInterface.
+
+00:01:56.406 --> 00:02:00.836 align:middle
+No está súper claro, pero ese error significa
+que hemos olvidado una declaración use.
+
+00:02:01.416 --> 00:02:06.046 align:middle
+Este BooleanFilter::class hace
+referencia a una clase específica
+
+00:02:06.306 --> 00:02:07.966 align:middle
+y necesitamos una sentencia use para ella. Es..
+
+00:02:08.596 --> 00:02:11.226 align:middle
+. una forma un poco extraña de
+utilizar los nombres de las clases,
+
+00:02:11.346 --> 00:02:14.466 align:middle
+por lo que PhpStorm no
+nos lo ha autocompletado.
+
+00:02:15.346 --> 00:02:19.446 align:middle
+No hay problema, al principio de
+tu clase, añade use BooleanFilter.
+
+00:02:19.846 --> 00:02:21.026 align:middle
+Pero... cuidado...
+
+00:02:21.376 --> 00:02:26.496 align:middle
+la mayoría de los filtros son compatibles
+con Doctrine ORM y Doctrine con MongoDB.
+
+00:02:26.986 --> 00:02:29.366 align:middle
+Asegúrate de elegir la clase para el ORM.
+
+00:02:31.116 --> 00:02:33.596 align:middle
+Bien, ahora muévete y actualiza de nuevo.
+
+00:02:36.306 --> 00:02:37.476 align:middle
+¡Volvemos a la vida!
+
+00:02:38.936 --> 00:02:39.966 align:middle
+Haz clic en "Probar".
+
+00:02:41.006 --> 00:02:45.156 align:middle
+¡Tenemos un pequeño cuadro de
+entrada del filtro isPublished!
+
+00:02:45.666 --> 00:02:47.336 align:middle
+Si lo dejamos en blanco y lo ejecutamos...
+
+00:02:48.736 --> 00:02:50.156 align:middle
+parece que hay 4 resultados.
+
+00:02:51.526 --> 00:02:54.036 align:middle
+Elige true en lugar de
+isPublished e inténtalo de nuevo.
+
+00:02:55.366 --> 00:02:57.096 align:middle
+¡Nos quedamos con dos resultados!
+
+00:02:57.846 --> 00:03:03.356 align:middle
+Y comprueba cómo funciona con la
+URL: sigue siendo /api/cheeses,
+
+00:03:03.776 --> 00:03:10.936 align:middle
+pero con un precioso ?isPublished=true
+o ?isPublished=false.
+
+00:03:11.776 --> 00:03:16.466 align:middle
+Así que, sin más, nuestros usuarios de la API
+pueden filtrar una colección en un campo booleano.
+
+00:03:17.416 --> 00:03:22.776 align:middle
+Además, en la respuesta hay una
+nueva propiedad hydra:search.
+
+00:03:23.016 --> 00:03:26.846 align:middle
+OoooOOO. Es un poco técnico, pero esto explica
+
+00:03:26.846 --> 00:03:30.616 align:middle
+que ahora puedes buscar utilizando un
+parámetro de consulta isPublished.
+
+00:03:31.216 --> 00:03:35.416 align:middle
+También da información sobre a qué
+propiedad se refiere en el recurso.
+
+00:03:36.656 --> 00:03:37.646 align:middle
+¿De qué otra forma podemos filtrar?
+
+00:03:38.066 --> 00:03:39.566 align:middle
+¿Y si buscamos por texto?
+
+00:03:39.566 --> 00:03:43.886 align:middle
+Sobre la clase, añade
+otro filtro: @ApiFilter().
+
+00:03:44.416 --> 00:03:49.796 align:middle
+Éste se llama SearchFilter::class y
+tiene la misma opción properties...
+
+00:03:49.796 --> 00:03:51.826 align:middle
+pero con un poco más de configuración.
+
+00:03:52.526 --> 00:03:55.176 align:middle
+Digamos que title está
+configurado como partial.
+
+00:03:56.456 --> 00:04:01.556 align:middle
+También hay configuraciones para que coincida con
+una cadena exact, con la start de una cadena, con la
+
+00:04:01.826 --> 00:04:04.366 align:middle
+end de una cadena o con la word_start.
+
+00:04:05.626 --> 00:04:10.356 align:middle
+De todos modos, esta vez, recuerdo que tenemos
+que añadir la declaración use manualmente.
+
+00:04:10.356 --> 00:04:15.086 align:middle
+Di use SearchFilter y autocompleta la del ORM.
+
+00:04:16.176 --> 00:04:19.506 align:middle
+Ah, y antes de comprobarlo, haré
+clic para abrir SearchFilter.
+
+00:04:20.576 --> 00:04:24.006 align:middle
+Esto vive en un directorio llamado Filter y...
+
+00:04:24.006 --> 00:04:25.096 align:middle
+si hago doble clic en él...
+
+00:04:25.386 --> 00:04:30.876 align:middle
+¡eh! Podemos ver un montón de
+otros: ExistsFilter, DateFilter,
+
+00:04:30.876 --> 00:04:33.096 align:middle
+RangeFilter, OrderFilter y más.
+
+00:04:33.816 --> 00:04:38.176 align:middle
+Todos ellos están documentados, pero también
+puedes entrar directamente y ver cómo funcionan.
+
+00:04:39.426 --> 00:04:46.436 align:middle
+De todos modos, ve a refrescar los documentos, abre la
+operación de la colección GET y haz clic para probarla.
+
+00:04:47.446 --> 00:04:49.836 align:middle
+Ahora tenemos un cuadro de filtro title.
+
+00:04:50.566 --> 00:04:51.926 align:middle
+Prueba... um...
+
+00:04:51.966 --> 00:04:53.536 align:middle
+cheese y...
+
+00:04:53.666 --> 00:04:56.776 align:middle
+Ejecuta. Oh, ¡magnífico!
+
+00:04:57.206 --> 00:05:00.716 align:middle
+Añade ?title=cheese a la URL...
+
+00:05:01.076 --> 00:05:03.506 align:middle
+y coincide con tres de
+nuestros cuatro listados.
+
+00:05:05.736 --> 00:05:12.256 align:middle
+La propiedad hydra:search contiene ahora una segunda
+entrada que anuncia esta nueva forma de filtrar.
+
+00:05:12.256 --> 00:05:14.786 align:middle
+Si queremos poder buscar por otra propiedad,
+
+00:05:14.896 --> 00:05:18.886 align:middle
+podemos añadirla también:
+description ajustada a partial.
+
+00:05:19.816 --> 00:05:24.586 align:middle
+Esto es fácil de configurar, pero este tipo de búsqueda
+en la base de datos sigue siendo bastante básico.
+
+00:05:24.886 --> 00:05:30.146 align:middle
+Afortunadamente, aunque no lo cubriremos en este tutorial,
+si necesitas una búsqueda verdaderamente robusta,
+
+00:05:30.476 --> 00:05:33.206 align:middle
+la Plataforma API puede
+integrarse con Elasticsearch:
+
+00:05:33.486 --> 00:05:37.606 align:middle
+exponiendo tus datos de Elasticsearch
+como recursos legibles de la API.
+
+00:05:38.216 --> 00:05:39.956 align:middle
+¡Es una maravilla! Vamos a
+
+00:05:40.796 --> 00:05:46.296 align:middle
+ver dos filtros más: un filtro
+de "rango", que será súper útil
+
+00:05:46.296 --> 00:05:49.266 align:middle
+para nuestra propiedad de
+precio y otro que es...
+
+00:05:49.556 --> 00:05:50.606 align:middle
+un poco especial.
+
+00:05:51.246 --> 00:05:57.336 align:middle
+En lugar de filtrar el número de resultados,
+permite que el cliente de la API elija un subconjunto
+
+00:05:57.336 --> 00:05:59.666 align:middle
+de propiedades para
+devolverlas en el resultado.
+
+00:06:00.246 --> 00:06:01.086 align:middle
+Eso a continuación
