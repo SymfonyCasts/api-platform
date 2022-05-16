@@ -1,0 +1,333 @@
+WEBVTT
+
+00:00:00.056 --> 00:00:03.566 align:middle
+¡Hola amigos!
+
+00:00:03.946 --> 00:00:05.216 align:middle
+Es hora de hablar de...
+
+00:00:05.536 --> 00:00:06.436 align:middle
+redoble de tambores...
+
+00:00:06.666 --> 00:00:10.966 align:middle
+cómo hacer un delicioso
+pastel que parece una Oreo.
+
+00:00:11.466 --> 00:00:15.566 align:middle
+Espera... ¡ah!
+
+00:00:16.316 --> 00:00:17.356 align:middle
+Tutorial equivocado.
+
+00:00:17.626 --> 00:00:23.776 align:middle
+Es hora de hablar de la Plataforma API...
+
+00:00:24.086 --> 00:00:29.416 align:middle
+tan divertida que es casi tan deliciosa
+como un pastel con forma de Oreo.
+
+00:00:30.026 --> 00:00:32.346 align:middle
+La Plataforma API está arrasando estos días.
+
+00:00:32.726 --> 00:00:36.526 align:middle
+Tengo la impresión de que en todas
+partes alguien habla maravillas de ella
+
+00:00:36.526 --> 00:00:41.476 align:middle
+Su desarrollador principal, Kévin Dunglas, es un
+colaborador principal de Symfony, un tipo muy agradable
+
+00:00:41.716 --> 00:00:45.946 align:middle
+y está ampliando absolutamente los
+límites de lo que pueden hacer las API.
+
+00:00:46.786 --> 00:00:48.496 align:middle
+Vamos a verlo de primera mano.
+
+00:00:49.286 --> 00:00:51.986 align:middle
+Además, ¡ha tenido la amabilidad
+de guiarnos en este tutorial!
+
+00:00:52.886 --> 00:00:57.706 align:middle
+Si sólo necesitas construir unas pocas rutas
+de API para soportar algo de JavaScript,
+
+00:00:58.306 --> 00:01:00.416 align:middle
+puede que estés pensando:
+¿Cuál es el problema?
+
+00:01:01.326 --> 00:01:04.686 align:middle
+¡Devolver algo de JSON aquí
+y allá ya es bastante fácil!
+
+00:01:05.566 --> 00:01:07.466 align:middle
+Yo he tenido esta misma
+opinión durante un tiempo.
+
+00:01:07.816 --> 00:01:12.106 align:middle
+Pero poco a poco, creo que esto es
+cada vez menos cierto. Al igual que
+
+00:01:12.726 --> 00:01:17.746 align:middle
+nacieron los frameworks cuando las aplicaciones
+web se volvieron más y más complejas, se
+
+00:01:18.026 --> 00:01:20.336 align:middle
+han creado herramientas como API Platform
+
+00:01:20.426 --> 00:01:24.186 align:middle
+porque lo mismo está ocurriendo actualmente
+con las API. Hoy en día, las API
+
+00:01:25.096 --> 00:01:30.616 align:middle
+son algo más que devolver JSON:
+se trata de ser capaz de serializar
+
+00:01:30.616 --> 00:01:35.586 align:middle
+y deserializar tus modelos de forma
+coherente, quizá en múltiples formatos,
+
+00:01:35.636 --> 00:01:40.696 align:middle
+como JSON o XML, pero también
+JSON-LD o HAL JSON. Luego están
+
+00:01:41.446 --> 00:01:47.776 align:middle
+los hipermedios, los datos enlazados, los códigos
+de estado, los formatos de error, la documentación
+
+00:01:47.996 --> 00:01:51.696 align:middle
+-incluida la documentación de las especificaciones de
+la API que puede alimentar a Swagger-. Luego está la
+
+00:01:52.756 --> 00:01:58.656 align:middle
+seguridad, el CORS, el control de acceso y otras
+características importantes como la paginación, el
+
+00:01:58.896 --> 00:02:03.286 align:middle
+filtrado, la validación, la negociación
+del tipo de contenido, el GraphQL...
+
+00:02:03.286 --> 00:02:05.856 align:middle
+y... sinceramente, podría seguir.
+
+00:02:06.906 --> 00:02:14.466 align:middle
+Por eso existe la Plataforma API: para permitirnos
+construir APIs increíbles y amar el proceso
+
+00:02:14.936 --> 00:02:19.526 align:middle
+Ah, ¿y esa gran lista de cosas que
+acabo de mencionar que necesita una API?
+
+00:02:19.956 --> 00:02:22.826 align:middle
+La Plataforma API viene con todo ello.
+
+00:02:24.006 --> 00:02:27.016 align:middle
+Y no es sólo para construir una enorme API.
+
+00:02:28.176 --> 00:02:32.146 align:middle
+Realmente es la herramienta perfecta,
+incluso si sólo necesitas unas pocas rutas
+
+00:02:32.146 --> 00:02:34.106 align:middle
+para potenciar tu propio JavaScript.
+
+00:02:34.916 --> 00:02:35.986 align:middle
+¡Así que vamos a hacerlo!
+
+00:02:36.486 --> 00:02:41.966 align:middle
+La Plataforma API es una biblioteca PHP independiente
+construida sobre los componentes de Symfony. No es
+
+00:02:42.396 --> 00:02:47.206 align:middle
+necesario que la utilices desde dentro de una
+aplicación Symfony, pero, como puedes ver aquí, así es
+
+00:02:47.516 --> 00:02:50.846 align:middle
+como recomiendan utilizarla, lo
+cual es genial para nosotros.
+
+00:02:51.886 --> 00:02:56.936 align:middle
+Si sigues sus documentos, tienen su
+propia distribución de la Plataforma API:
+
+00:02:57.296 --> 00:03:00.836 align:middle
+una estructura de directorios
+personalizada con un montón de cosas
+
+00:03:01.946 --> 00:03:06.996 align:middle
+un directorio para tu API alimentada por
+Symfony, otro para tu frontend de JavaScript,
+
+00:03:07.476 --> 00:03:12.836 align:middle
+otro para un frontend de administración,
+¡todo ello conectado con Docker!
+
+00:03:13.296 --> 00:03:20.166 align:middle
+¡Vaya! Puede parecer un poco "grande" al principio, pero
+obtienes todas las características fuera de la caja...
+
+00:03:21.196 --> 00:03:22.666 align:middle
+incluso más de las que acabo de describir.
+
+00:03:23.126 --> 00:03:26.276 align:middle
+Si eso suena increíble,
+puedes utilizarlo totalmente.
+
+00:03:26.276 --> 00:03:32.076 align:middle
+Pero vamos a hacer algo diferente: vamos a
+instalar la Plataforma API como un paquete
+
+00:03:32.076 --> 00:03:34.746 align:middle
+en una aplicación Symfony
+normal y tradicional.
+
+00:03:35.726 --> 00:03:37.956 align:middle
+Esto hace que el aprendizaje de la
+Plataforma API sea un poco más fácil.
+
+00:03:38.436 --> 00:03:43.736 align:middle
+Una vez que te sientas seguro, para tu proyecto,
+puedes hacerlo de esta misma manera o lanzarte a
+
+00:03:43.736 --> 00:03:45.506 align:middle
+utilizar la distribución oficial.
+
+00:03:45.996 --> 00:03:48.136 align:middle
+Como he dicho, es súper potente. De
+
+00:03:49.306 --> 00:03:55.276 align:middle
+todos modos, para convertirte en el héroe de la API
+que todos necesitamos, deberías codificar conmigo
+
+00:03:55.276 --> 00:03:57.346 align:middle
+descargando el código del
+curso desde esta página.
+
+00:03:58.106 --> 00:04:01.226 align:middle
+Después de descomprimirlo,
+encontrarás dentro un directorio start/
+
+00:04:01.836 --> 00:04:03.606 align:middle
+con el mismo código que ves aquí...
+
+00:04:03.986 --> 00:04:08.616 align:middle
+que en realidad es sólo un nuevo
+proyecto esqueleto de Symfony 4.2:
+
+00:04:09.246 --> 00:04:12.716 align:middle
+no hay nada especial instalado
+ni configurado todavía.
+
+00:04:13.736 --> 00:04:17.016 align:middle
+Sigue el archivo README.md para las
+instrucciones de configuración.
+
+00:04:18.146 --> 00:04:21.976 align:middle
+El último paso será abrir un
+terminal, entrar en el proyecto
+
+00:04:21.976 --> 00:04:28.766 align:middle
+e iniciar el servidor Symfony con: symfony
+serve -d Esto utiliza el ejecutable symfony -
+
+00:04:29.176 --> 00:04:33.876 align:middle
+una pequeña e impresionante herramienta de desarrollo
+que puedes obtener en https://symfony.com/download.
+
+00:04:34.726 --> 00:04:38.676 align:middle
+Esto inicia un servidor web en el puerto
+8000 que se ejecuta en segundo plano.
+
+00:04:39.076 --> 00:04:44.486 align:middle
+Lo que significa que podemos encontrar nuestro
+navegador, dirigirnos a localhost:8000 y ver...
+
+00:04:44.966 --> 00:04:46.576 align:middle
+bueno, ¡básicamente nada!
+
+00:04:47.506 --> 00:04:50.796 align:middle
+Sólo la bonita página de bienvenida que
+se ve en una aplicación Symfony vacía.
+
+00:04:51.506 --> 00:04:55.796 align:middle
+Ahora que tenemos nuestra aplicación Symfony
+vacía, ¿cómo podemos instalar la Plataforma API?
+
+00:04:56.346 --> 00:04:58.536 align:middle
+Es increíble.
+
+00:04:59.006 --> 00:05:04.456 align:middle
+Busca tu terminal y ejecuta:
+composer require api:1.2.0 Eso es.
+
+00:05:05.546 --> 00:05:10.256 align:middle
+Te darás cuenta de que esto está instalando
+algo llamado api-platform/api-pack.
+
+00:05:10.936 --> 00:05:15.936 align:middle
+Si recuerdas nuestra serie sobre Symfony, un
+"paquete" es una especie de biblioteca "falsa "
+
+00:05:16.476 --> 00:05:18.626 align:middle
+que ayuda a instalar varias cosas a la vez.
+
+00:05:18.626 --> 00:05:24.826 align:middle
+Puedes ver esto en
+https://github.com/api-platform/api-pack: es
+
+00:05:25.646 --> 00:05:30.806 align:middle
+un único archivo composer.json que
+requiere varias librerías, como Doctrine,
+
+00:05:30.856 --> 00:05:36.926 align:middle
+un paquete CORS del que hablaremos más adelante,
+anotaciones, la propia Plataforma API y algunas partes
+
+00:05:36.926 --> 00:05:42.156 align:middle
+de Symfony, como el sistema de validación,
+el componente de seguridad e incluso Twig,
+
+00:05:43.056 --> 00:05:47.106 align:middle
+que se utiliza para generar una documentación
+realmente interesante que veremos en un minuto.
+
+00:05:48.476 --> 00:05:54.646 align:middle
+Pero aún no hay nada tan interesante: sólo la
+Plataforma API y algunos paquetes estándar de Symfony.
+
+00:05:55.586 --> 00:05:57.856 align:middle
+De vuelta al terminal, ¡ya está hecho!
+
+00:05:58.256 --> 00:06:00.586 align:middle
+Y tiene algunos detalles sobre cómo empezar.
+
+00:06:01.066 --> 00:06:04.716 align:middle
+También se han ejecutado algunas recetas que nos
+han proporcionado algunos archivos de configuración.
+
+00:06:05.886 --> 00:06:09.636 align:middle
+Antes de hacer nada más,
+vuelve al navegador y dirígete
+
+00:06:09.636 --> 00:06:14.386 align:middle
+a https://localhost:8000/api para ver...
+
+00:06:14.816 --> 00:06:18.376 align:middle
+¡woh! ¡Tenemos la documentación de la API!
+
+00:06:18.896 --> 00:06:21.196 align:middle
+Bueno, todavía no tenemos ninguna API...
+
+00:06:21.196 --> 00:06:22.336 align:middle
+así que aquí no hay nada.
+
+00:06:23.066 --> 00:06:30.836 align:middle
+Pero esta va a ser una característica enorme y gratuita que obtendrás
+con la Plataforma API: a medida que construyamos nuestra API,
+
+00:06:31.636 --> 00:06:34.096 align:middle
+esta página se actualizará automáticamente.
+
+00:06:35.096 --> 00:06:40.966 align:middle
+Veamos eso a continuación creando y
+exponiendo nuestro primer Recurso API
