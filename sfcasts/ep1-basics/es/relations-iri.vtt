@@ -1,0 +1,210 @@
+WEBVTT
+
+00:00:01.146 --> 00:00:05.526 align:middle
+Acabo de intentar crear un CheeseListing
+estableciendo la propiedad owner a 1:
+
+00:00:06.176 --> 00:00:08.546 align:middle
+el id de un usuario real en la base de datos.
+
+00:00:08.756 --> 00:00:10.916 align:middle
+Pero... ¡no le ha gustado!
+
+00:00:11.286 --> 00:00:18.206 align:middle
+¿Por qué? Porque en la Plataforma API y, comúnmente,
+en el desarrollo moderno de APIs en general,
+
+00:00:18.646 --> 00:00:24.656 align:middle
+no utilizamos ids para referirnos
+a los recursos: utilizamos IRIs.
+
+00:00:25.236 --> 00:00:28.846 align:middle
+Para mí, esto fue extraño al principio...
+
+00:00:29.296 --> 00:00:31.736 align:middle
+pero rápidamente me enamoré de esto.
+
+00:00:32.286 --> 00:00:38.306 align:middle
+¿Por qué pasar ids enteros cuando
+las URLs son mucho más útiles?
+
+00:00:39.176 --> 00:00:42.006 align:middle
+Mira la respuesta del usuario
+que acabamos de crear:
+
+00:00:44.906 --> 00:00:50.136 align:middle
+como toda respuesta JSON-LD,
+contiene una propiedad @id...
+
+00:00:50.296 --> 00:00:54.216 align:middle
+que no es un id, ¡es un IRI!
+
+00:00:54.776 --> 00:00:59.796 align:middle
+Y esto es lo que utilizarás siempre
+que necesites referirte a este recurso.
+
+00:01:01.166 --> 00:01:08.756 align:middle
+Vuelve a la operación POST de CheeseListing
+y establece owner en /api/users/1.
+
+00:01:10.246 --> 00:01:11.046 align:middle
+Ejecuta eso.
+
+00:01:12.806 --> 00:01:13.446 align:middle
+Esta vez...
+
+00:01:13.876 --> 00:01:19.696 align:middle
+¡funciona! Y fíjate, cuando transforma
+el nuevo CheeseListing en JSON,
+
+00:01:20.166 --> 00:01:23.516 align:middle
+la propiedad owner es ese mismo IRI.
+
+00:01:24.236 --> 00:01:28.216 align:middle
+Por eso Swagger lo documenta
+como una "cadena"...
+
+00:01:28.676 --> 00:01:30.766 align:middle
+lo cual no es del todo exacto.
+
+00:01:31.426 --> 00:01:34.306 align:middle
+Claro, en la superficie, owner es una cadena...
+
+00:01:34.706 --> 00:01:38.896 align:middle
+y eso es lo que muestra Swagger
+en el modelo cheeses-Write.
+
+00:01:39.416 --> 00:01:40.826 align:middle
+Pero sabemos...
+
+00:01:40.936 --> 00:01:45.026 align:middle
+con nuestro cerebro humano,
+que esta cadena es especial:
+
+00:01:45.576 --> 00:01:49.666 align:middle
+en realidad representa un
+"enlace" a un recurso relacionado.
+
+00:01:50.546 --> 00:01:54.196 align:middle
+Y... aunque Swagger no lo
+entienda del todo, consulta la
+
+00:01:54.506 --> 00:02:00.946 align:middle
+documentación de JSON-LD: en /api/docs.jsonld.
+
+00:02:02.676 --> 00:02:04.936 align:middle
+A ver, busca el propietario.
+
+00:02:05.406 --> 00:02:12.356 align:middle
+¡Ja! Esto es un poco más inteligente:
+JSON-LD sabe que esto es un Enlace...
+
+00:02:12.856 --> 00:02:19.576 align:middle
+con algunos metadatos extravagantes para decir
+básicamente que el enlace es a un recurso de User.
+
+00:02:20.446 --> 00:02:24.956 align:middle
+La gran conclusión es ésta: una
+relación es sólo una propiedad normal,
+
+00:02:25.406 --> 00:02:30.156 align:middle
+excepto que se representa en tu API con su IRI.
+
+00:02:30.936 --> 00:02:31.796 align:middle
+Bastante bien.
+
+00:02:31.796 --> 00:02:35.136 align:middle
+¿Y el otro lado de la relación?
+
+00:02:36.026 --> 00:02:39.616 align:middle
+Utiliza los documentos para ir a
+buscar el CheeseListing con id = 1.
+
+00:02:40.976 --> 00:02:44.946 align:middle
+Sí, aquí está toda la información,
+incluido el owner como IRI.
+
+00:02:45.566 --> 00:02:47.676 align:middle
+¿Pero qué pasa si queremos
+ir en la otra dirección?
+
+00:02:49.006 --> 00:02:50.936 align:middle
+Actualicemos para cerrar todo.
+
+00:02:53.006 --> 00:02:55.936 align:middle
+Ve a buscar el recurso User con id 1.
+
+00:02:58.006 --> 00:03:00.386 align:middle
+Bastante aburrido: email y username.
+
+00:03:01.146 --> 00:03:05.386 align:middle
+¿Y si también quieres ver qué
+quesos ha publicado este usuario?
+
+00:03:06.126 --> 00:03:07.636 align:middle
+Eso es igual de fácil.
+
+00:03:09.336 --> 00:03:14.456 align:middle
+Dentro de User encuentra la propiedad
+$username, copia la anotación @Groups
+
+00:03:14.856 --> 00:03:18.096 align:middle
+y pégala encima de la
+propiedad $cheeseListings.
+
+00:03:18.616 --> 00:03:24.446 align:middle
+Pero... por ahora, sólo vamos a
+hacer esto legible: sólo user:read.
+
+00:03:24.446 --> 00:03:30.426 align:middle
+Más adelante hablaremos de cómo puedes
+modificar las relaciones de la colección.
+
+00:03:31.766 --> 00:03:35.576 align:middle
+Bien, actualiza y abre la operación
+de elemento GET para Usuario.
+
+00:03:38.746 --> 00:03:42.876 align:middle
+Antes de intentarlo, ya anuncia
+
+00:03:43.016 --> 00:03:47.236 align:middle
+que ahora devolverá una
+propiedad cheeseListings que,
+
+00:03:47.586 --> 00:03:51.206 align:middle
+curiosamente, será un array de cadenas.
+
+00:03:52.446 --> 00:03:54.736 align:middle
+Veamos qué aspecto tiene User id 1.
+
+00:03:55.026 --> 00:03:58.216 align:middle
+¡Ejecuta! Ah...
+
+00:03:58.446 --> 00:03:59.916 align:middle
+¡es una matriz!
+
+00:04:00.196 --> 00:04:04.586 align:middle
+Una matriz de cadenas IRI, por supuesto. Por
+
+00:04:05.406 --> 00:04:11.256 align:middle
+defecto, cuando relacionas dos recursos, la
+Plataforma API mostrará el recurso relacionado
+
+00:04:11.376 --> 00:04:18.076 align:middle
+como un IRI o una matriz de IRIs, lo
+cual es maravillosamente sencillo.
+
+00:04:18.076 --> 00:04:23.476 align:middle
+Si el cliente de la API necesita más
+información, puede hacer otra petición a esa URL.
+
+00:04:24.156 --> 00:04:30.326 align:middle
+O... si quieres evitar esa petición
+adicional, puedes optar por
+
+00:04:30.416 --> 00:04:36.026 align:middle
+incrustar los datos del listado de quesos
+directamente en el JSON del recurso del usuario.
+
+00:04:36.726 --> 00:04:37.876 align:middle
+Hablemos de eso a continuación
