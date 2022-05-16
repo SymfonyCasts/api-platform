@@ -1,0 +1,254 @@
+WEBVTT
+
+00:00:01.086 --> 00:00:04.776 align:middle
+En sólo unos minutos, hemos dado a nuestros
+clientes de la API la capacidad de filtrar
+
+00:00:04.776 --> 00:00:08.126 align:middle
+por listados de quesos publicados y
+buscar por título y descripción.
+
+00:00:08.796 --> 00:00:12.136 align:middle
+Puede que también necesiten la
+capacidad de filtrar por precio.
+
+00:00:12.826 --> 00:00:14.266 align:middle
+Eso parece un trabajo para...
+
+00:00:14.436 --> 00:00:15.566 align:middle
+RangeFilter¡!
+
+00:00:16.426 --> 00:00:20.546 align:middle
+Añadir otro @ApiFilter()
+con RangeFilter::class.
+
+00:00:21.356 --> 00:00:26.356 align:middle
+Subamos inmediatamente y añadamos la
+declaración use para eso: la del ORM.
+
+00:00:28.896 --> 00:00:31.006 align:middle
+Luego, properties={"price"}.
+
+00:00:32.106 --> 00:00:34.046 align:middle
+Este filtro es un poco loco.
+
+00:00:34.046 --> 00:00:39.006 align:middle
+Dale la vuelta, refresca los documentos
+y mira la operación de recogida GET.
+
+00:00:39.966 --> 00:00:46.186 align:middle
+¡Vaya! Ahora tenemos un montón de casillas de
+filtro, para precio entre, mayor que, menor que,
+
+00:00:46.186 --> 00:00:53.006 align:middle
+mayor o igual, etc. Busquemos
+todo lo que sea mayor que 20 y...
+
+00:00:53.176 --> 00:01:00.046 align:middle
+Ejecuta. Esto añade ?price[gt]=20 a la URL.
+
+00:01:00.576 --> 00:01:04.556 align:middle
+¡Oh, excepto que eso es una búsqueda
+de todo lo que sea mayor de 20 céntimos!
+
+00:01:05.396 --> 00:01:07.356 align:middle
+Prueba con 1000 en su lugar.
+
+00:01:10.956 --> 00:01:13.936 align:middle
+Esto devuelve sólo un
+elemento y, una vez más,
+
+00:01:14.326 --> 00:01:18.276 align:middle
+anuncia los nuevos filtros
+dentro de hydra:search.
+
+00:01:18.326 --> 00:01:21.066 align:middle
+Los filtros son súper divertidos.
+
+00:01:21.446 --> 00:01:25.056 align:middle
+Hay montones de filtros incorporados,
+pero puedes añadir los tuyos propios.
+
+00:01:25.056 --> 00:01:28.816 align:middle
+Desde un alto nivel, un filtro
+es básicamente una forma de
+
+00:01:28.816 --> 00:01:32.756 align:middle
+modificar la consulta de Doctrine que se
+realiza cuando se obtiene una colección.
+
+00:01:33.596 --> 00:01:35.496 align:middle
+Hay un filtro más del que quiero hablar...
+
+00:01:35.606 --> 00:01:40.146 align:middle
+y es un poco especial: en lugar de
+devolver menos resultados, se trata
+
+00:01:40.466 --> 00:01:43.306 align:middle
+de devolver menos campos.
+
+00:01:43.926 --> 00:01:48.966 align:middle
+Supongamos que la mayoría de las descripciones
+son súper largas y contienen HTML.
+
+00:01:49.576 --> 00:01:53.886 align:middle
+En el front-end, queremos poder obtener
+una colección de listados de quesos,
+
+00:01:54.066 --> 00:01:58.346 align:middle
+pero sólo vamos a mostrar una
+versión muy corta de la descripción.
+
+00:01:59.256 --> 00:02:02.746 align:middle
+Para que eso sea súper fácil, vamos a
+añadir un nuevo campo que devuelva esto.
+
+00:02:03.156 --> 00:02:07.536 align:middle
+Busca getDescription() y añade un nuevo
+método a continuación llamado public
+
+00:02:07.536 --> 00:02:09.606 align:middle
+function getShortDescription() .
+
+00:02:10.806 --> 00:02:14.466 align:middle
+Esto devolverá una cadena anulable, en caso de que la
+descripción no esté establecida todavía. Añadamos
+
+00:02:15.486 --> 00:02:17.426 align:middle
+inmediatamente esto a un grupo -
+
+00:02:18.776 --> 00:02:24.226 align:middle
+cheese_listing:read para
+que aparezca en la API.
+
+00:02:24.226 --> 00:02:29.026 align:middle
+En el interior, si el description ya tiene
+menos de 40 caracteres, simplemente devuélvelo.
+
+00:02:32.696 --> 00:02:40.526 align:middle
+En caso contrario, devuelve un substr de la descripción:
+obtén los primeros 40 caracteres y luego un pequeño ...
+
+00:02:40.526 --> 00:02:41.366 align:middle
+al final.
+
+00:02:42.506 --> 00:02:47.656 align:middle
+Ah, y, en un proyecto real, para mejorar esto
+- probablemente deberías usar strip_tags()
+
+00:02:47.656 --> 00:02:52.166 align:middle
+en la descripción antes de hacer nada de esto
+para que no dividamos ninguna etiqueta HTML.
+
+00:02:53.536 --> 00:02:54.476 align:middle
+Actualiza los documentos...
+
+00:02:56.226 --> 00:02:58.436 align:middle
+y luego abre la operación GET del artículo.
+
+00:02:59.466 --> 00:03:01.656 align:middle
+Busquemos el id 1 del listado de quesos.
+
+00:03:03.156 --> 00:03:05.066 align:middle
+Y... ¡ahí está!
+
+00:03:05.476 --> 00:03:09.066 align:middle
+La descripción apenas
+supera los 40 caracteres.
+
+00:03:09.066 --> 00:03:17.716 align:middle
+Copiaré la URL, la pondré en una nueva pestaña
+y añadiré .jsonld al final para verlo mejor.
+
+00:03:17.786 --> 00:03:22.736 align:middle
+En este punto, añadir el nuevo
+campo no era nada especial.
+
+00:03:23.316 --> 00:03:27.956 align:middle
+Pero... si algunas partes de mi frontend
+sólo necesitan el shortDescription...
+
+00:03:28.146 --> 00:03:33.146 align:middle
+es un poco inútil que la API envíe
+también el campo description...
+
+00:03:33.616 --> 00:03:36.986 align:middle
+¡especialmente si ese
+campo es muy, muy grande!
+
+00:03:37.946 --> 00:03:42.796 align:middle
+¿Es posible que un cliente de la API le diga a
+nuestra API que no devuelva determinados campos?
+
+00:03:43.436 --> 00:03:49.606 align:middle
+En la parte superior de nuestra clase,
+añade otro filtro con PropertyFilter::class.
+
+00:03:53.536 --> 00:03:57.436 align:middle
+Sube, escribe use PropertyFilter y
+pulsa el tabulador para autocompletar.
+
+00:03:58.376 --> 00:04:00.916 align:middle
+Esta vez, sólo hay una de estas clases.
+
+00:04:01.706 --> 00:04:06.776 align:middle
+Este filtro tiene algunas opciones, pero
+funciona perfectamente sin hacer nada más.
+
+00:04:06.776 --> 00:04:08.926 align:middle
+Ve a refrescar nuestros documentos.
+
+00:04:16.296 --> 00:04:19.486 align:middle
+Hmm, esto no hace ninguna diferencia aquí...
+
+00:04:20.396 --> 00:04:25.756 align:middle
+esta no es una característica de nuestra API que pueda
+expresarse en el documento de especificaciones de la OpenAPI.
+
+00:04:26.226 --> 00:04:29.986 align:middle
+Pero, este recurso de nuestra API
+sí tiene un nuevo superpoder.
+
+00:04:31.016 --> 00:04:40.876 align:middle
+En la otra pestaña, elige las propiedades exactas que quieres
+con ?properties[]=title&properties[]=shortDescription.
+
+00:04:40.876 --> 00:04:42.256 align:middle
+¡Dale caña!
+
+00:04:44.256 --> 00:04:46.466 align:middle
+¡Precioso! Seguimos
+
+00:04:46.796 --> 00:04:53.036 align:middle
+obteniendo los campos JSON-LD estándar, pero
+entonces sólo recuperamos esos dos campos. Esta idea
+
+00:04:53.886 --> 00:04:58.706 align:middle
+se denomina a veces "conjunto de campos dispersos",
+y es una forma estupenda de permitir que
+
+00:04:58.706 --> 00:05:03.036 align:middle
+tu cliente de la API pida exactamente
+lo que quiere, sin dejar de
+
+00:05:03.306 --> 00:05:07.906 align:middle
+organizarlo todo en torno a
+recursos concretos de la API. Ah, y
+
+00:05:08.756 --> 00:05:13.476 align:middle
+el usuario no puede intentar seleccionar nuevos campos que
+no formen parte de nuestros datos originales - no puedes
+
+00:05:14.096 --> 00:05:20.276 align:middle
+intentar conseguir isPublished - simplemente no
+funciona, aunque puedes habilitarlo. Siguiente:
+
+00:05:21.326 --> 00:05:23.596 align:middle
+hablemos de la paginación. Sí, ¡las APIs
+
+00:05:24.376 --> 00:05:27.046 align:middle
+necesitan totalmente la paginación! Si
+
+00:05:27.666 --> 00:05:32.716 align:middle
+tenemos 10.000 listados de quesos en la base
+de datos, no podemos devolverlos todos a la vez
