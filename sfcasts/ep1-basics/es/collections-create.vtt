@@ -1,0 +1,363 @@
+WEBVTT
+
+00:00:01.056 --> 00:00:04.096 align:middle
+En lugar de asignar un
+CheeseListing existente al usuario,
+
+00:00:04.786 --> 00:00:08.316 align:middle
+¿podríamos crear uno totalmente
+nuevo incrustando sus datos?
+
+00:00:08.316 --> 00:00:10.006 align:middle
+¡Vamos a averiguarlo!
+
+00:00:10.546 --> 00:00:15.846 align:middle
+Esta vez, no enviaremos una cadena
+IRI, sino un objeto de datos.
+
+00:00:16.776 --> 00:00:17.296 align:middle
+Veamos...
+
+00:00:17.296 --> 00:00:21.356 align:middle
+necesitamos un title y...
+
+00:00:21.356 --> 00:00:24.376 align:middle
+Haré trampa y miraré la
+ruta POST para los quesos.
+
+00:00:25.806 --> 00:00:29.176 align:middle
+Bien: necesitamos title,
+price owner y description.
+
+00:00:29.176 --> 00:00:34.706 align:middle
+Poner price a 20 dólares
+y pasar un description.
+
+00:00:36.376 --> 00:00:39.006 align:middle
+Pero no voy a enviar una propiedad owner.
+
+00:00:39.806 --> 00:00:41.086 align:middle
+¿Por qué? Pues...
+
+00:00:41.176 --> 00:00:46.376 align:middle
+olvídate de la Plataforma API
+e imagina que utilizas esta API.
+
+00:00:46.466 --> 00:00:52.946 align:middle
+Si estamos enviando una petición POST a
+/api/users para crear un nuevo usuario...
+
+00:00:53.296 --> 00:00:59.336 align:middle
+¿no es bastante obvio que queremos que el nuevo
+listado de quesos sea propiedad de este nuevo usuario?
+
+00:01:00.076 --> 00:01:06.596 align:middle
+Por supuesto, es nuestro trabajo hacer que esto
+funcione, pero así es como yo querría que funcionara.
+
+00:01:07.306 --> 00:01:10.526 align:middle
+Ah, y antes de que lo intentemos,
+cambia el email y el username
+
+00:01:10.596 --> 00:01:12.616 align:middle
+para asegurarte de que son
+únicos en la base de datos.
+
+00:01:14.876 --> 00:01:16.976 align:middle
+¿Preparado? ¡Ejecuta!
+
+00:01:18.946 --> 00:01:24.056 align:middle
+¡Funciona! No, no, estoy
+mintiendo: no es tan fácil.
+
+00:01:24.546 --> 00:01:29.816 align:middle
+Tenemos un error conocido: Los documentos anidados
+para el atributo "cheeseListings" no están permitidos.
+
+00:01:30.106 --> 00:01:32.256 align:middle
+Utiliza en su lugar IRIs.
+
+00:01:33.136 --> 00:01:34.536 align:middle
+Bien, retrocedamos.
+
+00:01:35.116 --> 00:01:38.096 align:middle
+El campo cheeseListings es
+escribible en nuestra API
+
+00:01:38.686 --> 00:01:42.606 align:middle
+porque la propiedad cheeseListings
+tiene el grupo user:write encima.
+
+00:01:42.886 --> 00:01:48.986 align:middle
+Pero si no hiciéramos nada más, esto significaría
+que podemos pasar una matriz de IRIs a esta propiedad,
+
+00:01:49.186 --> 00:01:52.196 align:middle
+pero no un objeto JSON de datos incrustados.
+
+00:01:53.216 --> 00:01:58.726 align:middle
+Para permitirlo, tenemos que entrar en
+CheeseListing y añadir ese grupo user:write
+
+00:01:58.726 --> 00:02:02.206 align:middle
+a todas las propiedades que
+queramos permitir pasar.
+
+00:02:03.056 --> 00:02:07.996 align:middle
+Por ejemplo, sabemos que, para crear
+un CheeseListing, necesitamos poder
+
+00:02:07.996 --> 00:02:10.556 align:middle
+establecer title, description y price.
+
+00:02:10.606 --> 00:02:12.536 align:middle
+Así que vamos a añadir ese grupo
+
+00:02:12.936 --> 00:02:20.756 align:middle
+user:write por encima de title, price y...
+
+00:02:20.756 --> 00:02:23.406 align:middle
+aquí abajo, busca setTextDescription()...
+
+00:02:23.666 --> 00:02:26.596 align:middle
+y añádelo ahí.
+
+00:02:26.596 --> 00:02:31.206 align:middle
+Me encanta lo limpio que es elegir los
+campos que quieres que se incrusten...
+
+00:02:31.376 --> 00:02:34.046 align:middle
+pero la vida es cada vez más complicada.
+
+00:02:34.046 --> 00:02:39.836 align:middle
+Ten en cuenta ese coste de "complejidad"
+si decides admitir este tipo de cosas
+
+00:02:39.836 --> 00:02:46.436 align:middle
+en tu API De todos modos, ¡probemos!
+
+00:02:46.436 --> 00:02:47.666 align:middle
+Ooh - un error 500.
+
+00:02:47.926 --> 00:02:48.956 align:middle
+¡Estamos más cerca!
+
+00:02:49.396 --> 00:02:51.106 align:middle
+¡Y también conocemos este error!
+
+00:02:51.626 --> 00:02:55.206 align:middle
+Se ha encontrado una nueva entidad a
+través de la relación User.cheeseListings
+
+00:02:55.376 --> 00:02:58.106 align:middle
+que no estaba configurada
+para persistir en cascada.
+
+00:02:58.656 --> 00:02:59.296 align:middle
+¡Excelente!
+
+00:02:59.936 --> 00:03:06.326 align:middle
+Esto me dice que la Plataforma API está creando
+un nuevo CheeseListing y lo está fijando
+
+00:03:06.326 --> 00:03:09.466 align:middle
+en la propiedad cheeseListings del nuevo User.
+
+00:03:10.106 --> 00:03:15.066 align:middle
+Pero nada llama a $entityManager->persist()
+en ese nuevo CheeseListing,
+
+00:03:15.386 --> 00:03:19.966 align:middle
+por lo que Doctrine no sabe qué hacer
+cuando intenta guardar el Usuario.
+
+00:03:20.076 --> 00:03:25.986 align:middle
+Si se tratara de una aplicación Symfony tradicional en
+la que yo escribiera personalmente el código para crear
+
+00:03:25.986 --> 00:03:31.046 align:middle
+y guardar estos objetos, probablemente me limitaría
+a encontrar dónde se está creando ese CheeseListing
+
+00:03:31.236 --> 00:03:33.636 align:middle
+y llamaría a
+$entityManager->persist() sobre él.
+
+00:03:33.906 --> 00:03:39.176 align:middle
+Pero como la Plataforma API se encarga de todo eso por
+nosotros, podemos utilizar una solución diferente.
+
+00:03:39.866 --> 00:03:45.956 align:middle
+Abre User, busca la propiedad $cheeseListings
+y añade cascade={"persist"}. Gracias
+
+00:03:46.396 --> 00:03:50.266 align:middle
+a esto, cada vez que se
+persista un User, Doctrine
+
+00:03:50.586 --> 00:03:55.496 align:middle
+persistirá automáticamente cualquier
+objeto CheeseListing de esta colección.
+
+00:03:55.496 --> 00:03:58.236 align:middle
+Bien, veamos qué ocurre.
+
+00:03:58.716 --> 00:04:03.216 align:middle
+¡Ejecuta! Woh, ¡ha funcionado!
+
+00:04:03.576 --> 00:04:09.716 align:middle
+Se ha creado un nuevo User, un nuevo CheeseListing
+y se han enlazado en la base de datos.
+
+00:04:10.406 --> 00:04:12.646 align:middle
+Pero... ¿cómo sabía Doctrine...
+
+00:04:12.646 --> 00:04:20.406 align:middle
+o la Plataforma API sabían que debían establecer la
+propiedad owner del nuevo CheeseListing en el nuevo User...
+
+00:04:20.646 --> 00:04:23.736 align:middle
+si no pasamos una clave owner en el JSON?
+
+00:04:23.736 --> 00:04:28.966 align:middle
+Si creas un CheeseListing de la forma
+normal, ¡es totalmente necesario!
+
+00:04:29.746 --> 00:04:30.516 align:middle
+Esto funciona...
+
+00:04:30.676 --> 00:04:36.166 align:middle
+no gracias a ninguna plataforma de la API ni a la
+magia de Doctrine , sino gracias a un código bueno,
+
+00:04:36.216 --> 00:04:39.776 align:middle
+anticuado y bien escrito en nuestra entidad.
+
+00:04:40.796 --> 00:04:46.466 align:middle
+Internamente, el serializador instala
+un nuevo CheeseListing, le pone datos
+
+00:04:46.466 --> 00:04:52.916 align:middle
+y luego llama a $user->addCheeseListing(),
+pasando ese nuevo objeto como argumento.
+
+00:04:53.646 --> 00:04:55.486 align:middle
+Y ese código se encarga
+
+00:04:55.486 --> 00:05:00.606 align:middle
+de llamar a$cheeseListing->setOwner()
+y establecerlo en $this Usuario.
+
+00:05:01.446 --> 00:05:07.636 align:middle
+Me encanta eso: nuestro código generado de
+make:entity y el serializador están trabajando juntos.
+
+00:05:08.016 --> 00:05:08.706 align:middle
+¿Qué va a funcionar?
+
+00:05:08.886 --> 00:05:09.636 align:middle
+¡El trabajo en equipo!
+
+00:05:10.946 --> 00:05:15.106 align:middle
+Pero, al igual que cuando incrustamos los
+datos de owner al editar un CheeseListing
+
+00:05:15.686 --> 00:05:19.826 align:middle
+, cuando permites que se cambien o creen recursos
+incrustados como éste, tienes que prestar
+
+00:05:20.196 --> 00:05:22.606 align:middle
+especial atención a la validación.
+
+00:05:22.606 --> 00:05:27.136 align:middle
+Por ejemplo, cambia los email y
+username para que vuelvan a ser únicos.
+
+00:05:28.306 --> 00:05:30.086 align:middle
+Ahora se trata de un usuario válido.
+
+00:05:30.616 --> 00:05:33.306 align:middle
+Pero establece el title del
+CheeseListing a una cadena vacía.
+
+00:05:33.986 --> 00:05:36.716 align:middle
+¿La validación detendrá esto?
+
+00:05:36.716 --> 00:05:40.286 align:middle
+No Ha permitido que el CheeseListing
+se guarde sin título, ¡ a
+
+00:05:40.656 --> 00:05:43.776 align:middle
+pesar de que tenemos la
+validación para evitarlo!
+
+00:05:44.316 --> 00:05:49.996 align:middle
+Esto se debe a que, como hemos hablado antes,
+cuando el validador procesa el objeto User,
+
+00:05:50.446 --> 00:05:55.066 align:middle
+no baja automáticamente
+a la matriz cheeseListings
+
+00:05:55.296 --> 00:05:57.976 align:middle
+y valida también esos objetos.
+
+00:05:58.806 --> 00:06:02.376 align:middle
+Puedes forzarlo añadiendo
+@Assert\Valid(). Asegurémonos
+
+00:06:03.276 --> 00:06:07.436 align:middle
+de que eso ha servido de algo: vuelve
+a subir, haz que los objetos email
+
+00:06:07.436 --> 00:06:10.016 align:middle
+y username vuelvan a ser únicos y...
+
+00:06:10.256 --> 00:06:15.316 align:middle
+¡Ejecuta! ¡Perfecto!
+
+00:06:15.596 --> 00:06:17.946 align:middle
+Un código de estado 400 porque
+
+00:06:18.256 --> 00:06:22.746 align:middle
+el campo cheeseListings[0].title
+no debe estar en blanco.
+
+00:06:24.076 --> 00:06:30.516 align:middle
+Vale, hemos hablado de cómo añadir nuevos listados
+de quesos a un usuario, ya sea pasando el IRI
+
+00:06:30.516 --> 00:06:35.486 align:middle
+de un CheeseListing existente o incrustando
+datos para crear un nuevo CheeseListing.
+
+00:06:36.406 --> 00:06:40.256 align:middle
+Pero ¿qué pasaría si un usuario
+tuviera 2 listados de quesos...
+
+00:06:40.626 --> 00:06:43.746 align:middle
+y hacemos una petición para editar ese User...
+
+00:06:44.186 --> 00:06:48.956 align:middle
+y sólo incluyera el IRI
+de uno de esos listados?
+
+00:06:49.516 --> 00:06:50.016 align:middle
+Eso debería...
+
+00:06:50.206 --> 00:06:53.666 align:middle
+eliminar el CheeseListing que
+le faltaba al usuario, ¿no?
+
+00:06:54.406 --> 00:06:55.466 align:middle
+¿Funciona?
+
+00:06:56.036 --> 00:07:00.056 align:middle
+Y si es así, ¿pone el owner
+de ese CheeseListing en cero?
+
+00:07:00.256 --> 00:07:02.966 align:middle
+¿O lo elimina por completo?
+
+00:07:03.546 --> 00:07:05.136 align:middle
+¡Busquemos algunas respuestas a continuación!
