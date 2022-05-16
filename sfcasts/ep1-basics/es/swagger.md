@@ -24,7 +24,7 @@ Nos ha desplazado hasta la documentación de esta ruta y la ha ejecutado con el 
 
 En la Plataforma API hay algo llamado negociación de tipo de contenido. Convenientemente, cuando ejecutas una operación, Swagger te muestra cómo podrías hacer esa misma petición utilizando curl en la línea de comandos. E incluye una pieza crítica:
 
-&gt `-H "accept: application/ld+json"`
+> `-H "accept: application/ld+json"`
 
 Que dice: haz una petición con una cabecera `Accept` establecida en `application/ld+json`. La petición está dando una pista a la Plataforma API de que debe devolver los datos en este formato JSON-LD. Te des cuenta o no, tu navegador también envía esta cabecera: como `text/html`... porque... es un navegador. Eso básicamente le dice a la Plataforma API:
 
