@@ -1,0 +1,262 @@
+WEBVTT
+
+00:00:01.046 --> 00:00:02.836 align:middle
+Cierra la operación POST.
+
+00:00:03.646 --> 00:00:07.276 align:middle
+Quiero hacer una petición GET
+a la colección de usuarios.
+
+00:00:10.376 --> 00:00:16.546 align:middle
+Veamos aquí: el usuario con id 4
+tiene un CheeseListing adjunto: id 2.
+
+00:00:17.956 --> 00:00:24.976 align:middle
+Bien, cierra esa operación y abre la
+operación para PUT: Quiero editar ese usuario.
+
+00:00:25.696 --> 00:00:27.066 align:middle
+Introduce el 4 como id.
+
+00:00:27.066 --> 00:00:31.116 align:middle
+Primero, voy a hacer algo
+que ya hemos visto: vamos a
+
+00:00:31.556 --> 00:00:36.016 align:middle
+actualizar el campo cheeseListings:
+ponerlo en una matriz
+
+00:00:36.016 --> 00:00:41.576 align:middle
+con un IRI dentro: /api/cheeses/2.
+
+00:00:41.576 --> 00:00:46.736 align:middle
+Si no hiciéramos nada más, esto
+establecería esta propiedad como...
+
+00:00:47.086 --> 00:00:53.466 align:middle
+exactamente a lo que ya equivale: el ID
+de usuario 4 ya tiene este CheeseListing.
+
+00:00:54.716 --> 00:01:01.416 align:middle
+Pero ahora, añade otro IRI: /api/cheeses/3.
+
+00:01:02.366 --> 00:01:06.536 align:middle
+Que ya existe, pero es
+propiedad de otro usuario.
+
+00:01:08.156 --> 00:01:09.166 align:middle
+Cuando pulso Execute....
+
+00:01:09.626 --> 00:01:15.126 align:middle
+pfff - me sale un error de sintaxis, porque
+me he dejado una coma de más en mi JSON.
+
+00:01:15.656 --> 00:01:18.676 align:middle
+Boo Ryan. Vamos a...
+
+00:01:18.676 --> 00:01:19.646 align:middle
+intentarlo de nuevo.
+
+00:01:20.616 --> 00:01:21.216 align:middle
+Esta vez...
+
+00:01:21.656 --> 00:01:27.816 align:middle
+¡bah! Un código de estado 400: Este valor
+no debería estar en blanco ¡Mis experimentos
+
+00:01:27.816 --> 00:01:30.926 align:middle
+con la validación acaban de volver a morderme!
+
+00:01:31.376 --> 00:01:35.906 align:middle
+Hemos puesto en la base de datos el title
+de CheeseListing 3 con una cadena vacía...
+
+00:01:35.906 --> 00:01:41.756 align:middle
+básicamente es un registro "malo" que se coló
+cuando jugábamos con la validación incrustada.
+
+00:01:42.566 --> 00:01:43.956 align:middle
+Podríamos arreglar ese título..
+
+00:01:44.246 --> 00:01:48.536 align:middle
+o... simplemente cambiar
+esto por /api/cheeses/1.
+
+00:01:50.706 --> 00:01:55.106 align:middle
+¡Ejecuta! Esta vez, ¡funciona!
+
+00:01:55.456 --> 00:01:58.766 align:middle
+Pero, no es una sorpresa,
+¡básicamente ya lo hemos hecho!
+
+00:01:59.726 --> 00:02:06.646 align:middle
+Internamente, el serializador ve el IRI
+existente de CheeseListing - /api/cheeses/2,
+
+00:02:07.016 --> 00:02:11.316 align:middle
+se da cuenta de que ya está
+establecido en nuestro User, y...
+
+00:02:11.506 --> 00:02:12.586 align:middle
+no hace nada.
+
+00:02:13.636 --> 00:02:16.916 align:middle
+Es decir, quizá vaya a tomar
+un café o a dar un paseo.
+
+00:02:16.916 --> 00:02:22.196 align:middle
+Pero, definitivamente, no llama
+a $user->addCheeseListing()...
+
+00:02:22.466 --> 00:02:23.736 align:middle
+ni hace realmente nada.
+
+00:02:24.346 --> 00:02:29.346 align:middle
+Pero cuando ve el nuevo
+IRI - /api/cheeses/1, se
+
+00:02:29.346 --> 00:02:35.956 align:middle
+da cuenta de que este CheeseListing no
+existe todavía en el User, y entonces,
+
+00:02:36.316 --> 00:02:39.116 align:middle
+sí llama a $user->addCheeseListing().
+
+00:02:39.816 --> 00:02:44.536 align:middle
+Por eso son tan útiles los métodos de adición y eliminación:
+el serializador es lo suficientemente inteligente como
+
+00:02:44.716 --> 00:02:49.586 align:middle
+para llamarlos sólo cuando realmente se
+está añadiendo o eliminando un objeto.
+
+00:02:50.536 --> 00:02:56.306 align:middle
+Ahora, hagamos lo contrario: imaginemos
+que queremos eliminar un CheeseListing
+
+00:02:56.306 --> 00:02:59.986 align:middle
+de este User - eliminar /api/cheeses/2.
+
+00:03:00.096 --> 00:03:03.046 align:middle
+¿Qué crees que ocurrirá?
+
+00:03:03.706 --> 00:03:05.226 align:middle
+Ejecuta y...
+
+00:03:05.716 --> 00:03:08.796 align:middle
+¡oh! ¡Un error de restricción de integridad!
+
+00:03:08.796 --> 00:03:15.486 align:middle
+Se ha producido una excepción al ejecutar
+UPDATE cheese_listing SET owner_id=NULL -
+
+00:03:16.166 --> 00:03:18.216 align:middle
+la columna owner_id no puede ser nula.
+
+00:03:18.966 --> 00:03:19.736 align:middle
+¡Esto es genial!
+
+00:03:20.256 --> 00:03:25.386 align:middle
+El serializador se ha dado cuenta de que
+hemos eliminado el CheeseListing con id = 2.
+
+00:03:26.206 --> 00:03:30.326 align:middle
+Y así, llamó correctamente a
+$user->removeCheeseListing()
+
+00:03:30.816 --> 00:03:33.016 align:middle
+y le pasó a CheeseListing el id 2.
+
+00:03:33.706 --> 00:03:38.256 align:middle
+Entonces, nuestro código generado estableció el
+propietario de ese CheeseListing en null. Dependiendo
+
+00:03:39.186 --> 00:03:43.456 align:middle
+de la situación y de la naturaleza
+de la relación y las entidades,
+
+00:03:43.736 --> 00:03:46.506 align:middle
+¡esto podría ser exactamente lo que quieres!
+
+00:03:47.376 --> 00:03:50.626 align:middle
+O, si se tratara de una relación ManyToMany,
+
+00:03:50.976 --> 00:03:56.986 align:middle
+el resultado de ese código generado sería
+básicamente "desvincular" los dos objetos.
+
+00:03:57.486 --> 00:04:02.516 align:middle
+Pero en nuestro caso, no queremos que un CheeseListing
+quede nunca "huérfano" en la base de datos.
+
+00:04:03.116 --> 00:04:03.526 align:middle
+De hecho...
+
+00:04:03.766 --> 00:04:10.056 align:middle
+¡es exactamente por lo que hicimos owner
+nullable=false y por lo que vemos este error!
+
+00:04:10.576 --> 00:04:13.176 align:middle
+No, si se elimina un
+CheeseListing de un User...
+
+00:04:13.506 --> 00:04:17.526 align:middle
+¡supongo que tenemos que eliminar
+ese CheeseListing por completo!
+
+00:04:18.586 --> 00:04:20.966 align:middle
+Y... ¡sí, hacer eso es fácil!
+
+00:04:21.856 --> 00:04:27.516 align:middle
+Todo el camino de vuelta por encima de la propiedad
+$cheeseListings, añade orphanRemoval=true.
+
+00:04:28.606 --> 00:04:32.546 align:middle
+Esto significa que, si alguno de los
+CheeseListings de esta matriz de repente...
+
+00:04:32.726 --> 00:04:36.626 align:middle
+no está en esta matriz,
+Doctrine lo eliminará.
+
+00:04:37.146 --> 00:04:42.476 align:middle
+Simplemente, ten en cuenta que si intentas
+reasignar un CheeseListing a otro User,
+
+00:04:42.856 --> 00:04:45.116 align:middle
+seguirá borrando ese CheeseListing.
+
+00:04:45.286 --> 00:04:50.066 align:middle
+Así que asegúrate de utilizar esto
+sólo cuando no sea un caso de uso.
+
+00:04:50.706 --> 00:04:54.016 align:middle
+Hemos cambiado mucho el propietario
+de los listados de quesos...
+
+00:04:54.246 --> 00:04:59.656 align:middle
+pero sólo como ejemplo: en realidad no
+tiene sentido, así que esto es perfecto.
+
+00:05:00.636 --> 00:05:01.636 align:middle
+Ejecuta una vez más.
+
+00:05:01.686 --> 00:05:04.256 align:middle
+Funciona...
+
+00:05:04.426 --> 00:05:08.276 align:middle
+y sólo está /api/cheeses/1.
+
+00:05:09.106 --> 00:05:13.036 align:middle
+Y si volvemos a buscar la
+colección de listados de quesos...
+
+00:05:16.706 --> 00:05:20.696 align:middle
+sí, CheeseListing id 2 ha desaparecido.
+
+00:05:21.646 --> 00:05:24.296 align:middle
+Luego, cuando combinas las
+relaciones y el filtrado...
+
+00:05:24.616 --> 00:05:27.726 align:middle
+bueno... obtienes una potencia bastante grande
