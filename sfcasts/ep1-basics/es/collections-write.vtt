@@ -1,0 +1,222 @@
+WEBVTT
+
+00:00:01.176 --> 00:00:04.456 align:middle
+Utiliza los documentos para
+comprobar el User con id=2.
+
+00:00:06.526 --> 00:00:10.926 align:middle
+Cuando leemos un recurso, podemos
+decidir exponer cualquier propiedad,
+
+00:00:11.466 --> 00:00:16.356 align:middle
+y una propiedad que contiene una colección,
+como cheeseListings, no es diferente.
+
+00:00:17.086 --> 00:00:21.616 align:middle
+Exponemos esa propiedad añadiendo
+@Groups("user:read") sobre ella.
+
+00:00:22.336 --> 00:00:25.886 align:middle
+Y como ésta contiene una
+colección de objetos relacionados,
+
+00:00:26.106 --> 00:00:32.046 align:middle
+también podemos decidir si la propiedad
+cheeseListings debe exponerse como una matriz
+
+00:00:32.046 --> 00:00:39.176 align:middle
+de cadenas IRI o como una matriz de objetos
+incrustados, añadiendo este mismo grupo
+
+00:00:39.176 --> 00:00:43.596 align:middle
+a al menos una propiedad dentro
+de la propia CheeseListing.
+
+00:00:43.596 --> 00:00:45.286 align:middle
+Genial. ¡Nuevo reto!
+
+00:00:45.696 --> 00:00:48.356 align:middle
+Podemos leer la propiedad
+cheeseListings en User...
+
+00:00:48.566 --> 00:00:51.696 align:middle
+pero ¿podemos también
+modificar esta propiedad? Por
+
+00:00:51.696 --> 00:00:58.426 align:middle
+ejemplo, bueno, es un ejemplo un poco extraño,
+pero supongamos que un administrador quiere
+
+00:00:58.426 --> 00:01:02.366 align:middle
+poder editar un User y
+convertirlo en propietario
+
+00:01:02.456 --> 00:01:06.376 align:middle
+de algunos objetos CheeseListing
+existentes en el sistema.
+
+00:01:07.246 --> 00:01:11.526 align:middle
+Esto ya se puede hacer editando un
+CheeseListing y cambiando su owner.
+
+00:01:13.306 --> 00:01:19.106 align:middle
+Pero, ¿podríamos hacerlo también editando un
+User y pasándole una propiedad cheeseListings?
+
+00:01:20.006 --> 00:01:22.746 align:middle
+En realidad, ¡vamos a
+ponernos aún más locos!
+
+00:01:23.366 --> 00:01:27.966 align:middle
+Quiero poder crear un nuevo
+User y especificar uno
+
+00:01:27.966 --> 00:01:31.426 align:middle
+o más listados de quesos que
+este User debería poseer...
+
+00:01:31.806 --> 00:01:33.486 align:middle
+todo en una sola petición.
+
+00:01:34.556 --> 00:01:37.956 align:middle
+Ahora mismo, la propiedad
+cheeseListings no es modificable.
+
+00:01:38.436 --> 00:01:42.406 align:middle
+La razón es sencilla: esa propiedad
+sólo tiene el grupo de lectura.
+
+00:01:43.416 --> 00:01:47.726 align:middle
+¡Genial! Haré de ese grupo un
+array y añadiré user:write.
+
+00:01:49.926 --> 00:01:53.826 align:middle
+Ahora, vuelve, refresca los
+documentos y mira la operación POST:
+
+00:01:56.166 --> 00:01:58.506 align:middle
+tenemos una propiedad cheeseListings.
+
+00:01:59.206 --> 00:01:59.926 align:middle
+¡Vamos a hacerlo!
+
+00:02:00.926 --> 00:02:07.306 align:middle
+Empieza con la aburrida información del usuario: correo
+electrónico, la contraseña no importa y el nombre de usuario.
+
+00:02:07.306 --> 00:02:11.706 align:middle
+Para cheeseListings, esto
+tiene que ser un array...
+
+00:02:12.206 --> 00:02:14.306 align:middle
+porque esta propiedad contiene un array.
+
+00:02:15.236 --> 00:02:22.666 align:middle
+Dentro, añade sólo un elemento
+- un IRI - /api/cheeses/1.
+
+00:02:22.666 --> 00:02:31.176 align:middle
+En un mundo perfecto, esto creará un nuevo User
+y luego irá a buscar el CheeseListing con el id 1
+
+00:02:31.556 --> 00:02:34.376 align:middle
+y lo cambiará para que sea
+propiedad de este usuario.
+
+00:02:35.496 --> 00:02:36.636 align:middle
+Respira hondo.
+
+00:02:36.636 --> 00:02:39.486 align:middle
+¡Ejecuta! ¿Ha funcionado?
+
+00:02:39.996 --> 00:02:41.516 align:middle
+Es decir, ¡ha funcionado!
+
+00:02:41.616 --> 00:02:49.336 align:middle
+Un código de estado 201: ¡ha creado el nuevo User y
+ese User es ahora el propietario de este CheeseListing!
+
+00:02:50.246 --> 00:02:50.926 align:middle
+Espera un momento...
+
+00:02:51.046 --> 00:02:52.716 align:middle
+¿cómo ha funcionado? Compruébalo
+
+00:02:53.626 --> 00:02:59.676 align:middle
+: entendemos cómo se manejan email,
+password y username: cuando hacemos un POST,
+
+00:02:59.926 --> 00:03:02.556 align:middle
+el serializador llamará a setEmail().
+
+00:03:02.556 --> 00:03:06.606 align:middle
+En este caso, estamos enviando
+un campo cheeseListings...
+
+00:03:06.726 --> 00:03:11.376 align:middle
+pero si buscamos
+setCheeseListings(), ¡no existe!
+
+00:03:12.406 --> 00:03:14.966 align:middle
+En su lugar, busca addCheeseListing().
+
+00:03:16.456 --> 00:03:22.936 align:middle
+Ahhh. El comando make:entity es inteligente: cuando
+genera una relación de colección como ésta,
+
+00:03:23.416 --> 00:03:26.416 align:middle
+en lugar de generar un
+método setCheeseListings(),
+
+00:03:26.606 --> 00:03:30.736 align:middle
+genera addCheeseListing()
+y removeCheeseListing().
+
+00:03:31.326 --> 00:03:34.566 align:middle
+Y el serializador es lo suficientemente
+inteligente como para utilizarlos
+
+00:03:35.366 --> 00:03:40.786 align:middle
+Ve el único IRI de CheeseListing que estamos enviando,
+consulta la base de datos en busca de ese objeto,
+
+00:03:41.246 --> 00:03:45.596 align:middle
+llama a addCheeseListing()
+y lo pasa como argumento. La
+
+00:03:46.706 --> 00:03:52.306 align:middle
+razón por la que make:entity genera el sumador
+-en lugar de sólo setCheeseListings() -
+
+00:03:52.756 --> 00:03:57.576 align:middle
+es que nos permite hacer cosas cuando se
+añade o elimina un listado de quesos.
+
+00:03:58.216 --> 00:03:59.976 align:middle
+¡Y eso es clave!
+
+00:04:00.596 --> 00:04:07.146 align:middle
+Compruébalo: dentro del código generado,
+llama a $cheeseListing->setOwner($this).
+
+00:04:07.656 --> 00:04:14.906 align:middle
+Por eso el propietario cambió al nuevo
+usuario, para este CheeseListing con id=1.
+
+00:04:15.716 --> 00:04:17.426 align:middle
+Entonces... ¡todo se guarda!
+
+00:04:18.406 --> 00:04:24.306 align:middle
+Siguiente: cuando estemos creando o editando un usuario,
+en lugar de reasignar un CheeseListing existente
+
+00:04:24.306 --> 00:04:29.206 align:middle
+a un nuevo propietario, vamos a hacer posible la
+creación de listados de quesos totalmente nuevos.
+
+00:04:29.816 --> 00:04:31.136 align:middle
+Sí, ¡nos estamos volviendo locos!
+
+00:04:31.626 --> 00:04:36.356 align:middle
+Pero esto nos permitirá aprender aún más
+sobre cómo piensa y funciona el serializador
