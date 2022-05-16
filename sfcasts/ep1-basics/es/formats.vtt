@@ -1,0 +1,276 @@
+WEBVTT
+
+00:00:01.136 --> 00:00:04.526 align:middle
+La Plataforma API admite múltiples
+formatos de entrada y salida.
+
+00:00:04.986 --> 00:00:14.276 align:middle
+Puedes comprobarlo entrando en /api/cheeses.json para
+obtener JSON "en bruto" o en .jsonld o incluso en .html,
+
+00:00:14.276 --> 00:00:16.796 align:middle
+que carga la documentación HTML.
+
+00:00:17.306 --> 00:00:22.526 align:middle
+Pero añadir la extensión de este modo es una especie
+de "truco" que la Plataforma API ha añadido sólo
+
+00:00:22.526 --> 00:00:23.976 align:middle
+para facilitar el juego.
+
+00:00:24.876 --> 00:00:30.476 align:middle
+En su lugar, se supone que debes elegir
+qué "formato" o "representación" quieres
+
+00:00:30.476 --> 00:00:33.406 align:middle
+para un recurso mediante la
+negociación del contenido. La
+
+00:00:34.446 --> 00:00:40.156 align:middle
+documentación ya lo hace y lo muestra en
+los ejemplos: envía una cabecera Accept,
+
+00:00:40.696 --> 00:00:45.876 align:middle
+que la Plataforma API utiliza para averiguar
+qué formato debe utilizar el serializador.
+
+00:00:46.876 --> 00:00:50.166 align:middle
+Por defecto, la Plataforma
+API utiliza 3 formatos...
+
+00:00:50.416 --> 00:00:57.206 align:middle
+pero en realidad admite un montón más:
+JSON-API, HAL JSON, XML, YAML y CSV.
+
+00:00:57.206 --> 00:01:06.556 align:middle
+Busca tu terminal y ejecuta: php bin/console debug:config api_platform
+Esta es nuestra configuración actual de la Plataforma API
+
+00:01:06.556 --> 00:01:10.916 align:middle
+, incluyendo los valores por defecto.
+
+00:01:12.016 --> 00:01:12.956 align:middle
+Echa un vistazo a formats.
+
+00:01:13.526 --> 00:01:19.526 align:middle
+Muestra los 3 formatos que hemos visto hasta
+ahora y los tipos mime de cada uno, que es
+
+00:01:19.876 --> 00:01:24.146 align:middle
+el valor que debe enviarse en la
+cabecera Accept para activarlos.
+
+00:01:25.416 --> 00:01:26.666 align:middle
+Vamos a añadir otro formato.
+
+00:01:27.506 --> 00:01:30.236 align:middle
+Para ello, copia toda
+esta sección de formatos.
+
+00:01:32.036 --> 00:01:38.586 align:middle
+Luego abre config/packages/api_platform.yaml
+y pégalo aquí.
+
+00:01:40.106 --> 00:01:43.046 align:middle
+Así nos aseguraremos de
+mantener estos tres formatos.
+
+00:01:43.976 --> 00:01:48.016 align:middle
+Ahora, vamos a añadir uno nuevo: jsonhal.
+
+00:01:48.846 --> 00:01:53.356 align:middle
+Este es uno de los otros formatos que la
+Plataforma API admite de forma inmediata.
+
+00:01:54.576 --> 00:02:01.936 align:middle
+A continuación, añade mime_types: y luego el tipo de
+contenido estándar para este formato: application/hal+json.
+
+00:02:03.536 --> 00:02:05.996 align:middle
+¡Genial! Y así de fácil...
+
+00:02:06.286 --> 00:02:09.236 align:middle
+¡toda nuestra API admite un nuevo formato!
+
+00:02:09.236 --> 00:02:15.026 align:middle
+Actualiza los documentos y abre la operación
+GET para ver el listado de quesos 1.
+
+00:02:16.456 --> 00:02:19.866 align:middle
+Antes de pulsar ejecutar, abre
+el desplegable del formato y...
+
+00:02:20.066 --> 00:02:24.586 align:middle
+¡eh! Selecciona application/hal+json.
+
+00:02:25.356 --> 00:02:34.216 align:middle
+¡Ejecuta! Saluda al formato JSON HAL: una
+especie de formato "competidor" con JSON-LD
+
+00:02:34.216 --> 00:02:40.356 align:middle
+o JSON-API, que pretenden estandarizar
+cómo debes estructurar tu JSON:
+
+00:02:40.806 --> 00:02:47.766 align:middle
+dónde deben vivir tus datos, dónde deben vivir los
+enlaces, etc. En HAL, tienes una propiedad _links.
+
+00:02:48.416 --> 00:02:53.406 align:middle
+Ahora sólo tiene un enlace a self, pero
+éste suele contener enlaces a otros recursos.
+
+00:02:54.316 --> 00:02:57.126 align:middle
+Esto es más divertido si probamos
+la operación de recolección GET
+
+00:02:57.906 --> 00:03:01.476 align:middle
+seleccionar application/hal+json
+y pulsar Ejecutar.
+
+00:03:02.646 --> 00:03:06.616 align:middle
+Es bastante chulo ver cómo los distintos
+formatos "anuncian" la paginación.
+
+00:03:07.296 --> 00:03:11.606 align:middle
+HAL utiliza _links con las
+claves first, last y next.
+
+00:03:12.046 --> 00:03:16.146 align:middle
+Si estuviéramos en la página 2,
+también habría un campo prev.
+
+00:03:17.196 --> 00:03:20.416 align:middle
+Disponer de este formato
+puede ser útil o no para ti;
+
+00:03:21.316 --> 00:03:25.036 align:middle
+lo increíble es que puedes
+elegir lo que quieras.
+
+00:03:25.746 --> 00:03:30.526 align:middle
+Además, entender los formatos desbloquea
+otras posibilidades interesantes.
+
+00:03:32.036 --> 00:03:38.216 align:middle
+Por ejemplo, ¿qué pasa si, por alguna razón,
+tú o alguien que utilice tu API quiere poder
+
+00:03:38.216 --> 00:03:41.256 align:middle
+obtener los recursos del
+listado de quesos como CSV?
+
+00:03:41.256 --> 00:03:44.266 align:middle
+Sí, ¡eso es totalmente posible!
+
+00:03:44.716 --> 00:03:49.196 align:middle
+Pero en lugar de hacer que ese formato esté
+disponible globalmente para todos los recursos, vamos a
+
+00:03:49.536 --> 00:03:52.516 align:middle
+activarlo sólo para nuestro CheeseListing.
+
+00:03:53.796 --> 00:03:59.346 align:middle
+De vuelta a esa clase, de nuevo bajo esta
+clave especial attributes, añade "formats".
+
+00:03:59.346 --> 00:04:02.446 align:middle
+Si quieres mantener todos los
+formatos existentes, tendrás que
+
+00:04:02.606 --> 00:04:07.296 align:middle
+enumerarlos aquí: jsonld, json, y luego...
+
+00:04:07.296 --> 00:04:12.856 align:middle
+veamos, ah sí, html y jsonhal.
+
+00:04:15.376 --> 00:04:23.546 align:middle
+Para añadir un nuevo formato, di csv, pero
+ponlo en una nueva matriz con text/csv dentro.
+
+00:04:24.146 --> 00:04:26.276 align:middle
+Este es el tipo mime del formato.
+
+00:04:27.836 --> 00:04:30.736 align:middle
+No necesitamos añadir tipos
+mime para los otros formatos
+
+00:04:31.026 --> 00:04:33.666 align:middle
+porque ya están configurados en
+nuestro archivo de configuración.
+
+00:04:34.936 --> 00:04:35.636 align:middle
+¡Vamos a probarlo!
+
+00:04:36.326 --> 00:04:37.266 align:middle
+Ve a actualizar los documentos.
+
+00:04:39.686 --> 00:04:42.966 align:middle
+De repente, sólo para este recurso...
+
+00:04:43.146 --> 00:04:46.556 align:middle
+que, vale, ahora sólo tenemos un recurso...
+
+00:04:47.246 --> 00:04:50.966 align:middle
+pero CheeseListing tiene ahora un formato CSV.
+
+00:04:51.476 --> 00:04:52.946 align:middle
+Selecciónalo y ejecútalo.
+
+00:04:54.536 --> 00:04:55.566 align:middle
+¡Ya está!
+
+00:04:56.206 --> 00:05:00.456 align:middle
+Y podemos probarlo directamente en el
+navegador añadiendo .csv al final.
+
+00:05:01.726 --> 00:05:03.406 align:middle
+Mi navegador lo ha descargado...
+
+00:05:03.406 --> 00:05:07.976 align:middle
+así que vamos a dar la vuelta y a cat
+ese archivo para ver qué aspecto tiene.
+
+00:05:11.006 --> 00:05:15.056 align:middle
+Los saltos de línea parecen un poco
+extraños, pero es un CSV válido.
+
+00:05:16.126 --> 00:05:20.616 align:middle
+Un ejemplo mejor es obtener la
+lista completa: /api/cheeses.csv.
+
+00:05:20.616 --> 00:05:24.296 align:middle
+Veamos también qué aspecto
+tiene en el terminal.
+
+00:05:26.076 --> 00:05:27.366 align:middle
+¡Esto es increíble!
+
+00:05:27.426 --> 00:05:30.926 align:middle
+La función de descarga de CSV más
+rápida que he construido nunca.
+
+00:05:31.746 --> 00:05:32.436 align:middle
+Y... ¡sí!
+
+00:05:33.056 --> 00:05:36.656 align:middle
+También puedes crear tu propio formato
+y activarlo de esta misma manera. Es
+
+00:05:37.016 --> 00:05:45.186 align:middle
+una idea poderosa: nuestro único recurso de la API
+puede representarse de muchas maneras diferentes,
+
+00:05:45.676 --> 00:05:49.856 align:middle
+incluso en formatos -como
+el CSV- que no necesitas...
+
+00:05:50.006 --> 00:05:54.796 align:middle
+hasta esa situación aleatoria en la
+que de repente los necesitas de verdad.
+
+00:05:55.816 --> 00:06:01.276 align:middle
+A continuación, es hora de dejar que los usuarios
+creen listados de queso con los datos que quieran.
+
+00:06:01.556 --> 00:06:03.436 align:middle
+¡Es hora de añadir la validación!
