@@ -1,0 +1,372 @@
+WEBVTT
+
+00:00:01.146 --> 00:00:03.646 align:middle
+Cuando dos recursos están
+relacionados entre sí,
+
+00:00:03.916 --> 00:00:07.766 align:middle
+esto puede expresarse de dos
+maneras diferentes en una API.
+
+00:00:08.706 --> 00:00:14.156 align:middle
+La primera es con IRIs - básicamente
+un "enlace" al otro recurso.
+
+00:00:14.766 --> 00:00:18.886 align:middle
+No podemos ver los datos del CheeseListing
+relacionado, pero si los necesitamos,
+
+00:00:19.226 --> 00:00:22.076 align:middle
+podríamos hacer una segunda
+petición a esta URL y...
+
+00:00:22.336 --> 00:00:23.696 align:middle
+¡boom! Lo tenemos.
+
+00:00:24.336 --> 00:00:28.636 align:middle
+Pero, por motivos de rendimiento,
+podrías decir: ¿Sabes qué?
+
+00:00:28.636 --> 00:00:35.036 align:middle
+No quiero tener que hacer una petición para
+obtener los datos del usuario y luego otra petición
+
+00:00:35.036 --> 00:00:40.766 align:middle
+para obtener los datos de cada lista de quesos
+que posea: ¡Quiero obtenerlos todos a la vez!
+
+00:00:41.416 --> 00:00:48.116 align:middle
+Y eso describe la segunda forma de expresar una
+relación: en lugar de devolver simplemente un enlace
+
+00:00:48.116 --> 00:00:52.946 align:middle
+a un listado de quesos, ¡puedes
+incrustar sus datos justo dentro!
+
+00:00:54.136 --> 00:01:00.106 align:middle
+Como recordatorio, cuando normalizamos un
+User, incluimos todo en el grupo user:read.
+
+00:01:00.106 --> 00:01:04.256 align:middle
+Así que eso significa $email,
+$username y $cheeseListings, que es la
+
+00:01:04.766 --> 00:01:06.976 align:middle
+razón por la que esa
+propiedad aparece en absoluto.
+
+00:01:07.966 --> 00:01:14.086 align:middle
+Para hacer que esta propiedad devuelva datos, en lugar
+de sólo un IRI, esto es lo que tienes que hacer entrar
+
+00:01:15.086 --> 00:01:18.416 align:middle
+en la entidad relacionada
+-por tanto, CheeseListing -
+
+00:01:19.126 --> 00:01:24.156 align:middle
+y añadir este grupo user:read
+a al menos una propiedad.
+
+00:01:25.976 --> 00:01:28.926 align:middle
+Por ejemplo, añade user:read
+por encima de $title...
+
+00:01:29.946 --> 00:01:32.566 align:middle
+y qué tal también por encima de $price.
+
+00:01:35.356 --> 00:01:36.486 align:middle
+¡A ver qué pasa!
+
+00:01:37.516 --> 00:01:40.366 align:middle
+Ni siquiera necesitamos
+actualizar, sólo ejecutar.
+
+00:01:43.296 --> 00:01:49.136 align:middle
+¡Vaya! En lugar de una matriz de
+cadenas, ¡ahora es una matriz de objetos!
+
+00:01:49.766 --> 00:01:54.096 align:middle
+Bueno, este usuario sólo posee un
+CheeseListing, pero te haces una idea.
+
+00:01:54.666 --> 00:02:00.616 align:middle
+Cada elemento tiene los estándares @type y
+@id más las propiedades que hayamos añadido
+
+00:02:00.616 --> 00:02:02.896 align:middle
+al grupo: title y price.
+
+00:02:03.876 --> 00:02:10.406 align:middle
+Es muy sencillo: el serializador sabe que debe
+serializar todos los campos del grupo user:read.
+
+00:02:11.156 --> 00:02:15.776 align:middle
+Primero busca en User y encuentra
+email, username y cheeseListings.
+
+00:02:16.536 --> 00:02:20.696 align:middle
+Luego sigue adelante y, dentro
+de CheeseListing, encuentra
+
+00:02:20.756 --> 00:02:23.536 align:middle
+ese grupo en title y price.
+
+00:02:24.366 --> 00:02:31.276 align:middle
+Esto significa que cada propiedad de la relación
+puede ser una cadena -el IRI- o un objeto.
+
+00:02:31.676 --> 00:02:33.626 align:middle
+Y un cliente de la API
+puede notar la diferencia.
+
+00:02:34.226 --> 00:02:40.966 align:middle
+Si devuelve un objeto, sabe que tendrá @id,
+@type y algunas otras propiedades de datos.
+
+00:02:40.966 --> 00:02:47.166 align:middle
+Si recibe una cadena, sabe que es un IRI que
+puede utilizar para obtener los datos reales.
+
+00:02:48.426 --> 00:02:51.356 align:middle
+Podemos hacer lo mismo en el
+otro lado de la relación.
+
+00:02:52.066 --> 00:02:55.476 align:middle
+Utiliza los documentos para obtener
+el CheeseListing con id = 1.
+
+00:02:57.256 --> 00:02:59.646 align:middle
+¡Sí! La propiedad owner es una cadena.
+
+00:03:00.236 --> 00:03:03.706 align:middle
+Pero puede ser conveniente
+que el JSON de CheeseListing
+
+00:03:03.816 --> 00:03:07.166 align:middle
+contenga al menos el nombre
+de usuario del propietario...
+
+00:03:07.436 --> 00:03:12.956 align:middle
+para que no tengamos que ir a buscar todo el
+usuario sólo para mostrar quién es el propietario.
+
+00:03:13.896 --> 00:03:18.436 align:middle
+Dentro de CheeseListing, el proceso
+de normalización serializará todo
+
+00:03:18.436 --> 00:03:21.526 align:middle
+en el grupo cheese_listing:read.
+
+00:03:22.496 --> 00:03:23.016 align:middle
+Copiadlo.
+
+00:03:24.136 --> 00:03:28.166 align:middle
+La propiedad owner, por supuesto,
+ya tiene este grupo encima,
+
+00:03:28.546 --> 00:03:30.126 align:middle
+por eso lo vemos en nuestra API.
+
+00:03:31.496 --> 00:03:33.756 align:middle
+Dentro de User, busca $username...
+
+00:03:34.106 --> 00:03:37.096 align:middle
+y añádele cheese_listing:read.
+
+00:03:38.696 --> 00:03:39.546 align:middle
+¡Vamos a probar esto!
+
+00:03:40.296 --> 00:03:41.566 align:middle
+Vuelve a moverte y...
+
+00:03:41.926 --> 00:03:45.116 align:middle
+¡Ejecuta! Y...
+
+00:03:45.296 --> 00:03:47.146 align:middle
+¡ja! ¡Perfecto!
+
+00:03:47.486 --> 00:03:50.306 align:middle
+Se expande a un objeto e incluye el username.
+
+00:03:51.956 --> 00:03:55.716 align:middle
+¿Funciona si obtenemos la
+colección de listados de quesos?
+
+00:03:56.396 --> 00:03:56.976 align:middle
+¡Pruébalo!
+
+00:03:59.956 --> 00:04:05.926 align:middle
+Bueno... vale, ahora mismo sólo hay un CheeseListing
+en la base de datos, pero ¡por supuesto!
+
+00:04:06.306 --> 00:04:08.166 align:middle
+Se incrusta el propietario de la misma manera.
+
+00:04:09.366 --> 00:04:11.426 align:middle
+Así que... sobre eso...
+
+00:04:11.886 --> 00:04:12.786 align:middle
+¡nuevo reto!
+
+00:04:13.366 --> 00:04:18.316 align:middle
+¿Qué pasa si queremos incrustar los datos de
+owner cuando obtengo un único CheeseListing...
+
+00:04:18.826 --> 00:04:21.976 align:middle
+pero, para evitar que la
+respuesta sea gigantesca...
+
+00:04:22.376 --> 00:04:27.066 align:middle
+no queremos incrustar los datos
+cuando busquemos la colección.
+
+00:04:27.066 --> 00:04:28.446 align:middle
+¿Es posible?
+
+00:04:29.356 --> 00:04:35.486 align:middle
+Totalmente De nuevo, para CheeseListing,
+cuando normalizamos, incluimos todo
+
+00:04:35.486 --> 00:04:37.406 align:middle
+en el grupo cheese_listing:read.
+
+00:04:38.066 --> 00:04:42.116 align:middle
+Esto es así independientemente de
+si estamos obteniendo la colección
+
+00:04:42.116 --> 00:04:45.886 align:middle
+de listados de quesos o sólo
+obtenemos un único artículo.
+
+00:04:46.856 --> 00:04:54.106 align:middle
+Pero, un montón de cosas -incluidos los grupos-
+pueden cambiarse operación por operación.
+
+00:04:54.106 --> 00:04:59.966 align:middle
+Por ejemplo, en itemOperations, rompe
+la configuración de la operación get
+
+00:04:59.966 --> 00:05:05.936 align:middle
+en varias líneas y añade
+normalization_context.
+
+00:05:05.936 --> 00:05:10.446 align:middle
+Una de las cosas complicadas
+de la configuración aquí es
+
+00:05:10.446 --> 00:05:15.636 align:middle
+que las claves de nivel superior están
+en minúsculas, como normalizationContext.
+
+00:05:15.966 --> 00:05:22.456 align:middle
+Pero las claves más profundas suelen ser mayúsculas
+y minúsculas, como normalization_context.
+
+00:05:23.206 --> 00:05:27.936 align:middle
+Eso... puede ser un poco
+incoherente, y es fácil estropearlo.
+
+00:05:28.516 --> 00:05:29.376 align:middle
+Ten cuidado.
+
+00:05:30.206 --> 00:05:35.216 align:middle
+En cualquier caso, el objetivo es
+anular el contexto de normalización,
+
+00:05:35.356 --> 00:05:38.516 align:middle
+pero sólo para esta operación.
+
+00:05:39.556 --> 00:05:43.076 align:middle
+Establece esto en la normalidad
+groups y en otra matriz.
+
+00:05:45.426 --> 00:05:48.096 align:middle
+Dentro, vamos a decir ¡Oye!
+
+00:05:48.506 --> 00:05:53.406 align:middle
+Al obtener un solo elemento, quiero
+incluir todas las propiedades
+
+00:05:53.406 --> 00:05:57.456 align:middle
+que tenga el grupo
+cheese_listing:read como es normal.
+
+00:05:57.956 --> 00:06:05.426 align:middle
+Pero también quiero incluir las propiedades
+de un nuevo grupo cheese_listing:item:get.
+
+00:06:06.436 --> 00:06:10.556 align:middle
+Hablaremos de ello más adelante, pero estoy
+utilizando una convención de nomenclatura específica
+
+00:06:10.696 --> 00:06:18.196 align:middle
+para este grupo específico de la operación: el "nombre de la
+entidad", dos puntos, el elemento o la colección, dos puntos,
+
+00:06:18.476 --> 00:06:28.616 align:middle
+y luego el método HTTP: get, post, put,
+etc. Si recuperamos un solo CheeseListing....
+
+00:06:29.996 --> 00:06:35.166 align:middle
+no hay ninguna diferencia: estamos incluyendo
+un nuevo grupo para la serialización -
+
+00:06:35.266 --> 00:06:38.506 align:middle
+yaaaay - pero no hay nada en el nuevo grupo.
+
+00:06:39.766 --> 00:06:40.706 align:middle
+Aquí está la magia.
+
+00:06:41.476 --> 00:06:47.446 align:middle
+Copia el nombre del nuevo grupo, abre
+User, y sobre la propiedad $username,
+
+00:06:47.756 --> 00:06:53.946 align:middle
+sustituye cheese_listing:read
+por cheese_listing:item:get.
+
+00:06:54.936 --> 00:06:55.486 align:middle
+Ya está
+
+00:06:56.166 --> 00:06:59.616 align:middle
+Vuelve a la documentación y
+busca un solo CheeseListing.
+
+00:07:02.156 --> 00:07:07.836 align:middle
+Y... perfecto - sigue incorporando el
+propietario - ahí está el nombre de usuario.
+
+00:07:08.666 --> 00:07:13.356 align:middle
+Pero ahora, cierra eso y ve al
+punto final de la colección GET.
+
+00:07:17.166 --> 00:07:20.306 align:middle
+¡Ejecuta! ¡Sí!
+
+00:07:20.606 --> 00:07:22.956 align:middle
+¡El propietario vuelve a ser un IRI!
+
+00:07:23.696 --> 00:07:26.996 align:middle
+Estos grupos de serialización
+pueden resultar un poco complejos
+
+00:07:26.996 --> 00:07:30.066 align:middle
+de pensar, pero vaya si son potentes.
+
+00:07:31.246 --> 00:07:37.816 align:middle
+A continuación... cuando obtenemos un CheeseListing, algunos
+de los datos del propietario se incrustan en la respuesta.
+
+00:07:38.366 --> 00:07:43.646 align:middle
+Así que... tengo una pregunta un poco loca:
+cuando actualizamos un CheeseListing...
+
+00:07:44.036 --> 00:07:49.596 align:middle
+¿podríamos actualizar también algunos datos
+del propietario enviando datos incrustados?
+
+00:07:50.326 --> 00:07:51.156 align:middle
+Um... ¡sí!
+
+00:07:51.916 --> 00:07:52.666 align:middle
+Eso a continuación
