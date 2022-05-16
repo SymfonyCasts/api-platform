@@ -1,0 +1,414 @@
+WEBVTT
+
+00:00:00.986 --> 00:00:03.656 align:middle
+Actualmente estamos estudiando
+algo llamado Swagger
+
+00:00:04.176 --> 00:00:07.226 align:middle
+una interfaz de documentación
+de API de código abierto.
+
+00:00:08.056 --> 00:00:13.516 align:middle
+Pronto hablaremos más de ella, pero la idea
+es básicamente ésta: si tienes una API
+
+00:00:14.096 --> 00:00:19.726 align:middle
+-construida en cualquier lenguaje- y creas
+alguna configuración que describa esa API
+
+00:00:20.076 --> 00:00:23.336 align:middle
+en un formato que Swagger entienda, ¡boom!
+
+00:00:23.946 --> 00:00:28.776 align:middle
+Swagger puede mostrarte esta
+hermosa documentación interactiva.
+
+00:00:29.836 --> 00:00:34.896 align:middle
+Entre bastidores, la Plataforma API ya está
+preparando esa configuración para Swagger.
+
+00:00:35.506 --> 00:00:36.316 align:middle
+¡Vamos a jugar con ella!
+
+00:00:37.006 --> 00:00:38.096 align:middle
+Abre la ruta POST.
+
+00:00:39.256 --> 00:00:43.456 align:middle
+Dice lo que hace y muestra cómo
+debe ser el JSON para utilizarlo.
+
+00:00:44.106 --> 00:00:46.146 align:middle
+¡Muy bien! ¡Haz clic en "Probar"!
+
+00:00:47.526 --> 00:00:54.876 align:middle
+Veamos lo que hay en mi cocina: un poco de
+"queso azul a medio comer", que todavía está...
+
+00:00:54.876 --> 00:00:56.366 align:middle
+probablemente se puede comer.
+
+00:00:57.656 --> 00:00:59.456 align:middle
+Lo venderemos por 1$.
+
+00:00:59.456 --> 00:01:00.856 align:middle
+¡Menuda ganga!
+
+00:01:01.816 --> 00:01:03.036 align:middle
+Y... ¡Ejecutar!
+
+00:01:04.456 --> 00:01:05.646 align:middle
+¿Qué ha pasado?
+
+00:01:06.306 --> 00:01:06.916 align:middle
+Desplázate hacia abajo.
+
+00:01:08.166 --> 00:01:14.916 align:middle
+¡Woh! ¡Acaba de hacer una petición a POST a
+/api/cheese_listings y ha enviado nuestro JSON!
+
+00:01:15.786 --> 00:01:20.246 align:middle
+Nuestra aplicación ha respondido
+con un código de estado 201 y...
+
+00:01:20.246 --> 00:01:25.576 align:middle
+unas claves JSON de aspecto
+extraño: @context @id y @type.
+
+00:01:26.266 --> 00:01:33.766 align:middle
+Luego tiene los datos normales del nuevo listado
+de quesos: el autoincremento id, title, etc. ¡Oye!
+
+00:01:34.066 --> 00:01:36.166 align:middle
+Ya tenemos una API que funciona...
+
+00:01:36.166 --> 00:01:38.356 align:middle
+¡y esto acaba de demostrarlo!
+
+00:01:39.096 --> 00:01:43.546 align:middle
+Cierra el POST y abre el GET que devuelve
+una colección de listados de quesos.
+
+00:01:44.326 --> 00:01:46.546 align:middle
+Prueba esto también: ¡Ejecuta!
+
+00:01:47.486 --> 00:01:49.796 align:middle
+Sí... ahí está nuestro único listado...
+
+00:01:50.496 --> 00:01:52.216 align:middle
+pero no es JSON en bruto.
+
+00:01:52.716 --> 00:01:55.716 align:middle
+Este material extra se llama JSON-LD.
+
+00:01:56.326 --> 00:02:02.556 align:middle
+Es simplemente JSON normal, pero con claves especiales
+-como @context - que tienen un significado específico.
+
+00:02:03.296 --> 00:02:07.416 align:middle
+Entender JSON-LD es una parte importante
+para aprovechar la Plataforma API,
+
+00:02:07.416 --> 00:02:08.616 align:middle
+y pronto hablaremos más de ello. De
+
+00:02:09.496 --> 00:02:13.456 align:middle
+todos modos, para hacer las cosas más
+interesantes, vuelve a la ruta POST
+
+00:02:13.456 --> 00:02:20.036 align:middle
+y crea una segunda lista de quesos:
+un bloque gigante de queso cheddar...
+
+00:02:20.136 --> 00:02:26.456 align:middle
+por 10 dólares. ¡Ejecuta!
+
+00:02:28.306 --> 00:02:31.946 align:middle
+Mismo resultado: código de estado 201 e id 2.
+
+00:02:33.036 --> 00:02:34.976 align:middle
+Vuelve a probar la ruta de recogida GET.
+
+00:02:36.066 --> 00:02:37.656 align:middle
+Y... ¡bien!
+
+00:02:37.976 --> 00:02:40.376 align:middle
+Dos resultados, con los identificadores 1 y 2.
+
+00:02:41.346 --> 00:02:46.696 align:middle
+Y si queremos obtener sólo un listado de
+quesos, podemos hacerlo con la otra ruta GET.
+
+00:02:47.646 --> 00:02:53.376 align:middle
+Como puedes ver, el id del listado de quesos
+que queremos obtener forma parte de la URL.
+
+00:02:54.566 --> 00:02:57.036 align:middle
+Esta vez, cuando hacemos
+clic para probarlo, ¡genial!
+
+00:02:57.476 --> 00:02:59.106 align:middle
+Nos da una casilla para el identificador.
+
+00:02:59.916 --> 00:03:01.446 align:middle
+Usa "2" y...
+
+00:03:01.686 --> 00:03:09.796 align:middle
+¡Ejecuta! Esto hace una petición GET
+muy sencilla a /api/cheese_listings/2,
+
+00:03:10.256 --> 00:03:14.296 align:middle
+que devuelve un código de estado
+200 y el conocido formato JSON.
+
+00:03:14.606 --> 00:03:16.286 align:middle
+¡Qué guay es esto!
+
+00:03:16.286 --> 00:03:19.056 align:middle
+Un "CRUD" completo de la
+API sin ningún trabajo.
+
+00:03:19.896 --> 00:03:23.846 align:middle
+Por supuesto, el truco será personalizar
+esto a nuestras necesidades exactas.
+
+00:03:24.066 --> 00:03:24.826 align:middle
+Pero, ¡vaya!
+
+00:03:25.026 --> 00:03:26.586 align:middle
+Este es un comienzo impresionante.
+
+00:03:27.676 --> 00:03:31.046 align:middle
+Intentemos acceder a nuestra API
+directamente -fuera de Swagger-
+
+00:03:31.176 --> 00:03:34.026 align:middle
+sólo para asegurarnos de que todo
+esto no es un truco elaborado.
+
+00:03:35.016 --> 00:03:39.796 align:middle
+Copia la URL, abre una
+nueva pestaña, pega y...
+
+00:03:40.076 --> 00:03:41.236 align:middle
+¡hola JSON!
+
+00:03:41.686 --> 00:03:42.896 align:middle
+¡Woh! Hola...
+
+00:03:43.036 --> 00:03:44.836 align:middle
+¿Página de documentación de la API de nuevo?
+
+00:03:45.566 --> 00:03:51.246 align:middle
+Nos ha desplazado hasta la documentación de
+esta ruta y la ha ejecutado con el id 2...
+
+00:03:51.736 --> 00:03:53.456 align:middle
+lo que está bien...
+
+00:03:53.546 --> 00:03:55.026 align:middle
+¿pero qué está pasando?
+
+00:03:55.486 --> 00:03:58.796 align:middle
+¿Tenemos realmente una API que funciona o no?
+
+00:03:59.846 --> 00:04:04.046 align:middle
+En la Plataforma API hay algo llamado
+negociación de tipo de contenido.
+
+00:04:04.636 --> 00:04:09.756 align:middle
+Convenientemente, cuando ejecutas una operación,
+Swagger te muestra cómo podrías hacer
+
+00:04:09.756 --> 00:04:12.956 align:middle
+esa misma petición utilizando
+curl en la línea de comandos.
+
+00:04:13.246 --> 00:04:22.416 align:middle
+E incluye una pieza crítica: -H
+"accept: application/ld+json" Que dice
+
+00:04:22.706 --> 00:04:28.906 align:middle
+haz una petición con una cabecera Accept
+configurada como application/ld+json.
+
+00:04:29.526 --> 00:04:36.956 align:middle
+La petición está indicando a la Plataforma API
+que debe devolver los datos en este formato JSON-LD.
+
+00:04:37.826 --> 00:04:44.256 align:middle
+Te des cuenta o no, tu navegador también
+envía esta cabecera: como text/html...
+
+00:04:44.576 --> 00:04:45.996 align:middle
+porque... es un navegador.
+
+00:04:46.566 --> 00:04:49.296 align:middle
+Eso básicamente le dice
+a la Plataforma API ¡Eh!
+
+00:04:49.726 --> 00:04:53.706 align:middle
+Quiero el CheeseListing con id 2
+en formato HTML. La Plataforma API
+
+00:04:54.646 --> 00:05:02.316 align:middle
+responde haciendo todo lo posible por hacer exactamente eso:
+devuelve la página HTML Swagger con el id 2 de CheeseListing
+
+00:05:02.546 --> 00:05:05.526 align:middle
+ya mostrado.
+
+00:05:06.396 --> 00:05:11.046 align:middle
+Esto no es un problema para un cliente de la API
+porque establecer una cabecera Accept es fácil.
+
+00:05:11.506 --> 00:05:13.426 align:middle
+Pero... ¿hay alguna forma de...
+
+00:05:13.606 --> 00:05:15.626 align:middle
+"probar" la ruta en un navegador?
+
+00:05:16.246 --> 00:05:23.166 align:middle
+Totalmente Puedes hacer trampa:
+añade .jsonld al final de la URL.
+
+00:05:23.166 --> 00:05:27.486 align:middle
+Y ¡boom! Esta es nuestra ruta
+de la API en formato JSON-LD.
+
+00:05:28.066 --> 00:05:30.596 align:middle
+He llamado a esto "trampa"
+porque este pequeño "truco"
+
+00:05:30.696 --> 00:05:33.996 align:middle
+de añadir la extensión sólo está
+pensado para el desarrollo. En el
+
+00:05:34.546 --> 00:05:37.746 align:middle
+mundo real, deberías establecer
+la cabecera Accept en su lugar,
+
+00:05:37.896 --> 00:05:40.946 align:middle
+como si estuvieras haciendo una
+petición AJAX desde JavaScript.
+
+00:05:41.466 --> 00:05:45.056 align:middle
+Y, mira esto: cambia la extensión a .json.
+
+00:05:45.996 --> 00:05:47.956 align:middle
+¡Eso parece un poco más familiar!
+
+00:05:48.766 --> 00:05:54.826 align:middle
+Este es un gran ejemplo de la filosofía de la
+Plataforma API : en lugar de pensar en rutas,
+
+00:05:54.826 --> 00:06:01.086 align:middle
+controladores y respuestas, la Plataforma
+API quiere que pienses en crear recursos API
+
+00:06:01.206 --> 00:06:07.326 align:middle
+-como CheeseListing - y luego exponer ese
+recurso en una variedad de formatos diferentes,
+
+00:06:07.566 --> 00:06:14.136 align:middle
+como JSON-LD, JSON normal, XML o exponerlo
+a través de una interfaz GraphQL.
+
+00:06:14.866 --> 00:06:20.776 align:middle
+Por supuesto, por muy increíble que sea, si eres como
+yo, probablemente estés pensando Esto es genial...
+
+00:06:20.776 --> 00:06:24.796 align:middle
+¿pero cómo se han añadido mágicamente
+todas estas rutas a mi aplicación?
+
+00:06:24.796 --> 00:06:29.826 align:middle
+Después de todo, normalmente no
+añadimos una anotación a una entidad...
+
+00:06:29.946 --> 00:06:33.386 align:middle
+y, de repente, ¡obtengo un
+montón de páginas funcionales!
+
+00:06:33.386 --> 00:06:39.816 align:middle
+Busca tu terminal y ejecuta: php
+bin/console debug:router ¡Genial!
+
+00:06:40.446 --> 00:06:46.946 align:middle
+La plataforma de la API aporta varias rutas nuevas:
+api_entrypoint es una especie de "página de inicio"
+
+00:06:46.946 --> 00:06:52.456 align:middle
+de nuestra api, que, por cierto, puede
+devolverse como HTML -como hemos estado viendo-
+
+00:06:52.726 --> 00:06:59.366 align:middle
+o como JSON-LD, para obtener un "índice" legible
+por la máquina de lo que incluye nuestra API.
+
+00:06:59.996 --> 00:07:00.886 align:middle
+Más adelante hablaremos de ello.
+
+00:07:01.526 --> 00:07:07.546 align:middle
+También hay una URL /api/docs -que,
+para el HTML es lo mismo que ir a /api,
+
+00:07:08.376 --> 00:07:13.706 align:middle
+otra llamada /api/context -más
+sobre esto en un minuto- y abajo,
+
+00:07:14.016 --> 00:07:16.766 align:middle
+5 rutas para los 5 nuevos puntos finales.
+
+00:07:17.906 --> 00:07:21.556 align:middle
+Cuando añadamos más recursos
+más adelante, veremos más rutas.
+
+00:07:22.486 --> 00:07:24.446 align:middle
+Cuando instalamos el paquete
+de la Plataforma API,
+
+00:07:24.716 --> 00:07:29.936 align:middle
+su receta añadió un archivo
+config/routes/api_platform.yaml.
+
+00:07:30.526 --> 00:07:34.426 align:middle
+Así es como la Plataforma API
+añade mágicamente las rutas.
+
+00:07:35.286 --> 00:07:39.476 align:middle
+No es muy interesante, pero
+¿ves ese type: api_platform?
+
+00:07:40.026 --> 00:07:41.776 align:middle
+Eso dice básicamente: ¡Oye!
+
+00:07:42.256 --> 00:07:48.326 align:middle
+Quiero que la Plataforma API pueda añadir
+dinámicamente las rutas que quiera.
+
+00:07:49.096 --> 00:07:54.246 align:middle
+Lo hace encontrando todas las clases marcadas
+con @ApiResource -sólo una en este momento-,
+
+00:07:54.646 --> 00:08:01.296 align:middle
+creando 5 nuevas rutas para las 5 operaciones,
+y prefijando todas las URL con /api.
+
+00:08:01.526 --> 00:08:08.726 align:middle
+Si quieres que tus URLs de la API vivan en la raíz
+del dominio, sólo tienes que cambiar esto por prefix:
+
+00:08:08.766 --> 00:08:15.106 align:middle
+/ . Espero que ya estés emocionado,
+¡pero hay mucho más de lo que parece!
+
+00:08:15.606 --> 00:08:22.186 align:middle
+A continuación, vamos a hablar de la especificación OpenAPI:
+un formato de descripción de la API estándar en la industria
+
+00:08:22.446 --> 00:08:25.286 align:middle
+que da a tu API superpoderes de Swagger...
+
+00:08:25.286 --> 00:08:31.326 align:middle
+de forma gratuita. Sí, tenemos que hablar
+un poco de teoría, pero no te arrepentirás
