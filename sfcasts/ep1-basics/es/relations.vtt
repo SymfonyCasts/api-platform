@@ -1,0 +1,343 @@
+WEBVTT
+
+00:00:01.126 --> 00:00:04.566 align:middle
+Tenemos un recurso de queso
+y un recurso de usuario.
+
+00:00:05.056 --> 00:00:06.386 align:middle
+¡Vamos a enlazarlos!
+
+00:00:07.076 --> 00:00:13.776 align:middle
+Bien, el verdadero problema que tenemos que resolver
+es el siguiente: cada CheeseListing será "propiedad"
+
+00:00:13.776 --> 00:00:18.406 align:middle
+por un único usuario, lo cual es algo que
+tenemos que configurar en la base de datos
+
+00:00:18.606 --> 00:00:25.856 align:middle
+, pero también algo que tenemos que exponer en
+nuestra API: cuando miro un recurso CheeseListing,
+
+00:00:26.156 --> 00:00:28.716 align:middle
+¡necesito saber qué usuario lo ha publicado!
+
+00:00:29.786 --> 00:00:31.196 align:middle
+Configuremos primero la base de datos.
+
+00:00:31.196 --> 00:00:38.746 align:middle
+Busca tu terminal y ejecuta: php bin/console
+make:entity Actualicemos la entidad CheeseListing
+
+00:00:38.746 --> 00:00:41.346 align:middle
+y añadamos una nueva propiedad owner.
+
+00:00:42.336 --> 00:00:45.296 align:middle
+Esta será una relation a la entidad User...
+
+00:00:46.366 --> 00:00:52.656 align:middle
+que será una relación ManyToOne:
+cada CheeseListing tiene un User.
+
+00:00:53.396 --> 00:00:55.976 align:middle
+¿Esta nueva propiedad debe ser
+anulable en la base de datos?
+
+00:00:56.346 --> 00:01:01.756 align:middle
+Di que no: cada CheeseListing debe
+tener un owner en nuestro sistema.
+
+00:01:03.046 --> 00:01:10.066 align:middle
+A continuación, formula una pregunta superimportante:
+¿queremos añadir una nueva propiedad a User
+
+00:01:10.066 --> 00:01:16.756 align:middle
+para poder acceder y actualizar los listados de
+quesos en ella, como $user->getCheeseListings().
+
+00:01:17.636 --> 00:01:22.036 align:middle
+Hacer esto es opcional, y hay dos
+razones por las que podrías quererlo.
+
+00:01:22.036 --> 00:01:26.926 align:middle
+En primer lugar, si crees que
+escribir $user->getCheeseListings()
+
+00:01:26.926 --> 00:01:29.966 align:middle
+en tu código puede ser conveniente,
+¡lo querrás! En segundo lugar
+
+00:01:31.126 --> 00:01:36.636 align:middle
+, cuando obtengas un User en
+nuestra API, si quieres poder
+
+00:01:36.636 --> 00:01:43.976 align:middle
+ver los listados de queso que posee este usuario como
+una propiedad en el JSON, también querrás esto.
+
+00:01:44.416 --> 00:01:45.216 align:middle
+Pronto hablaremos de ello.
+
+00:01:46.216 --> 00:01:52.896 align:middle
+En cualquier caso, di que sí, llama a la propiedad
+cheeseListings y di que no a orphanRemoval.
+
+00:01:54.096 --> 00:01:56.466 align:middle
+Si no conoces esa opción...
+
+00:01:56.466 --> 00:01:58.366 align:middle
+entonces no la necesitas.
+
+00:01:58.366 --> 00:01:59.416 align:middle
+Y... ¡bono!
+
+00:01:59.776 --> 00:02:05.356 align:middle
+Un poco más adelante en este tutorial, te
+mostraré por qué y cuándo es útil esta opción.
+
+00:02:06.336 --> 00:02:07.426 align:middle
+¡Pulsa enter para terminar! Como
+
+00:02:09.076 --> 00:02:15.306 align:middle
+es habitual, esto hizo algunas cosas: añadió
+una propiedad $owner a CheeseListing junto
+
+00:02:15.306 --> 00:02:17.866 align:middle
+con los métodos getOwner() y setOwner().
+
+00:02:19.776 --> 00:02:26.326 align:middle
+En User, añadió una propiedad $cheeseListings
+con un método getCheeseListings()...
+
+00:02:26.616 --> 00:02:29.606 align:middle
+pero no un método setCheeseListings().
+
+00:02:29.606 --> 00:02:34.176 align:middle
+En su lugar, make:entity generó
+los métodos addCheeseListing()
+
+00:02:34.176 --> 00:02:36.446 align:middle
+y removeCheeseListing().
+
+00:02:37.216 --> 00:02:38.656 align:middle
+Estos serán útiles más adelante.
+
+00:02:39.606 --> 00:02:47.126 align:middle
+Vamos a crear la migración: php
+bin/console make:migration Y abre eso...
+
+00:02:47.506 --> 00:02:50.026 align:middle
+para asegurarnos de que no contiene nada extra.
+
+00:02:51.406 --> 00:02:54.826 align:middle
+Se ve bien: alterando la tabla y
+configurando la clave foránea.
+
+00:02:55.436 --> 00:03:03.716 align:middle
+Ejecuta eso: php bin/console
+doctrine:migrations:migrate ¡Oh, no!
+
+00:03:03.756 --> 00:03:05.336 align:middle
+¡Ha explotado!
+
+00:03:05.876 --> 00:03:10.026 align:middle
+No se puede añadir ni actualizar una fila hija,
+falla una restricción de clave foránea ...
+
+00:03:10.166 --> 00:03:12.936 align:middle
+en la columna owner_id de cheese_listing.
+
+00:03:14.336 --> 00:03:19.026 align:middle
+Encima de la propiedad owner,
+pusimos nullable=false,
+
+00:03:19.546 --> 00:03:24.686 align:middle
+lo que significa que la columna
+owner_id de la tabla no puede ser nula.
+
+00:03:25.716 --> 00:03:30.506 align:middle
+Pero... como nuestra tabla cheese_listing
+ya tiene algunas filas en ella,
+
+00:03:30.816 --> 00:03:32.656 align:middle
+cuando intentamos añadir esa nueva columna...
+
+00:03:32.946 --> 00:03:39.146 align:middle
+no sabe qué valor utilizar para
+las filas existentes y explota.
+
+00:03:39.876 --> 00:03:42.336 align:middle
+Es un clásico fallo de migración.
+
+00:03:43.276 --> 00:03:48.306 align:middle
+Si nuestro sitio ya estuviera en producción,
+tendríamos que hacer esta migración más elegante
+
+00:03:48.586 --> 00:03:55.696 align:middle
+añadiendo primero la nueva columna como anulable,
+establecer los valores y luego cambiarla a no anulable.
+
+00:03:56.646 --> 00:03:58.806 align:middle
+Pero como todavía no estamos ahí...
+
+00:03:59.176 --> 00:04:01.536 align:middle
+podemos eliminar todos nuestros
+datos y volver a intentarlo.
+
+00:04:02.376 --> 00:04:06.876 align:middle
+Ejecuta: php bin/console
+doctrine:schema:drop --help ...
+
+00:04:07.266 --> 00:04:09.786 align:middle
+porque esto tiene una opción que no recuerdo.
+
+00:04:11.436 --> 00:04:17.616 align:middle
+Ah, aquí está: --full-database se
+asegurará de que eliminemos todas las tablas,
+
+00:04:18.036 --> 00:04:20.816 align:middle
+incluyendo migration_versions.
+
+00:04:21.646 --> 00:04:27.066 align:middle
+Ejecuta: php bin/console
+doctrine:schema:drop --full-database
+
+00:04:27.446 --> 00:04:34.096 align:middle
+--force Ahora podemos ejecutar todas las
+migraciones para crear nuestro esquema desde cero:
+
+00:04:34.096 --> 00:04:40.136 align:middle
+php bin/console
+doctrine:migrations:migrate ¡Bien!
+
+00:04:41.066 --> 00:04:41.766 align:middle
+¡De vuelta al trabajo!
+
+00:04:42.926 --> 00:04:47.166 align:middle
+En CheeseListing, tenemos una nueva
+propiedad y un nuevo getter y setter.
+
+00:04:47.946 --> 00:04:51.906 align:middle
+Pero como estamos utilizando grupos
+de normalización y desnormalización,
+
+00:04:52.236 --> 00:04:55.116 align:middle
+esta novedad no está expuesta en nuestra API.
+
+00:04:55.186 --> 00:05:00.876 align:middle
+Para empezar, éste es el objetivo:
+cuando creamos un CheeseListing,
+
+00:05:01.246 --> 00:05:06.566 align:middle
+un cliente de la API debe poder
+especificar quién es el propietario.
+
+00:05:07.106 --> 00:05:11.936 align:middle
+Y cuando leamos un CheeseListing, deberíamos
+poder ver quién es su propietario.
+
+00:05:12.846 --> 00:05:18.626 align:middle
+Esto puede parecer un poco extraño al principio:
+¿realmente vamos a permitir que un cliente de la API
+
+00:05:18.626 --> 00:05:23.656 align:middle
+cree un CheeseListing y elija
+libremente quién es su propietario?
+
+00:05:23.656 --> 00:05:29.506 align:middle
+Por ahora, sí: establecer el propietario
+de un listado de queso no es diferente
+
+00:05:29.506 --> 00:05:31.296 align:middle
+de establecer cualquier otro campo.
+
+00:05:32.196 --> 00:05:37.616 align:middle
+Más adelante, cuando tengamos un verdadero sistema de seguridad,
+empezaremos a bloquear las cosas para que no pueda crear
+
+00:05:37.616 --> 00:05:40.836 align:middle
+un CheeseListing y decir
+que otro es su propietario.
+
+00:05:42.246 --> 00:05:47.076 align:middle
+De todos modos, para que owner forme parte de
+nuestra API, copia el @Groups() de $price...
+
+00:05:47.076 --> 00:05:50.446 align:middle
+y añádelos encima de $owner.
+
+00:05:50.446 --> 00:05:51.136 align:middle
+¡Vamos a probarlo!
+
+00:05:51.676 --> 00:05:53.666 align:middle
+Muévete y refresca los documentos.
+
+00:05:53.666 --> 00:06:00.636 align:middle
+Pero antes de ver CheeseListing, vamos a crear un
+User para tener algunos datos con los que jugar.
+
+00:06:02.406 --> 00:06:11.366 align:middle
+Le daré un correo electrónico, una contraseña
+cualquiera, un nombre de usuario y...
+
+00:06:11.666 --> 00:06:16.136 align:middle
+Ejecuta. Genial - 201 éxito.
+
+00:06:17.636 --> 00:06:21.906 align:middle
+Ajusta los datos y crea un usuario más.
+
+00:06:23.676 --> 00:06:28.756 align:middle
+Ahora, el momento de la verdad: haz
+clic para crear un nuevo CheeseListing.
+
+00:06:29.556 --> 00:06:30.746 align:middle
+Interesante...
+
+00:06:31.056 --> 00:06:34.016 align:middle
+dice que owner es una "cadena"...
+
+00:06:34.516 --> 00:06:36.886 align:middle
+lo que puede ser sorprendente...
+
+00:06:37.456 --> 00:06:40.176 align:middle
+¿no vamos a establecerlo como un id entero?
+
+00:06:40.876 --> 00:06:41.636 align:middle
+Vamos a averiguarlo.
+
+00:06:42.276 --> 00:06:49.226 align:middle
+Intenta vender un bloque de queso desconocido
+por 20$, y añade una descripción.
+
+00:06:52.226 --> 00:06:54.296 align:middle
+Para el propietario, ¿qué ponemos aquí?
+
+00:06:55.116 --> 00:06:55.976 align:middle
+Veamos...
+
+00:06:55.976 --> 00:07:00.076 align:middle
+los dos usuarios que acabamos
+de crear tenían los ids 2 y 1.
+
+00:07:03.306 --> 00:07:07.836 align:middle
+¡Muy bien! Establece el
+propietario en 1 y ¡ejecuta!
+
+00:07:09.126 --> 00:07:13.966 align:middle
+¡Woh! ¡Falla con un código de estado 400!
+
+00:07:14.776 --> 00:07:20.686 align:middle
+Se esperaba un IRI o un documento anidado
+para el atributo owner, se ha dado un entero.
+
+00:07:22.026 --> 00:07:26.046 align:middle
+¡Resulta que establecer
+owner al id no es correcto!
+
+00:07:27.316 --> 00:07:31.496 align:middle
+A continuación, vamos a arreglar
+esto, a hablar más sobre los IRI
+
+00:07:31.856 --> 00:07:36.696 align:middle
+y a añadir una nueva propiedad cheeseListings
+a nuestro recurso de la API User
