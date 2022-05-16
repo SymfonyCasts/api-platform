@@ -1,0 +1,254 @@
+WEBVTT
+
+00:00:01.146 --> 00:00:06.306 align:middle
+Ve directamente a /api/users/5.jsonld.
+
+00:00:07.876 --> 00:00:10.216 align:middle
+Este usuario posee un CheeseListing...
+
+00:00:10.526 --> 00:00:15.836 align:middle
+y hemos decidido incrustar los campos title
+y price en lugar de mostrar sólo el IRI.
+
+00:00:16.676 --> 00:00:21.396 align:middle
+¡Genial! Antes hemos hablado de un
+filtro muy chulo llamado PropertyFilter,
+
+00:00:21.626 --> 00:00:28.566 align:middle
+que nos permite, por ejemplo, añadir
+?properties[]=username a la URL
+
+00:00:28.696 --> 00:00:31.666 align:middle
+si sólo queremos recuperar ese campo.
+
+00:00:32.296 --> 00:00:35.116 align:middle
+Lo hemos añadido a
+CheeseListing, pero no a User.
+
+00:00:35.576 --> 00:00:36.226 align:middle
+¡Arreglemos eso!
+
+00:00:37.116 --> 00:00:42.266 align:middle
+Por encima de User, añade
+@ApiFilter(PropertyFilter::class).
+
+00:00:43.576 --> 00:00:47.106 align:middle
+Y recuerda que tenemos que añadir
+manualmente la declaración use
+
+00:00:47.106 --> 00:00:49.876 align:middle
+para las clases de filtro: use PropertyFilter.
+
+00:00:49.876 --> 00:00:53.556 align:middle
+Y... ¡hemos terminado!
+
+00:00:54.586 --> 00:00:57.456 align:middle
+Cuando actualizamos, ¡funciona!
+
+00:00:58.286 --> 00:01:02.316 align:middle
+Aparte de las propiedades JSON-LD
+estándar, sólo vemos username.
+
+00:01:02.866 --> 00:01:04.416 align:middle
+Pero espera, ¡hay más!
+
+00:01:05.216 --> 00:01:10.086 align:middle
+Quita la parte de ?properties[]= por un segundo
+para que podamos ver la respuesta completa.
+
+00:01:11.156 --> 00:01:14.116 align:middle
+¿Qué pasaría si quisiéramos
+obtener sólo la propiedad username
+
+00:01:14.456 --> 00:01:18.386 align:middle
+y la propiedad title del
+cheeseListings incrustado?
+
+00:01:18.726 --> 00:01:19.716 align:middle
+¿Es posible?
+
+00:01:20.376 --> 00:01:23.286 align:middle
+Totalmente Sólo tienes
+que conocer la sintaxis.
+
+00:01:23.936 --> 00:01:26.356 align:middle
+Vuelve a poner el ?properties[]=username.
+
+00:01:26.636 --> 00:01:33.406 align:middle
+Ahora añade &properties[, pero dentro
+de los corchetes, pon cheeseListings.
+
+00:01:35.936 --> 00:01:39.416 align:middle
+Luego []= y el nombre de la propiedad: title.
+
+00:01:40.116 --> 00:01:42.256 align:middle
+¡Dale caña! ¡Muy bien!
+
+00:01:42.676 --> 00:01:46.206 align:middle
+Bueno, el title está vacío en este
+CheeseListing, pero te haces una idea. La
+
+00:01:47.016 --> 00:01:51.266 align:middle
+cuestión es la siguiente: PropertyFilter
+es una maravilla y puede usarse
+
+00:01:51.266 --> 00:01:54.286 align:middle
+para filtrar datos incrustados
+sin ningún trabajo extra.
+
+00:01:55.036 --> 00:02:00.776 align:middle
+Hablando de filtros, hemos dotado a CheeseListing de un
+montón de ellos, incluyendo la posibilidad de buscar
+
+00:02:00.776 --> 00:02:03.386 align:middle
+por title o description y filtrar por price.
+
+00:02:04.136 --> 00:02:04.976 align:middle
+Vamos a añadir otro.
+
+00:02:05.736 --> 00:02:08.366 align:middle
+Desplázate hasta la parte superior de
+CheeseListing para encontrar SearchFilter.
+
+00:02:09.836 --> 00:02:11.906 align:middle
+Vamos a dividir esto en varias líneas.
+
+00:02:13.536 --> 00:02:15.626 align:middle
+Buscar por title y description está muy bien.
+
+00:02:15.626 --> 00:02:22.606 align:middle
+¿Pero qué pasa si quiero buscar por propietario: encontrar
+todos los CheeseListings que pertenecen a un User concreto?
+
+00:02:23.386 --> 00:02:27.556 align:middle
+Bueno, ya podemos hacerlo de otra
+manera: obtener los datos de ese usuario
+
+00:02:27.556 --> 00:02:29.586 align:middle
+y mirar su propiedad cheeseListings.
+
+00:02:30.166 --> 00:02:33.286 align:middle
+Pero tenerlo como filtro
+podría ser súper útil. ¡
+
+00:02:33.806 --> 00:02:36.886 align:middle
+Diablos, entonces podríamos buscar
+todos los listados de quesos propiedad
+
+00:02:36.886 --> 00:02:40.256 align:middle
+de un usuario concreto y que
+coincidan con algún título!
+
+00:02:40.846 --> 00:02:47.156 align:middle
+Y... si los usuarios empiezan a tener muchos
+cheeseListings, podríamos decidir no exponer
+
+00:02:47.156 --> 00:02:50.736 align:middle
+esa propiedad en User en absoluto: la
+lista podría ser demasiado larga. La
+
+00:02:51.476 --> 00:02:55.096 align:middle
+ventaja de un filtro es que podemos
+obtener todos los listados de ques os
+
+00:02:55.096 --> 00:02:57.456 align:middle
+de un usuario en una colección paginada.
+
+00:02:58.416 --> 00:02:58.906 align:middle
+Para ello...
+
+00:02:59.446 --> 00:03:02.046 align:middle
+añade owner a exact.
+
+00:03:03.376 --> 00:03:05.806 align:middle
+Ve a actualizar los documentos
+y prueba la ruta GET.
+
+00:03:09.776 --> 00:03:12.616 align:middle
+¡Ya tenemos un nuevo cuadro de filtrado!
+
+00:03:13.076 --> 00:03:15.536 align:middle
+Incluso podemos buscar por varios propietarios.
+
+00:03:16.616 --> 00:03:22.326 align:middle
+Dentro de la caja, añade
+el IRI - /api/users/4.
+
+00:03:23.246 --> 00:03:27.456 align:middle
+También puedes filtrar por
+id, pero se recomienda el IRI.
+
+00:03:28.546 --> 00:03:29.926 align:middle
+Ejecuta y...
+
+00:03:30.646 --> 00:03:34.446 align:middle
+¡sí! Obtenemos el
+CheeseListing para ese User.
+
+00:03:35.226 --> 00:03:41.796 align:middle
+Y la sintaxis de la URL es maravillosamente
+sencilla: ?owner= y el IRI...
+
+00:03:42.166 --> 00:03:45.126 align:middle
+que sólo parece fea porque
+está codificada en la URL.
+
+00:03:45.656 --> 00:03:47.426 align:middle
+¡Pero podemos volvernos aún más locos!
+
+00:03:48.126 --> 00:03:53.086 align:middle
+Añade un filtro más:
+owner.username ajustado a partial.
+
+00:03:53.746 --> 00:03:54.866 align:middle
+Esto es muy bonito.
+
+00:03:55.286 --> 00:03:58.556 align:middle
+Vuelve a actualizar los documentos
+y abre la operación de recogida.
+
+00:04:02.076 --> 00:04:05.286 align:middle
+Aquí está nuestro nuevo cuadro
+de filtro, para owner.username.
+
+00:04:06.246 --> 00:04:11.826 align:middle
+Fíjate en esto: Busca "cabeza" porque tenemos un
+montón de nombres de usuario con cabeza de queso.
+
+00:04:13.026 --> 00:04:20.836 align:middle
+¡Ejecuta! Esto encuentra dos listados
+de queso propiedad de los usuarios 4 y 5.
+
+00:04:24.676 --> 00:04:26.656 align:middle
+Vamos a buscar a todos los usuarios...
+
+00:04:26.746 --> 00:04:29.666 align:middle
+sólo para estar seguros y...
+
+00:04:29.986 --> 00:04:33.736 align:middle
+¡sí! Los usuarios 4 y 5 coinciden
+con la búsqueda del nombre de usuario.
+
+00:04:35.026 --> 00:04:38.166 align:middle
+Probemos a buscar exactamente este cheesehead3.
+
+00:04:41.176 --> 00:04:43.296 align:middle
+Ponlo en la casilla y...
+
+00:04:43.626 --> 00:04:46.766 align:middle
+¡Ejecuta! ¡Ya está!
+
+00:04:47.036 --> 00:04:48.766 align:middle
+La búsqueda exacta también funciona.
+
+00:04:48.766 --> 00:04:52.586 align:middle
+Y, aunque estamos filtrando
+a través de una relación,
+
+00:04:53.036 --> 00:04:57.486 align:middle
+la URL está bastante limpia:
+owner.username=cheesehead3.
+
+00:04:58.286 --> 00:05:03.706 align:middle
+Vale, sólo un tema más breve para esta
+parte de nuestro tutorial: los subrecursos
