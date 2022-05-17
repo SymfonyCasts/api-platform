@@ -1,5 +1,5 @@
 diff --git a/src/ApiPlatform/CheeseSearchFilter.php b/src/ApiPlatform/CheeseSearchFilter.php
-index 72103fa27..b0a4c42df 100644
+index 72103fa..b0a4c42 100644
 --- a/src/ApiPlatform/CheeseSearchFilter.php
 +++ b/src/ApiPlatform/CheeseSearchFilter.php
 @@ -14,5 +14,6 @@ class CheeseSearchFilter extends AbstractFilter
@@ -10,7 +10,7 @@ index 72103fa27..b0a4c42df 100644
      }
  }
 diff --git a/src/Entity/CheeseListing.php b/src/Entity/CheeseListing.php
-index bb12155db..d7ccc68c9 100644
+index bb12155..d7ccc68 100644
 --- a/src/Entity/CheeseListing.php
 +++ b/src/Entity/CheeseListing.php
 @@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;

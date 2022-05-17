@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/UserDataProvider.php b/src/DataProvider/UserDataProvider.php
-index dc4e2c0af..1716afc77 100644
+index dc4e2c0..1716afc 100644
 --- a/src/DataProvider/UserDataProvider.php
 +++ b/src/DataProvider/UserDataProvider.php
 @@ -4,11 +4,12 @@ namespace App\DataProvider;

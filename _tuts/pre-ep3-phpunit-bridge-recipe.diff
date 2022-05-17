@@ -1,5 +1,5 @@
 diff --git a/.env.test b/.env.test
-index cd8a3269a..f58508cae 100644
+index cd8a326..f58508c 100644
 --- a/.env.test
 +++ b/.env.test
 @@ -3,3 +3,4 @@ KERNEL_CLASS='App\Kernel'
@@ -11,7 +11,7 @@ diff --git a/bin/phpunit b/bin/phpunit
 old mode 100644
 new mode 100755
 diff --git a/phpunit.xml.dist b/phpunit.xml.dist
-index d45120bb0..ae0173d5f 100644
+index d45120b..ae0173d 100644
 --- a/phpunit.xml.dist
 +++ b/phpunit.xml.dist
 @@ -2,10 +2,10 @@
@@ -39,7 +39,7 @@ index d45120bb0..ae0173d5f 100644
      </filter>
  
 diff --git a/symfony.lock b/symfony.lock
-index ef591cb9f..838fe5fae 100644
+index ef591cb..838fe5f 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -342,14 +342,13 @@
@@ -61,7 +61,7 @@ index ef591cb9f..838fe5fae 100644
      "symfony/polyfill-ctype": {
 diff --git a/tests/bootstrap.php b/tests/bootstrap.php
 new file mode 100644
-index 000000000..469dccee4
+index 0000000..469dcce
 --- /dev/null
 +++ b/tests/bootstrap.php
 @@ -0,0 +1,11 @@

@@ -1,5 +1,5 @@
 diff --git a/src/Dto/CheeseListingInput.php b/src/Dto/CheeseListingInput.php
-index 4bf897f80..24d466df4 100644
+index 4bf897f..24d466d 100644
 --- a/src/Dto/CheeseListingInput.php
 +++ b/src/Dto/CheeseListingInput.php
 @@ -35,6 +35,24 @@ class CheeseListingInput
@@ -28,7 +28,7 @@ index 4bf897f80..24d466df4 100644
      {
          if (!$cheeseListing) {
 diff --git a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
-index fca2ea2ea..8b37e22f2 100644
+index fca2ea2..8b37e22 100644
 --- a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 +++ b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 @@ -39,23 +39,10 @@ class CheeseListingInputDenormalizer implements DenormalizerInterface, Cacheable

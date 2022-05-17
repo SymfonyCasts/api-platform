@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 534b09985..030445f4e 100644
+index 534b099..030445f 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -14,6 +14,7 @@
@@ -11,7 +11,7 @@ index 534b09985..030445f4e 100644
          "symfony/yaml": "4.3.*"
      },
 diff --git a/composer.lock b/composer.lock
-index efc28ec24..9b29575fa 100644
+index efc28ec..9b29575 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -245,7 +245,7 @@ index efc28ec24..9b29575fa 100644
              "name": "symfony/polyfill-intl-idn",
              "version": "v1.11.0",
 diff --git a/config/bundles.php b/config/bundles.php
-index 8939eefca..49f9ce83d 100644
+index 8939eef..49f9ce8 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -15,4 +15,5 @@ return [
@@ -256,7 +256,7 @@ index 8939eefca..49f9ce83d 100644
  ];
 diff --git a/config/packages/dev/monolog.yaml b/config/packages/dev/monolog.yaml
 new file mode 100644
-index 000000000..b1998da1a
+index 0000000..b1998da
 --- /dev/null
 +++ b/config/packages/dev/monolog.yaml
 @@ -0,0 +1,19 @@
@@ -281,7 +281,7 @@ index 000000000..b1998da1a
 +            channels: ["!event", "!doctrine", "!console"]
 diff --git a/config/packages/prod/monolog.yaml b/config/packages/prod/monolog.yaml
 new file mode 100644
-index 000000000..5bcdf06ea
+index 0000000..5bcdf06
 --- /dev/null
 +++ b/config/packages/prod/monolog.yaml
 @@ -0,0 +1,23 @@
@@ -310,7 +310,7 @@ index 000000000..5bcdf06ea
 +            channels: ["php"]
 diff --git a/config/packages/test/monolog.yaml b/config/packages/test/monolog.yaml
 new file mode 100644
-index 000000000..2762653c8
+index 0000000..2762653
 --- /dev/null
 +++ b/config/packages/test/monolog.yaml
 @@ -0,0 +1,7 @@
@@ -322,7 +322,7 @@ index 000000000..2762653c8
 +            level: debug
 +            channels: ["!event"]
 diff --git a/symfony.lock b/symfony.lock
-index 05604c99a..0a4ef8403 100644
+index 05604c9..0a4ef84 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -124,6 +124,9 @@

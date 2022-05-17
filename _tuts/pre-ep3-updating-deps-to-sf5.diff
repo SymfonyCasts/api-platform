@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index db5a1c941..364abd272 100644
+index db5a1c9..364abd2 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -8,35 +8,35 @@
@@ -67,7 +67,7 @@ index db5a1c941..364abd272 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 459a3d18d..f4b3d7668 100644
+index 459a3d1..f4b3d76 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,39 +4,40 @@
@@ -7268,7 +7268,7 @@ index 459a3d18d..f4b3d7668 100644
      "plugin-api-version": "2.2.0"
  }
 diff --git a/config/bundles.php b/config/bundles.php
-index 49f9ce83d..03399bd9b 100644
+index 49f9ce8..03399bd 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -5,7 +5,6 @@ return [
@@ -7280,7 +7280,7 @@ index 49f9ce83d..03399bd9b 100644
      ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
      Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
 diff --git a/symfony.lock b/symfony.lock
-index a5ba64760..c5030a05f 100644
+index a5ba647..c5030a0 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,9 +58,6 @@

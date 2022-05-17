@@ -1,5 +1,5 @@
 diff --git a/.env b/.env
-index 6053225bc..62b8545ab 100644
+index 6053225..62b8545 100644
 --- a/.env
 +++ b/.env
 @@ -19,3 +19,14 @@ APP_SECRET=1c78f3e5e06eb3c88a52819fbccdba6e
@@ -18,7 +18,7 @@ index 6053225bc..62b8545ab 100644
 +DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 +###< doctrine/doctrine-bundle ###
 diff --git a/composer.json b/composer.json
-index f0ca30049..8af44e5b0 100644
+index f0ca300..8af44e5 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -5,11 +5,22 @@
@@ -45,7 +45,7 @@ index f0ca30049..8af44e5b0 100644
      },
      "config": {
 diff --git a/composer.lock b/composer.lock
-index 0547262c8..5a0092848 100644
+index 0547262..5a00928 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,8 +4,147 @@
@@ -6083,7 +6083,7 @@ index 0547262c8..5a0092848 100644
 +    "plugin-api-version": "2.2.0"
  }
 diff --git a/config/bundles.php b/config/bundles.php
-index 49d3fb6fc..1edaed6d0 100644
+index 49d3fb6..1edaed6 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -2,4 +2,10 @@
@@ -6099,7 +6099,7 @@ index 49d3fb6fc..1edaed6d0 100644
  ];
 diff --git a/config/packages/api_platform.yaml b/config/packages/api_platform.yaml
 new file mode 100644
-index 000000000..e453d1d3e
+index 0000000..e453d1d
 --- /dev/null
 +++ b/config/packages/api_platform.yaml
 @@ -0,0 +1,3 @@
@@ -6108,7 +6108,7 @@ index 000000000..e453d1d3e
 +        paths: ['%kernel.project_dir%/src/Entity']
 diff --git a/config/packages/doctrine.yaml b/config/packages/doctrine.yaml
 new file mode 100644
-index 000000000..9521fad7d
+index 0000000..9521fad
 --- /dev/null
 +++ b/config/packages/doctrine.yaml
 @@ -0,0 +1,29 @@
@@ -6143,7 +6143,7 @@ index 000000000..9521fad7d
 +                alias: App
 diff --git a/config/packages/nelmio_cors.yaml b/config/packages/nelmio_cors.yaml
 new file mode 100644
-index 000000000..6f202c264
+index 0000000..6f202c2
 --- /dev/null
 +++ b/config/packages/nelmio_cors.yaml
 @@ -0,0 +1,10 @@
@@ -6159,7 +6159,7 @@ index 000000000..6f202c264
 +        '^/': ~
 diff --git a/config/packages/prod/doctrine.yaml b/config/packages/prod/doctrine.yaml
 new file mode 100644
-index 000000000..0a7c53b44
+index 0000000..0a7c53b
 --- /dev/null
 +++ b/config/packages/prod/doctrine.yaml
 @@ -0,0 +1,32 @@
@@ -6197,7 +6197,7 @@ index 000000000..0a7c53b44
 +                adapter: cache.system
 diff --git a/config/packages/security.yaml b/config/packages/security.yaml
 new file mode 100644
-index 000000000..fb4c593ef
+index 0000000..fb4c593
 --- /dev/null
 +++ b/config/packages/security.yaml
 @@ -0,0 +1,24 @@
@@ -6227,7 +6227,7 @@ index 000000000..fb4c593ef
 +        # - { path: ^/profile, roles: ROLE_USER }
 diff --git a/config/packages/test/validator.yaml b/config/packages/test/validator.yaml
 new file mode 100644
-index 000000000..2febc4035
+index 0000000..2febc40
 --- /dev/null
 +++ b/config/packages/test/validator.yaml
 @@ -0,0 +1,4 @@
@@ -6237,7 +6237,7 @@ index 000000000..2febc4035
 +        # disable_not_compromised_password: true
 diff --git a/config/packages/twig.yaml b/config/packages/twig.yaml
 new file mode 100644
-index 000000000..d1582a23d
+index 0000000..d1582a2
 --- /dev/null
 +++ b/config/packages/twig.yaml
 @@ -0,0 +1,4 @@
@@ -6247,7 +6247,7 @@ index 000000000..d1582a23d
 +    strict_variables: '%kernel.debug%'
 diff --git a/config/packages/validator.yaml b/config/packages/validator.yaml
 new file mode 100644
-index 000000000..a695e1a62
+index 0000000..a695e1a
 --- /dev/null
 +++ b/config/packages/validator.yaml
 @@ -0,0 +1,3 @@
@@ -6256,7 +6256,7 @@ index 000000000..a695e1a62
 +        email_validation_mode: html5
 diff --git a/config/routes/annotations.yaml b/config/routes/annotations.yaml
 new file mode 100644
-index 000000000..d49a502a8
+index 0000000..d49a502
 --- /dev/null
 +++ b/config/routes/annotations.yaml
 @@ -0,0 +1,3 @@
@@ -6265,7 +6265,7 @@ index 000000000..d49a502a8
 +    type: annotation
 diff --git a/config/routes/api_platform.yaml b/config/routes/api_platform.yaml
 new file mode 100644
-index 000000000..38f11cba8
+index 0000000..38f11cb
 --- /dev/null
 +++ b/config/routes/api_platform.yaml
 @@ -0,0 +1,4 @@
@@ -6275,7 +6275,7 @@ index 000000000..38f11cba8
 +    prefix: /api
 diff --git a/config/routes/dev/twig.yaml b/config/routes/dev/twig.yaml
 new file mode 100644
-index 000000000..f4ee83960
+index 0000000..f4ee839
 --- /dev/null
 +++ b/config/routes/dev/twig.yaml
 @@ -0,0 +1,3 @@
@@ -6284,12 +6284,12 @@ index 000000000..f4ee83960
 +    prefix: /_error
 diff --git a/src/Entity/.gitignore b/src/Entity/.gitignore
 new file mode 100644
-index 000000000..e69de29bb
+index 0000000..e69de29
 diff --git a/src/Repository/.gitignore b/src/Repository/.gitignore
 new file mode 100644
-index 000000000..e69de29bb
+index 0000000..e69de29
 diff --git a/symfony.lock b/symfony.lock
-index 0ec957b57..dc081d6c8 100644
+index 0ec957b..dc081d6 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -1,25 +1,141 @@
@@ -6573,7 +6573,7 @@ index 0ec957b57..dc081d6c8 100644
  }
 diff --git a/templates/base.html.twig b/templates/base.html.twig
 new file mode 100644
-index 000000000..043f42d1a
+index 0000000..043f42d
 --- /dev/null
 +++ b/templates/base.html.twig
 @@ -0,0 +1,12 @@

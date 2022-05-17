@@ -1,6 +1,6 @@
 diff --git a/src/Validator/ValidIsPublished.php b/src/Validator/ValidIsPublished.php
 new file mode 100644
-index 000000000..6dcfcd6bd
+index 0000000..6dcfcd6
 --- /dev/null
 +++ b/src/Validator/ValidIsPublished.php
 @@ -0,0 +1,17 @@
@@ -23,7 +23,7 @@ index 000000000..6dcfcd6bd
 +}
 diff --git a/src/Validator/ValidIsPublishedValidator.php b/src/Validator/ValidIsPublishedValidator.php
 new file mode 100644
-index 000000000..b54db6cca
+index 0000000..b54db6c
 --- /dev/null
 +++ b/src/Validator/ValidIsPublishedValidator.php
 @@ -0,0 +1,23 @@

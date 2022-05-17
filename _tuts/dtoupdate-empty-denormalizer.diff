@@ -1,6 +1,6 @@
 diff --git a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 new file mode 100644
-index 000000000..13b1cede5
+index 0000000..13b1ced
 --- /dev/null
 +++ b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 @@ -0,0 +1,21 @@

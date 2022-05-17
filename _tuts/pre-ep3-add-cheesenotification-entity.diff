@@ -1,6 +1,6 @@
 diff --git a/migrations/Version20200901180523.php b/migrations/Version20200901180523.php
 new file mode 100644
-index 000000000..da38cbfc9
+index 0000000..da38cbf
 --- /dev/null
 +++ b/migrations/Version20200901180523.php
 @@ -0,0 +1,32 @@
@@ -38,7 +38,7 @@ index 000000000..da38cbfc9
 +}
 diff --git a/src/Entity/CheeseNotification.php b/src/Entity/CheeseNotification.php
 new file mode 100644
-index 000000000..2c309f0ed
+index 0000000..2c309f0
 --- /dev/null
 +++ b/src/Entity/CheeseNotification.php
 @@ -0,0 +1,59 @@
@@ -103,7 +103,7 @@ index 000000000..2c309f0ed
 +}
 diff --git a/src/Repository/CheeseNotificationRepository.php b/src/Repository/CheeseNotificationRepository.php
 new file mode 100644
-index 000000000..278a3581e
+index 0000000..278a358
 --- /dev/null
 +++ b/src/Repository/CheeseNotificationRepository.php
 @@ -0,0 +1,50 @@

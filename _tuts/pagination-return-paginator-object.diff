@@ -1,5 +1,5 @@
 diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
-index 5c452c918..62b9990ab 100644
+index 5c452c9..62b9990 100644
 --- a/src/DataProvider/DailyStatsProvider.php
 +++ b/src/DataProvider/DailyStatsProvider.php
 @@ -21,7 +21,7 @@ class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataPro

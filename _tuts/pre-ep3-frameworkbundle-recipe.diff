@@ -1,5 +1,5 @@
 diff --git a/.env b/.env
-index 71c2b7576..0ebbe5b61 100644
+index 71c2b75..0ebbe5b 100644
 --- a/.env
 +++ b/.env
 @@ -16,8 +16,8 @@
@@ -14,7 +14,7 @@ index 71c2b7576..0ebbe5b61 100644
  
  ###> nelmio/cors-bundle ###
 diff --git a/.gitignore b/.gitignore
-index 428f6fc23..347db2d99 100644
+index 428f6fc..347db2d 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -2,6 +2,7 @@
@@ -26,7 +26,7 @@ index 428f6fc23..347db2d99 100644
  /var/
  /vendor/
 diff --git a/config/packages/cache.yaml b/config/packages/cache.yaml
-index 93e620efa..6899b7200 100644
+index 93e620e..6899b72 100644
 --- a/config/packages/cache.yaml
 +++ b/config/packages/cache.yaml
 @@ -1,10 +1,10 @@
@@ -50,7 +50,7 @@ index 93e620efa..6899b7200 100644
 -            #my.dedicated.cache: ~
 +            #my.dedicated.cache: null
 diff --git a/config/packages/framework.yaml b/config/packages/framework.yaml
-index d3f884c4b..cad7f780f 100644
+index d3f884c..cad7f78 100644
 --- a/config/packages/framework.yaml
 +++ b/config/packages/framework.yaml
 @@ -1,13 +1,13 @@
@@ -71,7 +71,7 @@ index d3f884c4b..cad7f780f 100644
  
 diff --git a/config/routes/dev/framework.yaml b/config/routes/dev/framework.yaml
 new file mode 100644
-index 000000000..bcbbf13d0
+index 0000000..bcbbf13
 --- /dev/null
 +++ b/config/routes/dev/framework.yaml
 @@ -0,0 +1,3 @@
@@ -80,7 +80,7 @@ index 000000000..bcbbf13d0
 +    prefix: /_error
 diff --git a/config/routes/dev/twig.yaml b/config/routes/dev/twig.yaml
 deleted file mode 100644
-index f4ee83960..000000000
+index f4ee839..0000000
 --- a/config/routes/dev/twig.yaml
 +++ /dev/null
 @@ -1,3 +0,0 @@
@@ -88,7 +88,7 @@ index f4ee83960..000000000
 -    resource: '@TwigBundle/Resources/config/routing/errors.xml'
 -    prefix: /_error
 diff --git a/config/services.yaml b/config/services.yaml
-index 95444ae33..1966d260b 100644
+index 95444ae..1966d26 100644
 --- a/config/services.yaml
 +++ b/config/services.yaml
 @@ -4,7 +4,6 @@
@@ -121,7 +121,7 @@ index 95444ae33..1966d260b 100644
  
      # add more service definitions when explicit configuration is needed
 diff --git a/public/index.php b/public/index.php
-index e30f90c03..3f8b90e50 100644
+index e30f90c..3f8b90e 100644
 --- a/public/index.php
 +++ b/public/index.php
 @@ -1,10 +1,13 @@
@@ -155,7 +155,7 @@ index e30f90c03..3f8b90e50 100644
  }
  
 diff --git a/src/Kernel.php b/src/Kernel.php
-index 785b0beff..b0168617a 100644
+index 785b0be..b016861 100644
 --- a/src/Kernel.php
 +++ b/src/Kernel.php
 @@ -3,51 +3,36 @@
@@ -230,7 +230,7 @@ index 785b0beff..b0168617a 100644
      }
  }
 diff --git a/symfony.lock b/symfony.lock
-index 671032034..4b4b57b15 100644
+index 6710320..4b4b57b 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -280,18 +280,18 @@

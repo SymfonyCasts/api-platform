@@ -1,5 +1,5 @@
 diff --git a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
-index 13b1cede5..0c35a4bde 100644
+index 13b1ced..0c35a4b 100644
 --- a/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 +++ b/src/Serializer/Normalizer/CheeseListingInputDenormalizer.php
 @@ -2,6 +2,7 @@

@@ -1,5 +1,5 @@
 diff --git a/config/services.yaml b/config/services.yaml
-index c9c5851a3..3bee7a408 100644
+index c9c5851..3bee7a4 100644
 --- a/config/services.yaml
 +++ b/config/services.yaml
 @@ -37,6 +37,9 @@ services:
@@ -13,7 +13,7 @@ index c9c5851a3..3bee7a408 100644
          bind:
              $decoratedDataPersister: '@api_platform.doctrine.orm.data_persister'
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 70fd40faf..8edd76eb6 100644
+index 70fd40f..8edd76e 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -5,6 +5,7 @@ namespace App\Entity;

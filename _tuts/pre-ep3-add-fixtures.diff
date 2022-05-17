@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index f95cc0bd1..d7837e5ee 100644
+index f95cc0b..d7837e5 100644
 --- a/README.md
 +++ b/README.md
 @@ -77,6 +77,7 @@ To actually *create* the database and get some tables, run:
@@ -11,7 +11,7 @@ index f95cc0bd1..d7837e5ee 100644
  
  This uses the `symfony` binary, but `symfony console` is identical
 diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
-index 6c20526f4..4c7175c45 100644
+index 6c20526..4c7175c 100644
 --- a/src/DataFixtures/AppFixtures.php
 +++ b/src/DataFixtures/AppFixtures.php
 @@ -2,15 +2,42 @@

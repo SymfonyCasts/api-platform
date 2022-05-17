@@ -1,5 +1,5 @@
 diff --git a/src/DataTransformer/CheeseListingOutputDataTransformer.php b/src/DataTransformer/CheeseListingOutputDataTransformer.php
-index 0b4b9f3b7..92d4a0167 100644
+index 0b4b9f3..92d4a01 100644
 --- a/src/DataTransformer/CheeseListingOutputDataTransformer.php
 +++ b/src/DataTransformer/CheeseListingOutputDataTransformer.php
 @@ -8,9 +8,15 @@ use App\Entity\CheeseListing;

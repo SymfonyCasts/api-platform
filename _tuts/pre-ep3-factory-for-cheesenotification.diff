@@ -1,5 +1,5 @@
 diff --git a/src/Entity/CheeseNotification.php b/src/Entity/CheeseNotification.php
-index 2c309f0ed..cb9c12294 100644
+index 2c309f0..cb9c122 100644
 --- a/src/Entity/CheeseNotification.php
 +++ b/src/Entity/CheeseNotification.php
 @@ -28,32 +28,25 @@ class CheeseNotification
@@ -46,7 +46,7 @@ index 2c309f0ed..cb9c12294 100644
  }
 diff --git a/src/Factory/CheeseNotificationFactory.php b/src/Factory/CheeseNotificationFactory.php
 new file mode 100644
-index 000000000..51584ae93
+index 0000000..51584ae
 --- /dev/null
 +++ b/src/Factory/CheeseNotificationFactory.php
 @@ -0,0 +1,42 @@

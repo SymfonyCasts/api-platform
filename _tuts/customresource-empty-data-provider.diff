@@ -1,6 +1,6 @@
 diff --git a/src/DataProvider/DailyStatsProvider.php b/src/DataProvider/DailyStatsProvider.php
 new file mode 100644
-index 000000000..442cbbaf4
+index 0000000..442cbba
 --- /dev/null
 +++ b/src/DataProvider/DailyStatsProvider.php
 @@ -0,0 +1,17 @@

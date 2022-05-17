@@ -1,5 +1,5 @@
 diff --git a/src/Test/CustomApiTestCase.php b/src/Test/CustomApiTestCase.php
-index 4edf7b33a..0fb2beee8 100644
+index 4edf7b3..0fb2bee 100644
 --- a/src/Test/CustomApiTestCase.php
 +++ b/src/Test/CustomApiTestCase.php
 @@ -5,6 +5,7 @@ namespace App\Test;
@@ -22,7 +22,7 @@ index 4edf7b33a..0fb2beee8 100644
  }
 \ No newline at end of file
 diff --git a/tests/Functional/CheeseListingResourceTest.php b/tests/Functional/CheeseListingResourceTest.php
-index 756faa013..c82099181 100644
+index 756faa0..c820991 100644
 --- a/tests/Functional/CheeseListingResourceTest.php
 +++ b/tests/Functional/CheeseListingResourceTest.php
 @@ -2,6 +2,7 @@

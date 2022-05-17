@@ -1,5 +1,5 @@
 diff --git a/src/DataPersister/UserDataPersister.php b/src/DataPersister/UserDataPersister.php
-index f010e52dc..8295a969f 100644
+index f010e52..8295a96 100644
 --- a/src/DataPersister/UserDataPersister.php
 +++ b/src/DataPersister/UserDataPersister.php
 @@ -7,18 +7,21 @@ use ApiPlatform\Core\DataPersister\DataPersisterInterface;

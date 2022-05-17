@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index c54db00ec..3bb227e11 100644
+index c54db00..3bb227e 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -9,6 +9,7 @@
@@ -11,7 +11,7 @@ index c54db00ec..3bb227e11 100644
          "nelmio/cors-bundle": "^1.5",
          "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
 diff --git a/composer.lock b/composer.lock
-index 867a27fd4..c41166901 100644
+index 867a27f..c411669 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -458,7 +458,7 @@ index 867a27fd4..c41166901 100644
      ],
      "packages-dev": [
 diff --git a/config/bundles.php b/config/bundles.php
-index b55f43b2a..1f5fdfcce 100644
+index b55f43b..1f5fdfc 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -9,4 +9,5 @@ return [
@@ -469,7 +469,7 @@ index b55f43b2a..1f5fdfcce 100644
  ];
 diff --git a/config/packages/doctrine_migrations.yaml b/config/packages/doctrine_migrations.yaml
 new file mode 100644
-index 000000000..3bf0fbcae
+index 0000000..3bf0fbc
 --- /dev/null
 +++ b/config/packages/doctrine_migrations.yaml
 @@ -0,0 +1,5 @@
@@ -480,9 +480,9 @@ index 000000000..3bf0fbcae
 +    namespace: DoctrineMigrations
 diff --git a/src/Migrations/.gitignore b/src/Migrations/.gitignore
 new file mode 100644
-index 000000000..e69de29bb
+index 0000000..e69de29
 diff --git a/symfony.lock b/symfony.lock
-index a54bbd258..d8cfca773 100644
+index a54bbd2..d8cfca7 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,6 +58,19 @@

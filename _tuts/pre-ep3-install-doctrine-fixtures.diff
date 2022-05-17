@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 364abd272..71222bc2e 100644
+index 364abd2..71222bc 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -29,6 +29,7 @@
@@ -11,7 +11,7 @@ index 364abd272..71222bc2e 100644
          "symfony/browser-kit": "5.1.*",
          "symfony/css-selector": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index f4b3d7668..48e325db7 100644
+index f4b3d76..48e325d 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -230,7 +230,7 @@ index f4b3d7668..48e325db7 100644
              "name": "fzaninotto/faker",
              "version": "v1.9.1",
 diff --git a/config/bundles.php b/config/bundles.php
-index 03399bd9b..1cbd4d830 100644
+index 03399bd..1cbd4d8 100644
 --- a/config/bundles.php
 +++ b/config/bundles.php
 @@ -15,4 +15,5 @@ return [
@@ -241,7 +241,7 @@ index 03399bd9b..1cbd4d830 100644
  ];
 diff --git a/src/DataFixtures/AppFixtures.php b/src/DataFixtures/AppFixtures.php
 new file mode 100644
-index 000000000..6c20526f4
+index 0000000..6c20526
 --- /dev/null
 +++ b/src/DataFixtures/AppFixtures.php
 @@ -0,0 +1,17 @@
@@ -263,7 +263,7 @@ index 000000000..6c20526f4
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index 162912171..12994adbe 100644
+index 1629121..12994ad 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,6 +58,18 @@

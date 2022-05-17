@@ -1,5 +1,5 @@
 diff --git a/src/Entity/User.php b/src/Entity/User.php
-index 4c07a81a0..f8a78f1cf 100644
+index 4c07a81..f8a78f1 100644
 --- a/src/Entity/User.php
 +++ b/src/Entity/User.php
 @@ -10,6 +10,7 @@ use App\Doctrine\UserSetIsMvpListener;

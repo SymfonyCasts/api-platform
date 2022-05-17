@@ -1,5 +1,5 @@
 diff --git a/src/DataPersister/DailyStatsPersister.php b/src/DataPersister/DailyStatsPersister.php
-index d5706cb15..7072d5a4d 100644
+index d5706cb..7072d5a 100644
 --- a/src/DataPersister/DailyStatsPersister.php
 +++ b/src/DataPersister/DailyStatsPersister.php
 @@ -3,11 +3,13 @@

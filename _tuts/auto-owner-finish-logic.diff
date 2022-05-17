@@ -1,5 +1,5 @@
 diff --git a/src/Doctrine/CheeseListingSetOwnerListener.php b/src/Doctrine/CheeseListingSetOwnerListener.php
-index 16483a518..51527a9dd 100644
+index 16483a5..51527a9 100644
 --- a/src/Doctrine/CheeseListingSetOwnerListener.php
 +++ b/src/Doctrine/CheeseListingSetOwnerListener.php
 @@ -3,10 +3,25 @@

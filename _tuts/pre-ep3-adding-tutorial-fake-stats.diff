@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index bfe3c7844..a0fe95dfa 100644
+index bfe3c78..362f468 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -2,7 +2,7 @@
@@ -20,17 +20,20 @@ index bfe3c7844..a0fe95dfa 100644
          "symfony/asset": "5.1.*",
          "symfony/console": "5.1.*",
          "symfony/dotenv": "5.1.*",
-@@ -45,7 +45,7 @@
+@@ -45,7 +45,10 @@
          },
          "sort-packages": true,
          "platform": {
 -            "php": "7.2.5"
 +            "php": "7.4.0"
++        },
++        "allow-plugins": {
++            "symfony/flex": true
          }
      },
      "autoload": {
 diff --git a/composer.lock b/composer.lock
-index 47080057f..d96d7ffda 100644
+index 4708005..d2791ae 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,20 +4,20 @@
@@ -898,7 +901,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2020-07-30T16:57:33+00:00"
          },
          {
-@@ -1668,8 +1611,293 @@
+@@ -1668,8 +1611,160 @@
                  "psr-13",
                  "rest"
              ],
@@ -992,44 +995,39 @@ index 47080057f..d96d7ffda 100644
 +        },
 +        {
 +            "name": "laminas/laminas-code",
-+            "version": "4.0.0",
++            "version": "4.5.1",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/laminas/laminas-code.git",
-+                "reference": "28a6d70ea8b8bca687d7163300e611ae33baf82a"
++                "reference": "6fd96d4d913571a2cd056a27b123fa28cb90ac4e"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/28a6d70ea8b8bca687d7163300e611ae33baf82a",
-+                "reference": "28a6d70ea8b8bca687d7163300e611ae33baf82a",
++                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/6fd96d4d913571a2cd056a27b123fa28cb90ac4e",
++                "reference": "6fd96d4d913571a2cd056a27b123fa28cb90ac4e",
 +                "shasum": ""
 +            },
 +            "require": {
-+                "laminas/laminas-eventmanager": "^3.3",
-+                "php": "^7.4 || ~8.0.0"
-+            },
-+            "conflict": {
-+                "phpspec/prophecy": "<1.9.0"
-+            },
-+            "replace": {
-+                "zendframework/zend-code": "self.version"
++                "php": ">=7.4, <8.2"
 +            },
 +            "require-dev": {
-+                "doctrine/annotations": "^1.10.4",
++                "doctrine/annotations": "^1.13.2",
 +                "ext-phar": "*",
-+                "laminas/laminas-coding-standard": "^2.1.4",
-+                "laminas/laminas-stdlib": "^3.3.0",
-+                "phpunit/phpunit": "^9.4.2",
-+                "psalm/plugin-phpunit": "^0.14.0",
-+                "vimeo/psalm": "^4.3.1"
++                "laminas/laminas-coding-standard": "^2.3.0",
++                "laminas/laminas-stdlib": "^3.6.1",
++                "phpunit/phpunit": "^9.5.10",
++                "psalm/plugin-phpunit": "^0.16.1",
++                "vimeo/psalm": "^4.13.1"
 +            },
 +            "suggest": {
 +                "doctrine/annotations": "Doctrine\\Common\\Annotations >=1.0 for annotation features",
-+                "laminas/laminas-stdlib": "Laminas\\Stdlib component",
-+                "laminas/laminas-zendframework-bridge": "A bridge with Zend Framework"
++                "laminas/laminas-stdlib": "Laminas\\Stdlib component"
 +            },
 +            "type": "library",
 +            "autoload": {
++                "files": [
++                    "polyfill/ReflectionEnumPolyfill.php"
++                ],
 +                "psr-4": {
 +                    "Laminas\\Code\\": "src/"
 +                }
@@ -1059,140 +1057,12 @@ index 47080057f..d96d7ffda 100644
 +                    "type": "community_bridge"
 +                }
 +            ],
-+            "time": "2020-12-30T16:16:14+00:00"
-+        },
-+        {
-+            "name": "laminas/laminas-eventmanager",
-+            "version": "3.3.1",
-+            "source": {
-+                "type": "git",
-+                "url": "https://github.com/laminas/laminas-eventmanager.git",
-+                "reference": "966c859b67867b179fde1eff0cd38df51472ce4a"
-+            },
-+            "dist": {
-+                "type": "zip",
-+                "url": "https://api.github.com/repos/laminas/laminas-eventmanager/zipball/966c859b67867b179fde1eff0cd38df51472ce4a",
-+                "reference": "966c859b67867b179fde1eff0cd38df51472ce4a",
-+                "shasum": ""
-+            },
-+            "require": {
-+                "laminas/laminas-zendframework-bridge": "^1.0",
-+                "php": "^7.3 || ^8.0"
-+            },
-+            "replace": {
-+                "zendframework/zend-eventmanager": "^3.2.1"
-+            },
-+            "require-dev": {
-+                "container-interop/container-interop": "^1.1",
-+                "laminas/laminas-coding-standard": "~1.0.0",
-+                "laminas/laminas-stdlib": "^2.7.3 || ^3.0",
-+                "phpbench/phpbench": "^0.17.1",
-+                "phpunit/phpunit": "^8.5.8"
-+            },
-+            "suggest": {
-+                "container-interop/container-interop": "^1.1, to use the lazy listeners feature",
-+                "laminas/laminas-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature"
-+            },
-+            "type": "library",
-+            "autoload": {
-+                "psr-4": {
-+                    "Laminas\\EventManager\\": "src/"
-+                }
-+            },
-+            "notification-url": "https://packagist.org/downloads/",
-+            "license": [
-+                "BSD-3-Clause"
-+            ],
-+            "description": "Trigger and listen to events within a PHP application",
-+            "homepage": "https://laminas.dev",
-+            "keywords": [
-+                "event",
-+                "eventmanager",
-+                "events",
-+                "laminas"
-+            ],
-+            "support": {
-+                "chat": "https://laminas.dev/chat",
-+                "docs": "https://docs.laminas.dev/laminas-eventmanager/",
-+                "forum": "https://discourse.laminas.dev",
-+                "issues": "https://github.com/laminas/laminas-eventmanager/issues",
-+                "rss": "https://github.com/laminas/laminas-eventmanager/releases.atom",
-+                "source": "https://github.com/laminas/laminas-eventmanager"
-+            },
-+            "funding": [
-+                {
-+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-+                    "type": "community_bridge"
-+                }
-+            ],
-+            "time": "2021-03-08T15:24:29+00:00"
-+        },
-+        {
-+            "name": "laminas/laminas-zendframework-bridge",
-+            "version": "1.2.0",
-+            "source": {
-+                "type": "git",
-+                "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
-+                "reference": "6cccbddfcfc742eb02158d6137ca5687d92cee32"
-+            },
-+            "dist": {
-+                "type": "zip",
-+                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/6cccbddfcfc742eb02158d6137ca5687d92cee32",
-+                "reference": "6cccbddfcfc742eb02158d6137ca5687d92cee32",
-+                "shasum": ""
-+            },
-+            "require": {
-+                "php": "^7.3 || ^8.0"
-+            },
-+            "require-dev": {
-+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.1 || ^9.3",
-+                "psalm/plugin-phpunit": "^0.15.1",
-+                "squizlabs/php_codesniffer": "^3.5",
-+                "vimeo/psalm": "^4.6"
-+            },
-+            "type": "library",
-+            "extra": {
-+                "laminas": {
-+                    "module": "Laminas\\ZendFrameworkBridge"
-+                }
-+            },
-+            "autoload": {
-+                "files": [
-+                    "src/autoload.php"
-+                ],
-+                "psr-4": {
-+                    "Laminas\\ZendFrameworkBridge\\": "src//"
-+                }
-+            },
-+            "notification-url": "https://packagist.org/downloads/",
-+            "license": [
-+                "BSD-3-Clause"
-+            ],
-+            "description": "Alias legacy ZF class names to Laminas Project equivalents.",
-+            "keywords": [
-+                "ZendFramework",
-+                "autoloading",
-+                "laminas",
-+                "zf"
-+            ],
-+            "support": {
-+                "forum": "https://discourse.laminas.dev/",
-+                "issues": "https://github.com/laminas/laminas-zendframework-bridge/issues",
-+                "rss": "https://github.com/laminas/laminas-zendframework-bridge/releases.atom",
-+                "source": "https://github.com/laminas/laminas-zendframework-bridge"
-+            },
-+            "funding": [
-+                {
-+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-+                    "type": "community_bridge"
-+                }
-+            ],
-+            "time": "2021-02-25T21:54:58+00:00"
++            "time": "2021-12-19T18:06:55+00:00"
 +        },
          {
              "name": "monolog/monolog",
              "version": "2.1.1",
-@@ -1749,6 +1977,10 @@
+@@ -1749,6 +1844,10 @@
                  "logging",
                  "psr-3"
              ],
@@ -1203,7 +1073,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://github.com/Seldaek",
-@@ -1816,6 +2048,10 @@
+@@ -1816,6 +1915,10 @@
                  "cors",
                  "crossdomain"
              ],
@@ -1214,7 +1084,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2020-07-22T11:44:28+00:00"
          },
          {
-@@ -1895,6 +2131,10 @@
+@@ -1895,6 +1998,10 @@
                  "datetime",
                  "time"
              ],
@@ -1225,7 +1095,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://opencollective.com/Carbon",
-@@ -1907,76 +2147,6 @@
+@@ -1907,76 +2014,6 @@
              ],
              "time": "2020-09-04T13:11:37+00:00"
          },
@@ -1302,7 +1172,7 @@ index 47080057f..d96d7ffda 100644
          {
              "name": "phpdocumentor/reflection-common",
              "version": "2.2.0",
-@@ -2024,45 +2194,45 @@
+@@ -2024,45 +2061,45 @@
                  "reflection",
                  "static analysis"
              ],
@@ -1364,7 +1234,7 @@ index 47080057f..d96d7ffda 100644
                  }
              },
              "notification-url": "https://packagist.org/downloads/",
-@@ -2073,10 +2243,18 @@
+@@ -2073,10 +2110,18 @@
                  {
                      "name": "Mike van Riel",
                      "email": "me@mikevanriel.com"
@@ -1384,7 +1254,7 @@ index 47080057f..d96d7ffda 100644
          },
          {
              "name": "phpdocumentor/type-resolver",
-@@ -2121,6 +2299,10 @@
+@@ -2121,6 +2166,10 @@
                  }
              ],
              "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
@@ -1395,7 +1265,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2020-06-27T10:12:23+00:00"
          },
          {
-@@ -2167,6 +2349,9 @@
+@@ -2167,6 +2216,9 @@
                  "psr",
                  "psr-6"
              ],
@@ -1405,7 +1275,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2016-08-06T20:24:11+00:00"
          },
          {
-@@ -2216,6 +2401,10 @@
+@@ -2216,6 +2268,10 @@
                  "container-interop",
                  "psr"
              ],
@@ -1416,7 +1286,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2017-02-14T16:28:37+00:00"
          },
          {
-@@ -2262,6 +2451,10 @@
+@@ -2262,6 +2318,10 @@
                  "psr",
                  "psr-14"
              ],
@@ -1427,7 +1297,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2019-01-08T18:20:26+00:00"
          },
          {
-@@ -2311,6 +2504,9 @@
+@@ -2311,6 +2371,9 @@
                  "psr-13",
                  "rest"
              ],
@@ -1437,7 +1307,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2016-10-28T16:06:13+00:00"
          },
          {
-@@ -2358,6 +2554,9 @@
+@@ -2358,6 +2421,9 @@
                  "psr",
                  "psr-3"
              ],
@@ -1447,7 +1317,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2020-03-23T09:12:05+00:00"
          },
          {
-@@ -2415,6 +2614,9 @@
+@@ -2415,6 +2481,9 @@
              ],
              "description": "Symfony Asset Component",
              "homepage": "https://symfony.com",
@@ -1457,7 +1327,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -2509,6 +2711,9 @@
+@@ -2509,6 +2578,9 @@
                  "caching",
                  "psr6"
              ],
@@ -1467,7 +1337,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -2585,6 +2790,9 @@
+@@ -2585,6 +2657,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1477,7 +1347,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -2665,6 +2873,9 @@
+@@ -2665,6 +2740,9 @@
              ],
              "description": "Symfony Config Component",
              "homepage": "https://symfony.com",
@@ -1487,7 +1357,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -2758,6 +2969,9 @@
+@@ -2758,6 +2836,9 @@
              ],
              "description": "Symfony Console Component",
              "homepage": "https://symfony.com",
@@ -1497,7 +1367,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -2847,6 +3061,9 @@
+@@ -2847,6 +2928,9 @@
              ],
              "description": "Symfony DependencyInjection Component",
              "homepage": "https://symfony.com",
@@ -1507,7 +1377,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -2911,6 +3128,9 @@
+@@ -2911,6 +2995,9 @@
              ],
              "description": "A generic function and convention to trigger deprecation notices",
              "homepage": "https://symfony.com",
@@ -1517,7 +1387,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3025,6 +3245,9 @@
+@@ -3025,6 +3112,9 @@
              ],
              "description": "Symfony Doctrine Bridge",
              "homepage": "https://symfony.com",
@@ -1527,7 +1397,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3097,6 +3320,9 @@
+@@ -3097,6 +3187,9 @@
                  "env",
                  "environment"
              ],
@@ -1537,7 +1407,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3168,6 +3394,9 @@
+@@ -3168,6 +3261,9 @@
              ],
              "description": "Symfony ErrorHandler Component",
              "homepage": "https://symfony.com",
@@ -1547,7 +1417,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3254,6 +3483,9 @@
+@@ -3254,6 +3350,9 @@
              ],
              "description": "Symfony EventDispatcher Component",
              "homepage": "https://symfony.com",
@@ -1557,7 +1427,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3330,6 +3562,9 @@
+@@ -3330,6 +3429,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1567,7 +1437,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3396,6 +3631,9 @@
+@@ -3396,6 +3498,9 @@
              ],
              "description": "Symfony ExpressionLanguage Component",
              "homepage": "https://symfony.com",
@@ -1577,7 +1447,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3460,6 +3698,9 @@
+@@ -3460,6 +3565,9 @@
              ],
              "description": "Symfony Filesystem Component",
              "homepage": "https://symfony.com",
@@ -1587,7 +1457,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3523,6 +3764,9 @@
+@@ -3523,6 +3631,9 @@
              ],
              "description": "Symfony Finder Component",
              "homepage": "https://symfony.com",
@@ -1597,7 +1467,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3735,6 +3979,9 @@
+@@ -3735,6 +3846,9 @@
              ],
              "description": "Symfony FrameworkBundle",
              "homepage": "https://symfony.com",
@@ -1607,7 +1477,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3821,6 +4068,9 @@
+@@ -3821,6 +3935,9 @@
              ],
              "description": "Symfony HttpClient component",
              "homepage": "https://symfony.com",
@@ -1617,7 +1487,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3896,6 +4146,9 @@
+@@ -3896,6 +4013,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1627,7 +1497,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -3971,6 +4224,9 @@
+@@ -3971,6 +4091,9 @@
              ],
              "description": "Symfony HttpFoundation Component",
              "homepage": "https://symfony.com",
@@ -1637,7 +1507,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4084,6 +4340,9 @@
+@@ -4084,6 +4207,9 @@
              ],
              "description": "Symfony HttpKernel Component",
              "homepage": "https://symfony.com",
@@ -1647,7 +1517,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4167,6 +4426,9 @@
+@@ -4167,6 +4293,9 @@
              ],
              "description": "Symfony Monolog Bridge",
              "homepage": "https://symfony.com",
@@ -1657,7 +1527,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4244,6 +4506,10 @@
+@@ -4244,6 +4373,10 @@
                  "log",
                  "logging"
              ],
@@ -1668,7 +1538,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2019-11-13T13:11:14+00:00"
          },
          {
-@@ -4306,6 +4572,9 @@
+@@ -4306,6 +4439,9 @@
                  "polyfill",
                  "portable"
              ],
@@ -1678,7 +1548,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4384,6 +4653,9 @@
+@@ -4384,6 +4520,9 @@
                  "portable",
                  "shim"
              ],
@@ -1688,7 +1558,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4465,6 +4737,9 @@
+@@ -4465,6 +4604,9 @@
                  "portable",
                  "shim"
              ],
@@ -1698,7 +1568,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4542,6 +4817,9 @@
+@@ -4542,6 +4684,9 @@
                  "portable",
                  "shim"
              ],
@@ -1708,7 +1578,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4618,6 +4896,9 @@
+@@ -4618,6 +4763,9 @@
                  "portable",
                  "shim"
              ],
@@ -1718,7 +1588,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4698,6 +4979,9 @@
+@@ -4698,6 +4846,9 @@
                  "portable",
                  "shim"
              ],
@@ -1728,7 +1598,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4780,6 +5064,9 @@
+@@ -4780,6 +4931,9 @@
                  "property path",
                  "reflection"
              ],
@@ -1738,7 +1608,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4871,6 +5158,9 @@
+@@ -4871,6 +5025,9 @@
                  "type",
                  "validator"
              ],
@@ -1748,7 +1618,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -4963,6 +5253,9 @@
+@@ -4963,6 +5120,9 @@
                  "uri",
                  "url"
              ],
@@ -1758,7 +1628,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5062,6 +5355,9 @@
+@@ -5062,6 +5222,9 @@
              ],
              "description": "Symfony SecurityBundle",
              "homepage": "https://symfony.com",
@@ -1768,7 +1638,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5151,6 +5447,9 @@
+@@ -5151,6 +5314,9 @@
              ],
              "description": "Symfony Security Component - Core Library",
              "homepage": "https://symfony.com",
@@ -1778,7 +1648,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5224,6 +5523,9 @@
+@@ -5224,6 +5390,9 @@
              ],
              "description": "Symfony Security Component - CSRF Library",
              "homepage": "https://symfony.com",
@@ -1788,7 +1658,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5293,6 +5595,9 @@
+@@ -5293,6 +5462,9 @@
              ],
              "description": "Symfony Security Component - Guard",
              "homepage": "https://symfony.com",
@@ -1798,7 +1668,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5375,6 +5680,9 @@
+@@ -5375,6 +5547,9 @@
              ],
              "description": "Symfony Security Component - HTTP Integration",
              "homepage": "https://symfony.com",
@@ -1808,7 +1678,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5472,6 +5780,9 @@
+@@ -5472,6 +5647,9 @@
              ],
              "description": "Symfony Serializer Component",
              "homepage": "https://symfony.com",
@@ -1818,7 +1688,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5548,6 +5859,9 @@
+@@ -5548,6 +5726,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1828,7 +1698,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5612,6 +5926,9 @@
+@@ -5612,6 +5793,9 @@
              ],
              "description": "Symfony Stopwatch Component",
              "homepage": "https://symfony.com",
@@ -1838,7 +1708,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5697,6 +6014,9 @@
+@@ -5697,6 +5881,9 @@
                  "utf-8",
                  "utf8"
              ],
@@ -1848,7 +1718,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5789,6 +6109,9 @@
+@@ -5789,6 +5976,9 @@
              ],
              "description": "Symfony Translation Component",
              "homepage": "https://symfony.com",
@@ -1858,7 +1728,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5864,6 +6187,9 @@
+@@ -5864,6 +6054,9 @@
                  "interoperability",
                  "standards"
              ],
@@ -1868,7 +1738,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -5980,6 +6306,9 @@
+@@ -5980,6 +6173,9 @@
              ],
              "description": "Symfony Twig Bridge",
              "homepage": "https://symfony.com",
@@ -1878,7 +1748,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6069,6 +6398,9 @@
+@@ -6069,6 +6265,9 @@
              ],
              "description": "Symfony TwigBundle",
              "homepage": "https://symfony.com",
@@ -1888,7 +1758,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6180,6 +6512,9 @@
+@@ -6180,6 +6379,9 @@
              ],
              "description": "Symfony Validator Component",
              "homepage": "https://symfony.com",
@@ -1898,7 +1768,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6270,6 +6605,9 @@
+@@ -6270,6 +6472,9 @@
                  "debug",
                  "dump"
              ],
@@ -1908,7 +1778,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6345,6 +6683,9 @@
+@@ -6345,6 +6550,9 @@
                  "instantiate",
                  "serialize"
              ],
@@ -1918,7 +1788,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6434,6 +6775,9 @@
+@@ -6434,6 +6642,9 @@
                  "psr13",
                  "push"
              ],
@@ -1928,7 +1798,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6452,20 +6796,20 @@
+@@ -6452,20 +6663,20 @@
          },
          {
              "name": "symfony/webpack-encore-bundle",
@@ -1954,7 +1824,7 @@ index 47080057f..d96d7ffda 100644
                  "symfony/asset": "^3.4 || ^4.0 || ^5.0",
                  "symfony/config": "^3.4 || ^4.0 || ^5.0",
                  "symfony/dependency-injection": "^3.4 || ^4.0 || ^5.0",
-@@ -6501,7 +6845,25 @@
+@@ -6501,7 +6712,25 @@
                  }
              ],
              "description": "Integration with your Symfony app & Webpack Encore!",
@@ -1981,7 +1851,7 @@ index 47080057f..d96d7ffda 100644
          },
          {
              "name": "symfony/yaml",
-@@ -6564,6 +6926,9 @@
+@@ -6564,6 +6793,9 @@
              ],
              "description": "Symfony Yaml Component",
              "homepage": "https://symfony.com",
@@ -1991,7 +1861,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -6640,6 +7005,10 @@
+@@ -6640,6 +6872,10 @@
              "keywords": [
                  "templating"
              ],
@@ -2002,7 +1872,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://github.com/fabpot",
-@@ -6657,12 +7026,12 @@
+@@ -6657,12 +6893,12 @@
              "version": "1.9.1",
              "source": {
                  "type": "git",
@@ -2017,7 +1887,7 @@ index 47080057f..d96d7ffda 100644
                  "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                  "shasum": ""
              },
-@@ -6699,32 +7068,36 @@
+@@ -6699,32 +6935,36 @@
                  "check",
                  "validate"
              ],
@@ -2061,7 +1931,7 @@ index 47080057f..d96d7ffda 100644
                  }
              },
              "autoload": {
-@@ -6751,120 +7124,11 @@
+@@ -6751,120 +6991,11 @@
                  "header",
                  "negotiation"
              ],
@@ -2186,7 +2056,7 @@ index 47080057f..d96d7ffda 100644
          }
      ],
      "packages-dev": [
-@@ -6929,6 +7193,10 @@
+@@ -6929,6 +7060,10 @@
              "keywords": [
                  "database"
              ],
@@ -2197,7 +2067,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://www.doctrine-project.org/sponsorship.html",
-@@ -7011,6 +7279,10 @@
+@@ -7011,6 +7146,10 @@
                  "Fixture",
                  "persistence"
              ],
@@ -2208,7 +2078,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://www.doctrine-project.org/sponsorship.html",
-@@ -7028,33 +7300,31 @@
+@@ -7028,33 +7167,31 @@
              "time": "2020-09-01T07:06:14+00:00"
          },
          {
@@ -2254,7 +2124,7 @@ index 47080057f..d96d7ffda 100644
              "autoload": {
                  "psr-4": {
                      "Faker\\": "src/Faker/"
-@@ -7075,7 +7345,11 @@
+@@ -7075,7 +7212,11 @@
                  "faker",
                  "fixtures"
              ],
@@ -2267,7 +2137,7 @@ index 47080057f..d96d7ffda 100644
          },
          {
              "name": "nikic/php-parser",
-@@ -7127,6 +7401,10 @@
+@@ -7127,6 +7268,10 @@
                  "parser",
                  "php"
              ],
@@ -2278,7 +2148,7 @@ index 47080057f..d96d7ffda 100644
              "time": "2020-08-30T16:15:20+00:00"
          },
          {
-@@ -7186,6 +7464,9 @@
+@@ -7186,6 +7331,9 @@
              ],
              "description": "Symfony BrowserKit Component",
              "homepage": "https://symfony.com",
@@ -2288,7 +2158,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7253,6 +7534,9 @@
+@@ -7253,6 +7401,9 @@
              ],
              "description": "Symfony CssSelector Component",
              "homepage": "https://symfony.com",
@@ -2298,7 +2168,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7329,6 +7613,9 @@
+@@ -7329,6 +7480,9 @@
              ],
              "description": "Symfony DomCrawler Component",
              "homepage": "https://symfony.com",
@@ -2308,7 +2178,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7347,22 +7634,22 @@
+@@ -7347,22 +7501,22 @@
          },
          {
              "name": "symfony/maker-bundle",
@@ -2336,7 +2206,7 @@ index 47080057f..d96d7ffda 100644
                  "symfony/config": "^3.4|^4.0|^5.0",
                  "symfony/console": "^3.4|^4.0|^5.0",
                  "symfony/dependency-injection": "^3.4|^4.0|^5.0",
-@@ -7412,6 +7699,10 @@
+@@ -7412,6 +7566,10 @@
                  "scaffold",
                  "scaffolding"
              ],
@@ -2347,7 +2217,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7426,7 +7717,7 @@
+@@ -7426,7 +7584,7 @@
                      "type": "tidelift"
                  }
              ],
@@ -2356,7 +2226,7 @@ index 47080057f..d96d7ffda 100644
          },
          {
              "name": "symfony/phpunit-bridge",
-@@ -7491,6 +7782,9 @@
+@@ -7491,6 +7649,9 @@
              ],
              "description": "Symfony PHPUnit Bridge",
              "homepage": "https://symfony.com",
@@ -2366,7 +2236,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7570,6 +7864,9 @@
+@@ -7570,6 +7731,9 @@
              ],
              "description": "Symfony WebProfilerBundle",
              "homepage": "https://symfony.com",
@@ -2376,7 +2246,7 @@ index 47080057f..d96d7ffda 100644
              "funding": [
                  {
                      "url": "https://symfony.com/sponsor",
-@@ -7586,34 +7883,88 @@
+@@ -7586,34 +7750,88 @@
              ],
              "time": "2020-08-10T08:03:57+00:00"
          },
@@ -2474,7 +2344,7 @@ index 47080057f..d96d7ffda 100644
              },
              "type": "library",
              "extra": {
-@@ -7649,7 +8000,11 @@
+@@ -7649,7 +7867,11 @@
                  "symfony",
                  "test"
              ],
@@ -2487,7 +2357,7 @@ index 47080057f..d96d7ffda 100644
          }
      ],
      "aliases": [],
-@@ -7658,13 +8013,13 @@
+@@ -7658,13 +7880,13 @@
      "prefer-stable": false,
      "prefer-lowest": false,
      "platform": {
@@ -2501,13 +2371,14 @@ index 47080057f..d96d7ffda 100644
 -        "php": "7.2.5"
 +        "php": "7.4.0"
      },
-     "plugin-api-version": "2.2.0"
+-    "plugin-api-version": "2.2.0"
++    "plugin-api-version": "2.3.0"
  }
 diff --git a/symfony.lock b/symfony.lock
-index 646e06f1a..11ed4e5ca 100644
+index 646e06f..8247ce4 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -104,17 +104,26 @@
+@@ -104,17 +104,20 @@
      "doctrine/persistence": {
          "version": "1.1.1"
      },
@@ -2530,16 +2401,10 @@ index 646e06f1a..11ed4e5ca 100644
 +    },
 +    "laminas/laminas-code": {
 +        "version": "3.4.1"
-+    },
-+    "laminas/laminas-eventmanager": {
-+        "version": "3.3.1"
-+    },
-+    "laminas/laminas-zendframework-bridge": {
-+        "version": "1.2.0"
      },
      "monolog/monolog": {
          "version": "1.24.0"
-@@ -140,9 +149,6 @@
+@@ -140,9 +143,6 @@
      "ocramius/package-versions": {
          "version": "1.4.0"
      },
@@ -2549,7 +2414,26 @@ index 646e06f1a..11ed4e5ca 100644
      "php": {
          "version": "7.2.5"
      },
-@@ -501,11 +507,8 @@
+@@ -327,18 +327,12 @@
+     "symfony/polyfill-intl-grapheme": {
+         "version": "v1.18.1"
+     },
+-    "symfony/polyfill-intl-normalizer": {
+-        "version": "v1.18.1"
+-    },
+     "symfony/polyfill-intl-normalizer": {
+         "version": "v1.23.0"
+     },
+     "symfony/polyfill-mbstring": {
+         "version": "v1.11.0"
+     },
+-    "symfony/polyfill-php80": {
+-        "version": "v1.18.1"
+-    },
+     "symfony/polyfill-php73": {
+         "version": "v1.23.0"
+     },
+@@ -501,11 +495,8 @@
      "willdurand/negotiation": {
          "version": "v2.3.1"
      },
@@ -2565,7 +2449,7 @@ index 646e06f1a..11ed4e5ca 100644
          "version": "v1.1.1"
 diff --git a/tutorial/StatsHelper.php b/tutorial/StatsHelper.php
 new file mode 100644
-index 000000000..57df59a76
+index 0000000..57df59a
 --- /dev/null
 +++ b/tutorial/StatsHelper.php
 @@ -0,0 +1,112 @@
@@ -2683,7 +2567,7 @@ index 000000000..57df59a76
 +}
 diff --git a/tutorial/fake_stats.json b/tutorial/fake_stats.json
 new file mode 100644
-index 000000000..f55d8aa21
+index 0000000..f55d8aa
 --- /dev/null
 +++ b/tutorial/fake_stats.json
 @@ -0,0 +1,124 @@

@@ -1,5 +1,5 @@
 diff --git a/config/services.yaml b/config/services.yaml
-index 10bca7de3..e94203381 100644
+index 10bca7d..e942033 100644
 --- a/config/services.yaml
 +++ b/config/services.yaml
 @@ -26,3 +26,7 @@ services:
@@ -12,7 +12,7 @@ index 10bca7de3..e94203381 100644
 +        arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]
 diff --git a/src/Serializer/AdminGroupsContextBuilder.php b/src/Serializer/AdminGroupsContextBuilder.php
 new file mode 100644
-index 000000000..d0565610f
+index 0000000..d056561
 --- /dev/null
 +++ b/src/Serializer/AdminGroupsContextBuilder.php
 @@ -0,0 +1,31 @@
