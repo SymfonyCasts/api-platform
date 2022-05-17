@@ -240,7 +240,7 @@ index 1445e3d..089ba47 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 36380af..3ec46d7 100644
+index 36380af..7687333 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,44 +4,8 @@
@@ -781,7 +781,7 @@ index 36380af..3ec46d7 100644
              "time": "2019-06-23T08:51:25+00:00"
          },
          {
-@@ -3018,6 +3132,9 @@
+@@ -3018,20 +3132,23 @@
              ],
              "description": "Symfony Finder Component",
              "homepage": "https://symfony.com",
@@ -791,6 +791,42 @@ index 36380af..3ec46d7 100644
              "time": "2019-06-13T11:03:18+00:00"
          },
          {
+             "name": "symfony/flex",
+-            "version": "v1.17.6",
++            "version": "v1.18.7",
+             "source": {
+                 "type": "git",
+                 "url": "https://github.com/symfony/flex.git",
+-                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc"
++                "reference": "e74319d17ed4edc5f27b9d24757e172930a7ebc4"
+             },
+             "dist": {
+                 "type": "zip",
+-                "url": "https://api.github.com/repos/symfony/flex/zipball/7a79135e1dc66b30042b4d968ecba0908f9374bc",
+-                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc",
++                "url": "https://api.github.com/repos/symfony/flex/zipball/e74319d17ed4edc5f27b9d24757e172930a7ebc4",
++                "reference": "e74319d17ed4edc5f27b9d24757e172930a7ebc4",
+                 "shasum": ""
+             },
+             "require": {
+@@ -3067,7 +3184,7 @@
+             "description": "Composer plugin for Symfony",
+             "support": {
+                 "issues": "https://github.com/symfony/flex/issues",
+-                "source": "https://github.com/symfony/flex/tree/v1.17.6"
++                "source": "https://github.com/symfony/flex/tree/v1.18.7"
+             },
+             "funding": [
+                 {
+@@ -3083,7 +3200,7 @@
+                     "type": "tidelift"
+                 }
+             ],
+-            "time": "2021-11-29T15:39:37+00:00"
++            "time": "2022-05-02T10:18:23+00:00"
+         },
+         {
+             "name": "symfony/framework-bundle",
 @@ -3205,6 +3322,9 @@
              ],
              "description": "Symfony FrameworkBundle",

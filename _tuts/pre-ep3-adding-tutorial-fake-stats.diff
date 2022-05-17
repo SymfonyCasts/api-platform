@@ -30,7 +30,7 @@ index 851554d..362f468 100644
          "allow-plugins": {
              "symfony/flex": true
 diff --git a/composer.lock b/composer.lock
-index e62031e..4c8de87 100644
+index 1a99a61..f0261b0 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,20 +4,20 @@

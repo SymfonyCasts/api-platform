@@ -11,7 +11,7 @@ index 362f468..0787dd3 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index 4c8de87..0b08acc 100644
+index f0261b0..4fea846 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@

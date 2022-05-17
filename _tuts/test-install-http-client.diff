@@ -11,7 +11,7 @@ index 9dd6038..bd3a5a9 100644
          "symfony/twig-bundle": "4.3.*",
          "symfony/validator": "4.3.*",
 diff --git a/composer.lock b/composer.lock
-index 6235155..9573c6d 100644
+index 3208e40..346a7ad 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
