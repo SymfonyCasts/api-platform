@@ -86,7 +86,7 @@ index 0a7c53b..084f59a 100644
  framework:
      cache:
 diff --git a/symfony.lock b/symfony.lock
-index 7e27b0a..bc54b9d 100644
+index 1362285..59bcd8e 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -44,12 +44,12 @@

@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 364abd2..71222bc 100644
+index a6064c4..6a17b76 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -29,6 +29,7 @@
@@ -11,19 +11,19 @@ index 364abd2..71222bc 100644
          "symfony/browser-kit": "5.1.*",
          "symfony/css-selector": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index f4b3d76..48e325d 100644
+index d0bdf77..34c5592 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "4d4989805cdbb89c35c55b78a5f6adf3",
-+    "content-hash": "d7281dcf07a52520100e0986c3c912ce",
+-    "content-hash": "ccba9c20abe7a328b9146685b5c7f126",
++    "content-hash": "e898833986f4ce9b420cebf7ddea08bb",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -2865,16 +2865,16 @@
+@@ -3001,16 +3001,16 @@
          },
          {
              "name": "symfony/deprecation-contracts",
@@ -44,7 +44,7 @@ index f4b3d76..48e325d 100644
                  "shasum": ""
              },
              "require": {
-@@ -2883,7 +2883,7 @@
+@@ -3019,7 +3019,7 @@
              "type": "library",
              "extra": {
                  "branch-alias": {
@@ -53,7 +53,16 @@ index f4b3d76..48e325d 100644
                  },
                  "thanks": {
                      "name": "symfony/contracts",
-@@ -2925,7 +2925,7 @@
+@@ -3048,7 +3048,7 @@
+             "description": "A generic function and convention to trigger deprecation notices",
+             "homepage": "https://symfony.com",
+             "support": {
+-                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.1.3"
++                "source": "https://github.com/symfony/deprecation-contracts/tree/master"
+             },
+             "funding": [
+                 {
+@@ -3064,7 +3064,7 @@
                      "type": "tidelift"
                  }
              ],
@@ -62,7 +71,7 @@ index f4b3d76..48e325d 100644
          },
          {
              "name": "symfony/doctrine-bridge",
-@@ -3272,16 +3272,16 @@
+@@ -3423,16 +3423,16 @@
          },
          {
              "name": "symfony/event-dispatcher-contracts",
@@ -83,7 +92,7 @@ index f4b3d76..48e325d 100644
                  "shasum": ""
              },
              "require": {
-@@ -3294,7 +3294,7 @@
+@@ -3445,7 +3445,7 @@
              "type": "library",
              "extra": {
                  "branch-alias": {
@@ -92,7 +101,16 @@ index f4b3d76..48e325d 100644
                  },
                  "thanks": {
                      "name": "symfony/contracts",
-@@ -3344,7 +3344,7 @@
+@@ -3482,7 +3482,7 @@
+                 "standards"
+             ],
+             "support": {
+-                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/master"
++                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/v2.2.0"
+             },
+             "funding": [
+                 {
+@@ -3498,7 +3498,7 @@
                      "type": "tidelift"
                  }
              ],
@@ -101,7 +119,7 @@ index f4b3d76..48e325d 100644
          },
          {
              "name": "symfony/expression-language",
-@@ -5490,16 +5490,16 @@
+@@ -5720,16 +5720,16 @@
          },
          {
              "name": "symfony/service-contracts",
@@ -122,7 +140,7 @@ index f4b3d76..48e325d 100644
                  "shasum": ""
              },
              "require": {
-@@ -5512,7 +5512,7 @@
+@@ -5742,7 +5742,7 @@
              "type": "library",
              "extra": {
                  "branch-alias": {
@@ -131,7 +149,16 @@ index f4b3d76..48e325d 100644
                  },
                  "thanks": {
                      "name": "symfony/contracts",
-@@ -5562,7 +5562,7 @@
+@@ -5779,7 +5779,7 @@
+                 "standards"
+             ],
+             "support": {
+-                "source": "https://github.com/symfony/service-contracts/tree/v2.1.3"
++                "source": "https://github.com/symfony/service-contracts/tree/master"
+             },
+             "funding": [
+                 {
+@@ -5795,7 +5795,7 @@
                      "type": "tidelift"
                  }
              ],
@@ -140,7 +167,7 @@ index f4b3d76..48e325d 100644
          },
          {
              "name": "symfony/stopwatch",
-@@ -6945,6 +6945,88 @@
+@@ -7243,6 +7243,92 @@
              ],
              "time": "2020-09-01T07:13:28+00:00"
          },
@@ -210,6 +237,10 @@ index f4b3d76..48e325d 100644
 +                "Fixture",
 +                "persistence"
 +            ],
++            "support": {
++                "issues": "https://github.com/doctrine/DoctrineFixturesBundle/issues",
++                "source": "https://github.com/doctrine/DoctrineFixturesBundle/tree/3.3.x"
++            },
 +            "funding": [
 +                {
 +                    "url": "https://www.doctrine-project.org/sponsorship.html",
@@ -263,7 +294,7 @@ index 0000000..6c20526
 +    }
 +}
 diff --git a/symfony.lock b/symfony.lock
-index 1629121..12994ad 100644
+index 8a1bc4e..ab71a4a 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -58,6 +58,18 @@

@@ -12,7 +12,7 @@ index e6b1cd6..05a2b3d 100644
 -            - '%locale%'
 +            - en
 diff --git a/symfony.lock b/symfony.lock
-index f69ea23..827590a 100644
+index aaf9ea7..53f4594 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -437,7 +437,7 @@

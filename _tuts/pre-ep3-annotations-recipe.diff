@@ -11,7 +11,7 @@ index d49a502..e92efc5 100644
 +    resource: ../../src/Kernel.php
 +    type: annotation
 diff --git a/symfony.lock b/symfony.lock
-index ed8a732..7e27b0a 100644
+index b6731db..1362285 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -22,7 +22,7 @@

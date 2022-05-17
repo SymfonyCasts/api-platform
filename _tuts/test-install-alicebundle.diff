@@ -1,29 +1,29 @@
 diff --git a/composer.json b/composer.json
-index 3418f38..534b099 100644
+index bd3a5a9..d931834 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -66,6 +66,7 @@
+@@ -79,6 +79,7 @@
          }
      },
      "require-dev": {
 +        "hautelook/alice-bundle": "^2.5",
+         "symfony/browser-kit": "4.3.*",
+         "symfony/css-selector": "4.3.*",
          "symfony/maker-bundle": "^1.11",
-         "symfony/profiler-pack": "^1.0",
-         "symfony/test-pack": "^1.0"
 diff --git a/composer.lock b/composer.lock
-index 814cd86..efc28ec 100644
+index 9573c6d..fcbe1af 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "8eb02842a8fedcb56ca0e429598d7884",
-+    "content-hash": "d2c5f603e145f203defd8689e8f5603c",
+-    "content-hash": "4721fba76a9fabe918daaff136e480cb",
++    "content-hash": "bceaf9428c742abfc5ca0c39f9bb32c3",
      "packages": [
          {
-             "name": "api-platform/api-pack",
-@@ -5322,6 +5322,321 @@
+             "name": "api-platform/core",
+@@ -5545,6 +5545,330 @@
          }
      ],
      "packages-dev": [
@@ -85,6 +85,10 @@ index 814cd86..efc28ec 100644
 +            "keywords": [
 +                "database"
 +            ],
++            "support": {
++                "issues": "https://github.com/doctrine/data-fixtures/issues",
++                "source": "https://github.com/doctrine/data-fixtures/tree/v1.3.2"
++            },
 +            "time": "2019-07-10T18:30:35+00:00"
 +        },
 +        {
@@ -135,6 +139,11 @@ index 814cd86..efc28ec 100644
 +                "faker",
 +                "fixtures"
 +            ],
++            "support": {
++                "issues": "https://github.com/fzaninotto/Faker/issues",
++                "source": "https://github.com/fzaninotto/Faker/tree/master"
++            },
++            "abandoned": true,
 +            "time": "2018-07-12T10:23:15+00:00"
 +        },
 +        {
@@ -204,14 +213,9 @@ index 814cd86..efc28ec 100644
 +                "symfony"
 +            ],
 +            "support": {
++                "issues": "https://github.com/theofidry/AliceBundle/issues",
 +                "source": "https://github.com/theofidry/AliceBundle/tree/2.7.3"
 +            },
-+            "funding": [
-+                {
-+                    "url": "https://github.com/theofidry",
-+                    "type": "github"
-+                }
-+            ],
 +            "time": "2020-09-24T20:52:16+00:00"
 +        },
 +        {
@@ -231,9 +235,6 @@ index 814cd86..efc28ec 100644
 +            "require": {
 +                "php": "^7.1"
 +            },
-+            "replace": {
-+                "myclabs/deep-copy": "self.version"
-+            },
 +            "require-dev": {
 +                "doctrine/collections": "^1.0",
 +                "doctrine/common": "^2.6",
@@ -241,12 +242,12 @@ index 814cd86..efc28ec 100644
 +            },
 +            "type": "library",
 +            "autoload": {
-+                "psr-4": {
-+                    "DeepCopy\\": "src/DeepCopy/"
-+                },
 +                "files": [
 +                    "src/DeepCopy/deep_copy.php"
-+                ]
++                ],
++                "psr-4": {
++                    "DeepCopy\\": "src/DeepCopy/"
++                }
 +            },
 +            "notification-url": "https://packagist.org/downloads/",
 +            "license": [
@@ -260,6 +261,10 @@ index 814cd86..efc28ec 100644
 +                "object",
 +                "object graph"
 +            ],
++            "support": {
++                "issues": "https://github.com/myclabs/DeepCopy/issues",
++                "source": "https://github.com/myclabs/DeepCopy/tree/1.9.1"
++            },
 +            "time": "2019-04-07T13:18:21+00:00"
 +        },
 +        {
@@ -340,13 +345,17 @@ index 814cd86..efc28ec 100644
 +                "faker",
 +                "test"
 +            ],
++            "support": {
++                "issues": "https://github.com/nelmio/alice/issues",
++                "source": "https://github.com/nelmio/alice/tree/v3.5.7"
++            },
 +            "time": "2019-05-05T08:51:28+00:00"
 +        },
          {
              "name": "nikic/php-parser",
              "version": "v4.2.2",
-@@ -5373,6 +5688,246 @@
-             ],
+@@ -5600,6 +5924,262 @@
+             },
              "time": "2019-05-25T20:07:01+00:00"
          },
 +        {
@@ -411,6 +420,10 @@ index 814cd86..efc28ec 100644
 +                "compare",
 +                "equality"
 +            ],
++            "support": {
++                "issues": "https://github.com/sebastianbergmann/comparator/issues",
++                "source": "https://github.com/sebastianbergmann/comparator/tree/master"
++            },
 +            "time": "2018-07-12T15:12:46+00:00"
 +        },
 +        {
@@ -467,6 +480,10 @@ index 814cd86..efc28ec 100644
 +                "unidiff",
 +                "unified diff"
 +            ],
++            "support": {
++                "issues": "https://github.com/sebastianbergmann/diff/issues",
++                "source": "https://github.com/sebastianbergmann/diff/tree/master"
++            },
 +            "time": "2019-02-04T06:01:07+00:00"
 +        },
 +        {
@@ -534,6 +551,10 @@ index 814cd86..efc28ec 100644
 +                "export",
 +                "exporter"
 +            ],
++            "support": {
++                "issues": "https://github.com/sebastianbergmann/exporter/issues",
++                "source": "https://github.com/sebastianbergmann/exporter/tree/master"
++            },
 +            "time": "2017-04-03T13:19:02+00:00"
 +        },
 +        {
@@ -587,14 +608,18 @@ index 814cd86..efc28ec 100644
 +            ],
 +            "description": "Provides functionality to recursively process PHP variables",
 +            "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
++            "support": {
++                "issues": "https://github.com/sebastianbergmann/recursion-context/issues",
++                "source": "https://github.com/sebastianbergmann/recursion-context/tree/master"
++            },
 +            "time": "2017-03-03T06:23:57+00:00"
 +        },
          {
              "name": "symfony/browser-kit",
              "version": "v4.3.3",
-@@ -5876,6 +6431,85 @@
-             "description": "Symfony WebProfilerBundle",
-             "homepage": "https://symfony.com",
+@@ -6069,6 +6649,89 @@
+                 "source": "https://github.com/symfony/web-profiler-bundle/tree/v4.3.1"
+             },
              "time": "2019-05-30T16:10:05+00:00"
 +        },
 +        {
@@ -674,6 +699,10 @@ index 814cd86..efc28ec 100644
 +                "orm",
 +                "tests"
 +            ],
++            "support": {
++                "issues": "https://github.com/theofidry/AliceDataFixtures/issues",
++                "source": "https://github.com/theofidry/AliceDataFixtures/tree/master"
++            },
 +            "time": "2018-09-18T19:11:18+00:00"
          }
      ],
@@ -733,7 +762,7 @@ diff --git a/fixtures/.gitignore b/fixtures/.gitignore
 new file mode 100644
 index 0000000..e69de29
 diff --git a/symfony.lock b/symfony.lock
-index f165f1d..05604c9 100644
+index d9af483..1b1aa4a 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -40,6 +40,9 @@
@@ -808,7 +837,7 @@ index f165f1d..05604c9 100644
      "symfony/asset": {
          "version": "v4.2.8"
      },
-@@ -455,6 +503,15 @@
+@@ -452,6 +500,15 @@
      "symfony/yaml": {
          "version": "v4.2.8"
      },

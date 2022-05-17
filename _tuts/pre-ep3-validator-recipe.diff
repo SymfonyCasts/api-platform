@@ -22,7 +22,7 @@ index a695e1a..350786a 100644
 +        #auto_mapping:
 +        #    App\Entity\: []
 diff --git a/symfony.lock b/symfony.lock
-index a092bda..90204ff 100644
+index a1d08cc..2dc9e66 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -465,12 +465,12 @@

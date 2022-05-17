@@ -19,7 +19,7 @@ index 7df7e82..71c2b75 100644
  ###> symfony/framework-bundle ###
  APP_ENV=dev
 diff --git a/symfony.lock b/symfony.lock
-index df6d352..6710320 100644
+index 239dcdd..eb72e77 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -273,7 +273,7 @@

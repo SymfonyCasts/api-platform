@@ -1,30 +1,30 @@
 diff --git a/composer.json b/composer.json
-index 534b099..030445f 100644
+index d931834..e7e5ac4 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -14,6 +14,7 @@
+@@ -21,6 +21,7 @@
          "symfony/flex": "^1.1",
          "symfony/framework-bundle": "4.3.*",
          "symfony/http-client": "4.3.*",
 +        "symfony/monolog-bundle": "^3.4",
-         "symfony/webpack-encore-bundle": "^1.6",
-         "symfony/yaml": "4.3.*"
-     },
+         "symfony/security-bundle": "4.3.*",
+         "symfony/twig-bundle": "4.3.*",
+         "symfony/validator": "4.3.*",
 diff --git a/composer.lock b/composer.lock
-index efc28ec..9b29575 100644
+index fcbe1af..68df633 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "d2c5f603e145f203defd8689e8f5603c",
-+    "content-hash": "074fc66f9096dcaf797928cf72464113",
+-    "content-hash": "bceaf9428c742abfc5ca0c39f9bb32c3",
++    "content-hash": "532400e8997a233f193db68d32b016bb",
      "packages": [
          {
-             "name": "api-platform/api-pack",
-@@ -1636,6 +1636,84 @@
-             ],
+             "name": "api-platform/core",
+@@ -1677,6 +1677,88 @@
+             },
              "time": "2014-01-12T16:20:24+00:00"
          },
 +        {
@@ -103,13 +103,17 @@ index efc28ec..9b29575 100644
 +                "logging",
 +                "psr-3"
 +            ],
++            "support": {
++                "issues": "https://github.com/Seldaek/monolog/issues",
++                "source": "https://github.com/Seldaek/monolog/tree/1.24.0"
++            },
 +            "time": "2018-11-05T09:00:11+00:00"
 +        },
          {
              "name": "nelmio/cors-bundle",
              "version": "1.5.6",
-@@ -3533,6 +3611,135 @@
-             ],
+@@ -3669,6 +3751,142 @@
+             },
              "time": "2019-06-04T09:22:54+00:00"
          },
 +        {
@@ -176,6 +180,9 @@ index efc28ec..9b29575 100644
 +            ],
 +            "description": "Symfony Monolog Bridge",
 +            "homepage": "https://symfony.com",
++            "support": {
++                "source": "https://github.com/symfony/monolog-bridge/tree/4.3"
++            },
 +            "time": "2019-06-13T11:01:17+00:00"
 +        },
 +        {
@@ -239,6 +246,10 @@ index efc28ec..9b29575 100644
 +                "log",
 +                "logging"
 +            ],
++            "support": {
++                "issues": "https://github.com/symfony/monolog-bundle/issues",
++                "source": "https://github.com/symfony/monolog-bundle/tree/v3.4.0"
++            },
 +            "time": "2019-06-20T12:18:19+00:00"
 +        },
          {
@@ -322,7 +333,7 @@ index 0000000..2762653
 +            level: debug
 +            channels: ["!event"]
 diff --git a/symfony.lock b/symfony.lock
-index 05604c9..0a4ef84 100644
+index 1b1aa4a..0a4ef84 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -124,6 +124,9 @@
@@ -335,10 +346,12 @@ index 05604c9..0a4ef84 100644
      "myclabs/deep-copy": {
          "version": "1.9.1"
      },
-@@ -319,6 +322,23 @@
+@@ -319,8 +322,22 @@
              "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
          }
      },
+-    "symfony/mime": {
+-        "version": "v4.3.1"
 +    "symfony/monolog-bridge": {
 +        "version": "v4.3.3"
 +    },
@@ -355,7 +368,26 @@ index 05604c9..0a4ef84 100644
 +            "config/packages/prod/monolog.yaml",
 +            "config/packages/test/monolog.yaml"
 +        ]
-+    },
+     },
      "symfony/phpunit-bridge": {
          "version": "4.3",
+@@ -338,6 +355,9 @@
+             "tests/.gitignore"
+         ]
+     },
++    "symfony/mime": {
++        "version": "v4.3.1"
++    },
+     "symfony/polyfill-intl-idn": {
+         "version": "v1.11.0"
+     },
+@@ -410,6 +430,9 @@
+     "symfony/stopwatch": {
+         "version": "v4.2.8"
+     },
++    "symfony/test-pack": {
++        "version": "v1.0.6"
++    },
+     "symfony/translation": {
+         "version": "3.3",
          "recipe": {
