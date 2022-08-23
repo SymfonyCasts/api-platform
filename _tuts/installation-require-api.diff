@@ -18,7 +18,7 @@ index 6053225..62b8545 100644
 +DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 +###< doctrine/doctrine-bundle ###
 diff --git a/composer.json b/composer.json
-index f0ca300..8af44e5 100644
+index 46fe1e5..d3538b3 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -5,11 +5,22 @@

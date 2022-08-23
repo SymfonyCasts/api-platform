@@ -187,7 +187,7 @@ index 0000000..ab14df4
 +<style scoped lang="scss">
 +</style>
 diff --git a/composer.json b/composer.json
-index 1445e3d..089ba47 100644
+index d88f182..089ba47 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -2,17 +2,27 @@
@@ -220,17 +220,7 @@ index 1445e3d..089ba47 100644
          "symfony/webpack-encore-bundle": "^1.6",
          "symfony/yaml": "4.3.*"
      },
-@@ -23,6 +33,9 @@
-         "sort-packages": true,
-         "platform": {
-             "php": "7.2.0"
-+        },
-+        "allow-plugins": {
-+            "symfony/flex": true
-         }
-     },
-     "autoload": {
-@@ -66,6 +79,7 @@
+@@ -69,6 +79,7 @@
      },
      "require-dev": {
          "symfony/maker-bundle": "^1.11",

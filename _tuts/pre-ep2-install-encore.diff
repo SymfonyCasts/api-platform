@@ -69,7 +69,7 @@ index 0000000..0648e87
 +
 +console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 diff --git a/composer.json b/composer.json
-index d8c32a3..1445e3d 100644
+index 129d520..d88f182 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -13,6 +13,7 @@
