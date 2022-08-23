@@ -19,6 +19,9 @@
         "sort-packages": true,
         "platform": {
             "php": "7.2.0"
+        },
+        "allow-plugins": {
+            "symfony/flex": true
         }
     },
     "autoload": {
