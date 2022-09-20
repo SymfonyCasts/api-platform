@@ -125,6 +125,11 @@ means that we don't need to repeat `access_control` on the `get` collection or
 operation to look for `IS_AUTHENTICATED_ANONYMOUSLY`. We're overriding the
 default access control and making sure that *anyone* can access this operation.
 
+***TIP
+> On Symfony 6 or higher (or with `enable_authenticator_manager: true` in `security.yaml` in Symfony 5.3/5.4), use
+> replace `IS_AUTHENTICATED_ANONYMOUSLY` with `PUBLIC_ACCESS`.
+***
+
 [[[ code('a4c57775cb') ]]]
 
 Using the resource-level versus operation-level access control is a matter of
