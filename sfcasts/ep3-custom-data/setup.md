@@ -3,11 +3,11 @@
 Hey friends. Yea! It's time for part 3 of our API Platform tutorial series. First,
 let's do a status check, because we have been busy!
 
-In [part 1](https://symfonycasts.com/screencast/api-platform), we got everything
+In [part 1](https://symfonycasts.com/screencast/api-platform2), we got everything
 we needed for a pretty sweet API. We talked about JSON-LD and OpenAPI, operations
 and config, serialization groups, validation, relations, IRIs, filtering and more.
 
-In [part 2](https://symfonycasts.com/screencast/api-platform-security), we talked
+In [part 2](https://symfonycasts.com/screencast/api-platform2-security), we talked
 about security, logging in, adding authorization checks to operations, making it
 so that *certain* fields can be read or written only by *specific* users and
 some pretty serious work related to custom normalizers for even more control over
