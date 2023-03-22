@@ -1,12 +1,13 @@
 # Hello API Security + API Docs on Production?
 
-Friends! Welcome to part two of our API Platform series - the one where we're
+Friends! Welcome to part 2 of our API Platform series - the one where we're
 talking all about ice cream, um, security. We're talking about security, not uh,
 ice cream. Hmm. Um, it's going to be *almost* as awesome as ice cream though,
 because the topic of security - especially API security - is fascinating! We've
 got API tokens, session-based authentication, CSRF attacks, dragon attacks and
 the challenge of securing our API Platform application down to the smallest details,
-like letting different users see different records *or* even returning or accepting different fields based on the user. Yep, we're going to take this *wonderful*
+like letting different users see different records *or* even returning or accepting
+different fields based on the user. Yep, we're going to take this *wonderful*
 base that API platform has given us and shape it to act *exactly* like we need
 from a security perspective.
 
@@ -19,9 +20,9 @@ Anyways, let's dive into this! To put the lock down on your API Platform
 security skills, download the course code from this page and code along with me.
 After you unzip the file, you'll find a `start/` directory that has the same
 code you see here. Open up the `README.md` file for all the details on getting
-the app set up. If you coded through part one of this tutorial, um, you *rock*,
-but also, I recommend downloading the new course code because I upgraded a few
-dependencies and added a frontend to the site.
+the app set up. If you coded through [part 1](https://symfonycasts.com/screencast/api-platform2)
+of this tutorial, um, you *rock*, but also, I recommend downloading the new course
+code because I upgraded a few dependencies and added a frontend to the site.
 
 Anyways, one of the last steps in the README will be to open a terminal, move
 into the project and run:
