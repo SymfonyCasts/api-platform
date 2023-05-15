@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 0787dd3..6bc3793 100644
+index b4644fd..8557c42 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -14,6 +14,7 @@
@@ -11,15 +11,15 @@ index 0787dd3..6bc3793 100644
          "symfony/console": "5.1.*",
          "symfony/debug-bundle": "5.1.*",
 diff --git a/composer.lock b/composer.lock
-index 4fea846..ce30690 100644
+index b553a88..bc51d87 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "a127a0720fd5f63dd0d6cd63ce4e2e9e",
-+    "content-hash": "64bae8cecc9c9444b67b21b273cf0e43",
+-    "content-hash": "46ee6497f5f0f9f1e5e39582d6a204d3",
++    "content-hash": "cb61a19b94716774ce475587e7c99667",
      "packages": [
          {
              "name": "api-platform/core",
@@ -86,7 +86,7 @@ index 4fea846..ce30690 100644
          {
              "name": "composer/package-versions-deprecated",
              "version": "1.11.99",
-@@ -2426,6 +2482,223 @@
+@@ -2423,6 +2479,223 @@
              },
              "time": "2020-03-23T09:12:05+00:00"
          },
@@ -321,7 +321,7 @@ index 0000000..cfc3036
 +        types:
 +            uuid: 'Ramsey\Uuid\Doctrine\UuidType'
 diff --git a/symfony.lock b/symfony.lock
-index 4367fbb..4e12ed0 100644
+index 8b8d5c4..245d01b 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -13,6 +13,9 @@
@@ -334,9 +334,9 @@ index 4367fbb..4e12ed0 100644
      "composer/package-versions-deprecated": {
          "version": "1.11.99"
      },
-@@ -173,6 +176,24 @@
-     "psr/simple-cache": {
-         "version": "1.0.1"
+@@ -164,6 +167,24 @@
+     "psr/log": {
+         "version": "1.1.0"
      },
 +    "ramsey/collection": {
 +        "version": "1.1.0"

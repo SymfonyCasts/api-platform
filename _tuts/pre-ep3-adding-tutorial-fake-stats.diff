@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 851554d..362f468 100644
+index 851554d..0e71f98 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -2,7 +2,7 @@
@@ -7,7 +7,7 @@ index 851554d..362f468 100644
      "license": "proprietary",
      "require": {
 -        "php": "^7.2.5, <8.0",
-+        "php": "^7.4.0 || ^8.0",
++        "php": ">=8.1",
          "ext-ctype": "*",
          "ext-iconv": "*",
          "api-platform/core": "^2.1",
@@ -25,12 +25,12 @@ index 851554d..362f468 100644
          "sort-packages": true,
          "platform": {
 -            "php": "7.2.5"
-+            "php": "7.4.0"
++            "php": "8.1.0"
          },
          "allow-plugins": {
              "symfony/flex": true
 diff --git a/composer.lock b/composer.lock
-index 1a99a61..f0261b0 100644
+index 1a99a61..96b0ba9 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,20 +4,20 @@
@@ -38,7 +38,7 @@ index 1a99a61..f0261b0 100644
          "This file is @generated automatically"
      ],
 -    "content-hash": "2a99fc8ce0ff79ea4cf72c19ccb05208",
-+    "content-hash": "f60e9a1960b19b0391690b988cbb6e47",
++    "content-hash": "12ffe9f27fd09b89da166c47f92376ba",
      "packages": [
          {
              "name": "api-platform/core",
@@ -708,8 +708,7 @@ index 1a99a61..f0261b0 100644
              "support": {
                  "issues": "https://github.com/doctrine/persistence/issues",
 -                "source": "https://github.com/doctrine/persistence/tree/1.3.x"
-+                "source": "https://github.com/doctrine/persistence/tree/2.1.0"
-             },
+-            },
 -            "funding": [
 -                {
 -                    "url": "https://www.doctrine-project.org/sponsorship.html",
@@ -760,7 +759,8 @@ index 1a99a61..f0261b0 100644
 -                "branch-alias": {
 -                    "dev-master": "1.2.x-dev"
 -                }
--            },
++                "source": "https://github.com/doctrine/persistence/tree/2.1.0"
+             },
 -            "autoload": {
 -                "psr-4": {
 -                    "Doctrine\\Common\\": "lib/Doctrine/Common"
@@ -812,7 +812,7 @@ index 1a99a61..f0261b0 100644
          },
          {
              "name": "doctrine/sql-formatter",
-@@ -1743,6 +1617,154 @@
+@@ -1743,6 +1617,151 @@
              },
              "time": "2020-04-27T06:40:36+00:00"
          },
@@ -900,29 +900,29 @@ index 1a99a61..f0261b0 100644
 +        },
 +        {
 +            "name": "laminas/laminas-code",
-+            "version": "4.5.1",
++            "version": "4.11.0",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/laminas/laminas-code.git",
-+                "reference": "6fd96d4d913571a2cd056a27b123fa28cb90ac4e"
++                "reference": "169123b3ede20a9193480c53de2a8194f8c073ec"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/6fd96d4d913571a2cd056a27b123fa28cb90ac4e",
-+                "reference": "6fd96d4d913571a2cd056a27b123fa28cb90ac4e",
++                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/169123b3ede20a9193480c53de2a8194f8c073ec",
++                "reference": "169123b3ede20a9193480c53de2a8194f8c073ec",
 +                "shasum": ""
 +            },
 +            "require": {
-+                "php": ">=7.4, <8.2"
++                "php": "~8.1.0 || ~8.2.0"
 +            },
 +            "require-dev": {
-+                "doctrine/annotations": "^1.13.2",
++                "doctrine/annotations": "^2.0.0",
 +                "ext-phar": "*",
 +                "laminas/laminas-coding-standard": "^2.3.0",
 +                "laminas/laminas-stdlib": "^3.6.1",
-+                "phpunit/phpunit": "^9.5.10",
-+                "psalm/plugin-phpunit": "^0.16.1",
-+                "vimeo/psalm": "^4.13.1"
++                "phpunit/phpunit": "^10.0.9",
++                "psalm/plugin-phpunit": "^0.18.4",
++                "vimeo/psalm": "^5.7.1"
 +            },
 +            "suggest": {
 +                "doctrine/annotations": "Doctrine\\Common\\Annotations >=1.0 for annotation features",
@@ -930,9 +930,6 @@ index 1a99a61..f0261b0 100644
 +            },
 +            "type": "library",
 +            "autoload": {
-+                "files": [
-+                    "polyfill/ReflectionEnumPolyfill.php"
-+                ],
 +                "psr-4": {
 +                    "Laminas\\Code\\": "src/"
 +                }
@@ -962,12 +959,12 @@ index 1a99a61..f0261b0 100644
 +                    "type": "community_bridge"
 +                }
 +            ],
-+            "time": "2021-12-19T18:06:55+00:00"
++            "time": "2023-05-14T12:05:38+00:00"
 +        },
          {
              "name": "monolog/monolog",
              "version": "2.1.1",
-@@ -1992,80 +2014,6 @@
+@@ -1992,80 +2011,6 @@
              ],
              "time": "2020-09-04T13:11:37+00:00"
          },
@@ -1048,7 +1045,7 @@ index 1a99a61..f0261b0 100644
          {
              "name": "phpdocumentor/reflection-common",
              "version": "2.2.0",
-@@ -2121,41 +2069,37 @@
+@@ -2121,41 +2066,37 @@
          },
          {
              "name": "phpdocumentor/reflection-docblock",
@@ -1102,7 +1099,7 @@ index 1a99a61..f0261b0 100644
                  }
              },
              "notification-url": "https://packagist.org/downloads/",
-@@ -2166,14 +2110,18 @@
+@@ -2166,14 +2107,18 @@
                  {
                      "name": "Mike van Riel",
                      "email": "me@mikevanriel.com"
@@ -1123,7 +1120,7 @@ index 1a99a61..f0261b0 100644
          },
          {
              "name": "phpdocumentor/type-resolver",
-@@ -6715,20 +6663,20 @@
+@@ -6715,20 +6660,20 @@
          },
          {
              "name": "symfony/webpack-encore-bundle",
@@ -1149,7 +1146,7 @@ index 1a99a61..f0261b0 100644
                  "symfony/asset": "^3.4 || ^4.0 || ^5.0",
                  "symfony/config": "^3.4 || ^4.0 || ^5.0",
                  "symfony/dependency-injection": "^3.4 || ^4.0 || ^5.0",
-@@ -6766,9 +6714,23 @@
+@@ -6766,9 +6711,23 @@
              "description": "Integration with your Symfony app & Webpack Encore!",
              "support": {
                  "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
@@ -1175,7 +1172,7 @@ index 1a99a61..f0261b0 100644
          },
          {
              "name": "symfony/yaml",
-@@ -6981,28 +6943,28 @@
+@@ -6981,28 +6940,28 @@
          },
          {
              "name": "willdurand/negotiation",
@@ -1211,7 +1208,7 @@ index 1a99a61..f0261b0 100644
                  }
              },
              "autoload": {
-@@ -7031,134 +6993,9 @@
+@@ -7031,134 +6990,9 @@
              ],
              "support": {
                  "issues": "https://github.com/willdurand/Negotiation/issues",
@@ -1232,7 +1229,8 @@ index 1a99a61..f0261b0 100644
 -                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/268040548f92c2bfcba164421c1add2ba43abaaa",
 -                "reference": "268040548f92c2bfcba164421c1add2ba43abaaa",
 -                "shasum": ""
--            },
++                "source": "https://github.com/willdurand/Negotiation/tree/3.0.0"
+             },
 -            "require": {
 -                "php": "^7.1",
 -                "zendframework/zend-eventmanager": "^2.6 || ^3.0"
@@ -1340,15 +1338,14 @@ index 1a99a61..f0261b0 100644
 -            "support": {
 -                "issues": "https://github.com/zendframework/zend-eventmanager/issues",
 -                "source": "https://github.com/zendframework/zend-eventmanager/tree/master"
-+                "source": "https://github.com/willdurand/Negotiation/tree/3.0.0"
-             },
+-            },
 -            "abandoned": "laminas/laminas-eventmanager",
 -            "time": "2018-04-25T15:33:34+00:00"
 +            "time": "2020-09-25T08:01:41+00:00"
          }
      ],
      "packages-dev": [
-@@ -7330,33 +7167,31 @@
+@@ -7330,33 +7164,31 @@
              "time": "2020-09-01T07:06:14+00:00"
          },
          {
@@ -1394,7 +1391,7 @@ index 1a99a61..f0261b0 100644
              "autoload": {
                  "psr-4": {
                      "Faker\\": "src/Faker/"
-@@ -7378,11 +7213,10 @@
+@@ -7378,11 +7210,10 @@
                  "fixtures"
              ],
              "support": {
@@ -1409,7 +1406,7 @@ index 1a99a61..f0261b0 100644
          },
          {
              "name": "nikic/php-parser",
-@@ -7667,22 +7501,22 @@
+@@ -7667,22 +7498,22 @@
          },
          {
              "name": "symfony/maker-bundle",
@@ -1437,7 +1434,7 @@ index 1a99a61..f0261b0 100644
                  "symfony/config": "^3.4|^4.0|^5.0",
                  "symfony/console": "^3.4|^4.0|^5.0",
                  "symfony/dependency-injection": "^3.4|^4.0|^5.0",
-@@ -7734,7 +7568,7 @@
+@@ -7734,7 +7565,7 @@
              ],
              "support": {
                  "issues": "https://github.com/symfony/maker-bundle/issues",
@@ -1446,7 +1443,7 @@ index 1a99a61..f0261b0 100644
              },
              "funding": [
                  {
-@@ -7750,7 +7584,7 @@
+@@ -7750,7 +7581,7 @@
                      "type": "tidelift"
                  }
              ],
@@ -1455,7 +1452,7 @@ index 1a99a61..f0261b0 100644
          },
          {
              "name": "symfony/phpunit-bridge",
-@@ -7916,34 +7750,88 @@
+@@ -7916,34 +7747,88 @@
              ],
              "time": "2020-08-10T08:03:57+00:00"
          },
@@ -1553,7 +1550,7 @@ index 1a99a61..f0261b0 100644
              },
              "type": "library",
              "extra": {
-@@ -7981,9 +7869,9 @@
+@@ -7981,9 +7866,9 @@
              ],
              "support": {
                  "issues": "https://github.com/zenstruck/foundry/issues",
@@ -1565,24 +1562,24 @@ index 1a99a61..f0261b0 100644
          }
      ],
      "aliases": [],
-@@ -7992,13 +7880,13 @@
+@@ -7992,13 +7877,13 @@
      "prefer-stable": false,
      "prefer-lowest": false,
      "platform": {
 -        "php": "^7.2.5, <8.0",
-+        "php": "^7.4.0 || ^8.0",
++        "php": ">=8.1",
          "ext-ctype": "*",
          "ext-iconv": "*"
      },
      "platform-dev": [],
      "platform-overrides": {
 -        "php": "7.2.5"
-+        "php": "7.4.0"
++        "php": "8.1.0"
      },
      "plugin-api-version": "2.3.0"
  }
 diff --git a/symfony.lock b/symfony.lock
-index 2429770..8069d77 100644
+index 2429770..48fb071 100644
 --- a/symfony.lock
 +++ b/symfony.lock
 @@ -104,17 +104,20 @@
@@ -1611,17 +1608,33 @@ index 2429770..8069d77 100644
      },
      "monolog/monolog": {
          "version": "1.24.0"
-@@ -140,9 +143,6 @@
-     "ocramius/package-versions": {
-         "version": "1.4.0"
+@@ -137,15 +140,6 @@
+     "nikic/php-parser": {
+         "version": "v4.2.1"
      },
+-    "ocramius/package-versions": {
+-        "version": "1.4.0"
+-    },
 -    "ocramius/proxy-manager": {
 -        "version": "2.2.2"
 -    },
-     "php": {
-         "version": "7.2.5"
+-    "php": {
+-        "version": "7.2.5"
+-    },
+     "phpdocumentor/reflection-common": {
+         "version": "1.0.1"
      },
-@@ -327,18 +327,12 @@
+@@ -170,9 +164,6 @@
+     "psr/log": {
+         "version": "1.1.0"
+     },
+-    "psr/simple-cache": {
+-        "version": "1.0.1"
+-    },
+     "symfony/asset": {
+         "version": "v4.2.8"
+     },
+@@ -327,18 +318,12 @@
      "symfony/polyfill-intl-grapheme": {
          "version": "v1.18.1"
      },
@@ -1640,7 +1653,7 @@ index 2429770..8069d77 100644
      "symfony/polyfill-php73": {
          "version": "v1.23.0"
      },
-@@ -501,11 +495,8 @@
+@@ -501,11 +486,8 @@
      "willdurand/negotiation": {
          "version": "v2.3.1"
      },

@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 362f468..0787dd3 100644
+index 0e71f98..b4644fd 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -16,6 +16,7 @@
@@ -11,19 +11,19 @@ index 362f468..0787dd3 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index f0261b0..4fea846 100644
+index 96b0ba9..b553a88 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "f60e9a1960b19b0391690b988cbb6e47",
-+    "content-hash": "a127a0720fd5f63dd0d6cd63ce4e2e9e",
+-    "content-hash": "12ffe9f27fd09b89da166c47f92376ba",
++    "content-hash": "46ee6497f5f0f9f1e5e39582d6a204d3",
      "packages": [
          {
              "name": "api-platform/core",
-@@ -2855,6 +2855,89 @@
+@@ -2852,6 +2852,89 @@
              ],
              "time": "2020-09-02T07:07:40+00:00"
          },
@@ -134,10 +134,10 @@ index 0000000..26d4e53
 +    # See the "server:dump" command to start a new server.
 +    dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
 diff --git a/symfony.lock b/symfony.lock
-index 8069d77..4367fbb 100644
+index 48fb071..8b8d5c4 100644
 --- a/symfony.lock
 +++ b/symfony.lock
-@@ -203,6 +203,18 @@
+@@ -194,6 +194,18 @@
      "symfony/css-selector": {
          "version": "v4.3.3"
      },
