@@ -62,7 +62,7 @@ index 089ba47..9dd6038 100644
          "symfony/web-profiler-bundle": "4.3.*"
      }
 diff --git a/composer.lock b/composer.lock
-index 7687333..3208e40 100644
+index 950bcd9..94ba3a2 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@

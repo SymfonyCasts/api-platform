@@ -74,7 +74,7 @@ index e7e5ac4..b1ff9de 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index b6ca7a7..6055d12 100644
+index 1cb393b..ea770a1 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -189,7 +189,7 @@ index b6ca7a7..6055d12 100644
 -        "php": "7.2.0"
 +        "php": "7.2.5"
      },
-     "plugin-api-version": "2.3.0"
+     "plugin-api-version": "2.6.0"
  }
 diff --git a/symfony.lock b/symfony.lock
 index 0a4ef84..789ee3c 100644

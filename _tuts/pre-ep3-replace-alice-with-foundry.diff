@@ -11,7 +11,7 @@ index ec7c92b..851554d 100644
          "symfony/css-selector": "5.1.*",
          "symfony/maker-bundle": "^1.11",
 diff --git a/composer.lock b/composer.lock
-index 5374cf6..1a99a61 100644
+index c6a4141..c335aff 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@

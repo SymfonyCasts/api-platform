@@ -230,7 +230,7 @@ index d88f182..089ba47 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 36380af..7687333 100644
+index 36380af..950bcd9 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,44 +4,8 @@
@@ -783,19 +783,19 @@ index 36380af..7687333 100644
          {
              "name": "symfony/flex",
 -            "version": "v1.17.6",
-+            "version": "v1.18.7",
++            "version": "v1.21.6",
              "source": {
                  "type": "git",
                  "url": "https://github.com/symfony/flex.git",
 -                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc"
-+                "reference": "e74319d17ed4edc5f27b9d24757e172930a7ebc4"
++                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8"
              },
              "dist": {
                  "type": "zip",
 -                "url": "https://api.github.com/repos/symfony/flex/zipball/7a79135e1dc66b30042b4d968ecba0908f9374bc",
 -                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc",
-+                "url": "https://api.github.com/repos/symfony/flex/zipball/e74319d17ed4edc5f27b9d24757e172930a7ebc4",
-+                "reference": "e74319d17ed4edc5f27b9d24757e172930a7ebc4",
++                "url": "https://api.github.com/repos/symfony/flex/zipball/06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
++                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
                  "shasum": ""
              },
              "require": {
@@ -804,7 +804,7 @@ index 36380af..7687333 100644
              "support": {
                  "issues": "https://github.com/symfony/flex/issues",
 -                "source": "https://github.com/symfony/flex/tree/v1.17.6"
-+                "source": "https://github.com/symfony/flex/tree/v1.18.7"
++                "source": "https://github.com/symfony/flex/tree/v1.21.6"
              },
              "funding": [
                  {
@@ -813,7 +813,7 @@ index 36380af..7687333 100644
                  }
              ],
 -            "time": "2021-11-29T15:39:37+00:00"
-+            "time": "2022-05-02T10:18:23+00:00"
++            "time": "2024-03-02T08:16:37+00:00"
          },
          {
              "name": "symfony/framework-bundle",
@@ -1311,7 +1311,7 @@ index 36380af..7687333 100644
          "php": "7.2.0"
      },
 -    "plugin-api-version": "2.2.0"
-+    "plugin-api-version": "2.3.0"
++    "plugin-api-version": "2.6.0"
  }
 diff --git a/package.json b/package.json
 index 56f4b19..52719d1 100644
