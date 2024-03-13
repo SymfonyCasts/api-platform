@@ -230,7 +230,7 @@ index d88f182..089ba47 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 36380af..950bcd9 100644
+index cfe3243..950bcd9 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,44 +4,8 @@
@@ -771,7 +771,7 @@ index 36380af..950bcd9 100644
              "time": "2019-06-23T08:51:25+00:00"
          },
          {
-@@ -3018,20 +3132,23 @@
+@@ -3018,6 +3132,9 @@
              ],
              "description": "Symfony Finder Component",
              "homepage": "https://symfony.com",
@@ -781,42 +781,6 @@ index 36380af..950bcd9 100644
              "time": "2019-06-13T11:03:18+00:00"
          },
          {
-             "name": "symfony/flex",
--            "version": "v1.17.6",
-+            "version": "v1.21.6",
-             "source": {
-                 "type": "git",
-                 "url": "https://github.com/symfony/flex.git",
--                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc"
-+                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8"
-             },
-             "dist": {
-                 "type": "zip",
--                "url": "https://api.github.com/repos/symfony/flex/zipball/7a79135e1dc66b30042b4d968ecba0908f9374bc",
--                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc",
-+                "url": "https://api.github.com/repos/symfony/flex/zipball/06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
-+                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
-                 "shasum": ""
-             },
-             "require": {
-@@ -3067,7 +3184,7 @@
-             "description": "Composer plugin for Symfony",
-             "support": {
-                 "issues": "https://github.com/symfony/flex/issues",
--                "source": "https://github.com/symfony/flex/tree/v1.17.6"
-+                "source": "https://github.com/symfony/flex/tree/v1.21.6"
-             },
-             "funding": [
-                 {
-@@ -3083,7 +3200,7 @@
-                     "type": "tidelift"
-                 }
-             ],
--            "time": "2021-11-29T15:39:37+00:00"
-+            "time": "2024-03-02T08:16:37+00:00"
-         },
-         {
-             "name": "symfony/framework-bundle",
 @@ -3205,6 +3322,9 @@
              ],
              "description": "Symfony FrameworkBundle",
@@ -1306,13 +1270,6 @@ index 36380af..950bcd9 100644
          "ext-ctype": "*",
          "ext-iconv": "*"
      },
-@@ -5564,5 +5770,5 @@
-     "platform-overrides": {
-         "php": "7.2.0"
-     },
--    "plugin-api-version": "2.2.0"
-+    "plugin-api-version": "2.6.0"
- }
 diff --git a/package.json b/package.json
 index 56f4b19..52719d1 100644
 --- a/package.json

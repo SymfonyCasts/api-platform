@@ -11,7 +11,7 @@ index 55ef2b7..284450e 100644
          "nelmio/cors-bundle": "^1.5",
          "phpdocumentor/reflection-docblock": "^3.0 || ^4.0",
 diff --git a/composer.lock b/composer.lock
-index 867a27f..c411669 100644
+index 712181c..ee51fc1 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@

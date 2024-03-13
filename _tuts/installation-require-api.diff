@@ -45,7 +45,7 @@ index 46fe1e5..d3538b3 100644
      },
      "config": {
 diff --git a/composer.lock b/composer.lock
-index 0547262..5a00928 100644
+index 4af7f5a..d299e1e 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,8 +4,147 @@
@@ -3064,16 +3064,16 @@ index 0547262..5a00928 100644
 +        },
 +        {
 +            "name": "symfony/flex",
-+            "version": "v1.17.6",
++            "version": "v1.21.6",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/symfony/flex.git",
-+                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc"
++                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/flex/zipball/7a79135e1dc66b30042b4d968ecba0908f9374bc",
-+                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc",
++                "url": "https://api.github.com/repos/symfony/flex/zipball/06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
++                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
 +                "shasum": ""
 +            },
 +            "require": {
@@ -3109,7 +3109,7 @@ index 0547262..5a00928 100644
 +            "description": "Composer plugin for Symfony",
 +            "support": {
 +                "issues": "https://github.com/symfony/flex/issues",
-+                "source": "https://github.com/symfony/flex/tree/v1.17.6"
++                "source": "https://github.com/symfony/flex/tree/v1.21.6"
 +            },
 +            "funding": [
 +                {
@@ -3125,7 +3125,7 @@ index 0547262..5a00928 100644
 +                    "type": "tidelift"
 +                }
 +            ],
-+            "time": "2021-11-29T15:39:37+00:00"
++            "time": "2024-03-02T08:16:37+00:00"
 +        },
 +        {
 +            "name": "symfony/framework-bundle",
@@ -4191,20 +4191,20 @@ index 0547262..5a00928 100644
          },
          {
 -            "name": "symfony/flex",
--            "version": "v1.17.5",
+-            "version": "v1.21.6",
 +            "name": "symfony/property-info",
 +            "version": "v4.3.11",
              "source": {
                  "type": "git",
 -                "url": "https://github.com/symfony/flex.git",
--                "reference": "3f0dc66dcddff035a2ab98ed7e666dfd478b2712"
+-                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8"
 +                "url": "https://github.com/symfony/property-info.git",
 +                "reference": "169aafe8f2a01ec50fb324f5d24bbd61a5799df1"
              },
              "dist": {
                  "type": "zip",
--                "url": "https://api.github.com/repos/symfony/flex/zipball/3f0dc66dcddff035a2ab98ed7e666dfd478b2712",
--                "reference": "3f0dc66dcddff035a2ab98ed7e666dfd478b2712",
+-                "url": "https://api.github.com/repos/symfony/flex/zipball/06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
+-                "reference": "06b58a5e5b4c6528fb12e0fac5fea0db3f1e7ae8",
 +                "url": "https://api.github.com/repos/symfony/property-info/zipball/169aafe8f2a01ec50fb324f5d24bbd61a5799df1",
 +                "reference": "169aafe8f2a01ec50fb324f5d24bbd61a5799df1",
                  "shasum": ""
@@ -4269,7 +4269,7 @@ index 0547262..5a00928 100644
 -            "description": "Composer plugin for Symfony",
 -            "support": {
 -                "issues": "https://github.com/symfony/flex/issues",
--                "source": "https://github.com/symfony/flex/tree/v1.17.5"
+-                "source": "https://github.com/symfony/flex/tree/v1.21.6"
 -            },
 -            "funding": [
 -                {
@@ -4289,7 +4289,7 @@ index 0547262..5a00928 100644
 +                    "homepage": "https://symfony.com/contributors"
                  }
              ],
--            "time": "2021-11-23T11:08:47+00:00"
+-            "time": "2024-03-02T08:16:37+00:00"
 +            "description": "Symfony Property Info Component",
 +            "homepage": "https://symfony.com",
 +            "keywords": [
@@ -6075,13 +6075,6 @@ index 0547262..5a00928 100644
          }
      ],
      "packages-dev": [],
-@@ -2387,5 +5246,5 @@
-     "platform-overrides": {
-         "php": "7.2.0"
-     },
--    "plugin-api-version": "2.0.0"
-+    "plugin-api-version": "2.2.0"
- }
 diff --git a/config/bundles.php b/config/bundles.php
 index 49d3fb6..1edaed6 100644
 --- a/config/bundles.php
