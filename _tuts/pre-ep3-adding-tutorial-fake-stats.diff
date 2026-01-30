@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 851554d..0e71f98 100644
+index 851554d..2d69a52 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -2,7 +2,7 @@
@@ -7,7 +7,7 @@ index 851554d..0e71f98 100644
      "license": "proprietary",
      "require": {
 -        "php": "^7.2.5, <8.0",
-+        "php": ">=8.1",
++        "php": ">=8.2",
          "ext-ctype": "*",
          "ext-iconv": "*",
          "api-platform/core": "^2.1",
@@ -25,12 +25,12 @@ index 851554d..0e71f98 100644
          "sort-packages": true,
          "platform": {
 -            "php": "7.2.5"
-+            "php": "8.1.0"
++            "php": "8.2"
          },
          "allow-plugins": {
              "symfony/flex": true
 diff --git a/composer.lock b/composer.lock
-index c335aff..b21302c 100644
+index c335aff..405c6c8 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,20 +4,20 @@
@@ -38,7 +38,7 @@ index c335aff..b21302c 100644
          "This file is @generated automatically"
      ],
 -    "content-hash": "2a99fc8ce0ff79ea4cf72c19ccb05208",
-+    "content-hash": "12ffe9f27fd09b89da166c47f92376ba",
++    "content-hash": "df1d1a2d8bfcd7ac5c2e71115c618c85",
      "packages": [
          {
              "name": "api-platform/core",
@@ -900,27 +900,27 @@ index c335aff..b21302c 100644
 +        },
 +        {
 +            "name": "laminas/laminas-code",
-+            "version": "4.16.0",
++            "version": "4.17.0",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/laminas/laminas-code.git",
-+                "reference": "1793e78dad4108b594084d05d1fb818b85b110af"
++                "reference": "40d61e2899ec17c5d08bbc0a2d586b3ca17ab9bd"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/1793e78dad4108b594084d05d1fb818b85b110af",
-+                "reference": "1793e78dad4108b594084d05d1fb818b85b110af",
++                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/40d61e2899ec17c5d08bbc0a2d586b3ca17ab9bd",
++                "reference": "40d61e2899ec17c5d08bbc0a2d586b3ca17ab9bd",
 +                "shasum": ""
 +            },
 +            "require": {
-+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
++                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
 +            },
 +            "require-dev": {
 +                "doctrine/annotations": "^2.0.1",
 +                "ext-phar": "*",
 +                "laminas/laminas-coding-standard": "^3.0.0",
 +                "laminas/laminas-stdlib": "^3.18.0",
-+                "phpunit/phpunit": "^10.5.37",
++                "phpunit/phpunit": "^10.5.58",
 +                "psalm/plugin-phpunit": "^0.19.0",
 +                "vimeo/psalm": "^5.15.0"
 +            },
@@ -959,7 +959,7 @@ index c335aff..b21302c 100644
 +                    "type": "community_bridge"
 +                }
 +            ],
-+            "time": "2024-11-20T13:15:13+00:00"
++            "time": "2025-11-01T09:38:14+00:00"
 +        },
          {
              "name": "monolog/monolog",
@@ -1569,7 +1569,7 @@ index c335aff..b21302c 100644
      "prefer-lowest": false,
      "platform": {
 -        "php": "^7.2.5, <8.0",
-+        "php": ">=8.1",
++        "php": ">=8.2",
          "ext-ctype": "*",
          "ext-iconv": "*"
      },
@@ -1577,9 +1577,10 @@ index c335aff..b21302c 100644
 +    "platform-dev": {},
      "platform-overrides": {
 -        "php": "7.2.5"
-+        "php": "8.1.0"
++        "php": "8.2"
      },
-     "plugin-api-version": "2.6.0"
+-    "plugin-api-version": "2.6.0"
++    "plugin-api-version": "2.9.0"
  }
 diff --git a/symfony.lock b/symfony.lock
 index 2429770..48fb071 100644

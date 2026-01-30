@@ -1,5 +1,5 @@
 diff --git a/composer.json b/composer.json
-index 0e71f98..b4644fd 100644
+index 2d69a52..42fd9d6 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -16,6 +16,7 @@
@@ -11,15 +11,15 @@ index 0e71f98..b4644fd 100644
          "symfony/expression-language": "5.1.*",
          "symfony/flex": "^1.1",
 diff --git a/composer.lock b/composer.lock
-index b21302c..6242eca 100644
+index 405c6c8..ff3691c 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "12ffe9f27fd09b89da166c47f92376ba",
-+    "content-hash": "46ee6497f5f0f9f1e5e39582d6a204d3",
+-    "content-hash": "df1d1a2d8bfcd7ac5c2e71115c618c85",
++    "content-hash": "18b3eb17fec77c23ed643e6f4c38a0a7",
      "packages": [
          {
              "name": "api-platform/core",
